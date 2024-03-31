@@ -1,18 +1,13 @@
 ﻿using System;
 
-class CodeFile1
+namespace StarPrint
 {
-    public static void Main(string[] args)
+    public class CodeFile1
     {
-        int num = 5;
-        for(int i= 0; i < num; i++)
+        public static void Main(string[] args)
         {
-            for(int j=  num - 1; j > i; j--)
-                Console.Write(' ');
-            
-            for(int j = 0; j < 2 * i + 1; j++)
-                Console.Write("*");
-            Console.WriteLine();
+            new StartScreen();
         }
+
     }
 }

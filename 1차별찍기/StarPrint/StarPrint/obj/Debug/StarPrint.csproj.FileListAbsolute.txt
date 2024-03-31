@@ -1,0 +1,8 @@
+C:\Users\user\Desktop\EN#스터디\SangHyeok\1차별찍기\StarPrint\StarPrint\bin\Debug\StarPrint.exe.config
+C:\Users\user\Desktop\EN#스터디\SangHyeok\1차별찍기\StarPrint\StarPrint\bin\Debug\StarPrint.exe
+C:\Users\user\Desktop\EN#스터디\SangHyeok\1차별찍기\StarPrint\StarPrint\bin\Debug\StarPrint.pdb
+C:\Users\user\Desktop\EN#스터디\SangHyeok\1차별찍기\StarPrint\StarPrint\obj\Debug\StarPrint.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\EN#스터디\SangHyeok\1차별찍기\StarPrint\StarPrint\obj\Debug\StarPrint.csproj.SuggestedBindingRedirects.cache
+C:\Users\user\Desktop\EN#스터디\SangHyeok\1차별찍기\StarPrint\StarPrint\obj\Debug\StarPrint.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\EN#스터디\SangHyeok\1차별찍기\StarPrint\StarPrint\obj\Debug\StarPrint.exe
+C:\Users\user\Desktop\EN#스터디\SangHyeok\1차별찍기\StarPrint\StarPrint\obj\Debug\StarPrint.pdb

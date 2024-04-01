@@ -32,18 +32,40 @@ namespace StarPrint
 
         private void PrintScreen()
         {
-            UpDownSort();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
             Console.Write("                                               ");
-            PrintYellowBackground("                                  ");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.Write("                                                      ");
+            Console.WriteLine("1  가운데정렬");
+            Console.Write("                                                      ");
+            Console.WriteLine("2  1번의 반대");
+            Console.Write("                                                      ");
+            Console.WriteLine("3  모래 시계");
+            Console.Write("                                                      ");
+            Console.WriteLine("4  다이아");
+            Console.Write("                                                      ");
+            Console.WriteLine("5  종료");
+            Console.WriteLine();
             Console.WriteLine();
             Console.Write("                                               ");
-            
-
-
-
-        }
-        private void UpDownSort()
-        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
+            Console.ResetColor();
 
             Console.WriteLine();
             Console.WriteLine();
@@ -52,10 +74,6 @@ namespace StarPrint
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-
         }
     }
 }

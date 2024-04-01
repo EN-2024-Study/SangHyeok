@@ -34,9 +34,7 @@ namespace StarPrint
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
-
             Console.Write("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");  // 윗부분
-
             Console.ResetColor();
             Console.WriteLine();
 

@@ -8,7 +8,7 @@ namespace StarPrint
 {
     internal class Screen
     {
-        bool isStartScreen;
+        bool isStartScreen, isSelectScreen, isStarPrintScreen;
         bool exit;
         int startScreenNumber;
         int selectScreenNumber;
@@ -17,6 +17,8 @@ namespace StarPrint
         {
             exit = false;
             isStartScreen = true;
+            isSelectScreen = false;
+            isStarPrintScreen = false;
             startScreenNumber = 0;
             selectScreenNumber = 0;
             TransitionScreen();
@@ -29,8 +31,10 @@ namespace StarPrint
                 Console.Clear();
                 if (isStartScreen)
                     new StartScreen(startScreenNumber % 2);
-                else
+                else if (isSelectScreen)
                     new SelectScreen(selectScreenNumber % 5);
+                else if (isStarPrintScreen)
+                    new StarPrintScreen(selectScreenNumber);
                 InputKey();
             }
             Console.Clear();
@@ -39,14 +43,16 @@ namespace StarPrint
         private void InputKey()
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
+
             if (isStartScreen)
-            {
+            {   
                 if (keyInfo.Key == ConsoleKey.Enter || keyInfo.Key == ConsoleKey.Spacebar)
                 {
                     switch (startScreenNumber % 2)
                     {
                         case 0:
                             isStartScreen = false;
+                            isSelectScreen = true;
                             break;
                         case 1:
                             exit = true;
@@ -56,29 +62,26 @@ namespace StarPrint
                 else if (keyInfo.Key == ConsoleKey.DownArrow || keyInfo.Key == ConsoleKey.UpArrow)
                     startScreenNumber++;
             }
-            else
-            {   // selectScreen
+            else if (isSelectScreen)
+            {   
                 if (keyInfo.Key == ConsoleKey.Enter || keyInfo.Key == ConsoleKey.Spacebar)
                 {
                     switch (selectScreenNumber % 5)
                     {
                         case 0:
-                            break;
                         case 1:
-                            break;
                         case 2:
-                            break;
                         case 3:
+                            isSelectScreen = false;
+                            isStarPrintScreen = true;
                             break;
                         case 4:
-                            break;
-                        case 5:
+                            exit = true;
                             break;
                     }
                 }
                 else if (keyInfo.Key == ConsoleKey.DownArrow || keyInfo.Key == ConsoleKey.UpArrow)
                     selectScreenNumber++;
-
             }
         }
     }

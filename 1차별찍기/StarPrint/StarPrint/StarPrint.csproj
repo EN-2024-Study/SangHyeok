@@ -39,6 +39,7 @@
     <Compile Include="PrintColorStringInterface.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="SelectScreen.cs" />
+    <Compile Include="StarPrintScreen.cs" />
     <Compile Include="StartScreen.cs" />
     <Compile Include="CodeFile1.cs" />
   </ItemGroup>

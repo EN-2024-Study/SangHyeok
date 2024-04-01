@@ -12,9 +12,24 @@ namespace StarPrint
         int lineNumber;
         public StarPrintScreen(int select)
         {
-            lineNumber = 0;
             this.select = select;
             PrintScreen();
+        }
+
+        private int InputLineNumber()
+        {
+            int number;
+            String inputString = Console.ReadLine();
+            if (int.TryParse(inputString, out number))
+            {
+                if (number < 1)
+                    return 0;
+                else if (number > 60)
+                    return -1;
+                else
+                    return number;
+            }
+            return -2;
         }
 
         private void PrintScreen()
@@ -22,63 +37,69 @@ namespace StarPrint
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("줄 수를 입력해 주세요 : ");
             Console.ResetColor();
-
-            String input = Console.ReadLine();
-            if (int.TryParse(input, out lineNumber))
+            lineNumber = InputLineNumber();
+            switch (lineNumber)
             {
-                if (lineNumber == 0)
-                {
+                case -2:
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("0 이상의 숫자를 입력해 주세요.");
+                    Console.WriteLine("숫자를 입력해 주세요.");
                     Console.ResetColor();
-                    PrintScreen();
-                }
-                else if (lineNumber > 60)
-                {
+                    new StarPrintScreen(select);
+                    break;
+                case -1:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("너무 큽니다. 60 이하의 숫자를 입력해주세요.");
                     Console.ResetColor();
-                    PrintScreen();
-                }
-                else
-                {
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    switch (select)
-                    {
-                        case 0:
-                            FirstPrintStar();
-                            break;
-                        case 1:
-                            SecondPrintStar();
-                            break;
-                        case 2:
-                            ThirdPrintStar();
-                            break;
-                        case 3:
-                            FourPrintStar();
-                            break;
-                    }
+                    new StarPrintScreen(select);
+                    break;
+                case 0:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("0 이상의 숫자를 입력해 주세요.");
                     Console.ResetColor();
-                }
+                    new StarPrintScreen(select);
+                    break;
+                default:
+                    PrintStar();
+                    break;
             }
-            else
+            
+        }
+
+        private void PrintStar()
+        {
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            switch (select)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("숫자를 입력해 주세요.");
-                Console.ResetColor();
-                PrintScreen();
+                case 0:
+                    FirstPrintStar();
+                    break;
+                case 1:
+                    SecondPrintStar();
+                    break;
+                case 2:
+                    ThirdPrintStar();
+                    break;
+                case 3:
+                    FourPrintStar();
+                    break;
             }
+            Console.ResetColor();
+
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Backspace를 눌러 메뉴로 돌아가기");
         }
 
         private void FirstPrintStar()
         {
-            for(int i = 0; i < lineNumber; i++)
+            for (int i = 0; i < lineNumber; i++)
             {
                 for (int j = 0; j < lineNumber - i; j++)
                     Console.Write(" ");
-                for(int j = 0; j < i * 2 + 1; j++)
+                for (int j = 0; j < i * 2 + 1; j++)
                     Console.Write("*");
                 Console.WriteLine();
             }

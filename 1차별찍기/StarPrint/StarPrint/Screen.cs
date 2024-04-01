@@ -35,12 +35,13 @@ namespace StarPrint
                     new SelectScreen(selectScreenNumber % 5);
                 else if (isStarPrintScreen)
                     new StarPrintScreen(selectScreenNumber);
-                InputKey();
+
+                InputKeyInfo();
             }
             Console.Clear();
         }
 
-        private void InputKey()
+        private void InputKeyInfo()
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 
@@ -80,8 +81,22 @@ namespace StarPrint
                             break;
                     }
                 }
-                else if (keyInfo.Key == ConsoleKey.DownArrow || keyInfo.Key == ConsoleKey.UpArrow)
+                else if (keyInfo.Key == ConsoleKey.DownArrow)
                     selectScreenNumber++;
+                else if (keyInfo.Key == ConsoleKey.UpArrow)
+                {
+                    selectScreenNumber--;
+                    if (selectScreenNumber < 0)
+                        selectScreenNumber += 5;
+                }
+            }
+            else if (isStarPrintScreen)
+            {
+                if (keyInfo.Key == ConsoleKey.Backspace)
+                {
+                    isStarPrintScreen = false;
+                    isSelectScreen = true;
+                }
             }
         }
     }

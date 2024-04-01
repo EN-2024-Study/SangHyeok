@@ -36,6 +36,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PrintColorStringInterface.cs" />
+    <Compile Include="Screen.cs" />
     <Compile Include="SelectScreen.cs" />
     <Compile Include="StartScreen.cs" />
     <Compile Include="CodeFile1.cs" />

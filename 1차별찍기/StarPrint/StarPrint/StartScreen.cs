@@ -6,10 +6,31 @@ using System.Threading.Tasks;
 
 namespace StarPrint
 {
-    public class StartScreen
+    public class StartScreen : PrintColorStringInterface
     {
+        int select;
 
         public StartScreen(int select)
+        {
+            this.select = select;
+            PrintScreen();
+        }
+
+        public void PrintYellowBackground(string s)
+        {
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.Write(s);
+            Console.ResetColor();
+        }
+
+        public void PrintGreenForeground(string s)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(s);
+            Console.ResetColor();
+        }
+
+        private void PrintScreen()
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -17,265 +38,265 @@ namespace StarPrint
             Console.Write("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");  // 윗부분
 
             Console.ResetColor();
-            Console.WriteLine();   
+            Console.WriteLine();
 
             Console.WriteLine();
             Console.WriteLine();
 
             // star 첫 부분
             Console.Write("                                             ");     // S
-            PrintYellowString("        ");
+            PrintYellowBackground("        ");
             Console.Write(" ");
 
-            PrintYellowString("       ");  // T
+            PrintYellowBackground("       ");  // T
             Console.Write("   ");
 
-            PrintYellowString("     ");     // A
+            PrintYellowBackground("     ");     // A
             Console.Write("  ");
 
-            PrintYellowString("       ");   // R 윗
+            PrintYellowBackground("       ");   // R 윗
             Console.WriteLine();
 
             // star 두번째 라인
             Console.Write("                                             ");
 
-            PrintYellowString(" ");         // S
+            PrintYellowBackground(" ");         // S
             Console.Write("           ");
 
-            PrintYellowString(" ");         // t
+            PrintYellowBackground(" ");         // t
             Console.Write("     ");
 
-            PrintYellowString(" ");         // a
+            PrintYellowBackground(" ");         // a
             Console.Write("     ");
-            PrintYellowString(" ");         // a
+            PrintYellowBackground(" ");         // a
             Console.Write(" ");
 
-            PrintYellowString(" ");         // R
+            PrintYellowBackground(" ");         // R
             Console.Write("      ");         // R
-            PrintYellowString(" ");         // R
+            PrintYellowBackground(" ");         // R
             Console.WriteLine();
 
             // 3번째 라인
             Console.Write("                                             ");
 
-            PrintYellowString("        ");         // S
+            PrintYellowBackground("        ");         // S
             Console.Write("    ");
 
-            PrintYellowString(" ");         // T
+            PrintYellowBackground(" ");         // T
             Console.Write("     ");
 
-            PrintYellowString("       ");         // A
+            PrintYellowBackground("       ");         // A
             Console.Write(" ");
 
-            PrintYellowString("       ");         // R
+            PrintYellowBackground("       ");         // R
             Console.WriteLine();
 
             // 4번째 라인
             Console.Write("                                                    ");
-            PrintYellowString(" ");         // S
+            PrintYellowBackground(" ");         // S
             Console.Write("    ");
 
-            PrintYellowString(" ");         // T
+            PrintYellowBackground(" ");         // T
             Console.Write("     ");
 
-            PrintYellowString(" ");         // A
+            PrintYellowBackground(" ");         // A
             Console.Write("     ");
-            PrintYellowString(" ");         // A
+            PrintYellowBackground(" ");         // A
             Console.Write(" ");
 
-            PrintYellowString(" ");         // R
+            PrintYellowBackground(" ");         // R
             Console.Write("      ");
-            PrintYellowString(" ");         // R
+            PrintYellowBackground(" ");         // R
             Console.WriteLine();
 
             // 5 번째 라인
             Console.Write("                                             ");
-            PrintYellowString("        ");         // S
+            PrintYellowBackground("        ");         // S
             Console.Write("    ");
 
-            PrintYellowString(" ");         // T
+            PrintYellowBackground(" ");         // T
             Console.Write("     ");
 
-            PrintYellowString(" ");         // A
+            PrintYellowBackground(" ");         // A
             Console.Write("     ");
-            PrintYellowString(" ");         // A
+            PrintYellowBackground(" ");         // A
             Console.Write(" ");
 
-            PrintYellowString(" ");         // R
+            PrintYellowBackground(" ");         // R
             Console.Write("      ");
-            PrintYellowString(" ");         // R
+            PrintYellowBackground(" ");         // R
 
             Console.WriteLine();
             Console.WriteLine();
 
             // PRINTING 윗부분
             Console.Write("                                  ");
-            PrintYellowString("       ");   // P
+            PrintYellowBackground("       ");   // P
             Console.Write("  ");
 
-            PrintYellowString("       ");   // R
+            PrintYellowBackground("       ");   // R
             Console.Write("  ");
 
-            PrintYellowString(" "); // I
+            PrintYellowBackground(" "); // I
             Console.Write(" ");
 
-            PrintYellowString("  "); // N
+            PrintYellowBackground("  "); // N
             Console.Write("     ");
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write(" ");
 
-            PrintYellowString("       "); // T
+            PrintYellowBackground("       "); // T
             Console.Write(" ");
 
-            PrintYellowString(" "); // I
+            PrintYellowBackground(" "); // I
             Console.Write(" ");
 
-            PrintYellowString("  "); // N
+            PrintYellowBackground("  "); // N
             Console.Write("     ");
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("  ");
 
-            PrintYellowString("      "); // G
+            PrintYellowBackground("      "); // G
             Console.WriteLine("");
 
             // PRINTING 2번째 라인
             Console.Write("                                  ");
-            PrintYellowString(" ");   // P
+            PrintYellowBackground(" ");   // P
             Console.Write("     ");
-            PrintYellowString(" ");   // P
+            PrintYellowBackground(" ");   // P
             Console.Write("  ");
 
-            PrintYellowString(" ");   // R
+            PrintYellowBackground(" ");   // R
             Console.Write("     ");
-            PrintYellowString(" ");   // R
+            PrintYellowBackground(" ");   // R
             Console.Write("  ");
 
-            PrintYellowString(" "); // I
+            PrintYellowBackground(" "); // I
             Console.Write(" ");
 
-            PrintYellowString("   "); // N
+            PrintYellowBackground("   "); // N
             Console.Write("    ");
-            PrintYellowString(" "); // N
-            Console.Write("    ");
-
-            PrintYellowString(" "); // T
+            PrintYellowBackground(" "); // N
             Console.Write("    ");
 
-            PrintYellowString(" "); // I
+            PrintYellowBackground(" "); // T
+            Console.Write("    ");
+
+            PrintYellowBackground(" "); // I
             Console.Write(" ");
 
-            PrintYellowString("   "); // N
+            PrintYellowBackground("   "); // N
             Console.Write("    ");
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write(" ");
 
-            PrintYellowString("  "); // G
+            PrintYellowBackground("  "); // G
             Console.WriteLine();
 
             // 3번째 라인
             Console.Write("                                  ");
-            PrintYellowString("       ");   // P
+            PrintYellowBackground("       ");   // P
             Console.Write("  ");
 
-            PrintYellowString("       ");   // R
+            PrintYellowBackground("       ");   // R
             Console.Write("  ");
 
-            PrintYellowString(" "); // I
+            PrintYellowBackground(" "); // I
             Console.Write(" ");
 
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("  ");
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("   ");
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("    ");
 
-            PrintYellowString(" "); // T
+            PrintYellowBackground(" "); // T
             Console.Write("    ");
 
-            PrintYellowString(" "); // I
+            PrintYellowBackground(" "); // I
             Console.Write(" ");
 
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("  ");
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("   ");
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write(" ");
 
-            PrintYellowString("  "); // G
+            PrintYellowBackground("  "); // G
             Console.Write("   ");
-            PrintYellowString("   "); // G
+            PrintYellowBackground("   "); // G
             Console.WriteLine();
 
             // 4번째 라인
             Console.Write("                                  ");
-            PrintYellowString(" ");   // P
+            PrintYellowBackground(" ");   // P
             Console.Write("        ");
 
-            PrintYellowString(" ");   // R
+            PrintYellowBackground(" ");   // R
             Console.Write("    ");
-            PrintYellowString(" ");   // R
+            PrintYellowBackground(" ");   // R
             Console.Write("   ");
 
-            PrintYellowString(" "); // I
+            PrintYellowBackground(" "); // I
             Console.Write(" ");
 
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("   ");
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("  ");
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("    ");
 
-            PrintYellowString(" "); // T
+            PrintYellowBackground(" "); // T
             Console.Write("    ");
 
-            PrintYellowString(" "); // I
+            PrintYellowBackground(" "); // I
             Console.Write(" ");
 
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("   ");
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("  ");
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write(" ");
 
-            PrintYellowString("  "); // G
+            PrintYellowBackground("  "); // G
             Console.Write("    ");
-            PrintYellowString("  "); // G
+            PrintYellowBackground("  "); // G
             Console.WriteLine();
 
             // 5 번째 라인
             Console.Write("                                  ");
-            PrintYellowString(" ");   // P
+            PrintYellowBackground(" ");   // P
             Console.Write("        ");
 
-            PrintYellowString(" ");   // R
+            PrintYellowBackground(" ");   // R
             Console.Write("    ");
-            PrintYellowString("  ");   // R
+            PrintYellowBackground("  ");   // R
             Console.Write("  ");
 
-            PrintYellowString(" "); // I
+            PrintYellowBackground(" "); // I
             Console.Write(" ");
 
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("    ");
-            PrintYellowString("   "); // N
-            Console.Write("    ");
-
-            PrintYellowString(" "); // T
+            PrintYellowBackground("   "); // N
             Console.Write("    ");
 
-            PrintYellowString(" "); // I
+            PrintYellowBackground(" "); // T
+            Console.Write("    ");
+
+            PrintYellowBackground(" "); // I
             Console.Write(" ");
 
-            PrintYellowString(" "); // N
+            PrintYellowBackground(" "); // N
             Console.Write("    ");
-            PrintYellowString("   "); // N
+            PrintYellowBackground("   "); // N
             Console.Write("  ");
 
-            PrintYellowString("      "); // G
+            PrintYellowBackground("      "); // G
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
@@ -284,41 +305,41 @@ namespace StarPrint
 
             // 시작, 종료 박스
             Console.Write("                                  ");
-            PrintYellowString("                                                      ");
+            PrintYellowBackground("                                                      ");
             Console.WriteLine();
 
             Console.Write("                                  ");
-            PrintYellowString(" ");
+            PrintYellowBackground(" ");
             Console.Write("                                                    ");
-            PrintYellowString(" ");
+            PrintYellowBackground(" ");
             Console.WriteLine();
 
             Console.Write("                                  ");
-            PrintYellowString(" ");
+            PrintYellowBackground(" ");
             if (select == 0)
-                PrintGreenString("                     1시작하기                      ");
+                PrintGreenForeground("                     1시작하기                      ");
             else
                 Console.Write("                     1시작하기                      ");
-            PrintYellowString(" ");
+            PrintYellowBackground(" ");
             Console.WriteLine();
 
             Console.Write("                                  ");
-            PrintYellowString(" ");
+            PrintYellowBackground(" ");
             if (select == 1)
-                PrintGreenString("                     2종료하기                      ");
+                PrintGreenForeground("                     2종료하기                      ");
             else
                 Console.Write("                     2종료하기                      ");
-            PrintYellowString(" ");
+            PrintYellowBackground(" ");
             Console.WriteLine();
 
             Console.Write("                                  ");
-            PrintYellowString(" ");
+            PrintYellowBackground(" ");
             Console.Write("                                                    ");
-            PrintYellowString(" ");
+            PrintYellowBackground(" ");
             Console.WriteLine();
 
             Console.Write("                                  ");
-            PrintYellowString("                                                      ");
+            PrintYellowBackground("                                                      ");
             Console.WriteLine();
 
             Console.WriteLine();
@@ -330,18 +351,6 @@ namespace StarPrint
             Console.ResetColor();
             Console.WriteLine();
         }
-        private void PrintYellowString(string s)
-        {
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.Write(s);
-            Console.ResetColor();
-        }
 
-        private void PrintGreenString(string s)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(s);
-            Console.ResetColor();
-        }
     }
 }

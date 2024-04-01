@@ -6,20 +6,56 @@ using System.Threading.Tasks;
 
 namespace StarPrint
 {
-    internal class SelectScreen
+    internal class SelectScreen : PrintColorStringInterface
     {
+        int select;
+
+        public SelectScreen(int select)
+        {
+            this.select = select;
+            PrintScreen();
+        }
+
+        public void PrintYellowBackground(string s)
+        {
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.Write(s);
+            Console.ResetColor();
+        }
+
+        public void PrintGreenForeground(string s)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(s);
+            Console.ResetColor(); ;
+        }
+
+        private void PrintScreen()
+        {
+            UpDownSort();
+            Console.Write("                                               ");
+            PrintYellowBackground("                                  ");
+            Console.WriteLine();
+            Console.Write("                                               ");
+            
+
+
+
+        }
         private void UpDownSort()
         {
+
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-        }
-        public SelectScreen()
-        {
-            Console.Clear();
-            UpDownSort();
-            Console.Write("                ");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+
         }
     }
 }

@@ -36,6 +36,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SelectScreen.cs" />
     <Compile Include="StartScreen.cs" />
     <Compile Include="CodeFile1.cs" />
   </ItemGroup>

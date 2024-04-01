@@ -9,7 +9,7 @@ namespace StarPrint
     public class StartScreen
     {
 
-        public StartScreen()
+        public StartScreen(int select)
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -295,13 +295,19 @@ namespace StarPrint
 
             Console.Write("                                  ");
             PrintYellowString(" ");
-            Console.Write("                     1시작하기                      ");
+            if (select == 0)
+                PrintGreenString("                     1시작하기                      ");
+            else
+                Console.Write("                     1시작하기                      ");
             PrintYellowString(" ");
             Console.WriteLine();
 
             Console.Write("                                  ");
             PrintYellowString(" ");
-            Console.Write("                     2종료하기                      ");
+            if (select == 1)
+                PrintGreenString("                     2종료하기                      ");
+            else
+                Console.Write("                     2종료하기                      ");
             PrintYellowString(" ");
             Console.WriteLine();
 
@@ -327,6 +333,13 @@ namespace StarPrint
         private void PrintYellowString(string s)
         {
             Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.Write(s);
+            Console.ResetColor();
+        }
+
+        private void PrintGreenString(string s)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(s);
             Console.ResetColor();
         }

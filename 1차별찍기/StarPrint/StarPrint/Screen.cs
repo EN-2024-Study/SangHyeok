@@ -36,12 +36,12 @@ namespace StarPrint
                 else if (isStarPrintScreen)
                     new StarPrintScreen(selectScreenNumber);
 
-                InputKeyInfo();
+                InputKey();
             }
             Console.Clear();
         }
 
-        private void InputKeyInfo()
+        private void InputKey()
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 

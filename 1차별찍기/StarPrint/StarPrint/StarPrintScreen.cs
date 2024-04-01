@@ -10,6 +10,7 @@ namespace StarPrint
     {
         int select;
         int lineNumber;
+        string inputString;
         public StarPrintScreen(int select)
         {
             this.select = select;
@@ -19,7 +20,7 @@ namespace StarPrint
         private int InputLineNumber()
         {
             int number;
-            String inputString = Console.ReadLine();
+            inputString = Console.ReadLine();
             if (int.TryParse(inputString, out number))
             {
                 if (number < 1)
@@ -32,37 +33,43 @@ namespace StarPrint
             return -2;
         }
 
+        private void PrintError(string s)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(s);
+            Console.ResetColor();
+            Console.SetCursorPosition(24, 0);
+            for (int i = 0; i < inputString.Length; i++)
+                Console.Write(" ");
+            Console.SetCursorPosition(24, 0);
+        }
+
         private void PrintScreen()
         {
+            bool isBreak = false;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("줄 수를 입력해 주세요 : ");
             Console.ResetColor();
-            lineNumber = InputLineNumber();
-            switch (lineNumber)
+            while(!isBreak)
             {
-                case -2:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("숫자를 입력해 주세요.");
-                    Console.ResetColor();
-                    new StarPrintScreen(select);
-                    break;
-                case -1:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("너무 큽니다. 60 이하의 숫자를 입력해주세요.");
-                    Console.ResetColor();
-                    new StarPrintScreen(select);
-                    break;
-                case 0:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("0 이상의 숫자를 입력해 주세요.");
-                    Console.ResetColor();
-                    new StarPrintScreen(select);
-                    break;
-                default:
-                    PrintStar();
-                    break;
+                lineNumber = InputLineNumber();
+                switch (lineNumber)
+                {
+                    case -2:
+                        PrintError("숫자를 입력해 주세요 : ");
+                        break;
+                    case -1:
+                        PrintError("너무 큽니다. 60 이하의 숫자를 입력해주세요.");
+                        break;
+                    case 0:
+                        PrintError("0 이상의 숫자를 입력해 주세요.");
+                        break;
+                    default:
+                        PrintStar();
+                        isBreak = true;
+                        break;
+                }
             }
-            
         }
 
         private void PrintStar()

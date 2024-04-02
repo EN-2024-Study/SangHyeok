@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarPrint
 {
-    public class StartScreen
+    internal class StartScreen : Screen
     {
         int select;
 
@@ -15,7 +15,7 @@ namespace StarPrint
             this.select = select;   // 시작하기와 종료하기를 int 자료형으로 정함
         }
 
-        public void PrintScreen()
+        public override void PrintScreen()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(@"

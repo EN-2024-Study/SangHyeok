@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarPrint
 {
-    internal class StarPrintScreen 
+    internal class StarPrintScreen : Screen
     {
         int select;
         int lineNumber;
@@ -16,7 +16,7 @@ namespace StarPrint
             this.select = select;
         }
 
-        public void PrintScreen()
+        public override void PrintScreen()
         {
             bool isBreak = false;
             Console.ForegroundColor = ConsoleColor.Green;

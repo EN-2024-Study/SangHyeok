@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarPrint
 {
-    internal class SelectScreen
+    internal class SelectScreen : Screen
     {
         int select; // 어떤 메뉴로 들어갈지 int 자료형으로 정함
 
@@ -15,7 +15,7 @@ namespace StarPrint
             this.select = select;
         }
 
-        public void PrintScreen()
+        public override void PrintScreen()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(@"

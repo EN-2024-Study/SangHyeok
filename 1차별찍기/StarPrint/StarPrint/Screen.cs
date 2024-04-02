@@ -8,10 +8,9 @@ namespace StarPrint
 {
     internal class Screen
     {
-        bool isStartScreen, isSelectScreen, isStarPrintScreen;
+        bool isStartScreen, isSelectScreen, isStarPrintScreen;  // 어떤 화면을 띄울 지 bool 자료형으로 정함
         bool exit;
-        int startScreenNumber;
-        int selectScreenNumber;
+        int startScreenNumber, selectScreenNumber;  // int 자료형으로 어떤 메뉴를 선택할지 정함 
         StartScreen startScreen;
         SelectScreen selectScreen;
         StarPrintScreen starPrintScreen;
@@ -26,24 +25,24 @@ namespace StarPrint
             selectScreenNumber = 0;
         }
 
-        public void PrintScreen()
+        public void PrintScreen()   // 각각의 화면들을 제어하는 함수
         {
-            while (!exit)
+            while (!exit)   
             {
                 Console.Clear();
-                if (isStartScreen)
+                if (isStartScreen)  // 시작화면
                 {
                     startScreen = new StartScreen(startScreenNumber % 2);
                     startScreen.PrintScreen();
                     InputAtStartScreen();
                 }
-                else if (isSelectScreen)
+                else if (isSelectScreen)    // 메뉴
                 {
                     selectScreen = new SelectScreen(selectScreenNumber % 5);
                     selectScreen.PrintScreen();
                     InputAtSelectScreen();
                 }
-                else if (isStarPrintScreen)
+                else if (isStarPrintScreen) // 별찍기 화면
                 {
                     starPrintScreen = new StarPrintScreen(selectScreenNumber);
                     starPrintScreen.PrintScreen();
@@ -53,7 +52,7 @@ namespace StarPrint
             Console.Clear();
         }
 
-        private void InputAtStartScreen()
+        private void InputAtStartScreen()   // 시작화면에서 입력
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 
@@ -74,7 +73,7 @@ namespace StarPrint
                 startScreenNumber++;
         }
 
-        private void InputAtSelectScreen()
+        private void InputAtSelectScreen()  // 메뉴에서 입력
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 
@@ -104,7 +103,7 @@ namespace StarPrint
             }
         }
 
-        private void InputKeyAtStarPrintScreen()
+        private void InputKeyAtStarPrintScreen()    // 별찍기에서 backspace와 S키 입력
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 

@@ -12,7 +12,7 @@ namespace StarPrint
 
         public StartScreen(int select)
         {
-            this.select = select;
+            this.select = select;   // 시작하기와 종료하기를 int 자료형으로 정함
         }
 
         public void PrintYellowBackground(string s)
@@ -29,7 +29,7 @@ namespace StarPrint
             Console.ResetColor();
         }
 
-        public void PrintScreen()
+        public void PrintScreen()   // 화면 출력
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;

@@ -22,23 +22,23 @@ namespace StarPrint
             inputString = Console.ReadLine();
             if (int.TryParse(inputString, out number))
             {
-                if (number < 1)
+                if (number < 1) // 0이하의 숫자 입력시 예외 처리
                     return 0;
-                else if (number > 60)
+                else if (number > 60)   // 너무 큰 숫자 입력시 예외 처리
                     return -1;
                 else
-                    return number;
+                    return number;  // 정상 입력
             }
-            return -2;
+            return -2;  // 문자 입력시 예외 처리
         }
 
-        private void PrintError(string s)
+        private void PrintError(string s)   
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(s);
+            Console.WriteLine(s);   // 예외 처리 구문
             Console.ResetColor();
-            Console.SetCursorPosition(24, 0);
-            for (int i = 0; i < inputString.Length; i++)
+            Console.SetCursorPosition(24, 0);   
+            for (int i = 0; i < inputString.Length; i++)    // 잘못 입력된 문자 삭제
                 Console.Write(" ");
             Console.SetCursorPosition(24, 0);
         }
@@ -49,9 +49,10 @@ namespace StarPrint
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("줄 수를 입력해 주세요 : ");
             Console.ResetColor();
-            while(!isBreak)
+            while(!isBreak) // 정상 입력까지 반복
             {
-                lineNumber = InputLineNumber();
+                lineNumber = InputLineNumber(); 
+
                 switch (lineNumber)
                 {
                     case -2:
@@ -71,7 +72,7 @@ namespace StarPrint
             }
         }
 
-        private void PrintStar()
+        private void PrintStar()    // 별 출력
         {
             Console.WriteLine();
             Console.WriteLine();

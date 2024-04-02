@@ -8,7 +8,7 @@ namespace StarPrint
 {
     internal class SelectScreen : PrintColorStringInterface
     {
-        int select;
+        int select; // 어떤 메뉴로 들어갈지 int 자료형으로 정함
 
         public SelectScreen(int select)
         {
@@ -29,7 +29,7 @@ namespace StarPrint
             Console.ResetColor(); ;
         }
 
-        public void PrintScreen()
+        public void PrintScreen()   // 화면 출력
         {
             Console.WriteLine();
             Console.WriteLine();

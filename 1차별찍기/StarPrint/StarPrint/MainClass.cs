@@ -3,12 +3,13 @@ using System.Security.Cryptography;
 
 namespace StarPrint
 {
-    public class CodeFile1
+    public class MainClass
     {
         public static void Main(string[] args)
         {
-            Screen screen = new Screen();   // 각각의 화면들을 담당하는 클래스
-            screen.PrintScreen();
+            ScreenControl screen = new ScreenControl();
+            screen.ControlScreen();
         }
+
     }
 }

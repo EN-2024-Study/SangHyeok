@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarPrint
 {
-    internal class Screen
+    internal class ScreenControl
     {
         bool isStartScreen, isSelectScreen, isStarPrintScreen;  // 어떤 화면을 띄울 지 bool 자료형으로 정함
         bool exit;
@@ -15,7 +15,7 @@ namespace StarPrint
         SelectScreen selectScreen;
         StarPrintScreen starPrintScreen;
 
-        public Screen()
+        public ScreenControl()
         {
             exit = false;
             isStartScreen = true;
@@ -25,9 +25,9 @@ namespace StarPrint
             selectScreenNumber = 0;
         }
 
-        public void PrintScreen()   // 각각의 화면들을 제어하는 함수
+        public void ControlScreen()   // 각각의 화면들을 제어하는 함수
         {
-            while (!exit)   
+            while (!exit)
             {
                 Console.Clear();
                 if (isStartScreen)  // 시작화면

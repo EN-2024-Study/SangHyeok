@@ -6,27 +6,13 @@ using System.Threading.Tasks;
 
 namespace StarPrint
 {
-    public class StartScreen : PrintColorStringInterface
+    public class StartScreen
     {
         int select;
 
         public StartScreen(int select)
         {
             this.select = select;   // 시작하기와 종료하기를 int 자료형으로 정함
-        }
-
-        public void PrintYellowBackground(string s)
-        {
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.Write(s);
-            Console.ResetColor();
-        }
-
-        public void PrintGreenForeground(string s)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(s);
-            Console.ResetColor();
         }
 
         public void PrintScreen()

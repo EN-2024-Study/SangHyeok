@@ -29,70 +29,85 @@ namespace StarPrint
             Console.ResetColor(); ;
         }
 
-        public void PrintScreen()   // 화면 출력
+        public void PrintScreen()
         {
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.Write("                                               ");
-
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
-            Console.ResetColor();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.WriteLine(@"
+
+
+
+
+
+
+
+                                           ________________________________ 
+                                           \|                             \|
+                                           \|                             \|
+                                           \|                             \|
+                                           \|                             \|
+                                           \|                             \|
+                                           \|                             \|
+                                           \|                             \|
+                                           \|                             \|
+                                           \|                             \|
+                                           \|                             \|
+                                           \|_____________________________\|
+");
+            Console.SetCursorPosition(52, 10);
             if (select == 0)
-                PrintGreenForeground("                                                      ①  가운데정렬");
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("①  가운데정렬");
+            }
             else
-                Console.Write("                                                      ①  가운데정렬");
-            Console.WriteLine();
-
+            {
+                Console.ResetColor();
+                Console.WriteLine("①  가운데정렬");
+            }
+            Console.SetCursorPosition(52, 12);
             if (select == 1)
-                PrintGreenForeground("                                                      ②  1번의 반대");
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("②  1번의 반대");
+            }
             else
-                Console.Write("                                                      ②  1번의 반대");
-            Console.WriteLine();
-
+            {
+                Console.ResetColor();
+                Console.WriteLine("②  1번의 반대");
+            }
+            Console.SetCursorPosition(52, 14);
             if (select == 2)
-                PrintGreenForeground("                                                      ③  모래 시계");
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("③  모래 시계");
+            }
             else
-                Console.Write("                                                      ③  모래 시계");
-            Console.WriteLine();
-
+            {
+                Console.ResetColor();
+                Console.WriteLine("③  모래 시계");
+            }
+            Console.SetCursorPosition(52, 16);
             if (select == 3)
-                PrintGreenForeground("                                                      ④  다이아");
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("④  다이아");
+            }
             else
-                Console.Write("                                                      ④  다이아");
-            Console.WriteLine();
-
+            {
+                Console.ResetColor();
+                Console.WriteLine("④  다이아");
+            }
+            Console.SetCursorPosition(52, 18);
             if (select == 4)
-                PrintGreenForeground("                                                      ⑤  종료");
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("⑤  종료");
+            }
             else
-                Console.Write("                                                      ⑤  종료");
-            Console.WriteLine();
-
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.Write("                                               ");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
-            Console.ResetColor();
-
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            {
+                Console.ResetColor();
+                Console.WriteLine("⑤  종료");
+            }
         }
     }
 }

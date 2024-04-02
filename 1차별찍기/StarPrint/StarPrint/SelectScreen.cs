@@ -6,27 +6,13 @@ using System.Threading.Tasks;
 
 namespace StarPrint
 {
-    internal class SelectScreen : PrintColorStringInterface
+    internal class SelectScreen
     {
         int select; // 어떤 메뉴로 들어갈지 int 자료형으로 정함
 
         public SelectScreen(int select)
         {
             this.select = select;
-        }
-
-        public void PrintYellowBackground(string s)
-        {
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.Write(s);
-            Console.ResetColor();
-        }
-
-        public void PrintGreenForeground(string s)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(s);
-            Console.ResetColor(); ;
         }
 
         public void PrintScreen()

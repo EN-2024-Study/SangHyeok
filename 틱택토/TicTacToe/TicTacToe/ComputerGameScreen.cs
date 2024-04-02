@@ -6,16 +6,10 @@ using System.Threading.Tasks;
 
 namespace TicTacToe
 {
-    internal class MainClass
+    internal class ComputerGameScreen : Screen
     {
-
-        public static void Main(string[] args)
+        public override void PrintScreen()
         {
-            ScreenControl screen = new ScreenControl();
-            screen.Control();
         }
-
-
-
     }
 }

@@ -36,8 +36,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameScreen.cs" />
     <Compile Include="MainClass.cs" />
     <Compile Include="Screen.cs" />
+    <Compile Include="ScreenControl.cs" />
     <Compile Include="StartScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

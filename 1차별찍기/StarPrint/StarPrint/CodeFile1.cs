@@ -7,7 +7,8 @@ namespace StarPrint
     {
         public static void Main(string[] args)
         {
-            new Screen();
+            Screen screen = new Screen();
+            screen.PrintScreen();
         }
     }
 }

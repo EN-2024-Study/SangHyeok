@@ -14,7 +14,6 @@ namespace StarPrint
         public StarPrintScreen(int select)
         {
             this.select = select;
-            PrintScreen();
         }
 
         private int InputLineNumber()
@@ -44,7 +43,7 @@ namespace StarPrint
             Console.SetCursorPosition(24, 0);
         }
 
-        private void PrintScreen()
+        public void PrintScreen()
         {
             bool isBreak = false;
             Console.ForegroundColor = ConsoleColor.Green;
@@ -97,7 +96,9 @@ namespace StarPrint
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("Backspace를 눌러 메뉴로 돌아가기");
+            Console.WriteLine("← Backspace를 눌러 메뉴로 돌아가기");
+            Console.WriteLine();
+            Console.WriteLine("S키를 눌러 시작화면으로 돌아가기");
         }
 
         private void FirstPrintStar()

@@ -10,6 +10,10 @@ namespace TicTacToe
     {
         public override void PrintScreen()
         {
+            Console.SetCursorPosition(45, 1);
+            Console.WriteLine("<ScoreBoard>");
         }
+
+
     }
 }

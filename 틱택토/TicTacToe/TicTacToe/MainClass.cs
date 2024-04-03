@@ -14,8 +14,5 @@ namespace TicTacToe
             ScreenControl screen = new ScreenControl();
             screen.Control();
         }
-
-
-
     }
 }

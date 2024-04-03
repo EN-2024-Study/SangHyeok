@@ -9,9 +9,14 @@ namespace TicTacToe
     internal class StartScreen : Screen
     {
         int menuNumber;
+        string name;
 
-        public StartScreen(int number)
-        { menuNumber = number; }
+        public StartScreen()
+        {
+            menuNumber = -1;
+            name = null;
+        }
+
         public override void PrintScreen()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -36,8 +41,21 @@ namespace TicTacToe
                     ━━━━━━━━━━♥♥♥━━━━━━━━━━
 
             ");
+            Console.ResetColor();
+
             Console.SetCursorPosition(20, 15);
-            Console.WriteLine("  이름을 입력해 주세요.");
+            if (name == null)
+                Console.WriteLine("  이름을 입력해 주세요.");
+            else
+            {
+                Console.Write("환영합니다. ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(name + "님");
+                Console.ResetColor();
+                Console.SetCursorPosition(20, 17);
+                Console.WriteLine("방향키를 눌러 메뉴를 선택해 주세요.");
+            }
+
             Console.SetCursorPosition(80, 13);
             if (menuNumber == 0)
             {
@@ -50,6 +68,7 @@ namespace TicTacToe
                 Console.ResetColor();
                 Console.WriteLine("㉠  vs Computer");
             }
+
             Console.SetCursorPosition(80, 15);
             if (menuNumber == 1)
             {
@@ -62,6 +81,7 @@ namespace TicTacToe
                 Console.ResetColor();
                 Console.WriteLine("㉡  vs User");
             }
+
             Console.SetCursorPosition(80, 17);
             if (menuNumber == 2)
             {
@@ -74,6 +94,7 @@ namespace TicTacToe
                 Console.ResetColor();
                 Console.WriteLine("㉢  vs ScoreBoard");
             }
+
             Console.SetCursorPosition(80, 19);
             if (menuNumber == 3)
             {
@@ -86,6 +107,18 @@ namespace TicTacToe
                 Console.ResetColor();
                 Console.WriteLine("㉣  Quit");
             }
+        }
+
+        public int MenuNumber
+        {
+            get { return menuNumber; }
+            set { menuNumber = value; }
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
         }
     }
 }

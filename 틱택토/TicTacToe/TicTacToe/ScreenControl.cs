@@ -10,8 +10,6 @@ namespace TicTacToe
     {
         bool isStartScreen, isComputerGameScreen, isUserGameScreen, isScoreBoard;
         bool quit;
-        string userName;
-        int menuNumber;
         StartScreen startScreen;
         ComputerGameScreen computerGameScreen;
         UserGameScreen userGameScreen;
@@ -24,7 +22,10 @@ namespace TicTacToe
             isUserGameScreen = false;
             isScoreBoard = false;
             quit = false;
-            menuNumber = -1;
+            startScreen = new StartScreen();
+            computerGameScreen = new ComputerGameScreen();
+            userGameScreen = new UserGameScreen();
+            scoreBoardScreen = new ScoreBoardScreen();
         }
 
         public void Control()
@@ -34,32 +35,31 @@ namespace TicTacToe
                 Console.Clear();
                 if (isStartScreen)
                 {
-                    startScreen = new StartScreen(menuNumber);
                     startScreen.PrintScreen();
 
-                    if (userName == null)   // 처음 입력시 초기화
+                    if (startScreen.Name == null)   // 처음 입력시 초기화
                     {
                         InputUserName();
                         Console.Clear();
-                        menuNumber = 0;
+                        startScreen.MenuNumber = 0;
                         startScreen.PrintScreen();
                     }
                     SelectMenuButton();
                 }
                 else if (isComputerGameScreen)
                 {
-                    computerGameScreen = new ComputerGameScreen();
                     computerGameScreen.PrintScreen();
+                    PlayingWithComputer();
                 }
                 else if (isUserGameScreen)
                 {
-                    userGameScreen = new UserGameScreen();
                     userGameScreen.PrintScreen();
+                    PlayingWithUser();
                 }
                 else if (isScoreBoard)
                 {
-                    scoreBoardScreen = new ScoreBoardScreen();
                     scoreBoardScreen.PrintScreen();
+                    InputBackMenu();
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace TicTacToe
         private void InputUserName()
         {
             Console.SetCursorPosition(22, 17);  // 이름 입력 좌표
-            userName = Console.ReadLine();
+            startScreen.Name = Console.ReadLine();
         }
 
         private void SelectMenuButton()
@@ -75,16 +75,16 @@ namespace TicTacToe
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 
             if (keyInfo.Key == ConsoleKey.DownArrow)
-                menuNumber += 1;
+                startScreen.MenuNumber += 1;
             else if (keyInfo.Key == ConsoleKey.UpArrow)
             {
-                menuNumber -= 1;
-                if (menuNumber < 0)
-                    menuNumber = 3;
+                startScreen.MenuNumber -= 1;
+                if (startScreen.MenuNumber < 0)
+                    startScreen.MenuNumber = 3;
             }
             else if (keyInfo.Key == ConsoleKey.Enter)
             {
-                switch(menuNumber)
+                switch(startScreen.MenuNumber)
                 {
                     case 0:
                         isStartScreen = false;
@@ -98,13 +98,73 @@ namespace TicTacToe
                         isStartScreen = false;
                         isScoreBoard = true;
                         break;
-
                     case 3:
                         quit = true;
                         break;
                 }
             }
-            menuNumber %= 4;
+            startScreen.MenuNumber %= 4;
+        }
+
+        private void PlayingWithComputer()
+        {
+            InputWhenPlayGame();
+        }
+
+        private void PlayingWithUser()
+        {
+            InputWhenPlayGame();
+
+        }
+
+        private void InputBackMenu()
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+            if (keyInfo.Key == ConsoleKey.Backspace)
+            {
+                isScoreBoard = false;
+                isStartScreen = true;
+            }
+        }
+
+        private void InputWhenPlayGame()
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.Q:
+
+                    break;
+                case ConsoleKey.W:
+
+                    break;
+                case ConsoleKey.E:
+
+                    break;
+                case ConsoleKey.A:
+
+                    break;
+                case ConsoleKey.S:
+
+                    break;
+                case ConsoleKey.D:
+
+                    break;
+                case ConsoleKey.Z:
+
+                    break;
+                case ConsoleKey.X:
+
+                    break;
+                case ConsoleKey.C:
+
+                    break;
+            }
         }
     }
 }
+
+// StartScreen 클래스 생성자 지우고 Control method에서 new 지우고
+// ScreenControl 생성자에서 한번에 생성자 다 넣기

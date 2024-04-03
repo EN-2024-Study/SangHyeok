@@ -36,7 +36,7 @@ namespace StarPrint
                     startScreen.PrintScreen();
                     InputAtStartScreen();
                 }
-                else if (isSelectScreen)    // 메뉴
+                else if (isSelectScreen)    // 메뉴 화면
                 {
                     selectScreen.PrintScreen();
                     InputAtSelectScreen();
@@ -60,11 +60,11 @@ namespace StarPrint
                 case ConsoleKey.Spacebar:
                     switch (startScreen.Select)
                     {
-                        case 0:
+                        case 0:     // 시작하기 메뉴 입력
                             isStartScreen = false;
                             isSelectScreen = true;
                             break;
-                        case 1:
+                        case 1:     // 종료하기 메뉴 입력
                             exit = true;
                             break;
                     }
@@ -96,7 +96,7 @@ namespace StarPrint
                         isSelectScreen = false;
                         isStarPrintScreen = true;
                     }
-                    else if (SelectScreen.Select == 4)
+                    else if (SelectScreen.Select == 4)  // 종료하기 입력
                         exit = true;
                     break;
                 case ConsoleKey.DownArrow:
@@ -127,7 +127,7 @@ namespace StarPrint
             SelectScreen.Select %= 5;
         }
 
-        private void InputKeyAtStarPrintScreen()    // 별찍기 후 backspace와 S키 입력
+        private void InputKeyAtStarPrintScreen()    // 별찍기 후 backspace나 S키 입력
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 

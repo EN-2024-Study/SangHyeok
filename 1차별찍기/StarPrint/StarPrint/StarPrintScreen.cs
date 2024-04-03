@@ -39,8 +39,14 @@ namespace StarPrint
                         PrintError("0 이상의 숫자를 입력해 주세요.");
                         break;
                     default:
-                        PrintStar();
-                        isBreak = true;
+                        bool check = CheckError();
+                        if (check)
+                        {
+                            PrintStar();
+                            isBreak = true;
+                        }
+                        else
+                            PrintError("4 이상의 숫자를 입력해 주세요.");
                         break;
                 }
             }
@@ -71,6 +77,13 @@ namespace StarPrint
             for (int i = 0; i < numberString.Length; i++)    // 잘못 입력된 문자 삭제
                 Console.Write(" ");
             Console.SetCursorPosition(24, 0);
+        }
+
+        private bool CheckError()
+        {
+            if (SelectScreen.Select < 2 || lineNumber > 3)
+                return true;
+            return false;
         }
 
         private void PrintStar()    // 별 출력

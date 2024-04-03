@@ -7,6 +7,7 @@ namespace StarPrint
     {
         public static void Main(string[] args)
         {
+            Console.SetWindowSize(100, 30);
             ScreenControl screen = new ScreenControl();
             screen.ControlScreen();
         }

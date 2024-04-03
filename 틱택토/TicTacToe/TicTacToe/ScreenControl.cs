@@ -65,6 +65,7 @@ namespace TicTacToe
                     scoreBoardScreen.InputBackMenu();
                 }
             }
+            Console.Clear();
         }
 
         public static bool IsStartScreen

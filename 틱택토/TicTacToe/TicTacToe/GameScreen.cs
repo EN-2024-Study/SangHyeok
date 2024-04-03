@@ -48,6 +48,10 @@ namespace TicTacToe
 #########################################################
 #########################################################
 ");
+            Console.SetCursorPosition(77, 20);
+            Console.Write("이전 화면으로 돌아가실려면");
+            Console.SetCursorPosition(77, 22);
+            Console.Write("숫자 0 을 눌러주세요.");
         }
 
         protected int InputGameNumber()
@@ -59,6 +63,8 @@ namespace TicTacToe
             {
                 if (1 <= number && number <= 9)
                     return number;
+                else if (number == 0)
+                    return 0;
                 else
                 {
                     ExpressGameNumberError(number.ToString());

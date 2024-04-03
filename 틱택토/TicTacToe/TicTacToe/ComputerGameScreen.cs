@@ -27,6 +27,7 @@ namespace TicTacToe
             Console.Write("두번째로 시작하려면 2번을");
             Console.SetCursorPosition(77, 14);
             Console.Write("눌러주세요: ");
+
             if (isErrorNumber)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -58,7 +59,13 @@ namespace TicTacToe
             int number;
             if (int.TryParse(inputTemp, out number))
             {
-                if (1 <= number && number <= 2)
+                if (number == 0)
+                {
+                    ScreenControl.IsComputerGameScreen = false;
+                    ScreenControl.IsStartScreen = true;
+                    return;
+                }
+                else if (1 <= number && number <= 2)
                 {
                     startupOrder = number;
                     isErrorNumber = false;
@@ -73,6 +80,14 @@ namespace TicTacToe
         public void PlayGame()  // 컴퓨터와 사용자 대결 구현
         {
             int number = base.InputGameNumber();
+            if (number == 0)
+            {
+                ScreenControl.IsUserGameScreen = false;
+                ScreenControl.IsComputerGameScreen = false;
+                ScreenControl.IsStartScreen = true;
+                return;
+            }
+
             switch (startupOrder)
             {
                 case 1:

@@ -92,13 +92,13 @@ namespace TicTacToe
             if (menuNumber == 2)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("㉢  vs ScoreBoard");
+                Console.WriteLine("㉢  ScoreBoard");
                 Console.ResetColor();
             }
             else
             {
                 Console.ResetColor();
-                Console.WriteLine("㉢  vs ScoreBoard");
+                Console.WriteLine("㉢  ScoreBoard");
             }
 
             Console.SetCursorPosition(80, 19);

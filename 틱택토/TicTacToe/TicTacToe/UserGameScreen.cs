@@ -49,15 +49,23 @@ namespace TicTacToe
         public void PlayGame()  
         {
             int number = base.InputGameNumber();
-            //switch ()
-            //{
-            //    case 1:
+            if (number == 0)
+            {
+                ScreenControl.IsUserGameScreen = false;
+                ScreenControl.IsComputerGameScreen = false;
+                ScreenControl.IsStartScreen = true;
+                return;
+            }
 
-            //        break;
-            //    case 2:
+            switch (number)
+            {
+                case 1:
 
-            //        break;
-            //}
+                    break;
+                case 2:
+
+                    break;
+            }
             order++;
             order %= 2;
         }

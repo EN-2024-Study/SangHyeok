@@ -8,8 +8,8 @@ namespace TicTacToe
 {
     internal class ScreenControl
     {
-        bool isStartScreen, isComputerGameScreen, isUserGameScreen, isScoreBoard;
-        bool quit;
+        static bool isStartScreen, isComputerGameScreen, isUserGameScreen, isScoreBoard;
+        static bool quit;
         StartScreen startScreen;
         ComputerGameScreen computerGameScreen;
         UserGameScreen userGameScreen;
@@ -39,132 +39,56 @@ namespace TicTacToe
 
                     if (startScreen.Name == null)   // 처음 입력시 초기화
                     {
-                        InputUserName();
+                        startScreen.InputUserName();
                         Console.Clear();
                         startScreen.MenuNumber = 0;
                         startScreen.PrintScreen();
                     }
-                    SelectMenuButton();
+                    startScreen.SelectMenuButton();
                 }
                 else if (isComputerGameScreen)
                 {
                     computerGameScreen.PrintScreen();
-                    PlayingWithComputer();
+                    if (computerGameScreen.StartupOrder == 0 || computerGameScreen.IsErrorNumber)
+                        computerGameScreen.InputOrder();
+                    else
+                        computerGameScreen.PlayGame();
                 }
                 else if (isUserGameScreen)
                 {
                     userGameScreen.PrintScreen();
-                    PlayingWithUser();
                 }
                 else if (isScoreBoard)
                 {
                     scoreBoardScreen.PrintScreen();
-                    InputBackMenu();
+                    scoreBoardScreen.InputBackMenu();
                 }
             }
         }
 
-        private void InputUserName()
-        {
-            Console.SetCursorPosition(22, 17);  // 이름 입력 좌표
-            startScreen.Name = Console.ReadLine();
+        public static bool IsStartScreen
+        { 
+            set { isStartScreen = value; }
         }
 
-        private void SelectMenuButton()
+        public static bool IsComputerGameScreen
         {
-            ConsoleKeyInfo keyInfo = Console.ReadKey();
-
-            if (keyInfo.Key == ConsoleKey.DownArrow)
-                startScreen.MenuNumber += 1;
-            else if (keyInfo.Key == ConsoleKey.UpArrow)
-            {
-                startScreen.MenuNumber -= 1;
-                if (startScreen.MenuNumber < 0)
-                    startScreen.MenuNumber = 3;
-            }
-            else if (keyInfo.Key == ConsoleKey.Enter)
-            {
-                switch(startScreen.MenuNumber)
-                {
-                    case 0:
-                        isStartScreen = false;
-                        isComputerGameScreen = true;
-                        break;
-                    case 1:
-                        isStartScreen = false;
-                        isUserGameScreen = true;
-                        break;
-                    case 2:
-                        isStartScreen = false;
-                        isScoreBoard = true;
-                        break;
-                    case 3:
-                        quit = true;
-                        break;
-                }
-            }
-            startScreen.MenuNumber %= 4;
+            set { isComputerGameScreen = value; }
         }
 
-        private void PlayingWithComputer()
+        public static bool IsUserGameScreen
         {
-            InputWhenPlayGame();
+            set { isUserGameScreen = value; }
         }
 
-        private void PlayingWithUser()
+        public static bool IsScoreBoard
         {
-            InputWhenPlayGame();
-
+            set { isScoreBoard = value; }
         }
 
-        private void InputBackMenu()
+        public static bool Quit
         {
-            ConsoleKeyInfo keyInfo = Console.ReadKey();
-
-            if (keyInfo.Key == ConsoleKey.Backspace)
-            {
-                isScoreBoard = false;
-                isStartScreen = true;
-            }
-        }
-
-        private void InputWhenPlayGame()
-        {
-            ConsoleKeyInfo keyInfo = Console.ReadKey();
-
-            switch (keyInfo.Key)
-            {
-                case ConsoleKey.Q:
-
-                    break;
-                case ConsoleKey.W:
-
-                    break;
-                case ConsoleKey.E:
-
-                    break;
-                case ConsoleKey.A:
-
-                    break;
-                case ConsoleKey.S:
-
-                    break;
-                case ConsoleKey.D:
-
-                    break;
-                case ConsoleKey.Z:
-
-                    break;
-                case ConsoleKey.X:
-
-                    break;
-                case ConsoleKey.C:
-
-                    break;
-            }
+            set { quit = value; }
         }
     }
 }
-
-// StartScreen 클래스 생성자 지우고 Control method에서 new 지우고
-// ScreenControl 생성자에서 한번에 생성자 다 넣기

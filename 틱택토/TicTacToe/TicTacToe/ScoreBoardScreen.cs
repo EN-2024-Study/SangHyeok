@@ -14,6 +14,17 @@ namespace TicTacToe
         {
         }
 
+        public void InputBackMenu()
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+            if (keyInfo.Key == ConsoleKey.Backspace)
+            {
+                ScreenControl.IsScoreBoard = false;
+                ScreenControl.IsStartScreen = true;
+            }
+        }
+
         public static int UserScore
         {
             get { return userScore; }

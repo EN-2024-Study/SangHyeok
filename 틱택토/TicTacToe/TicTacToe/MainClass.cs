@@ -11,6 +11,7 @@ namespace TicTacToe
 
         public static void Main(string[] args)
         {
+            Console.SetWindowSize(120, 30);
             ScreenControl screen = new ScreenControl();
             screen.Control();
         }

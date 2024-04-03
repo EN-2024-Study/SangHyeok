@@ -10,9 +10,9 @@ namespace StarPrint
     {
         int select;
 
-        public StartScreen(int select)
+        public StartScreen()
         {
-            this.select = select;   // 시작하기와 종료하기를 int 자료형으로 정함
+            select = 0;  
         }
 
         public override void PrintScreen()
@@ -46,6 +46,14 @@ namespace StarPrint
 
                \|____________\|
 ");
+            Console.ResetColor();
+            Console.SetCursorPosition(40, 20);
+            Console.Write("숫자 키 또는 방향키를 눌러");
+            Console.SetCursorPosition(40, 22);
+            Console.Write("Enter 또는 spacebar 를 통해");
+            Console.SetCursorPosition(40, 24);
+            Console.Write("메뉴를 선택해 주세요.");
+
             Console.SetCursorPosition(17, 21);
             if (select == 0)
             {
@@ -70,6 +78,12 @@ namespace StarPrint
                 Console.ResetColor();
                 Console.WriteLine("②종료하기");
             }
+        }
+
+        public int Select
+        {
+            get { return select; }
+            set { select = value; }
         }
     }
 }

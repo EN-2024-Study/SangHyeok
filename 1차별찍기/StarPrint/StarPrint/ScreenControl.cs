@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,6 @@ namespace StarPrint
     {
         bool isStartScreen, isSelectScreen, isStarPrintScreen;  // 어떤 화면을 띄울 지 bool 자료형으로 정함
         bool exit;
-        int startScreenNumber, selectScreenNumber;  // int 자료형으로 어떤 메뉴를 선택할지 정함 
         StartScreen startScreen;
         SelectScreen selectScreen;
         StarPrintScreen starPrintScreen;
@@ -21,8 +21,9 @@ namespace StarPrint
             isStartScreen = true;
             isSelectScreen = false;
             isStarPrintScreen = false;
-            startScreenNumber = 0;
-            selectScreenNumber = 0;
+            startScreen = new StartScreen();
+            selectScreen = new SelectScreen();
+            starPrintScreen = new StarPrintScreen();
         }
 
         public void ControlScreen()   // 각각의 화면들을 제어하는 함수
@@ -32,19 +33,16 @@ namespace StarPrint
                 Console.Clear();
                 if (isStartScreen)  // 시작화면
                 {
-                    startScreen = new StartScreen(startScreenNumber % 2);
                     startScreen.PrintScreen();
                     InputAtStartScreen();
                 }
                 else if (isSelectScreen)    // 메뉴
                 {
-                    selectScreen = new SelectScreen(selectScreenNumber % 5);
                     selectScreen.PrintScreen();
                     InputAtSelectScreen();
                 }
                 else if (isStarPrintScreen) // 별찍기 화면
                 {
-                    starPrintScreen = new StarPrintScreen(selectScreenNumber);
                     starPrintScreen.PrintScreen();
                     InputKeyAtStarPrintScreen();
                 }
@@ -56,66 +54,93 @@ namespace StarPrint
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 
-            if (keyInfo.Key == ConsoleKey.Enter || keyInfo.Key == ConsoleKey.Spacebar)
+            switch(keyInfo.Key)
             {
-                switch (startScreenNumber % 2)
-                {
-                    case 0:
-                        isStartScreen = false;
-                        isSelectScreen = true;
-                        break;
-                    case 1:
-                        exit = true;
-                        break;
-                }
+                case ConsoleKey.Enter:
+                case ConsoleKey.Spacebar:
+                    switch (startScreen.Select)
+                    {
+                        case 0:
+                            isStartScreen = false;
+                            isSelectScreen = true;
+                            break;
+                        case 1:
+                            exit = true;
+                            break;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                case ConsoleKey.UpArrow:
+                    startScreen.Select++;
+                    break;
+                case ConsoleKey.D1:
+                    startScreen.Select = 0;
+                    break;
+                case ConsoleKey.D2:
+                    startScreen.Select = 1;
+                    break;
             }
-            else if (keyInfo.Key == ConsoleKey.DownArrow || keyInfo.Key == ConsoleKey.UpArrow)
-                startScreenNumber++;
+            startScreen.Select %= 2;
         }
 
         private void InputAtSelectScreen()  // 메뉴에서 입력
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 
-            if (keyInfo.Key == ConsoleKey.Enter || keyInfo.Key == ConsoleKey.Spacebar)
+            switch(keyInfo.Key)
             {
-                switch (selectScreenNumber % 5)
-                {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
+                case ConsoleKey.Enter:
+                case ConsoleKey.Spacebar:
+                    if (SelectScreen.Select < 4)
+                    {
                         isSelectScreen = false;
                         isStarPrintScreen = true;
-                        break;
-                    case 4:
+                    }
+                    else if (SelectScreen.Select == 4)
                         exit = true;
-                        break;
-                }
+                    break;
+                case ConsoleKey.DownArrow:
+                    SelectScreen.Select++;
+                    break;
+                case ConsoleKey.UpArrow:
+                    SelectScreen.Select--;
+                    if (SelectScreen.Select < 0)
+                        SelectScreen.Select = 4;
+                    break;
+                case ConsoleKey.D1:
+                    SelectScreen.Select = 0;
+                    break;
+                case ConsoleKey.D2:
+                    SelectScreen.Select = 1;
+                    break;
+                case ConsoleKey.D3:
+                    SelectScreen.Select = 2;
+                    break;
+                case ConsoleKey.D4:
+                    SelectScreen.Select = 3;
+                    break;
+                case ConsoleKey.D5:
+                    SelectScreen.Select = 4;
+                    break;
+
             }
-            else if (keyInfo.Key == ConsoleKey.DownArrow)
-                selectScreenNumber++;
-            else if (keyInfo.Key == ConsoleKey.UpArrow)
-            {
-                selectScreenNumber--;
-                if (selectScreenNumber < 0)
-                    selectScreenNumber += 5;
-            }
+            SelectScreen.Select %= 5;
         }
 
-        private void InputKeyAtStarPrintScreen()    // 별찍기에서 backspace와 S키 입력
+        private void InputKeyAtStarPrintScreen()    // 별찍기 후 backspace와 S키 입력
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 
-            if (keyInfo.Key == ConsoleKey.Backspace)
+            switch (keyInfo.Key)
             {
-                isStarPrintScreen = false;
-                isSelectScreen = true;
-            }
-            else if (keyInfo.Key == ConsoleKey.S)
-            {
-                isStarPrintScreen = false;
-                isStartScreen = true;
+                case ConsoleKey.Backspace:
+                    isStarPrintScreen = false;
+                    isSelectScreen = true;
+                    break;
+                case ConsoleKey.S:
+                    isStarPrintScreen = false;
+                    isStartScreen = true;
+                    break;
             }
         }
     }

@@ -8,12 +8,13 @@ namespace StarPrint
 {
     internal class StarPrintScreen : Screen
     {
-        int select;
         int lineNumber;
-        string inputString;
-        public StarPrintScreen(int select)
+        string numberString;
+
+        public StarPrintScreen()
         {
-            this.select = select;
+            lineNumber = 0;
+            numberString = null;
         }
 
         public override void PrintScreen()
@@ -48,8 +49,8 @@ namespace StarPrint
         private int InputLineNumber()
         {
             int number;
-            inputString = Console.ReadLine();
-            if (int.TryParse(inputString, out number))
+            numberString = Console.ReadLine();
+            if (int.TryParse(numberString, out number))
             {
                 if (number < 1) // 0이하의 숫자 입력시 예외 처리
                     return 0;
@@ -67,7 +68,7 @@ namespace StarPrint
             Console.WriteLine(s);   // 예외 처리 구문
             Console.ResetColor();
             Console.SetCursorPosition(24, 0);
-            for (int i = 0; i < inputString.Length; i++)    // 잘못 입력된 문자 삭제
+            for (int i = 0; i < numberString.Length; i++)    // 잘못 입력된 문자 삭제
                 Console.Write(" ");
             Console.SetCursorPosition(24, 0);
         }
@@ -75,10 +76,10 @@ namespace StarPrint
         private void PrintStar()    // 별 출력
         {
             Console.SetCursorPosition(0, 1);
-            Console.WriteLine("                              ");
+            Console.WriteLine("                              ");    // error 문자 삭제
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
-            switch (select)
+            switch (SelectScreen.Select)
             {
                 case 0:
                     FirstPrintStar();

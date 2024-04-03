@@ -36,12 +36,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Screen.cs" />
     <Compile Include="ScreenControl.cs" />
     <Compile Include="SelectScreen.cs" />
     <Compile Include="StarPrintScreen.cs" />
     <Compile Include="StartScreen.cs" />
     <Compile Include="MainClass.cs" />
-    <Compile Include="TestStartPrintScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

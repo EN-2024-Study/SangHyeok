@@ -72,7 +72,7 @@ namespace TicTacToe
 
         public void PlayGame()  // 컴퓨터와 사용자 대결 구현
         {
-            int number = InputGameNumber();
+            int number = base.InputGameNumber();
             switch (startupOrder)
             {
                 case 1:
@@ -92,36 +92,6 @@ namespace TicTacToe
         public bool IsErrorNumber
         {
             get { return isErrorNumber; }
-        }
-
-        private int InputGameNumber()
-        {
-            Console.SetCursorPosition(100, 12);
-            string inputTemp = Console.ReadLine();
-            int number;
-            if (int.TryParse(inputTemp, out number))
-            {
-                if (1 <= number && number <= 9)
-                    return number;
-                else
-                {
-                    ExpressGameNumberError(number.ToString());
-                    return InputGameNumber();
-                }
-            }
-            ExpressGameNumberError(inputTemp);
-            return InputGameNumber();
-        }
-
-        private void ExpressGameNumberError(string stringNumber)
-        {
-            Console.SetCursorPosition(100, 12);
-            for (int i = 0; i < stringNumber.Length; i++)
-                Console.Write(" ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.SetCursorPosition(77, 14);
-            Console.Write("숫자 오류로 다시 입력해 주세요.");
-            Console.ResetColor();
         }
     }
 }

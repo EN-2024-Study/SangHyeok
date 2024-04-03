@@ -93,6 +93,7 @@ namespace StarPrint
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("⑤  종료");
+                Console.ForegroundColor = ConsoleColor.Red;
             }
             else
             {

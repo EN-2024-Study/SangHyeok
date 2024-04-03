@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace TicTacToe
 {
-    internal class UserGameScreen : Screen
+    internal class UserGameScreen : GameScreen
     {
-        private static string user, oneUser, twoUser, computer;
-        private static int userScore, OneUserScore, twoUserScore, computerScore;
-      
         public override void PrintScreen()
         {
+            base.PrintScreen();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(79, 3);
+            Console.Write("★USER1★  ★USER2★");
+            Console.SetCursorPosition(82, 5);
+            Console.Write(ScoreBoardScreen.OneUserScore + "            " + ScoreBoardScreen.TwoUserScore);
+            Console.ResetColor();
         }
+
     }
 }

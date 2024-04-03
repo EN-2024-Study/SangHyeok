@@ -57,6 +57,7 @@ namespace TicTacToe
                 else if (isUserGameScreen)
                 {
                     userGameScreen.PrintScreen();
+                    //string str = Console.ReadLine();
                 }
                 else if (isScoreBoard)
                 {

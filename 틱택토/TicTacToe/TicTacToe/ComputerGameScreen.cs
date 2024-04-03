@@ -2,7 +2,7 @@
 
 namespace TicTacToe
 {
-    internal class ComputerGameScreen : Screen
+    internal class ComputerGameScreen : GameScreen
     {
         int startupOrder;
         bool isErrorNumber;
@@ -14,48 +14,13 @@ namespace TicTacToe
 
         public override void PrintScreen()
         {
+            base.PrintScreen();
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.SetCursorPosition(84, 1);
-            Console.Write("<ScoreBoard>");
             Console.SetCursorPosition(79, 3);
             Console.Write("★USER★  ★COMPUTER★");
             Console.SetCursorPosition(82, 5);
             Console.Write(ScoreBoardScreen.UserScore + "            " + ScoreBoardScreen.ComputerScore);
-            Console.SetCursorPosition(79, 7);
-            Console.WriteLine("★★★★★★★★★★★");
-            Console.SetCursorPosition(5, 0);
             Console.ResetColor();
-            Console.Write(@"
-#########################################################
-#########################################################
-##       1        ##      2222       ##      333       ##
-##      11        ##     2    2      ##    3    3      ##
-##     1 1        ##    2     2      ##   3    33      ##
-##    1  1        ##         2       ##      333       ##
-##       1        ##        2        ##   3    33      ##
-##       1        ##       2         ##    3    3      ##
-##    1111111     ##    222222222    ##     33333      ##
-#########################################################
-#########################################################
-##      44        ##     5           ##        6       ##
-##     4 4        ##     555555      ##      6         ##
-##    4  4        ##     5           ##    66          ##
-##  4444444444    ##     5555        ##   66666666     ##
-##       4        ##         55      ##   66     66    ##
-##       4        ##         55      ##    66    66    ##
-##       4        ##     5555        ##     66666      ##
-#########################################################
-#########################################################
-##   7777777      ##      888        ##     9999       ##
-##   7     7      ##    88   88      ##   99   99      ##
-##   7     7      ##    88   88      ##   99   99      ##
-##         7      ##      888        ##     99999      ##
-##         7      ##    88   88      ##         9      ##
-##         7      ##    88   88      ##         9      ##
-##         7      ##      888        ##         9      ##
-#########################################################
-#########################################################
-");
             Console.SetCursorPosition(77, 10);
             Console.Write("첫번째로 시작하려면 1번을,");
             Console.SetCursorPosition(77, 12);
@@ -159,5 +124,4 @@ namespace TicTacToe
             Console.ResetColor();
         }
     }
-
 }

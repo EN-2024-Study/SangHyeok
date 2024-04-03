@@ -158,6 +158,8 @@ namespace TicTacToe
                     break;
                 case ConsoleKey.D0:
                     name = null;
+                    menuNumber = -1;
+                    
                     break;
                 case ConsoleKey.R:
                     menuNumber = 0;

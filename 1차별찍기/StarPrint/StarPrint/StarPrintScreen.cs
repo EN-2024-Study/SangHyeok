@@ -74,7 +74,7 @@ namespace StarPrint
             Console.WriteLine(s);   // 예외 처리 구문
             Console.ResetColor();
             Console.SetCursorPosition(24, 0);
-            for (int i = 0; i < numberString.Length; i++)    // 잘못 입력된 문자 삭제
+            for (int i = 0; i < numberString.Length; i++)    // 예외 입력 문자 삭제
                 Console.Write(" ");
             Console.SetCursorPosition(24, 0);
         }
@@ -140,61 +140,112 @@ namespace StarPrint
                 Console.WriteLine();
             }
         }
+
         private void ThirdPrintStar()
         {
-            lineNumber /= 2;
-            lineNumber++;
-            bool first = true;
+            switch (lineNumber % 2)
+            {
+                case 0:
+                    lineNumber /= 2;
 
-            for (int i = 0; i < lineNumber; i++)
-            {
-                for (int j = 0; j < i + 1; j++)
-                    Console.Write(" ");
-                for (int j = 0; j < lineNumber * 2 - (i * 2) - 1; j++)
-                    Console.Write("*");
-                Console.WriteLine();
-            }
-            for (int i = 0; i < lineNumber; i++)
-            {
-                if (first)
-                {
-                    first = false;
-                    continue;
-                }
-                for (int j = 0; j < lineNumber - i; j++)
-                    Console.Write(" ");
-                for (int j = 0; j < i * 2 + 1; j++)
-                    Console.Write("*");
-                Console.WriteLine();
+                    for (int i = 0; i < lineNumber; i++)
+                    {
+                        for (int j = 0; j < i; j++)
+                            Console.Write(" ");
+                        for (int j = 0; j < lineNumber * 2 - (i * 2) - 1; j++)
+                            Console.Write("*");
+                        Console.WriteLine();
+                    }
+                    for (int i = 0; i < lineNumber; i++)
+                    {
+                        for (int j = 0; j < lineNumber - i - 1; j++)
+                            Console.Write(" ");
+                        for (int j = 0; j < i * 2 + 1; j++)
+                            Console.Write("*");
+                        Console.WriteLine();
+                    }
+                    break;
+                case 1:
+                    lineNumber /= 2;
+                    lineNumber++;
+                    bool first = true;
+
+                    for (int i = 0; i < lineNumber; i++)
+                    {
+                        for (int j = 0; j < i + 1; j++)
+                            Console.Write(" ");
+                        for (int j = 0; j < lineNumber * 2 - (i * 2) - 1; j++)
+                            Console.Write("*");
+                        Console.WriteLine();
+                    }
+                    for (int i = 0; i < lineNumber; i++)
+                    {
+                        if (first)
+                        {
+                            first = false;
+                            continue;
+                        }
+                        for (int j = 0; j < lineNumber - i; j++)
+                            Console.Write(" ");
+                        for (int j = 0; j < i * 2 + 1; j++)
+                            Console.Write("*");
+                        Console.WriteLine();
+                    }
+                    break;
             }
         }
+
         private void FourPrintStar()
         {
-            lineNumber /= 2;
-            lineNumber++;
-            bool first = true;
-
-            for (int i = 0; i < lineNumber; i++)
+            switch (lineNumber % 2)
             {
-                for (int j = 0; j < lineNumber - i; j++)
-                    Console.Write(" ");
-                for (int j = 0; j < i * 2 + 1; j++)
-                    Console.Write("*");
-                Console.WriteLine();
-            }
+                case 0:
+                    lineNumber /= 2;
 
-            for (int i = 0; i < lineNumber; i++)
-            {
-                if (first)
-                {
-                    first = false;
-                    continue;
-                }
-                for (int j = 0; j < i + 1; j++)
-                    Console.Write(" ");
-                for (int j = 0; j < lineNumber * 2 - (i * 2) - 1; j++)
-                    Console.Write("*");
-                Console.WriteLine();
+                    for (int i = 0; i < lineNumber; i++)
+                    {
+                        for (int j = 0; j < lineNumber - i - 1; j++)
+                            Console.Write(" ");
+                        for (int j = 0; j < i * 2 + 1; j++)
+                            Console.Write("*");
+                        Console.WriteLine();
+                    }
+                    for (int i = 0; i < lineNumber; i++)
+                    {
+                        for (int j = 0; j < i; j++)
+                            Console.Write(" ");
+                        for (int j = 0; j < lineNumber * 2 - (i * 2) - 1; j++)
+                            Console.Write("*");
+                        Console.WriteLine();
+                    }
+                    break;
+                case 1:
+                    lineNumber /= 2;
+                    lineNumber++;
+                    bool first = true;
+
+                    for (int i = 0; i < lineNumber; i++)
+                    {
+                        for (int j = 0; j < lineNumber - i; j++)
+                            Console.Write(" ");
+                        for (int j = 0; j < i * 2 + 1; j++)
+                            Console.Write("*");
+                        Console.WriteLine();
+                    }
+                    for (int i = 0; i < lineNumber; i++)
+                    {
+                        if (first)
+                        {
+                            first = false;
+                            continue;
+                        }
+                        for (int j = 0; j < i + 1; j++)
+                            Console.Write(" ");
+                        for (int j = 0; j < lineNumber * 2 - (i * 2) - 1; j++)
+                            Console.Write("*");
+                        Console.WriteLine();
+                    }
+                    break;
             }
         }
     }

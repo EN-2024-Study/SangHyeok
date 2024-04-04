@@ -4,10 +4,12 @@ namespace TicTacToe
 {
     internal class ComputerGameScreen : GameScreen
     {
+        GameScreen gameScreen;
         int startupOrder;
         bool isErrorNumber;
         public ComputerGameScreen()
         {
+            gameScreen = new GameScreen();
             startupOrder = 0;
             isErrorNumber = false;
         }
@@ -82,7 +84,6 @@ namespace TicTacToe
             int number = base.InputGameNumber();
             if (number == 0)
             {
-                ScreenControl.IsUserGameScreen = false;
                 ScreenControl.IsComputerGameScreen = false;
                 ScreenControl.IsStartScreen = true;
                 return;
@@ -91,7 +92,7 @@ namespace TicTacToe
             switch (startupOrder)
             {
                 case 1:
-
+                    base.ExpressXOrO(0, number);
                     break;
                 case 2:
 

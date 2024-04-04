@@ -8,10 +8,12 @@ namespace TicTacToe
 {
     internal class UserGameScreen : GameScreen
     {
+        GameScreen gameScreen;
         int order;
 
         public UserGameScreen()
         {
+            gameScreen = new GameScreen();
             order = 0;
         }
 
@@ -57,18 +59,10 @@ namespace TicTacToe
                 return;
             }
 
-            switch (number)
-            {
-                case 1:
+            base.ExpressXOrO(order, number);
 
-                    break;
-                case 2:
-
-                    break;
-            }
             order++;
             order %= 2;
         }
-
     }
 }

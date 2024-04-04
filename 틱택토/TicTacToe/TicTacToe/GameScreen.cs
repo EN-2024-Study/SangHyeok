@@ -194,31 +194,6 @@ namespace TicTacToe
             return InputGameNumber();
         }
 
-        protected void ExpressXOrO(int order, int number)
-        {
-            switch (order)
-            {
-                case 0:
-                    numberScreen[number - 1, 0] = "X              X";
-                    numberScreen[number - 1, 1] = " XX          XX ";
-                    numberScreen[number - 1, 2] = "   XX      XX   ";
-                    numberScreen[number - 1, 3] = "      XXXX      ";
-                    numberScreen[number - 1, 4] = "   XX      XX   ";
-                    numberScreen[number - 1, 5] = " XX          XX ";
-                    numberScreen[number - 1, 6] = "X              X";
-                    break;
-                case 1:
-                    numberScreen[number - 1, 0] = "       OO       ";
-                    numberScreen[number - 1, 1] = "    OO    OO    ";
-                    numberScreen[number - 1, 2] = "  OO        OO  ";
-                    numberScreen[number - 1, 3] = "OO            OO";
-                    numberScreen[number - 1, 4] = "  OO        OO  ";
-                    numberScreen[number - 1, 5] = "    OO    OO    ";
-                    numberScreen[number - 1, 6] = "       OO       ";
-                    break;
-            }
-        }
-
         private void ExpressGameNumberError(string stringNumber)
         {
             Console.SetCursorPosition(100, 12);

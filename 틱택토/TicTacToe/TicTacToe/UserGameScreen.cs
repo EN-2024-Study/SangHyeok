@@ -8,11 +8,15 @@ namespace TicTacToe
 {
     internal class UserGameScreen : GameScreen
     {
+        GameScreen gameScreen;
         int order;
+        int[] gameCoordinate;
 
         public UserGameScreen()
         {
+            gameScreen = new GameScreen();
             order = 0;
+            gameCoordinate = new int[9];
         }
 
         public override void PrintScreen()
@@ -22,7 +26,7 @@ namespace TicTacToe
             Console.SetCursorPosition(79, 3);
             Console.Write("★USER1★  ★USER2★");
             Console.SetCursorPosition(82, 5);
-            Console.Write(ScoreBoardScreen.OneUserScore + "            " + ScoreBoardScreen.TwoUserScore);
+            //Console.Write(ScoreBoardScreen.OneUserScore + "            " + ScoreBoardScreen.TwoUserScore);
             Console.ResetColor();
             Console.SetCursorPosition(77, 10);
             Console.Write("                             ");
@@ -46,29 +50,55 @@ namespace TicTacToe
             Console.ResetColor();
         }
 
-        public void PlayGame()  
+        public bool PlayGame()
         {
-            int number = base.InputGameNumber();
-            if (number == 0)
+            int num = base.InputGameNumber();
+            if (num == 0)
+                return false;
+            else if (gameCoordinate[num - 1] == 0)
             {
-                ScreenControl.IsUserGameScreen = false;
-                ScreenControl.IsComputerGameScreen = false;
-                ScreenControl.IsStartScreen = true;
-                return;
+                base.ExpressXOrO(order, num);
+                switch (order)
+                {
+                    case 0:
+                        gameCoordinate[num - 1] = 1;
+                        break;
+                    case 1:
+                        gameCoordinate[num - 1] = 2;
+                        break;
+                }
             }
 
-            switch (number)
-            {
-                case 1:
-
-                    break;
-                case 2:
-
-                    break;
-            }
-            order++;
-            order %= 2;
+            order = (order + 1) % 2;
+            return true;
         }
 
+        //public bool CheckEnd()
+        //{
+        //    for (int i = 0; i < 3; i++) // 세로와 대각선 확인
+        //    {
+        //        if (gameCoordinate[i] == gameCoordinate[2 + i] && gameCoordinate[i] == gameCoordinate[8 - i])
+        //        {
+        //            //if (gameCoordinate[i] == 1)
+        //            //    ScoreBoardScreen.OneUserScore += 1;
+        //            //else if (gameCoordinate[i] == 2)
+        //            //    ScoreBoardScreen.TwoUserScore += 1;
+        //            //return true;
+        //        }
+        //    }
+
+        //    for (int i = 0; i < 9; i += 3)  // 가로 확인
+        //    {
+        //        if (gameCoordinate[i] == gameCoordinate[i + 1] && gameCoordinate[i + 1] == gameCoordinate[i + 2])
+        //        {
+        //            //if (gameCoordinate[i] == 1)
+        //            //    ScoreBoardScreen.OneUserScore += 1;
+        //            //else if (gameCoordinate[i] == 2)
+        //            //    ScoreBoardScreen.TwoUserScore += 1;
+        //            //return true;
+        //        }
+        //    }
+        //    return false;
+        //}
     }
 }

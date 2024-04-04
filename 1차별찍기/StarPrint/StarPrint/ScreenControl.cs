@@ -58,7 +58,7 @@ namespace StarPrint
             {
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
-                    switch (startScreen.Select)
+                    switch (startScreen.Select) // 함수 
                     {
                         case 0:     // 시작하기 메뉴 입력
                             isStartScreen = false;

@@ -4,10 +4,12 @@ namespace TicTacToe
 {
     internal class ComputerGameScreen : GameScreen
     {
+        GameScreen gameScreen;
         int startupOrder;
         bool isErrorNumber;
         public ComputerGameScreen()
         {
+            gameScreen = new GameScreen();
             startupOrder = 0;
             isErrorNumber = false;
         }
@@ -19,7 +21,7 @@ namespace TicTacToe
             Console.SetCursorPosition(79, 3);
             Console.Write("★USER★  ★COMPUTER★");
             Console.SetCursorPosition(82, 5);
-            Console.Write(ScoreBoardScreen.UserScore + "            " + ScoreBoardScreen.ComputerScore);
+            //Console.Write(ScoreBoardScreen.UserScore + "            " + ScoreBoardScreen.ComputerScore);
             Console.ResetColor();
             Console.SetCursorPosition(77, 10);
             Console.Write("첫번째로 시작하려면 1번을,");
@@ -52,7 +54,7 @@ namespace TicTacToe
             }
         }
 
-        public void InputOrder()
+        public bool InputOrder()
         {
             Console.SetCursorPosition(89, 14);
             string inputTemp = Console.ReadLine();
@@ -60,11 +62,7 @@ namespace TicTacToe
             if (int.TryParse(inputTemp, out number))
             {
                 if (number == 0)
-                {
-                    ScreenControl.IsComputerGameScreen = false;
-                    ScreenControl.IsStartScreen = true;
-                    return;
-                }
+                    return false;
                 else if (1 <= number && number <= 2)
                 {
                     startupOrder = number;
@@ -75,28 +73,30 @@ namespace TicTacToe
             }
             else
                 isErrorNumber = true;
+            return true;
         }
 
-        public void PlayGame()  // 컴퓨터와 사용자 대결 구현
+        //public override bool PlayGame(int order)
+        //{
+        //    return base.PlayGame(startupOrder);
+        //}
+
+        public bool PlayGame()  // 컴퓨터와 사용자 대결 구현
         {
             int number = base.InputGameNumber();
             if (number == 0)
-            {
-                ScreenControl.IsUserGameScreen = false;
-                ScreenControl.IsComputerGameScreen = false;
-                ScreenControl.IsStartScreen = true;
-                return;
-            }
+                return false;
 
             switch (startupOrder)
             {
                 case 1:
-
+                    base.ExpressXOrO(0, number);
                     break;
                 case 2:
 
                     break;
             }
+            return true;
         }
 
         public int StartupOrder

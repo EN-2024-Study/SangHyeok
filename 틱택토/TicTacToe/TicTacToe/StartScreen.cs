@@ -8,18 +8,21 @@ namespace TicTacToe
 {
     internal class StartScreen : Screen
     {
-        int menuNumber;
-        string name;
+        private int menuNumber;
+        private string[] menuNames;
+        private string name;
 
         public StartScreen()
         {
             menuNumber = -1;
+            menuNames = new string[] { "㉠  vs Computer", "㉡  vs User", "㉢  ScoreBoard", "㉣  Quit" };
             name = null;
         }
 
         public override void PrintScreen()
         {
-            string startString = @"
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(@"
      ____________________________________________________________________
      ___  __/___  _/_  ____/__  __/__    |_  ____/__  __/_  __ \__  ____/
      __  /   __  / _  /    __  /  __  /| |  /    __  /  _  / / /_  __/   
@@ -36,12 +39,7 @@ namespace TicTacToe
 
 
                  ______________________________________________
-";
-            byte[] bytes = Encoding.Default.GetBytes(startString);
-            startString = Encoding.UTF8.GetString(bytes);
-
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(startString);
+");
             Console.ResetColor();
 
             Console.SetCursorPosition(20, 15);
@@ -59,59 +57,19 @@ namespace TicTacToe
                 Console.WriteLine("Enter 또는 spacebar를 입력해 주세요.");
                 Console.SetCursorPosition(20, 22);
                 Console.WriteLine("이름을 다시 입력하시려면 숫자 0을 눌러주세요.");
-                
             }
 
-            Console.SetCursorPosition(80, 13);
-            if (menuNumber == 0)
+            for(int i = 0; i < 4; i++)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("㉠  vs Computer");
-                Console.ResetColor();
-            }
-            else
-            {
-                Console.ResetColor();
-                Console.WriteLine("㉠  vs Computer");
-            }
-
-            Console.SetCursorPosition(80, 15);
-            if (menuNumber == 1)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("㉡  vs User");
-                Console.ResetColor();
-            }
-            else
-            {
-                Console.ResetColor();
-                Console.WriteLine("㉡  vs User");
-            }
-
-            Console.SetCursorPosition(80, 17);
-            if (menuNumber == 2)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("㉢  ScoreBoard");
-                Console.ResetColor();
-            }
-            else
-            {
-                Console.ResetColor();
-                Console.WriteLine("㉢  ScoreBoard");
-            }
-
-            Console.SetCursorPosition(80, 19);
-            if (menuNumber == 3)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("㉣  Quit");
-                Console.ResetColor();
-            }
-            else
-            {
-                Console.ResetColor();
-                Console.WriteLine("㉣  Quit");
+                Console.SetCursorPosition(80, i * 2 + 13);
+                if (menuNumber == i)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(menuNames[i]);
+                    Console.ResetColor();
+                }
+                else
+                    Console.Write(menuNames[i]);
             }
         }
 
@@ -121,7 +79,7 @@ namespace TicTacToe
             name = Console.ReadLine();
         }
 
-        public void SelectMenuButton()
+        public int SelectMenuButton()
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 
@@ -129,25 +87,7 @@ namespace TicTacToe
             {
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
-                    switch (menuNumber)
-                    {
-                        case 0:
-                            ScreenControl.IsStartScreen = false;
-                            ScreenControl.IsComputerGameScreen = true;
-                            break;
-                        case 1:
-                            ScreenControl.IsStartScreen = false;
-                            ScreenControl.IsUserGameScreen = true;
-                            break;
-                        case 2:
-                            ScreenControl.IsStartScreen = false;
-                            ScreenControl.IsScoreBoard = true;
-                            break;
-                        case 3:
-                            ScreenControl.Quit = true;
-                            break;
-                    }
-                    break;
+                    return menuNumber;
                 case ConsoleKey.DownArrow:
                     menuNumber += 1;
                     break;
@@ -159,7 +99,6 @@ namespace TicTacToe
                 case ConsoleKey.D0:
                     name = null;
                     menuNumber = -1;
-                    
                     break;
                 case ConsoleKey.R:
                     menuNumber = 0;
@@ -173,9 +112,9 @@ namespace TicTacToe
                 case ConsoleKey.F:
                     menuNumber = 3;
                     break;
-
             }
             menuNumber %= 4;
+            return 5;
         }
 
         public int MenuNumber

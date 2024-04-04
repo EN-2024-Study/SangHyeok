@@ -8,12 +8,12 @@ namespace TicTacToe
 {
     internal class ScreenControl
     {
-        static bool isStartScreen, isComputerGameScreen, isUserGameScreen, isScoreBoard;
-        static bool quit;
-        StartScreen startScreen;
-        ComputerGameScreen computerGameScreen;
-        UserGameScreen userGameScreen;
-        ScoreBoardScreen scoreBoardScreen;
+        private bool isStartScreen, isComputerGameScreen, isUserGameScreen, isScoreBoard;
+        private bool quit;
+        private StartScreen startScreen;
+        private ComputerGameScreen computerGameScreen;
+        private UserGameScreen userGameScreen;
+        private ScoreBoardScreen scoreBoardScreen;
 
         public ScreenControl()
         {
@@ -36,7 +36,6 @@ namespace TicTacToe
                 if (isStartScreen)
                 {
                     startScreen.PrintScreen();
-
                     if (startScreen.Name == null)   // 처음 입력시 초기화
                     {
                         startScreen.InputUserName();
@@ -44,53 +43,62 @@ namespace TicTacToe
                         startScreen.MenuNumber = 0;
                         startScreen.PrintScreen();
                     }
-                    startScreen.SelectMenuButton();
+
+                    int menuNumber = startScreen.SelectMenuButton();
+                    SwitchScreen(menuNumber);
                 }
                 else if (isComputerGameScreen)
                 {
                     computerGameScreen.PrintScreen();
                     if (computerGameScreen.StartupOrder == 0 || computerGameScreen.IsErrorNumber)
-                        computerGameScreen.InputOrder();
+                        isComputerGameScreen = computerGameScreen.InputOrder();
                     else
-                        computerGameScreen.PlayGame();
+                        isComputerGameScreen = computerGameScreen.PlayGame();
+
+                    if (!isComputerGameScreen)
+                        isStartScreen = true;
                 }
                 else if (isUserGameScreen)
                 {
                     userGameScreen.PrintScreen();
-                    userGameScreen.PlayGame();
+                    isUserGameScreen = userGameScreen.PlayGame();
+                    //userGameScreen.CheckEnd();
+
+                    if (!isUserGameScreen)
+                        isStartScreen = true;
                 }
                 else if (isScoreBoard)
                 {
                     scoreBoardScreen.PrintScreen();
-                    scoreBoardScreen.InputBackMenu();
+                    isScoreBoard = scoreBoardScreen.InputBackMenu();
+
+                    if (!isScoreBoard)
+                        isStartScreen = true;
                 }
             }
             Console.Clear();
         }
 
-        public static bool IsStartScreen
-        { 
-            set { isStartScreen = value; }
-        }
-
-        public static bool IsComputerGameScreen
+        private void SwitchScreen(int menuNumber)
         {
-            set { isComputerGameScreen = value; }
-        }
-
-        public static bool IsUserGameScreen
-        {
-            set { isUserGameScreen = value; }
-        }
-
-        public static bool IsScoreBoard
-        {
-            set { isScoreBoard = value; }
-        }
-
-        public static bool Quit
-        {
-            set { quit = value; }
+            switch (menuNumber)
+            {
+                case 0:
+                    isStartScreen = false;
+                    isComputerGameScreen = true;
+                    break;
+                case 1:
+                    isStartScreen = false;
+                    isUserGameScreen = true;
+                    break;
+                case 2:
+                    isStartScreen = false;
+                    isScoreBoard = true;
+                    break;
+                case 3:
+                    quit = true;
+                    break;
+            }
         }
     }
 }

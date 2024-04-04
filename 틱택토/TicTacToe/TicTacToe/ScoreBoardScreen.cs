@@ -8,8 +8,6 @@ namespace TicTacToe
 {
     internal class ScoreBoardScreen : Screen
     {
-        private static int userScore, oneUserScore, twoUserScore, computerScore;
-
         public override void PrintScreen()
         {
             Console.WriteLine(@"
@@ -19,45 +17,27 @@ namespace TicTacToe
                          ____/ // /__ / /_/ /  /   /  __/  /_/ // /_/ / /_/ /_  /   / /_/ /  
                          /____/ \___/ \____//_/    \___//_____/ \____/\__,_/ /_/    \__,_/   
 ");
+            Console.SetCursorPosition(57, 15);
+            Console.Write("OneUserScore = ");
+            //Console.Write(oneUserScore);
+            Console.SetCursorPosition(57, 16);
+            Console.Write("TwoUserScore = ");
+            //Console.Write(twoUserScore);
+
+
             Console.SetCursorPosition(77, 20);
             Console.Write("이전 화면으로 돌아가실려면");
             Console.SetCursorPosition(77, 22);
             Console.Write("숫자 0 을 눌러주세요.");
         }
 
-        public void InputBackMenu()
+        public bool InputBackMenu()
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 
             if (keyInfo.Key == ConsoleKey.D0)
-            {
-                ScreenControl.IsScoreBoard = false;
-                ScreenControl.IsStartScreen = true;
-            }
-        }
-
-        public static int UserScore
-        {
-            get { return userScore; }
-            set { userScore = value; }
-        }
-
-        public static int OneUserScore
-        {
-            get { return oneUserScore; }
-            set { oneUserScore = value; }
-        }
-
-        public static int TwoUserScore
-        {
-            get { return twoUserScore; }
-            set { twoUserScore = value; }
-        }
-
-        public static int ComputerScore
-        {
-            get { return computerScore; }
-            set { computerScore = value; }
+                return false;
+            return true;
         }
     }
 }

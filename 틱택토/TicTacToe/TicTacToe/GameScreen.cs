@@ -8,51 +8,170 @@ namespace TicTacToe
 {
     internal class GameScreen : Screen
     {
+        string[,] numberScreen;
+
+        public GameScreen()
+        {
+            numberScreen = new string[9, 7]
+            {
+                {
+                    "       1        ",
+                    "     111        ",
+                    "    1  1        ",
+                    "       1        ",
+                    "       1        ",
+                    "       1        ",
+                    "    1111111     "
+                },
+                {
+                    "      22        ",
+                    "    22  22      ",
+                    "   2      2     ",
+                    "         22     ",
+                    "        2       ",
+                    "      2         ",
+                    "   222222222    "
+                },
+                {
+                    "      333       ",
+                    "    33   3      ",
+                    "   3     33     ",
+                    "      33333     ",
+                    "   3     33     ",
+                    "    33   3      ",
+                    "      333       "
+                },
+                {
+                    "       44       ",
+                    "      4 4       ",
+                    "     4  4       ",
+                    "    44444444    ",
+                    "        4       ",
+                    "        4       ",
+                    "        4       "
+                },
+                {
+                    "    5           ",
+                    "    555555      ",
+                    "    5           ",
+                    "    55          ",
+                    "      555       ",
+                    "       555      ",
+                    "    5555        "
+                },
+                {
+                    "        6       ",
+                    "       6        ",
+                    "     66666      ",
+                    "    6     6     ",
+                    "   6       6    ",
+                    "     6    6     ",
+                    "      666       "
+                },
+                {
+                    "    7777777     ",
+                    "    7     7     ",
+                    "    7     7     ",
+                    "          7     ",
+                    "          7     ",
+                    "          7     ",
+                    "          7     "
+                },
+                {
+                    "      888      ",
+                    "    88   88    ",
+                    "    88   88    ",
+                    "      888      ",
+                    "    88   88    ",
+                    "    88   88    ",
+                    "      888      "
+                },
+                {
+                    "      999       ",
+                    "    99   99     ",
+                    "    99   99     ",
+                    "      99999     ",
+                    "         99     ",
+                    "          9     ",
+                    "          9     "
+                }
+            };
+        }
+
         public override void PrintScreen()
         {
+            Console.Write(@"
+            #########################################################
+            #########################################################
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            #########################################################
+            #########################################################
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            #########################################################
+            #########################################################
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            ##                ##                 ##                ##
+            #########################################################
+            #########################################################
+            ");
+
+            for(int i = 0; i < 9; i++)
+            {
+                int x = SetX(i), y = SetY(i);
+
+                if (numberScreen[i, 0].Equals("X              X"))
+                    Console.ForegroundColor = ConsoleColor.Green;
+                else if (numberScreen[i, 0].Equals("       OO       "))
+                    Console.ForegroundColor = ConsoleColor.Blue;
+
+                for (int j = 0; j < 7; j++)
+                {
+                    Console.SetCursorPosition(x, y + j + 1);
+                    Console.Write(numberScreen[i, j]);
+                }
+                Console.ResetColor();
+            }
+
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(84, 1);
             Console.Write("<ScoreBoard>");
             Console.SetCursorPosition(79, 7);
             Console.WriteLine("★★★★★★★★★★★");
-            Console.SetCursorPosition(5, 0);
-            Console.ResetColor();
-            Console.Write(@"
-#########################################################
-#########################################################
-##       1        ##      2222       ##      333       ##
-##      11        ##     2    2      ##    3    3      ##
-##     1 1        ##    2     2      ##   3    33      ##
-##    1  1        ##         2       ##      333       ##
-##       1        ##        2        ##   3    33      ##
-##       1        ##       2         ##    3    3      ##
-##    1111111     ##    222222222    ##     33333      ##
-#########################################################
-#########################################################
-##      44        ##     5           ##        6       ##
-##     4 4        ##     555555      ##      6         ##
-##    4  4        ##     5           ##    66          ##
-##  4444444444    ##     5555        ##   66666666     ##
-##       4        ##         55      ##   66     66    ##
-##       4        ##         55      ##    66    66    ##
-##       4        ##     5555        ##     66666      ##
-#########################################################
-#########################################################
-##   7777777      ##      888        ##     9999       ##
-##   7     7      ##    88   88      ##   99   99      ##
-##   7     7      ##    88   88      ##   99   99      ##
-##         7      ##      888        ##     99999      ##
-##         7      ##    88   88      ##         9      ##
-##         7      ##    88   88      ##         9      ##
-##         7      ##      888        ##         9      ##
-#########################################################
-#########################################################
-");
             Console.SetCursorPosition(77, 20);
             Console.Write("이전 화면으로 돌아가실려면");
             Console.SetCursorPosition(77, 22);
             Console.Write("숫자 0 을 눌러주세요.");
+            Console.ResetColor();
         }
+
+        //public virtual bool PlayGame(int order)
+        //{
+        //    int num = InputGameNumber();
+        //    if (num == 0)
+        //        return false;
+
+        //    ExpressXOrO(order, num);
+        //    return true;
+        //}
+
+        //public virtual bool CheckEnd() { }
 
         protected int InputGameNumber()
         {
@@ -75,6 +194,31 @@ namespace TicTacToe
             return InputGameNumber();
         }
 
+        protected void ExpressXOrO(int order, int number)
+        {
+            switch (order)
+            {
+                case 0:
+                    numberScreen[number - 1, 0] = "X              X";
+                    numberScreen[number - 1, 1] = " XX          XX ";
+                    numberScreen[number - 1, 2] = "   XX      XX   ";
+                    numberScreen[number - 1, 3] = "      XXXX      ";
+                    numberScreen[number - 1, 4] = "   XX      XX   ";
+                    numberScreen[number - 1, 5] = " XX          XX ";
+                    numberScreen[number - 1, 6] = "X              X";
+                    break;
+                case 1:
+                    numberScreen[number - 1, 0] = "       OO       ";
+                    numberScreen[number - 1, 1] = "    OO    OO    ";
+                    numberScreen[number - 1, 2] = "  OO        OO  ";
+                    numberScreen[number - 1, 3] = "OO            OO";
+                    numberScreen[number - 1, 4] = "  OO        OO  ";
+                    numberScreen[number - 1, 5] = "    OO    OO    ";
+                    numberScreen[number - 1, 6] = "       OO       ";
+                    break;
+            }
+        }
+
         private void ExpressGameNumberError(string stringNumber)
         {
             Console.SetCursorPosition(100, 12);
@@ -84,6 +228,24 @@ namespace TicTacToe
             Console.SetCursorPosition(77, 14);
             Console.Write("숫자 오류로 다시 입력해 주세요.");
             Console.ResetColor();
+        }
+
+        private int SetX(int i)
+        {
+            if (i == 0 || i == 3 || i == 6)
+                return 14;
+            else if (i == 1 || i == 4 || i == 7)
+                return 32;
+            return 51;
+        }
+
+        private int SetY(int i)
+        {
+            if (i <= 2)
+                return 2;
+            else if (i <= 5)
+                return 11;
+            return 20;
         }
     }
 }

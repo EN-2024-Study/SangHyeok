@@ -10,6 +10,7 @@ namespace TicTacToe
     {
         public override void PrintScreen()
         {
+            Console.SetCursorPosition(0, 0);
             Console.WriteLine(@"
                          ________                       ________                    _________
                          __  ___/__________________________  __ )___________ _____________  /

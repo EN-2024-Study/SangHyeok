@@ -28,7 +28,6 @@ namespace TicTacToe
         {
             while (!quit)
             {
-                Console.Clear();
                 Console.CursorVisible = false;
                 if (isStartScreen)
                 {
@@ -40,8 +39,9 @@ namespace TicTacToe
                         continue;
                     }
 
-                    int menunumber = startScreen.SelectMenuButton();
-                    SwitchScreen(menunumber);
+                    int menuNumber = startScreen.SelectMenuButton();
+                    if (menuNumber != -1)
+                        SwitchScreen(menuNumber);
                 }
                 else if (isComputerGameScreen)
                 {
@@ -88,15 +88,16 @@ namespace TicTacToe
                     isScoreBoard = scoreBoardScreen.InputBackMenu();
 
                     if (!isScoreBoard)
-                        isStartScreen = true;
+                        SwitchScreen(4);
                 }
             }
             Console.Clear();
         }
 
-        private void SwitchScreen(int menunumber)
+        private void SwitchScreen(int menuNumber)
         {
-            switch (menunumber)
+            Console.Clear();
+            switch (menuNumber)
             {
                 case 0:
                     isStartScreen = false;

@@ -21,6 +21,7 @@ namespace TicTacToe
 
         public override void PrintScreen()
         {
+            Console.SetCursorPosition(0, 0);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write(@"
      ____________________________________________________________________
@@ -44,9 +45,23 @@ namespace TicTacToe
 
             Console.SetCursorPosition(20, 15);
             if (name == null)
+            {
+                Console.Write("                                           ");
+                Console.SetCursorPosition(20, 18);
+                Console.Write("                                            ");
+                Console.SetCursorPosition(20, 20);
+                Console.Write("                                            ");
+                Console.SetCursorPosition(20, 22);
+                Console.Write("                                            ");
+                Console.SetCursorPosition(20, 15);
                 Console.WriteLine("  이름을 입력해 주세요.");
+            }
             else
             {
+                Console.Write("                                    ");
+                Console.SetCursorPosition(22, 17);
+                Console.Write("                                    ");
+                Console.SetCursorPosition(20, 15);
                 Console.Write("환영합니다. ");
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write(name + "님");
@@ -98,7 +113,7 @@ namespace TicTacToe
                     break;
                 case ConsoleKey.D0:
                     name = null;
-                    menunumber = -1;
+                    //menunumber = 4;
                     break;
                 case ConsoleKey.R:
                     menunumber = 0;
@@ -114,7 +129,7 @@ namespace TicTacToe
                     break;                    
             }
             menunumber %= 4;
-            return 5;
+            return -1;
         }
 
         public int Menunumber

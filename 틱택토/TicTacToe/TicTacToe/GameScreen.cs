@@ -106,6 +106,7 @@ namespace TicTacToe
 
         public override void PrintScreen()
         {
+            Console.SetCursorPosition(0, 0);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(@"
             #########################################################

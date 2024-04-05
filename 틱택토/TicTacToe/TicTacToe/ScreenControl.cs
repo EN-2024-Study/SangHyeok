@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TicTacToe
 {
@@ -33,6 +29,7 @@ namespace TicTacToe
             while (!quit)
             {
                 Console.Clear();
+                Console.CursorVisible = false;
                 if (isStartScreen)
                 {
                     startScreen.PrintScreen();
@@ -61,10 +58,14 @@ namespace TicTacToe
                 {
                     userGameScreen.PrintScreen();
                     isUserGameScreen = userGameScreen.PlayGame();
-                    //userGameScreen.CheckEnd();
+                    isStartScreen = userGameScreen.CheckEnd();
 
-                    if (!isUserGameScreen)
+                    if (!isUserGameScreen || isStartScreen)
+                    {
                         isStartScreen = true;
+                        isUserGameScreen = false;
+                        userGameScreen = new UserGameScreen();
+                    }
                 }
                 else if (isScoreBoard)
                 {

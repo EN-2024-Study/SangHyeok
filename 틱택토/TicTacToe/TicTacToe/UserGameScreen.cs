@@ -66,34 +66,5 @@ namespace TicTacToe
             order = (order + 1) % 2;
             return base.PlayGame();
         }
-
-        //public bool CheckEnd()
-        //{
-        //    for (int i = 0; i < 3; i++) // 세로와 대각선 확인
-        //    {
-        //        if (gameCoordinate[i] == gameCoordinate[2 + i] && gameCoordinate[i] == gameCoordinate[8 - i])
-        //        {
-        //            //if (gameCoordinate[i] == 1)
-        //            //    ScoreBoardScreen.OneUserScore += 1;
-        //            //else if (gameCoordinate[i] == 2)
-        //            //    ScoreBoardScreen.TwoUserScore += 1;
-        //            //return true;
-        //        }
-        //    }
-
-        //    for (int i = 0; i < 9; i += 3)  // 가로 확인
-        //    {
-        //        if (gameCoordinate[i] == gameCoordinate[i + 1] && gameCoordinate[i + 1] == gameCoordinate[i + 2])
-        //        {
-        //            //if (gameCoordinate[i] == 1)
-        //            //    ScoreBoardScreen.OneUserScore += 1;
-        //            //else if (gameCoordinate[i] == 2)
-        //            //    ScoreBoardScreen.TwoUserScore += 1;
-        //            //return true;
-        //        }
-        //    }
-        //    return false;
-        //}
-
     }
 }

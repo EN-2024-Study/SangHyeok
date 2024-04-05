@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,12 +12,12 @@ namespace TicTacToe
     {
         private string[,] numberDisplayedToScreen;
         private string numberString;
-        private int[] numberCoordinate;
+        private int[] coordinateValue;
 
         public GameScreen()
         {
             numberString = null;
-            numberCoordinate = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            coordinateValue = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             numberDisplayedToScreen = new string[9, 7]
             {
                 {
@@ -142,7 +144,7 @@ namespace TicTacToe
             {
                 int x = SetX(i), y = SetY(i);
 
-                switch(numberCoordinate[i])
+                switch (coordinateValue[i])
                 {
                     case 1:
                         Console.ForegroundColor = ConsoleColor.Green;
@@ -179,10 +181,35 @@ namespace TicTacToe
 
         public bool CheckEnd()
         {
-            // 게임이 끝났는지 확인
+            for (int i = 0; i < 3; i += 3)
+                if (coordinateValue[i] == coordinateValue[i + 1] && coordinateValue[i] == coordinateValue[i + 2])
+                    return CheckValue(coordinateValue[i]);  // 가로 확인
 
+            for(int i = 0; i < 3; i++)
+            {
+                if (coordinateValue[i] == coordinateValue[i + 3] && coordinateValue[i + 3] == coordinateValue[i + 6])
+                    return CheckValue(coordinateValue[i]); // 세로 확인
 
+                if (coordinateValue[i] == coordinateValue[4] && coordinateValue[8 - i] == coordinateValue[4])
+                    return CheckValue(coordinateValue[i]);  // 대각선 확인
+            }
             return false;
+
+            bool CheckValue(int value)
+            {
+                switch (value)
+                {
+                    case 0:
+                        return false;
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                }
+                return true;
+            }
         }
 
         protected int InputGamenumber()
@@ -209,7 +236,7 @@ namespace TicTacToe
             switch (order)
             {
                 case 0:
-                    numberCoordinate[number - 1] = 1;
+                    coordinateValue[number - 1] = 1;
                     numberDisplayedToScreen[number - 1, 0] = "X              X";
                     numberDisplayedToScreen[number - 1, 1] = " XX          XX ";
                     numberDisplayedToScreen[number - 1, 2] = "   XX      XX   ";
@@ -219,7 +246,7 @@ namespace TicTacToe
                     numberDisplayedToScreen[number - 1, 6] = "X              X";
                     break;
                 case 1:
-                    numberCoordinate[number - 1] = 2;
+                    coordinateValue[number - 1] = 2;
                     numberDisplayedToScreen[number - 1, 0] = "       OO       ";
                     numberDisplayedToScreen[number - 1, 1] = "    OO    OO    ";
                     numberDisplayedToScreen[number - 1, 2] = "  OO        OO  ";
@@ -251,7 +278,7 @@ namespace TicTacToe
 
         private int CheckDuplication(int number)
         {
-            if (numberCoordinate[number - 1] != 0)
+            if (coordinateValue[number - 1] != 0)
             {
                 ExpressError("이미 둔 좌표 입니다. 다시 입력하세요.");
                 return InputGamenumber();

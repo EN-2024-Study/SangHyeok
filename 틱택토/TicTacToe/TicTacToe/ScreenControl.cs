@@ -46,26 +46,41 @@ namespace TicTacToe
                 else if (isComputerGameScreen)
                 {
                     computerGameScreen.PrintScreen();
-                    if (computerGameScreen.StartupOrder == 0 || computerGameScreen.IsErrornumber)
-                        isComputerGameScreen = computerGameScreen.InputOrder();
-                    else
-                        isComputerGameScreen = computerGameScreen.PlayGame();
+                    int checkEnd = computerGameScreen.CheckEnd();
+                    if (checkEnd > 0)
+                    {
+                        computerGameScreen.ExpressEnd();
+                        SwitchScreen(4);
+                        computerGameScreen = new ComputerGameScreen();
+                        continue;
+                    }
 
+                    isComputerGameScreen = computerGameScreen.PlayGame();
                     if (!isComputerGameScreen)
-                        isStartScreen = true;
+                    {
+                        SwitchScreen(4);
+                        computerGameScreen = new ComputerGameScreen();
+                    }
                 }
                 else if (isUserGameScreen)
                 {
                     userGameScreen.PrintScreen();
-                    isUserGameScreen = userGameScreen.PlayGame();
-                    isStartScreen = userGameScreen.CheckEnd();
-
-                    if (!isUserGameScreen || isStartScreen)
+                    int checkEnd = userGameScreen.CheckEnd();
+                    if (checkEnd > 0)
                     {
-                        isStartScreen = true;
-                        isUserGameScreen = false;
+                        userGameScreen.ExpressEnd();
+                        SwitchScreen(4);
+                        userGameScreen = new UserGameScreen();
+                        continue;
+                    }
+
+                    isUserGameScreen = userGameScreen.PlayGame();
+                    if (!isUserGameScreen)
+                    {
+                        SwitchScreen(4);
                         userGameScreen = new UserGameScreen();
                     }
+
                 }
                 else if (isScoreBoard)
                 {
@@ -97,6 +112,12 @@ namespace TicTacToe
                     break;
                 case 3:
                     quit = true;
+                    break;
+                case 4:
+                    isComputerGameScreen = false;
+                    isUserGameScreen = false;
+                    isScoreBoard = false;
+                    isStartScreen = true;
                     break;
             }
         }

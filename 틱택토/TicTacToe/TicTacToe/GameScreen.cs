@@ -12,12 +12,12 @@ namespace TicTacToe
     {
         private string[,] numberDisplayedToScreen;
         private string numberString;
-        private int[] coordinateValue;
+        private int[] coordinates;
 
         public GameScreen()
         {
             numberString = null;
-            coordinateValue = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            coordinates = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             numberDisplayedToScreen = new string[9, 7]
             {
                 {
@@ -144,7 +144,7 @@ namespace TicTacToe
             {
                 int x = SetX(i), y = SetY(i);
 
-                switch (coordinateValue[i])
+                switch (coordinates[i])
                 {
                     case 1:
                         Console.ForegroundColor = ConsoleColor.Green;
@@ -179,37 +179,78 @@ namespace TicTacToe
             return true;
         }
 
-        public bool CheckEnd()
+        public void ExpressEnd()
         {
-            for (int i = 0; i < 3; i += 3)
-                if (coordinateValue[i] == coordinateValue[i + 1] && coordinateValue[i] == coordinateValue[i + 2])
-                    return CheckValue(coordinateValue[i]);  // 가로 확인
+            Console.SetCursorPosition(77, 20);
+            Console.Write("                              ");
+            Console.SetCursorPosition(77, 22);
+            Console.Write("                              ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(77, 16);
+            Console.Write("게임이 종료되었습니다!");
+            Console.SetCursorPosition(77, 18);
+            Console.Write("시작화면으로 돌아가려면");
+            Console.SetCursorPosition(77, 20);
+            Console.Write("Enter를 눌러주세요.");
+            Console.ResetColor();
+            string temp = Console.ReadLine();
+        }
 
-            for(int i = 0; i < 3; i++)
+        
+        public bool InputEnd()
+        {
+            Console.SetCursorPosition(100, 12);
+            string inputTemp = Console.ReadLine();
+            int number;
+
+            if (int.TryParse(inputTemp, out number))
             {
-                if (coordinateValue[i] == coordinateValue[i + 3] && coordinateValue[i + 3] == coordinateValue[i + 6])
-                    return CheckValue(coordinateValue[i]); // 세로 확인
-
-                if (coordinateValue[i] == coordinateValue[4] && coordinateValue[8 - i] == coordinateValue[4])
-                    return CheckValue(coordinateValue[i]);  // 대각선 확인
+                if (number == 0)
+                    return true;
             }
             return false;
+        }
 
-            bool CheckValue(int value)
+        public int CheckEnd()   // return 값 = 0: 아직 안 끝남, 1: user1승리, 2: user2승리, 3: 무승부
+        {
+            for (int i = 0; i < 9; i += 3)
             {
-                switch (value)
-                {
-                    case 0:
-                        return false;
-                    case 1:
-
-                        break;
-                    case 2:
-
-                        break;
-                }
-                return true;
+                if (coordinates[i] == 1 && coordinates[i] == coordinates[i + 1] && coordinates[i] == coordinates[i + 2])
+                    return 1;
+                else if (coordinates[i] == 2 && coordinates[i] == coordinates[i + 1] && coordinates[i] == coordinates[i + 2])
+                    return 2;
             }
+            // 가로 확인
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (coordinates[i] == 1 && coordinates[i] == coordinates[i + 3] && coordinates[i] == coordinates[i + 6])
+                    return 1;
+                else if (coordinates[i] == 2 && coordinates[i] == coordinates[i + 3] && coordinates[i] == coordinates[i + 6])
+                    return 2;
+                // 세로 확인
+
+                if (coordinates[i] == 1 && coordinates[i] == coordinates[4] && coordinates[4] == coordinates[8 - i])
+                    return 1;
+                else if (coordinates[i] == 1 && coordinates[i] == coordinates[4] && coordinates[4] == coordinates[8 - i])
+                    return 2;
+                // 대각선 확인
+            }
+
+            foreach(int value in coordinates)
+                if (value == 0)
+                    return 0;
+            return 3;
+        }
+
+        protected int GetCoordinates(int index)
+        {
+            return coordinates[index];
+        }
+
+        protected void SetCoordinates(int index, int value)
+        {
+            coordinates[index] = value;
         }
 
         protected int InputGamenumber()
@@ -231,29 +272,29 @@ namespace TicTacToe
             return CheckNumberError(inputTemp);
         }
 
-        protected void ExpressXOrO(int order, int number)
+        protected void ExpressXOrO(int order, int index)
         {
             switch (order)
             {
                 case 0:
-                    coordinateValue[number - 1] = 1;
-                    numberDisplayedToScreen[number - 1, 0] = "X              X";
-                    numberDisplayedToScreen[number - 1, 1] = " XX          XX ";
-                    numberDisplayedToScreen[number - 1, 2] = "   XX      XX   ";
-                    numberDisplayedToScreen[number - 1, 3] = "      XXXX      ";
-                    numberDisplayedToScreen[number - 1, 4] = "   XX      XX   ";
-                    numberDisplayedToScreen[number - 1, 5] = " XX          XX ";
-                    numberDisplayedToScreen[number - 1, 6] = "X              X";
+                    coordinates[index] = 1;
+                    numberDisplayedToScreen[index, 0] = "X              X";
+                    numberDisplayedToScreen[index, 1] = " XX          XX ";
+                    numberDisplayedToScreen[index, 2] = "   XX      XX   ";
+                    numberDisplayedToScreen[index, 3] = "      XXXX      ";
+                    numberDisplayedToScreen[index, 4] = "   XX      XX   ";
+                    numberDisplayedToScreen[index, 5] = " XX          XX ";
+                    numberDisplayedToScreen[index, 6] = "X              X";
                     break;
                 case 1:
-                    coordinateValue[number - 1] = 2;
-                    numberDisplayedToScreen[number - 1, 0] = "       OO       ";
-                    numberDisplayedToScreen[number - 1, 1] = "    OO    OO    ";
-                    numberDisplayedToScreen[number - 1, 2] = "  OO        OO  ";
-                    numberDisplayedToScreen[number - 1, 3] = "OO            OO";
-                    numberDisplayedToScreen[number - 1, 4] = "  OO        OO  ";
-                    numberDisplayedToScreen[number - 1, 5] = "    OO    OO    ";
-                    numberDisplayedToScreen[number - 1, 6] = "       OO       ";
+                    coordinates[index] = 2;
+                    numberDisplayedToScreen[index, 0] = "       OO       ";
+                    numberDisplayedToScreen[index, 1] = "    OO    OO    ";
+                    numberDisplayedToScreen[index, 2] = "  OO        OO  ";
+                    numberDisplayedToScreen[index, 3] = "OO            OO";
+                    numberDisplayedToScreen[index, 4] = "  OO        OO  ";
+                    numberDisplayedToScreen[index, 5] = "    OO    OO    ";
+                    numberDisplayedToScreen[index, 6] = "       OO       ";
                     break;
             }
         }
@@ -278,9 +319,9 @@ namespace TicTacToe
 
         private int CheckDuplication(int number)
         {
-            if (coordinateValue[number - 1] != 0)
+            if (coordinates[number - 1] != 0)
             {
-                ExpressError("이미 둔 좌표 입니다. 다시 입력하세요.");
+                ExpressError("이미 둔 좌표 입니다! 다시 입력하세요.");
                 return InputGamenumber();
             }
             return number;
@@ -289,7 +330,7 @@ namespace TicTacToe
         private int CheckNumberError(string s)
         {
             numberString = s;
-            ExpressError("숫자 오류입니다. 다시 입력하세요.");
+            ExpressError("숫자 오류입니다! 다시 입력하세요.");
             return InputGamenumber();
         }
 

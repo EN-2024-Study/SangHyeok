@@ -58,11 +58,10 @@ namespace TicTacToe
         public override bool PlayGame()
         {
             int number = base.InputGamenumber();
-
             if (number == 0)
                 return false;
 
-            base.ExpressXOrO(order, number);
+            base.ExpressXOrO(order, number - 1);
             order = (order + 1) % 2;
             return base.PlayGame();
         }

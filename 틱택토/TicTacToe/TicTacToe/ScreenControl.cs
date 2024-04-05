@@ -52,6 +52,7 @@ namespace TicTacToe
                         computerGameScreen.ExpressEnd();
                         SwitchScreen(4);
                         computerGameScreen = new ComputerGameScreen();
+                        RecordScore(1, checkEnd);
                         continue;
                     }
 
@@ -71,6 +72,7 @@ namespace TicTacToe
                         userGameScreen.ExpressEnd();
                         SwitchScreen(4);
                         userGameScreen = new UserGameScreen();
+                        RecordScore(2, checkEnd);
                         continue;
                     }
 
@@ -121,6 +123,32 @@ namespace TicTacToe
                     isStartScreen = true;
                     break;
             }
+        }
+
+        private bool RecordScore(int type, int checkEnd)
+        {
+            if (scoreBoardScreen.GetScoreListCount() == 5)
+            {
+                SwitchScreen(3);
+                return false;
+            }    
+
+            int score1 = 0, score2 = 0;
+            if (checkEnd == 1)
+                score1 = 1;
+            else
+                score2 = 1;
+
+            switch (type)
+            {
+                case 1:
+                    scoreBoardScreen.SetScore(1, score1, score2);
+                    break;
+                case 2:
+                    scoreBoardScreen.SetScore(2, score1, score2);
+                    break;
+            }
+            return true;
         }
     }
 }

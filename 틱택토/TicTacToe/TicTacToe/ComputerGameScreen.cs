@@ -84,21 +84,13 @@ namespace TicTacToe
                 return false;
 
             base.ExpressXOrO(0, number - 1);
-            base.ExpressXOrO(1, PlayGameByComputer());
+
+            int computerIndex = PlayGameByComputer();
+            base.ExpressXOrO(1, computerIndex);
             return base.PlayGame();
         }
 
-        private List<int> GetEmptycoordinateValues()
-        {
-            List<int> list = new List<int>();
 
-            for (int i = 0; i < 9; i++)
-            {
-                if (base.GetCoordinates(i) == 0)
-                    list.Add(i);
-            }
-            return list;
-        }
 
         private int MiniMax(bool flag)  // 미니맥스 알고리즘
         {
@@ -113,31 +105,30 @@ namespace TicTacToe
                     return 0;
             }
 
-            int bestScore = flag ? -3 : 3;  // computer차례이면 -3으로 초기화, user차례이면 3으로 초기화
-            // -3과 3으로 초기화를 한 이유는 -1, 0, 1로 최고의 경우의 수를 판단하기 때문
-            List<int> emptyCoordinates = GetEmptycoordinateValues();    // 비어있는 좌표들
-            foreach (int value in emptyCoordinates)
+            int bestScore = flag ? -1 : 1;  // computer차례이면 -1으로 초기화, user차례이면 1으로 초기화
+            List<int> emptyCoordinates = base.GetEmptycoordinateValues();    // 비어있는 좌표들
+            foreach (int index in emptyCoordinates)
             {
                 if (flag)   // computer 차례일 때
                 {
-                    base.SetCoordinates(value, 2);  // 임의의 좌표에 computer 값 임시로 삽입
+                    base.SetCoordinates(index, 2);  // 임의의 좌표에 computer 값 임시로 삽입
                     bestScore = Math.Max(bestScore, MiniMax(false));    // 재귀 함수로 최고의 경우의 수 갱신
                 }
                 else        // user 차례일 때
                 {
-                    base.SetCoordinates(value, 1);  // 임의의 좌표에 user 값 임시로 삽입
+                    base.SetCoordinates(index, 1);  // 임의의 좌표에 user 값 임시로 삽입
                     bestScore = Math.Min(bestScore, MiniMax(true));     // 재귀 함수로 최고의 경우의 수 갱신
                 }
 
-                base.SetCoordinates(value, 0);  // 임시로 삽입된 값 초기화
+                base.SetCoordinates(index, 0);  // 임시로 삽입된 값 초기화
             }
             return bestScore;   // 최고의 경우의 수 반환
         }
 
         private int PlayGameByComputer()
         {
-            List<int> emptyCoordinates = GetEmptycoordinateValues();    // 비어있는 좌표들
-            int bestScore = -3; // -1이 최솟값이기 때문에 -3으로 초기화
+            List<int> emptyCoordinates = base.GetEmptycoordinateValues();    // 비어있는 좌표들
+            int bestScore = -1; // -1이 최솟값이기 때문에 -1으로 초기화
             int bestIndex = 0;
 
             foreach(int index in emptyCoordinates)
@@ -148,10 +139,10 @@ namespace TicTacToe
                 if (score > bestScore)
                 {
                     bestScore = score;  // 최고의 경우의 수 갱신
-                    bestIndex = index;  // 최고의 경우의 index값 갱신
+                    bestIndex = index;  // 최고의 경우를 가진 index값 갱신
                 }
             }
-            return bestIndex;
+            return bestIndex;   // 최고의 경우를 가진 index값 반환
         }
     }
 }

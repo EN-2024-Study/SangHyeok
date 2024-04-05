@@ -96,8 +96,8 @@ namespace TicTacToe
 
         public int SelectMenuButton()
         {
+            Console.SetCursorPosition(110, 20);
             ConsoleKeyInfo keyInfo = Console.ReadKey();
-
             switch (keyInfo.Key)
             {
                 case ConsoleKey.Enter:
@@ -113,7 +113,6 @@ namespace TicTacToe
                     break;
                 case ConsoleKey.D0:
                     name = null;
-                    //menunumber = 4;
                     break;
                 case ConsoleKey.R:
                     menunumber = 0;
@@ -129,6 +128,8 @@ namespace TicTacToe
                     break;                    
             }
             menunumber %= 4;
+            Console.SetCursorPosition(110, 20);
+            Console.Write(" ");
             return -1;
         }
 

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection.Emit;
+using System.Text.RegularExpressions;
 
 namespace TicTacToe
 {
@@ -182,6 +179,8 @@ namespace TicTacToe
 
         public void ExpressEnd()
         {
+            Console.SetCursorPosition(77, 14);
+            Console.Write("                                      ");
             Console.SetCursorPosition(77, 20);
             Console.Write("                              ");
             Console.SetCursorPosition(77, 22);
@@ -197,45 +196,30 @@ namespace TicTacToe
             string temp = Console.ReadLine();
         }
 
-        
-        public bool InputEnd()
-        {
-            Console.SetCursorPosition(100, 12);
-            string inputTemp = Console.ReadLine();
-            int number;
-
-            if (int.TryParse(inputTemp, out number))
-            {
-                if (number == 0)
-                    return true;
-            }
-            return false;
-        }
-
         public int CheckEnd()   // return 값 = 0: 아직 안 끝남, 1: user1승리, 2: user2승리, 3: 무승부
         {
             for (int i = 0; i < 9; i += 3)
             {
+                // 가로 확인
                 if (coordinates[i] == 1 && coordinates[i] == coordinates[i + 1] && coordinates[i] == coordinates[i + 2])
                     return 1;
                 else if (coordinates[i] == 2 && coordinates[i] == coordinates[i + 1] && coordinates[i] == coordinates[i + 2])
                     return 2;
             }
-            // 가로 확인
 
             for (int i = 0; i < 3; i++)
             {
+                // 세로 확인
                 if (coordinates[i] == 1 && coordinates[i] == coordinates[i + 3] && coordinates[i] == coordinates[i + 6])
                     return 1;
                 else if (coordinates[i] == 2 && coordinates[i] == coordinates[i + 3] && coordinates[i] == coordinates[i + 6])
                     return 2;
-                // 세로 확인
 
+                // 대각선 확인
                 if (coordinates[i] == 1 && coordinates[i] == coordinates[4] && coordinates[4] == coordinates[8 - i])
                     return 1;
-                else if (coordinates[i] == 1 && coordinates[i] == coordinates[4] && coordinates[4] == coordinates[8 - i])
+                else if (coordinates[i] == 2 && coordinates[i] == coordinates[4] && coordinates[4] == coordinates[8 - i])
                     return 2;
-                // 대각선 확인
             }
 
             foreach(int value in coordinates)
@@ -244,33 +228,38 @@ namespace TicTacToe
             return 3;
         }
 
-        protected int GetCoordinates(int index)
-        {
-            return coordinates[index];
-        }
-
         protected void SetCoordinates(int index, int value)
         {
             coordinates[index] = value;
         }
 
+        protected List<int> GetEmptycoordinateValues()
+        {
+            List<int> list = new List<int>();
+
+            for (int i = 0; i < 9; i++)
+            {
+                if (coordinates[i] == 0)
+                    list.Add(i);
+            }
+            return list;
+        }
+
         protected int InputGamenumber()
         {
             Console.SetCursorPosition(100, 12);
-            string inputTemp = Console.ReadLine();
+            string tempInput = Console.ReadLine();
             int number;
 
-            if (int.TryParse(inputTemp, out number))
+            if (tempInput.Length > 0 && '0' <= tempInput[0] && tempInput[0] <= '9')
             {
+                number = (int)tempInput[0] - 48;
                 if (number == 0)
                     return 0;
-                else if (1 <= number && number <= 9)
-                {
-                    numberString = number.ToString();
+                else
                     return CheckDuplication(number);
-                }
             }
-            return CheckNumberError(inputTemp);
+            return CheckNumberError(tempInput);
         }
 
         protected void ExpressXOrO(int order, int index)
@@ -300,6 +289,19 @@ namespace TicTacToe
             }
         }
 
+        private void ExpressError(string str)
+        {
+            Console.SetCursorPosition(100, 12);
+            if (numberString != null)
+                for (int i = 0; i < numberString.Length; i++)
+                    Console.Write(" ");
+            Console.SetCursorPosition(77, 14);
+            Console.Write("                                      ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(77, 14);
+            Console.Write(str);
+            Console.ResetColor();
+        }
         private int SetX(int i)
         {
             if (i == 0 || i == 3 || i == 6)
@@ -333,19 +335,6 @@ namespace TicTacToe
             numberString = s;
             ExpressError("숫자 오류입니다! 다시 입력하세요.");
             return InputGamenumber();
-        }
-
-        private void ExpressError(string str)
-        {
-            Console.SetCursorPosition(100, 12);
-            for (int i = 0; i < numberString.Length; i++)
-                Console.Write(" ");
-            Console.SetCursorPosition(77, 14);
-            Console.Write("                                      ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.SetCursorPosition(77, 14);
-            Console.Write(str);
-            Console.ResetColor();
         }
     }
 }

@@ -8,13 +8,13 @@ namespace TicTacToe
 {
     internal class StartScreen : Screen
     {
-        private int menuNumber;
+        private int menunumber;
         private string[] menuNames;
         private string name;
 
         public StartScreen()
         {
-            menuNumber = -1;
+            menunumber = -1;
             menuNames = new string[] { "㉠  vs Computer", "㉡  vs User", "㉢  ScoreBoard", "㉣  Quit" };
             name = null;
         }
@@ -62,7 +62,7 @@ namespace TicTacToe
             for(int i = 0; i < 4; i++)
             {
                 Console.SetCursorPosition(80, i * 2 + 13);
-                if (menuNumber == i)
+                if (menunumber == i)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(menuNames[i]);
@@ -87,40 +87,40 @@ namespace TicTacToe
             {
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
-                    return menuNumber;
+                    return menunumber;
                 case ConsoleKey.DownArrow:
-                    menuNumber += 1;
+                    menunumber += 1;
                     break;
                 case ConsoleKey.UpArrow:
-                    menuNumber -= 1;
-                    if (menuNumber < 0)
-                        menuNumber = 3;
+                    menunumber -= 1;
+                    if (menunumber < 0)
+                        menunumber = 3;
                     break;
                 case ConsoleKey.D0:
                     name = null;
-                    menuNumber = -1;
+                    menunumber = -1;
                     break;
                 case ConsoleKey.R:
-                    menuNumber = 0;
+                    menunumber = 0;
                     break;
                 case ConsoleKey.S:
-                    menuNumber = 1;
+                    menunumber = 1;
                     break;
                 case ConsoleKey.E:
-                    menuNumber = 2;
+                    menunumber = 2;
                     break;
                 case ConsoleKey.F:
-                    menuNumber = 3;
-                    break;
+                    menunumber = 3;
+                    break;                    
             }
-            menuNumber %= 4;
+            menunumber %= 4;
             return 5;
         }
 
-        public int MenuNumber
+        public int Menunumber
         {
-            get { return menuNumber; }
-            set { menuNumber = value; }
+            get { return menunumber; }
+            set { menunumber = value; }
         }
 
         public string Name

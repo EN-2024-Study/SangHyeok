@@ -17,13 +17,6 @@ namespace TicTacToe
                          ____/ // /__ / /_/ /  /   /  __/  /_/ // /_/ / /_/ /_  /   / /_/ /  
                          /____/ \___/ \____//_/    \___//_____/ \____/\__,_/ /_/    \__,_/   
 ");
-            Console.SetCursorPosition(57, 15);
-            Console.Write("OneUserScore = ");
-            //Console.Write(oneUserScore);
-            Console.SetCursorPosition(57, 16);
-            Console.Write("TwoUserScore = ");
-            //Console.Write(twoUserScore);
-
 
             Console.SetCursorPosition(77, 20);
             Console.Write("이전 화면으로 돌아가실려면");

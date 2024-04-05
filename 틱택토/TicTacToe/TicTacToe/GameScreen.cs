@@ -8,11 +8,15 @@ namespace TicTacToe
 {
     internal class GameScreen : Screen
     {
-        string[,] numberScreen;
+        private string[,] numberDisplayedToScreen;
+        private string numberString;
+        private int[] numberCoordinate;
 
         public GameScreen()
         {
-            numberScreen = new string[9, 7]
+            numberString = null;
+            numberCoordinate = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            numberDisplayedToScreen = new string[9, 7]
             {
                 {
                     "       1        ",
@@ -51,13 +55,13 @@ namespace TicTacToe
                     "        4       "
                 },
                 {
-                    "    5           ",
-                    "    555555      ",
-                    "    5           ",
-                    "    55          ",
-                    "      555       ",
+                    "     5          ",
+                    "     555555     ",
+                    "     5          ",
+                    "     55         ",
                     "       555      ",
-                    "    5555        "
+                    "        555     ",
+                    "     5555       "
                 },
                 {
                     "        6       ",
@@ -100,6 +104,7 @@ namespace TicTacToe
 
         public override void PrintScreen()
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(@"
             #########################################################
             #########################################################
@@ -131,20 +136,26 @@ namespace TicTacToe
             #########################################################
             #########################################################
             ");
+            Console.ResetColor();
 
-            for(int i = 0; i < 9; i++)
+            for (int i = 0; i < 9; i++)
             {
                 int x = SetX(i), y = SetY(i);
 
-                if (numberScreen[i, 0].Equals("X              X"))
-                    Console.ForegroundColor = ConsoleColor.Green;
-                else if (numberScreen[i, 0].Equals("       OO       "))
-                    Console.ForegroundColor = ConsoleColor.Blue;
+                switch(numberCoordinate[i])
+                {
+                    case 1:
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        break;
+                    case 2:
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        break;
+                }
 
                 for (int j = 0; j < 7; j++)
                 {
                     Console.SetCursorPosition(x, y + j + 1);
-                    Console.Write(numberScreen[i, j]);
+                    Console.Write(numberDisplayedToScreen[i, j]);
                 }
                 Console.ResetColor();
             }
@@ -161,48 +172,63 @@ namespace TicTacToe
             Console.ResetColor();
         }
 
-        //public virtual bool PlayGame(int order)
-        //{
-        //    int num = InputGameNumber();
-        //    if (num == 0)
-        //        return false;
+        public virtual bool PlayGame()
+        {
+            return true;
+        }
 
-        //    ExpressXOrO(order, num);
-        //    return true;
-        //}
+        public bool CheckEnd()
+        {
+            // 게임이 끝났는지 확인
 
-        //public virtual bool CheckEnd() { }
 
-        protected int InputGameNumber()
+            return false;
+        }
+
+        protected int InputGamenumber()
         {
             Console.SetCursorPosition(100, 12);
             string inputTemp = Console.ReadLine();
             int number;
+
             if (int.TryParse(inputTemp, out number))
             {
-                if (1 <= number && number <= 9)
-                    return number;
-                else if (number == 0)
+                if (number == 0)
                     return 0;
-                else
+                else if (1 <= number && number <= 9)
                 {
-                    ExpressGameNumberError(number.ToString());
-                    return InputGameNumber();
+                    numberString = number.ToString();
+                    return CheckDuplication(number);
                 }
             }
-            ExpressGameNumberError(inputTemp);
-            return InputGameNumber();
+            return CheckNumberError(inputTemp);
         }
 
-        private void ExpressGameNumberError(string stringNumber)
+        protected void ExpressXOrO(int order, int number)
         {
-            Console.SetCursorPosition(100, 12);
-            for (int i = 0; i < stringNumber.Length; i++)
-                Console.Write(" ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.SetCursorPosition(77, 14);
-            Console.Write("숫자 오류로 다시 입력해 주세요.");
-            Console.ResetColor();
+            switch (order)
+            {
+                case 0:
+                    numberCoordinate[number - 1] = 1;
+                    numberDisplayedToScreen[number - 1, 0] = "X              X";
+                    numberDisplayedToScreen[number - 1, 1] = " XX          XX ";
+                    numberDisplayedToScreen[number - 1, 2] = "   XX      XX   ";
+                    numberDisplayedToScreen[number - 1, 3] = "      XXXX      ";
+                    numberDisplayedToScreen[number - 1, 4] = "   XX      XX   ";
+                    numberDisplayedToScreen[number - 1, 5] = " XX          XX ";
+                    numberDisplayedToScreen[number - 1, 6] = "X              X";
+                    break;
+                case 1:
+                    numberCoordinate[number - 1] = 2;
+                    numberDisplayedToScreen[number - 1, 0] = "       OO       ";
+                    numberDisplayedToScreen[number - 1, 1] = "    OO    OO    ";
+                    numberDisplayedToScreen[number - 1, 2] = "  OO        OO  ";
+                    numberDisplayedToScreen[number - 1, 3] = "OO            OO";
+                    numberDisplayedToScreen[number - 1, 4] = "  OO        OO  ";
+                    numberDisplayedToScreen[number - 1, 5] = "    OO    OO    ";
+                    numberDisplayedToScreen[number - 1, 6] = "       OO       ";
+                    break;
+            }
         }
 
         private int SetX(int i)
@@ -221,6 +247,36 @@ namespace TicTacToe
             else if (i <= 5)
                 return 11;
             return 20;
+        }
+
+        private int CheckDuplication(int number)
+        {
+            if (numberCoordinate[number - 1] != 0)
+            {
+                ExpressError("이미 둔 좌표 입니다. 다시 입력하세요.");
+                return InputGamenumber();
+            }
+            return number;
+        }
+
+        private int CheckNumberError(string s)
+        {
+            numberString = s;
+            ExpressError("숫자 오류입니다. 다시 입력하세요.");
+            return InputGamenumber();
+        }
+
+        private void ExpressError(string str)
+        {
+            Console.SetCursorPosition(100, 12);
+            for (int i = 0; i < numberString.Length; i++)
+                Console.Write(" ");
+            Console.SetCursorPosition(77, 14);
+            Console.Write("                                      ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(77, 14);
+            Console.Write(str);
+            Console.ResetColor();
         }
     }
 }

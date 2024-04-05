@@ -39,18 +39,17 @@ namespace TicTacToe
                     if (startScreen.Name == null)   // 처음 입력시 초기화
                     {
                         startScreen.InputUserName();
-                        Console.Clear();
-                        startScreen.MenuNumber = 0;
-                        startScreen.PrintScreen();
+                        startScreen.Menunumber = 0;
+                        continue;
                     }
 
-                    int menuNumber = startScreen.SelectMenuButton();
-                    SwitchScreen(menuNumber);
+                    int menunumber = startScreen.SelectMenuButton();
+                    SwitchScreen(menunumber);
                 }
                 else if (isComputerGameScreen)
                 {
                     computerGameScreen.PrintScreen();
-                    if (computerGameScreen.StartupOrder == 0 || computerGameScreen.IsErrorNumber)
+                    if (computerGameScreen.StartupOrder == 0 || computerGameScreen.IsErrornumber)
                         isComputerGameScreen = computerGameScreen.InputOrder();
                     else
                         isComputerGameScreen = computerGameScreen.PlayGame();
@@ -79,9 +78,9 @@ namespace TicTacToe
             Console.Clear();
         }
 
-        private void SwitchScreen(int menuNumber)
+        private void SwitchScreen(int menunumber)
         {
-            switch (menuNumber)
+            switch (menunumber)
             {
                 case 0:
                     isStartScreen = false;

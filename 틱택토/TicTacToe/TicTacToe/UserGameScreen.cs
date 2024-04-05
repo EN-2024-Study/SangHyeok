@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,15 +9,13 @@ namespace TicTacToe
 {
     internal class UserGameScreen : GameScreen
     {
-        GameScreen gameScreen;
-        int order;
-        int[] gameCoordinate;
+        private GameScreen gameScreen;
+        private int order;
 
         public UserGameScreen()
         {
             gameScreen = new GameScreen();
             order = 0;
-            gameCoordinate = new int[9];
         }
 
         public override void PrintScreen()
@@ -44,33 +43,28 @@ namespace TicTacToe
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(77, 16);
             if (order == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("USER1 차례입니다. ");
+            }
             else
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write("USER2 차례입니다. ");
+            }
             Console.ResetColor();
         }
 
-        public bool PlayGame()
+        public override bool PlayGame()
         {
-            int num = base.InputGameNumber();
-            if (num == 0)
-                return false;
-            else if (gameCoordinate[num - 1] == 0)
-            {
-                base.ExpressXOrO(order, num);
-                switch (order)
-                {
-                    case 0:
-                        gameCoordinate[num - 1] = 1;
-                        break;
-                    case 1:
-                        gameCoordinate[num - 1] = 2;
-                        break;
-                }
-            }
+            int number = base.InputGamenumber();
 
+            if (number == 0)
+                return false;
+
+            base.ExpressXOrO(order, number);
             order = (order + 1) % 2;
-            return true;
+            return base.PlayGame();
         }
 
         //public bool CheckEnd()

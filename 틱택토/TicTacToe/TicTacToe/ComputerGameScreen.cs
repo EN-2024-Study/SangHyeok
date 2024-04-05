@@ -4,14 +4,14 @@ namespace TicTacToe
 {
     internal class ComputerGameScreen : GameScreen
     {
-        GameScreen gameScreen;
-        int startupOrder;
-        bool isErrorNumber;
+        private GameScreen gameScreen;
+        private int startupOrder;
+        private bool isErrornumber;
         public ComputerGameScreen()
         {
             gameScreen = new GameScreen();
             startupOrder = 0;
-            isErrorNumber = false;
+            isErrornumber = false;
         }
 
         public override void PrintScreen()
@@ -30,7 +30,7 @@ namespace TicTacToe
             Console.SetCursorPosition(77, 14);
             Console.Write("눌러주세요: ");
 
-            if (isErrorNumber)
+            if (isErrornumber)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.SetCursorPosition(77, 16);
@@ -66,13 +66,13 @@ namespace TicTacToe
                 else if (1 <= number && number <= 2)
                 {
                     startupOrder = number;
-                    isErrorNumber = false;
+                    isErrornumber = false;
                 }
                 else
-                    isErrorNumber = true;
+                    isErrornumber = true;
             }
             else
-                isErrorNumber = true;
+                isErrornumber = true;
             return true;
         }
 
@@ -81,9 +81,9 @@ namespace TicTacToe
         //    return base.PlayGame(startupOrder);
         //}
 
-        public bool PlayGame()  // 컴퓨터와 사용자 대결 구현
+        public override bool PlayGame()  // 컴퓨터와 사용자 대결 구현
         {
-            int number = base.InputGameNumber();
+            int number = base.InputGamenumber();
             if (number == 0)
                 return false;
 
@@ -96,7 +96,7 @@ namespace TicTacToe
 
                     break;
             }
-            return true;
+            return base.PlayGame();
         }
 
         public int StartupOrder
@@ -104,9 +104,9 @@ namespace TicTacToe
             get { return startupOrder; }
         }
 
-        public bool IsErrorNumber
+        public bool IsErrornumber
         {
-            get { return isErrorNumber; }
+            get { return isErrornumber; }
         }
     }
 }

@@ -11,9 +11,11 @@ namespace TicTacToe
         private int menuNumber;
         private string[] menuNames; // 메뉴 이름들
         private string name;
+        private int nameLength;
 
         public StartScreen()
         {
+            nameLength = 0;
             menuNumber = -1;
             menuNames = new string[] { "㉠  vs Computer", "㉡  vs User", "㉢  ScoreBoard", "㉣  Quit" };
             name = null;
@@ -55,16 +57,28 @@ namespace TicTacToe
                 Console.Write("                                            ");
                 Console.SetCursorPosition(20, 15);
                 Console.WriteLine("  이름을 입력해 주세요.");
+
             }
             else
             {
+                Console.SetCursorPosition(22, 17);
+                for (int i = 0; i < nameLength; i++)
+                    Console.Write(" ");
+
                 Console.Write("                                    ");
                 Console.SetCursorPosition(22, 17);
                 Console.Write("                                    ");
                 Console.SetCursorPosition(20, 15);
                 Console.Write("환영합니다. ");
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write(name + "님");
+                if (name.Length > 15)
+                {
+                    for (int i = 0; i < 15; i++)
+                        Console.Write(name[i]);
+                    Console.Write("...님");
+                }    
+                else
+                    Console.Write(name + "님");
                 Console.ResetColor();
                 Console.SetCursorPosition(20, 18);
                 Console.WriteLine("방향키 또는 한글 키를 눌러 메뉴를 선택 후,");
@@ -88,6 +102,7 @@ namespace TicTacToe
         {
             Console.SetCursorPosition(22, 17);  
             name = Console.ReadLine();
+            nameLength = name.Length;
         }
 
         public int SelectMenuButton()   // 메뉴 선택
@@ -109,6 +124,7 @@ namespace TicTacToe
                     break;
                 case ConsoleKey.D0:
                     name = null;    // 사용자 이름 다시 받기
+                    nameLength = 0;
                     break;
                 case ConsoleKey.R:
                     menuNumber = 0;

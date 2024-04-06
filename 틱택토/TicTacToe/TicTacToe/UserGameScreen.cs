@@ -42,6 +42,7 @@ namespace TicTacToe
         public override bool PlayGame()
         {
             int number = base.InputGameNumber();    // 게임 좌표 입력
+
             if (number == 0)
                 return false;   // 시작화면으로 돌아가기
 

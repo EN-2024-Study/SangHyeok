@@ -264,10 +264,14 @@ namespace TicTacToe
             Console.SetCursorPosition(100, 12);
             string tempInput = Console.ReadLine();
             int number;
-
-            if (tempInput.Length > 0 && '0' <= tempInput[0] && tempInput[0] <= '9')
+            //   && !
+            if (tempInput.Length > 0 && '1' <= tempInput[0] && tempInput[0] <= '9')
             {
+                if ('0' <= tempInput[1] && tempInput[1] <= '9')
+                    return CheckNumberError(tempInput); // 숫자가 두자리 이상일 때 다시 입력받기
+
                 number = (int)tempInput[0] - 48;    // int형으로 변환
+
                 if (number == 0)
                     return 0;   // 시작화면으로 돌아가기
                 else

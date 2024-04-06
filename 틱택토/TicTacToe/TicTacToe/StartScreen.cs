@@ -8,13 +8,13 @@ namespace TicTacToe
 {
     internal class StartScreen : Screen
     {
-        private int menunumber;
+        private int menuNumber;
         private string[] menuNames; // 메뉴 이름들
         private string name;
 
         public StartScreen()
         {
-            menunumber = -1;
+            menuNumber = -1;
             menuNames = new string[] { "㉠  vs Computer", "㉡  vs User", "㉢  ScoreBoard", "㉣  Quit" };
             name = null;
         }
@@ -77,7 +77,7 @@ namespace TicTacToe
             for(int i = 0; i < 4; i++)
             {
                 Console.SetCursorPosition(80, i * 2 + 13);
-                if (menunumber == i)    // 해당 메뉴가 선택되었을 때
+                if (menuNumber == i)    // 해당 메뉴가 선택되었을 때
                     Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write(menuNames[i]);
                 Console.ResetColor();
@@ -98,32 +98,32 @@ namespace TicTacToe
             {
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
-                    return menunumber;  // enter, spacebar가 눌렸을 때 해당 메뉴 반환
+                    return menuNumber;  // enter, spacebar가 눌렸을 때 해당 메뉴 반환
                 case ConsoleKey.DownArrow:
-                    menunumber += 1;
+                    menuNumber += 1;
                     break;
                 case ConsoleKey.UpArrow:
-                    menunumber -= 1;
-                    if (menunumber < 0)
-                        menunumber = 3;
+                    menuNumber -= 1;
+                    if (menuNumber < 0)
+                        menuNumber = 3;
                     break;
                 case ConsoleKey.D0:
                     name = null;    // 사용자 이름 다시 받기
                     break;
                 case ConsoleKey.R:
-                    menunumber = 0;
+                    menuNumber = 0;
                     break;
                 case ConsoleKey.S:
-                    menunumber = 1;
+                    menuNumber = 1;
                     break;
                 case ConsoleKey.E:
-                    menunumber = 2;
+                    menuNumber = 2;
                     break;
                 case ConsoleKey.F:
-                    menunumber = 3;
+                    menuNumber = 3;
                     break;                    
             }
-            menunumber %= 4;
+            menuNumber %= 4;
             Console.SetCursorPosition(110, 20);
             Console.Write(" ");
             return -1;  // enter, spacebar 입력이 아닐 때
@@ -131,8 +131,8 @@ namespace TicTacToe
 
         public int Menunumber
         {
-            get { return menunumber; }
-            set { menunumber = value; }
+            get { return menuNumber; }
+            set { menuNumber = value; }
         }
 
         public string Name

@@ -247,7 +247,7 @@ namespace TicTacToe
             coordinates[index] = value;
         }
 
-        protected List<int> GetEmptycoordinateValues()
+        protected List<int> GetEmptCoordinateValues()
         {
             List<int> list = new List<int>();
 
@@ -259,7 +259,7 @@ namespace TicTacToe
             return list;
         }
 
-        protected int InputGamenumber()
+        protected int InputGameNumber()
         {
             Console.SetCursorPosition(100, 12);
             string tempInput = Console.ReadLine();
@@ -340,7 +340,7 @@ namespace TicTacToe
             if (coordinates[number - 1] != 0)
             {
                 ExpressError("이미 둔 좌표 입니다! 다시 입력하세요.");
-                return InputGamenumber();
+                return InputGameNumber();
             }
             return number;
         }
@@ -349,7 +349,7 @@ namespace TicTacToe
         {
             numberString = s;
             ExpressError("숫자 오류입니다! 다시 입력하세요.");
-            return InputGamenumber();
+            return InputGameNumber();
         }
     }
 }

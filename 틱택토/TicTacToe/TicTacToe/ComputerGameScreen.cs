@@ -22,7 +22,7 @@ namespace TicTacToe
 
         public override bool PlayGame()  // 컴퓨터와 사용자 대결 구현
         {
-            int number = base.InputGamenumber();
+            int number = base.InputGameNumber();
             if (number == 0)
                 return false;
 
@@ -50,7 +50,7 @@ namespace TicTacToe
             }
 
             int bestScore = flag ? -1 : 1;  // computer차례이면 -1으로 초기화, user차례이면 1으로 초기화
-            List<int> emptyCoordinates = base.GetEmptycoordinateValues();    // 비어있는 좌표들
+            List<int> emptyCoordinates = base.GetEmptCoordinateValues();    // 비어있는 좌표들
             foreach (int index in emptyCoordinates)
             {
                 if (flag)   // computer 차례일 때
@@ -71,7 +71,7 @@ namespace TicTacToe
 
         private int PlayGameByComputer()
         {
-            List<int> emptyCoordinates = base.GetEmptycoordinateValues();    // 비어있는 좌표들
+            List<int> emptyCoordinates = base.GetEmptCoordinateValues();    // 비어있는 좌표들
             int bestScore = -1; // -1이 최솟값이므로 -1으로 초기화
             int bestIndex = -1;
 

@@ -9,7 +9,7 @@ namespace TicTacToe
     internal class StartScreen : Screen
     {
         private int menunumber;
-        private string[] menuNames;
+        private string[] menuNames; // 메뉴 이름들
         private string name;
 
         public StartScreen()
@@ -77,24 +77,20 @@ namespace TicTacToe
             for(int i = 0; i < 4; i++)
             {
                 Console.SetCursorPosition(80, i * 2 + 13);
-                if (menunumber == i)
-                {
+                if (menunumber == i)    // 해당 메뉴가 선택되었을 때
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write(menuNames[i]);
-                    Console.ResetColor();
-                }
-                else
-                    Console.Write(menuNames[i]);
+                Console.Write(menuNames[i]);
+                Console.ResetColor();
             }
         }
 
-        public void InputUserName()
+        public void InputUserName()     // 사용자 이름 입력 
         {
-            Console.SetCursorPosition(22, 17);  // 이름 입력 좌표
+            Console.SetCursorPosition(22, 17);  
             name = Console.ReadLine();
         }
 
-        public int SelectMenuButton()
+        public int SelectMenuButton()   // 메뉴 선택
         {
             Console.SetCursorPosition(110, 20);
             ConsoleKeyInfo keyInfo = Console.ReadKey();
@@ -102,7 +98,7 @@ namespace TicTacToe
             {
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
-                    return menunumber;
+                    return menunumber;  // enter, spacebar가 눌렸을 때 해당 메뉴 반환
                 case ConsoleKey.DownArrow:
                     menunumber += 1;
                     break;
@@ -112,7 +108,7 @@ namespace TicTacToe
                         menunumber = 3;
                     break;
                 case ConsoleKey.D0:
-                    name = null;
+                    name = null;    // 사용자 이름 다시 받기
                     break;
                 case ConsoleKey.R:
                     menunumber = 0;
@@ -130,7 +126,7 @@ namespace TicTacToe
             menunumber %= 4;
             Console.SetCursorPosition(110, 20);
             Console.Write(" ");
-            return -1;
+            return -1;  // enter, spacebar 입력이 아닐 때
         }
 
         public int Menunumber

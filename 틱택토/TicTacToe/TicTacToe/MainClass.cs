@@ -8,7 +8,6 @@ namespace TicTacToe
 {
     internal class MainClass
     {
-
         public static void Main(string[] args)
         {
             Console.SetWindowSize(120, 30);

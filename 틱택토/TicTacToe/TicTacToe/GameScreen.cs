@@ -7,9 +7,9 @@ namespace TicTacToe
 {
     internal class GameScreen : Screen
     {
-        private string[,] numberDisplayedToScreen;
-        private string numberString;
-        private int[] coordinates;
+        private string[,] numberDisplayedToScreen;  
+        private string numberString;    // 숫자 입력시 담을 string 자료형
+        private int[] coordinates;  
 
         public GameScreen()
         {
@@ -136,11 +136,25 @@ namespace TicTacToe
             #########################################################
             #########################################################
             ");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(77, 10);
+            Console.Write("                             ");
+            Console.SetCursorPosition(77, 12);
+            Console.Write("                             ");
+            Console.SetCursorPosition(77, 14);
+            Console.Write("                             ");
+            Console.SetCursorPosition(77, 16);
+            Console.Write("                             ");
+            Console.SetCursorPosition(77, 10);
+            Console.Write("1부터 9까지를 입력하여");
+            Console.SetCursorPosition(77, 12);
+            Console.Write("게임을 진행해 주세요 : ");
             Console.ResetColor();
 
             for (int i = 0; i < 9; i++)
             {
-                int x = SetX(i), y = SetY(i);
+                int x = SetX(i), y = SetY(i);   // 좌표들 그릴 때의 좌표
 
                 switch (coordinates[i])
                 {
@@ -172,12 +186,12 @@ namespace TicTacToe
             Console.ResetColor();
         }
 
-        public virtual bool PlayGame()
+        public virtual bool PlayGame()  
         {
             return true;
         }
 
-        public void ExpressEnd()
+        public void ExpressEnd()    
         {
             Console.SetCursorPosition(77, 14);
             Console.Write("                                      ");
@@ -193,10 +207,10 @@ namespace TicTacToe
             Console.SetCursorPosition(77, 20);
             Console.Write("Enter를 눌러주세요.");
             Console.ResetColor();
-            string temp = Console.ReadLine();
+            string temp = Console.ReadLine();   // enter 키를 입력받기 위함
         }
 
-        public int CheckEnd()   // return 값 = 0: 아직 안 끝남, 1: user1승리, 2: user2승리, 3: 무승부
+        public int CheckEnd()   // return 값 = 0: 아직 안 끝남, 1: X 승리, 2: O 승리, 3: 무승부
         {
             for (int i = 0; i < 9; i += 3)
             {
@@ -223,9 +237,9 @@ namespace TicTacToe
             }
 
             foreach(int value in coordinates)
-                if (value == 0)
-                    return 0;
-            return 3;
+                if (value == 0) 
+                    return 0;   // 비어있는 좌표가 있을 경우
+            return 3;   // 비어있는 좌표가 없을 경우
         }
 
         protected void SetCoordinates(int index, int value)
@@ -253,13 +267,13 @@ namespace TicTacToe
 
             if (tempInput.Length > 0 && '0' <= tempInput[0] && tempInput[0] <= '9')
             {
-                number = (int)tempInput[0] - 48;
+                number = (int)tempInput[0] - 48;    // int형으로 변환
                 if (number == 0)
-                    return 0;
+                    return 0;   // 시작화면으로 돌아가기
                 else
-                    return CheckDuplication(number);
+                    return CheckDuplication(number);    // 중복까지 체크 후 반환
             }
-            return CheckNumberError(tempInput);
+            return CheckNumberError(tempInput); // 숫자 오류로 다시 입력
         }
 
         protected void ExpressXOrO(int order, int index)
@@ -289,6 +303,24 @@ namespace TicTacToe
             }
         }
 
+        private int SetX(int i)
+        {
+            if (i == 0 || i == 3 || i == 6)
+                return 14;  // 1열 좌표
+            else if (i == 1 || i == 4 || i == 7)
+                return 32;  // 2열 좌표    
+            return 51;  // 3열 좌표
+        }
+
+        private int SetY(int i)
+        {
+            if (i <= 2) 
+                return 2;   // 1행 좌표
+            else if (i <= 5)
+                return 11;  // 2행 좌표
+            return 20;      // 3행 좌표
+        }
+
         private void ExpressError(string str)
         {
             Console.SetCursorPosition(100, 12);
@@ -299,25 +331,8 @@ namespace TicTacToe
             Console.Write("                                      ");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(77, 14);
-            Console.Write(str);
+            Console.Write(str); // 오류 표시
             Console.ResetColor();
-        }
-        private int SetX(int i)
-        {
-            if (i == 0 || i == 3 || i == 6)
-                return 14;
-            else if (i == 1 || i == 4 || i == 7)
-                return 32;
-            return 51;
-        }
-
-        private int SetY(int i)
-        {
-            if (i <= 2)
-                return 2;
-            else if (i <= 5)
-                return 11;
-            return 20;
         }
 
         private int CheckDuplication(int number)

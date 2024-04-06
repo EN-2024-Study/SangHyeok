@@ -9,7 +9,7 @@ namespace TicTacToe
 {
     internal class ScoreBoardScreen : Screen
     {
-        private List<string> scoreList;
+        private List<string> scoreList; // 진행했던 점수들을 담을 List
         
         public ScoreBoardScreen()
         {
@@ -33,7 +33,7 @@ namespace TicTacToe
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             int y = 9;
-            for(int i = 0; i < scoreList.Count; i++)
+            for(int i = 0; i < scoreList.Count; i++)    // 점수 표시
             {
                 Console.SetCursorPosition(8, y);
                 Console.Write(scoreList[i]);
@@ -42,7 +42,7 @@ namespace TicTacToe
             Console.ResetColor();
         }
 
-        public bool InputBackMenu()
+        public bool InputBackMenu() // 뒤로 돌아가기 입력
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 
@@ -51,7 +51,7 @@ namespace TicTacToe
             return true;
         }
 
-        public void SetScore(int type, int score1, int score2)
+        public void SetScore(int type, int score1, int score2) 
         {
             scoreList.Add("GAME " + scoreList.Count + "   ");
             switch(type)

@@ -8,6 +8,6 @@ namespace TicTacToe
 {
     internal abstract class Screen
     {
-        public abstract void PrintScreen();
+        public abstract void PrintScreen(); // 화면 구현
     }
 }

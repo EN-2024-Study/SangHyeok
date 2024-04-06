@@ -125,14 +125,8 @@ namespace TicTacToe
             }
         }
 
-        private bool RecordScore(int type, int checkEnd)
-        {
-            if (scoreBoardScreen.GetScoreListCount() == 5)
-            {
-                SwitchScreen(3);
-                return false;
-            }    
-
+        private void RecordScore(int type, int checkEnd)
+        {  
             int score1 = 0, score2 = 0;
             if (checkEnd == 1)
                 score1 = 1;
@@ -148,7 +142,6 @@ namespace TicTacToe
                     scoreBoardScreen.SetScore(2, score1, score2);
                     break;
             }
-            return true;
         }
     }
 }

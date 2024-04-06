@@ -86,11 +86,12 @@ namespace TicTacToe
             base.ExpressXOrO(0, number - 1);
 
             int computerIndex = PlayGameByComputer();
+            if (computerIndex == -1)    // computer가 더이상 둘 곳이 없을 때
+                return true;
+
             base.ExpressXOrO(1, computerIndex);
             return base.PlayGame();
         }
-
-
 
         private int MiniMax(bool flag)  // 미니맥스 알고리즘
         {
@@ -128,8 +129,8 @@ namespace TicTacToe
         private int PlayGameByComputer()
         {
             List<int> emptyCoordinates = base.GetEmptycoordinateValues();    // 비어있는 좌표들
-            int bestScore = -1; // -1이 최솟값이기 때문에 -1으로 초기화
-            int bestIndex = 0;
+            int bestScore = -1; // -1이 최솟값이므로 -1으로 초기화
+            int bestIndex = -1;
 
             foreach(int index in emptyCoordinates)
             {

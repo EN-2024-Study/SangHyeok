@@ -10,12 +10,10 @@ namespace TicTacToe
     internal class ScoreBoardScreen : Screen
     {
         private List<string> scoreList;
-        private int y;
         
         public ScoreBoardScreen()
         {
             scoreList = new List<string>();
-            y = 10;
         }
         public override void PrintScreen()
         {
@@ -34,9 +32,10 @@ namespace TicTacToe
             Console.Write("숫자 0 을 눌러주세요.");
 
             Console.ForegroundColor = ConsoleColor.Yellow;
+            int y = 9;
             for(int i = 0; i < scoreList.Count; i++)
             {
-                Console.SetCursorPosition(10, y);
+                Console.SetCursorPosition(8, y);
                 Console.Write(scoreList[i]);
                 y += 4;
             }
@@ -54,21 +53,16 @@ namespace TicTacToe
 
         public void SetScore(int type, int score1, int score2)
         {
+            scoreList.Add("GAME " + scoreList.Count + "   ");
             switch(type)
             {
                 case 1:
-                    scoreList.Add("★USER ★   ★COMPUTER★\n");
+                    scoreList[scoreList.Count - 1] += "★ USER  : " + score1 + " ★    " + "★COMPUTER : " + score2 + " ★";
                     break;
                 case 2:
-                    scoreList.Add("★USER1★   ★ USER2 ★\n");
+                    scoreList[scoreList.Count - 1] += "★ USER1 : " + score1 + " ★    " + "★ USER2   : " + score2 + " ★";
                     break;
             }
-            scoreList[scoreList.Count - 1] += "             " + score1 + "             " + score2;
-        }
-
-        public int GetScoreListCount()
-        {
-            return scoreList.Count;
         }
     }
 }

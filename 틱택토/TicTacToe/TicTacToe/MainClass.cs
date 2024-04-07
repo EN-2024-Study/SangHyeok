@@ -17,18 +17,15 @@ namespace TicTacToe
             Console.SetWindowSize(120, 30);
             Console.CursorVisible = false;
 
-            //while(!exit)
-            //{
-                ScreenControl screen = new ScreenControl();
-                screen.Control();
-            //}
+            ScreenControl screen = new ScreenControl();
+            screen.Control();
         }
 
         //private static void Handler(object sender, ConsoleCancelEventArgs args)
         //{
         //    Console.WriteLine("test");
         //    args.Cancel = true;
-        //    exit = true;
+        //    //exit = true;
         //}
     }
 }

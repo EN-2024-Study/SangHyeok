@@ -281,6 +281,8 @@ namespace TicTacToe
 
         protected void ExpressXOrO(int order, int index)
         {
+            Console.SetCursorPosition(77, 14);
+            Console.Write("                                      ");
             switch (order)
             {
                 case 0:

@@ -128,10 +128,15 @@ namespace TicTacToe
         private void RecordScore(int type, int checkEnd)    // 점수 기록
         {  
             int score1 = 0, score2 = 0;
-            if (checkEnd == 1)
-                score1 = 1;
-            else
-                score2 = 1;
+            switch(checkEnd)
+            {
+                case 1:
+                    score1 = 1;
+                    break;
+                case 2:
+                    score2 = 1;
+                    break;
+            }
 
             switch (type)
             {

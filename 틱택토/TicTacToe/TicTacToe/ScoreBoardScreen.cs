@@ -53,7 +53,7 @@ namespace TicTacToe
 
         public void SetScore(int type, int score1, int score2) 
         {
-            scoreList.Add("GAME " + scoreList.Count + "   ");
+            scoreList.Add("GAME " + (scoreList.Count + 1) + "   ");
             switch(type)
             {
                 case 1:

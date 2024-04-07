@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace TicTacToe
 {
@@ -28,13 +29,12 @@ namespace TicTacToe
         {
             while (!quit)
             {
-                Console.CursorVisible = false;
                 if (isStartScreen)  // 시작화면
                 {
                     startScreen.PrintScreen();
                     if (startScreen.Name == null)   // 사용자 이름을 아직 안 정했을 때
                     {
-                        startScreen.InputUserName();
+                        startScreen.InputUserName(); 
                         startScreen.Menunumber = 0; 
                         continue;
                     }

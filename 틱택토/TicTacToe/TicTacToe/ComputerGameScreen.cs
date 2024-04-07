@@ -23,6 +23,7 @@ namespace TicTacToe
         public override bool PlayGame()  // 컴퓨터와 사용자 대결 구현
         {
             int number = base.InputGameNumber();
+
             if (number == 0)
                 return false;
 

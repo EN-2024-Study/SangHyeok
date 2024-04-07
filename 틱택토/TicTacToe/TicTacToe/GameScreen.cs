@@ -7,7 +7,7 @@ namespace TicTacToe
 {
     internal class GameScreen : Screen
     {
-        private string[,] numberDisplayedToScreen;  
+        private string[,] numberDisplayed;  
         private string numberString;    // 숫자 입력시 담을 string 자료형
         private int[] coordinates;  
 
@@ -15,7 +15,7 @@ namespace TicTacToe
         {
             numberString = null;
             coordinates = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            numberDisplayedToScreen = new string[9, 7]
+            numberDisplayed = new string[9, 7]
             {
                 {
                     "       1        ",
@@ -169,7 +169,7 @@ namespace TicTacToe
                 for (int j = 0; j < 7; j++)
                 {
                     Console.SetCursorPosition(x, y + j + 1);
-                    Console.Write(numberDisplayedToScreen[i, j]);
+                    Console.Write(numberDisplayed[i, j]);
                 }
                 Console.ResetColor();
             }
@@ -287,23 +287,23 @@ namespace TicTacToe
             {
                 case 0:
                     coordinates[index] = 1;
-                    numberDisplayedToScreen[index, 0] = "X              X";
-                    numberDisplayedToScreen[index, 1] = " XX          XX ";
-                    numberDisplayedToScreen[index, 2] = "   XX      XX   ";
-                    numberDisplayedToScreen[index, 3] = "      XXXX      ";
-                    numberDisplayedToScreen[index, 4] = "   XX      XX   ";
-                    numberDisplayedToScreen[index, 5] = " XX          XX ";
-                    numberDisplayedToScreen[index, 6] = "X              X";
+                    numberDisplayed[index, 0] = "X              X";
+                    numberDisplayed[index, 1] = " XX          XX ";
+                    numberDisplayed[index, 2] = "   XX      XX   ";
+                    numberDisplayed[index, 3] = "      XXXX      ";
+                    numberDisplayed[index, 4] = "   XX      XX   ";
+                    numberDisplayed[index, 5] = " XX          XX ";
+                    numberDisplayed[index, 6] = "X              X";
                     break;
                 case 1:
                     coordinates[index] = 2;
-                    numberDisplayedToScreen[index, 0] = "       OO       ";
-                    numberDisplayedToScreen[index, 1] = "    OO    OO    ";
-                    numberDisplayedToScreen[index, 2] = "  OO        OO  ";
-                    numberDisplayedToScreen[index, 3] = "OO            OO";
-                    numberDisplayedToScreen[index, 4] = "  OO        OO  ";
-                    numberDisplayedToScreen[index, 5] = "    OO    OO    ";
-                    numberDisplayedToScreen[index, 6] = "       OO       ";
+                    numberDisplayed[index, 0] = "       OO       ";
+                    numberDisplayed[index, 1] = "    OO    OO    ";
+                    numberDisplayed[index, 2] = "  OO        OO  ";
+                    numberDisplayed[index, 3] = "OO            OO";
+                    numberDisplayed[index, 4] = "  OO        OO  ";
+                    numberDisplayed[index, 5] = "    OO    OO    ";
+                    numberDisplayed[index, 6] = "       OO       ";
                     break;
             }
         }

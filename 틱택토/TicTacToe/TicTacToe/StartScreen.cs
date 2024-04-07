@@ -57,18 +57,20 @@ namespace TicTacToe
                 Console.Write("                                            ");
                 Console.SetCursorPosition(20, 15);
                 Console.WriteLine("  이름을 입력해 주세요.");
-
             }
             else
             {
+                Console.SetCursorPosition(20, 15);
+                Console.Write("                                    ");
                 Console.SetCursorPosition(22, 17);
                 for (int i = 0; i < nameLength; i++)
                     Console.Write(" ");
-
                 Console.Write("                                    ");
                 Console.SetCursorPosition(22, 17);
                 Console.Write("                                    ");
                 Console.SetCursorPosition(20, 15);
+
+
                 Console.Write("환영합니다. ");
                 Console.ForegroundColor = ConsoleColor.Blue;
                 if (name.Length > 15)

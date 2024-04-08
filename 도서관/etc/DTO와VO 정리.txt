@@ -1,9 +1,0 @@
-DTO
-로직을 가지지 않는 데이터 객체 -> getter와 setter의 method만 존재
-인스턴스 개념임 -> 가변의 성격을 가지고 있음
-
-VO
-리터럴 개념임 -> 단순히 값을 표현하기 위한 불변 클래스(Read-Only)
-모델 안에서 사용되는 값 객체로서, 해당 데이터에 대한 유효성을 검사하는데 사용
-getter method만 존재(setter method 존재 X)
-

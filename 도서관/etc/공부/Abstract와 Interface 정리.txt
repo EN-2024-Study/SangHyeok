@@ -1,0 +1,14 @@
+Abstract class
+인스턴스 생성 X
+멤버 변수, 추상 메소드가 아닌 일반 method 포함 O
+자식 클래스는 모든 method를 모두 overriding 해야 함
+다중 상속 X, 계층 상속 O
+
+Interface
+추상 method와 상수만을 멤버로 가질 수 있음
+멤버 변수 = public static final
+추상 method = public abstract
+interface는 interface로부터만 상속 가능 클래스에서는 interface 다중 상속 가능
+장점: 개발 시간 단축(method를 호출하는 쪽에서는 선언부만 알면 되기 때문)(?), 표준화 가능,
+서로 관계없는 클래스들에게 관계를 맺어 줄 수 있음, 독립적인 프로그래밍 가능
+

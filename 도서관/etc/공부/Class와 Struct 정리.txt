@@ -1,0 +1,7 @@
+Class
+상속 가능
+참조 타입(Reference Type) -> heap memory에 저장 후 주소 값을 가짐
+
+Struct
+상속 불가능
+값 타입(Value Type) -> stack memory에 값 저장

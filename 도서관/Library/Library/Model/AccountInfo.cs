@@ -13,6 +13,18 @@ namespace Library.Model
         private string address;
         private List<BookInfo> RentalBooks;
 
+
+        public AccountInfo()
+        {
+            id = null;
+            password = 0;
+            name = null;
+            age = 0;
+            phoneNumber = null;
+            address = null;
+            RentalBooks = new List<BookInfo>();
+        }
+
         public AccountInfo(string id, int password)
         {
             RentalBooks = new List<BookInfo>();

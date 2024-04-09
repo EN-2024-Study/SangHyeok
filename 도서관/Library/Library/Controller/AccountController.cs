@@ -41,12 +41,38 @@ namespace Library.Controller
                 return;
             }
 
-            accountScreen.PrintSignUpWindow();
-            for (int i = 0; i < 6; i++)
+            Console.CursorVisible = true;
+            Console.SetCursorPosition(36, 21);
+            bool isInput = true;
+            int menuValue = 0;
+            while (isInput)
             {
-                string str = inputController.InputSignUp(i);
-
+                accountScreen.PrintSignUpWindow(menuValue);
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        menuValue--;
+                        if (menuValue < 0)
+                            menuValue = 6;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        menuValue++;
+                        break;
+                    case ConsoleKey.Enter:
+                        if (menuValue == 6)
+                        {
+                            // enter일 때
+                        }
+                        menuValue++;
+                        break;
+                    default:
+                        string info = inputController.InputSignUp(menuValue % 7);
+                        break;
+                }
+                menuValue %= 7;
             }
+            Console.CursorVisible = false;
         }
 
 

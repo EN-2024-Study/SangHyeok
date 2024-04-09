@@ -22,19 +22,45 @@ namespace Library.View
             Console.Write("PASSWORD : ");
         }
 
-        public void PrintSignUpWindow()
+        public void PrintSignUpWindow(int menuValue)
         {
             ClearConsoleBottomPart();
-            Console.SetCursorPosition(10, 20);
-            Console.Write(@"
-User ID          (1 ~ 15 글자)    :
-User PW          (1 ~ 4 글자)      : 
-User Name        (1 ~ 4 글자)     :
-User Age         (1 ~ 200세)     :
-User PhoneNumber (010-xxxx-xxxx) :
-User Address     (1 ~ 20 글자)    :
-");
 
+            Console.SetCursorPosition(5, 21);
+            if (menuValue == (int)Constants.User.Id)
+                Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("User ID          (1 ~ 15 글자)   :");
+            Console.ResetColor();
+
+            Console.SetCursorPosition(5, 22);
+            if (menuValue == (int)Constants.User.Password)
+                Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("User PW          (1 ~ 4 글자)    :                            ENTER");
+            Console.ResetColor();
+
+            Console.SetCursorPosition(5, 23);
+            if (menuValue == (int)Constants.User.Name)
+                Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("User Name        (1 ~ 4 글자)    :");
+            Console.ResetColor();
+
+            Console.SetCursorPosition(5, 24);
+            if (menuValue == (int)Constants.User.Age)
+                Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("User Age         (1 ~ 200세)     :");
+            Console.ResetColor();
+
+            Console.SetCursorPosition(5, 25);
+            if (menuValue == (int)Constants.User.PhoneNumber)
+                Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("User PhoneNumber (010-xxxx-xxxx) :");
+            Console.ResetColor();
+
+            Console.SetCursorPosition(5, 26);
+            if (menuValue == (int)Constants.User.PhoneNumber)
+                Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("User Address     (1 ~ 20 글자)   :");
+            Console.ResetColor();
         }
 
         private void ClearConsoleBottomPart()

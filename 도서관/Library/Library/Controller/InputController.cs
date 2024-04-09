@@ -1,4 +1,5 @@
-﻿using Library.Utility;
+﻿using Library.Model;
+using Library.Utility;
 using Library.View;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace Library.Controller
     public class InputController
     {
         private ExceptionController exceptionController;
+        private AccountInfo accountInfo;
 
         public InputController()
         {
             exceptionController = new ExceptionController();
+            accountInfo = new AccountInfo();
         }
 
         public string InputLogIn(int coordinateX, int coordinateY, int length, bool isPassword)
@@ -75,27 +78,34 @@ namespace Library.Controller
         {
             string str = null;
             int lengthLimit = 0;
-            switch(infoNumber)
+
+            switch (infoNumber)
             {
                 case (int)Constants.User.Id:
-
+                    lengthLimit = 15;
                     break;
                 case (int)Constants.User.Password:
-
-                    break;
                 case (int)Constants.User.Name:
-
+                    lengthLimit = 4;
                     break;
                 case (int)Constants.User.Age:
-
+                    lengthLimit = 200;
                     break;
                 case (int)Constants.User.PhoneNumber:
-
+                    lengthLimit = 13;
                     break;
                 case (int)Constants.User.Address:
-
+                    lengthLimit = 20;
                     break;
             }
+
+            char[] inputString = new char[lengthLimit];
+            for(int i = 0; i < lengthLimit; i++)
+            {
+
+            }
+
+
 
             return str;
         }

@@ -35,5 +35,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controller\AccountController.cs" />
+    <Compile Include="Controller\MenuController.cs" />
+    <Compile Include="Model\AccountInfo.cs" />
+    <Compile Include="Model\AccountsDto.cs" />
+    <Compile Include="Model\BookInfo.cs" />
+    <Compile Include="Model\BooksDto.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Utility\Constants.cs" />
+    <Compile Include="View\AccountScreen.cs" />
+    <Compile Include="View\MenuScreen.cs" />
+    <Compile Include="View\BookScreen.cs" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Library.Controller;
+using Library.Utility;
+using System;
 
 namespace Library
 {
@@ -11,7 +9,8 @@ namespace Library
 
         public static void Main(string[] args)
         {
-
+            MenuController menuController = new MenuController();
+            menuController.Run();
         }
     }
 }

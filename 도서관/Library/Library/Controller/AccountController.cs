@@ -6,33 +6,28 @@ namespace Library.Controller
 {
     public class AccountController
     {
-
+        private InputController inputController;
         private AccountScreen accountScreen;
-        private AccountsDto accounts;
-        private ExceptionHandler handler;
 
         public AccountController()
         {
+            this.inputController = new InputController();
             this.accountScreen = new AccountScreen();
-            this.accounts = new AccountsDto();
-            this.handler = new ExceptionHandler();
         }
 
-        public void InputLogIn()    // 박윤경
+        public void LogIn()    
         {
-            bool isLogin = true;
             accountScreen.PrintLogInWindow();
-            while(isLogin)
-            {
-                Console.SetCursorPosition(15, 23);
-                string id = handler.HandleInputException(15, false);
-                if (id == null)
-                    continue;
-                Console.SetCursorPosition(15, 25);
-                string password = handler.HandleInputException(15, true);
-                if (password != null)
-                    isLogin = false;
-            }
+
+            string id = inputController.InputLogIn(15, 23, 15, false);
+            if (id == null)
+                return;
+            string password = inputController.InputLogIn(15, 25, 4, true);
+            if (password == null)
+                return;
+
+
+
         }
 
         public void InputSignUp()

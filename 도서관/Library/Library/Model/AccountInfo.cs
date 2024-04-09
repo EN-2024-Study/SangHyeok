@@ -5,7 +5,7 @@ namespace Library.Model
 {
     public class AccountInfo
     {
-        private int id;
+        private string id;
         private int password;
         private string name;
         private int age;
@@ -13,14 +13,14 @@ namespace Library.Model
         private string address;
         private List<BookInfo> RentalBooks;
 
-        public AccountInfo(int id, int password)
+        public AccountInfo(string id, int password)
         {
             RentalBooks = new List<BookInfo>();
             this.id = id;
             this.password = password;
         }
 
-        public AccountInfo(int id, int password, string name, 
+        public AccountInfo(string id, int password, string name, 
             int age, string phoneNumber, string address) : this(id, password)
         {
             this.name = name;
@@ -29,7 +29,7 @@ namespace Library.Model
             this.address = address;
         }
 
-        public int Id
+        public string Id
         {
             get { return id; }
             set { id = value; }

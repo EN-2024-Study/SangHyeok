@@ -34,16 +34,16 @@ namespace Library.Controller
             else
             {
                 SelectLogInMenu();
-                switch (menuValue)
+                switch (menuValue % 3)
                 {
-                    case (int)Constants.LogInMenu.GoBack:
-                        Run();
-                        break;
                     case (int)Constants.LogInMenu.LogIn:
-                        accountController.InputLogIn();
+                        accountController.LogIn();
                         break;
                     case (int)Constants.LogInMenu.SignUp:
                         accountController.InputSignUp();
+                        break;
+                    case (int)Constants.LogInMenu.GoBack:
+                        Run();
                         break;
                 }
             }

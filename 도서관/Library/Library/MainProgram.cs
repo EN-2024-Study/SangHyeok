@@ -4,7 +4,7 @@ using System;
 
 namespace Library
 {
-    public class Program
+    public class MainProgram
     {
 
         public static void Main(string[] args)

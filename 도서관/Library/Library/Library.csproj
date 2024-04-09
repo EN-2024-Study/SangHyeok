@@ -42,7 +42,7 @@
     <Compile Include="Model\AccountsDto.cs" />
     <Compile Include="Model\BookInfo.cs" />
     <Compile Include="Model\BooksDto.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="MainProgram.cs" />
     <Compile Include="Utility\Constants.cs" />
     <Compile Include="View\AccountScreen.cs" />
     <Compile Include="View\MenuScreen.cs" />

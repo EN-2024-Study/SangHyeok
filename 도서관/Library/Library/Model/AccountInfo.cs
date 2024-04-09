@@ -13,10 +13,16 @@ namespace Library.Model
         private string address;
         private List<BookInfo> RentalBooks;
 
-        public AccountInfo(int id, int password, string name, int age, string phoneNumber, string address)
+        public AccountInfo(int id, int password)
         {
+            RentalBooks = new List<BookInfo>();
             this.id = id;
             this.password = password;
+        }
+
+        public AccountInfo(int id, int password, string name, 
+            int age, string phoneNumber, string address) : this(id, password)
+        {
             this.name = name;
             this.age = age;
             this.phoneNumber = phoneNumber;

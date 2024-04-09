@@ -26,11 +26,10 @@ namespace Library.Utility
             GoBack
         }
 
-
-        public enum User
+        public enum Error
         {
-            User,
-            Manager
+            Length,
+            Regex
         }
     }
 }

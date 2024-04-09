@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Utility;
+using System;
 
 namespace Library.View
 {
@@ -17,7 +18,7 @@ namespace Library.View
             Console.ResetColor();
             Console.SetCursorPosition(10, 23);
             Console.Write("ID : ");
-            Console.SetCursorPosition(3, 25);
+            Console.SetCursorPosition(4, 25);
             Console.Write("PASSWORD : ");
         }
 
@@ -38,6 +39,29 @@ namespace Library.View
                 }
             }
             Console.SetCursorPosition(20, 20);
+        }
+
+        public void PrintException(int errorNumber)
+        {
+            Console.SetCursorPosition(4, 27);
+            Console.ForegroundColor = ConsoleColor.Red;
+            switch (errorNumber)
+            {
+                case (int)Constants.Error.Length:
+                    Console.Write("입력 길이가 맞지 않습니다.");
+                    break;
+                case 1:
+
+                    break;
+            }
+
+            Console.SetCursorPosition(4, 28);
+            Console.Write("다시 입력하여 주세요.");
+            Console.SetCursorPosition(15, 23);
+            Console.Write("                ");
+            Console.SetCursorPosition(15, 25);
+            Console.Write("                ");
+            Console.ResetColor();
         }
     }
 }

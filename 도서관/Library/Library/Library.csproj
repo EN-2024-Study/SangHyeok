@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AccountController.cs" />
+    <Compile Include="Controller\ExceptionHandler.cs" />
     <Compile Include="Controller\MenuController.cs" />
     <Compile Include="Model\AccountInfo.cs" />
     <Compile Include="Model\AccountsDto.cs" />

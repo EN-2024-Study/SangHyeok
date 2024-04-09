@@ -28,7 +28,7 @@ namespace Library.Controller
             for (int i = 0; i < length; i++)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
-                switch(keyInfo.Key)
+                switch (keyInfo.Key)
                 {
                     case ConsoleKey.Enter:
                         isBreak = true;
@@ -55,14 +55,48 @@ namespace Library.Controller
 
             if (!isBreak)
             {
-                if (exceptionController.HandleInputException())
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                if (keyInfo.Key != ConsoleKey.Enter)
+                {
+                    exceptionController.HandleInputException();
                     return InputLogIn(coordinateX, coordinateY, length, isPassword);
+                }
             }
-            
+
             for (int i = 0; i < length; i++)
                 str += inputString[i];
 
             Console.CursorVisible = false;
+            return str;
+        }
+
+
+        public string InputSignUp(int infoNumber)
+        {
+            string str = null;
+            int lengthLimit = 0;
+            switch(infoNumber)
+            {
+                case (int)Constants.User.Id:
+
+                    break;
+                case (int)Constants.User.Password:
+
+                    break;
+                case (int)Constants.User.Name:
+
+                    break;
+                case (int)Constants.User.Age:
+
+                    break;
+                case (int)Constants.User.PhoneNumber:
+
+                    break;
+                case (int)Constants.User.Address:
+
+                    break;
+            }
+
             return str;
         }
     }

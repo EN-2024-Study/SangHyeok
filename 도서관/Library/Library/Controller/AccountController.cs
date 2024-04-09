@@ -1,6 +1,7 @@
 ﻿using Library.View;
 using Library.Model;
 using System;
+using Library.Utility;
 
 namespace Library.Controller
 {
@@ -8,11 +9,13 @@ namespace Library.Controller
     {
         private InputController inputController;
         private AccountScreen accountScreen;
+        private ExceptionController exceptionController;
 
         public AccountController()
         {
             this.inputController = new InputController();
             this.accountScreen = new AccountScreen();
+            this.exceptionController = new ExceptionController();
         }
 
         public void LogIn()    
@@ -30,10 +33,20 @@ namespace Library.Controller
 
         }
 
-        public void InputSignUp()
+        public void SignUp(int modeValue)
         {
+            if (modeValue == (int)Constants.ModeMenu.ManagerMode)
+            {
+                exceptionController.HandleSignUpException();
+                return;
+            }
+
             accountScreen.PrintSignUpWindow();
-            
+            for (int i = 0; i < 6; i++)
+            {
+                string str = inputController.InputSignUp(i);
+
+            }
         }
 
 

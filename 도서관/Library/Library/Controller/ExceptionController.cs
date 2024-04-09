@@ -17,15 +17,18 @@ namespace Library.Controller
             exceptionScreen = new ExceptionScreen();
         }
 
-        public bool HandleInputException()
+        public void HandleInputException()
         {
+            exceptionScreen.PrintInputException((int)Constants.Error.Length);
+        }
+
+        public void HandleSignUpException()
+        {
+            exceptionScreen.PrintSignUpException();
             ConsoleKeyInfo keyInfo = Console.ReadKey();
-            if (keyInfo.Key != ConsoleKey.Enter)
-            {
-                exceptionScreen.PrintException((int)Constants.Error.Length);
-                return true;
-            }
-            return false;
+            if (keyInfo.Key == ConsoleKey.Escape)
+                return;
+            HandleSignUpException();
         }
 
     }

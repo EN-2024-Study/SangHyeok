@@ -5,11 +5,10 @@ namespace Library.Utility
 {
     public class Constants
     {
-
         public enum YesNo
         {
-            Yes,
-            No
+            No,
+            Yes
         }
 
         public enum ModeMenu
@@ -30,6 +29,17 @@ namespace Library.Utility
         {
             Length,
             Regex
+        }
+
+
+        public enum User
+        {
+            Id,
+            Password,
+            Name,
+            Age,
+            PhoneNumber,
+            Address
         }
     }
 }

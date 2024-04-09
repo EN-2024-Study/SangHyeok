@@ -25,7 +25,16 @@ namespace Library.View
         public void PrintSignUpWindow()
         {
             ClearConsoleBottomPart();
-            Console.Write("test");
+            Console.SetCursorPosition(10, 20);
+            Console.Write(@"
+User ID          (1 ~ 15 글자)    :
+User PW          (1 ~ 4 글자)      : 
+User Name        (1 ~ 4 글자)     :
+User Age         (1 ~ 200세)     :
+User PhoneNumber (010-xxxx-xxxx) :
+User Address     (1 ~ 20 글자)    :
+");
+
         }
 
         private void ClearConsoleBottomPart()

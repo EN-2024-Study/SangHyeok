@@ -10,6 +10,7 @@ namespace Library.Controller
         private MenuScreen menuScreen;
         private AccountController accountController;
         private int menuValue;
+        private int modeValue;
 
         public MenuController()
         {
@@ -25,27 +26,18 @@ namespace Library.Controller
             menuValue = 0;
 
             SelectModeMenu();
-            if (menuValue % 3 == (int)Constants.ModeMenu.Quit)
+            switch (menuValue % 3)
             {
-                SelectYesNoMenu();
-                if (menuValue % 2 == (int)Constants.YesNo.No)
-                    Run();
-            }
-            else
-            {
-                SelectLogInMenu();
-                switch (menuValue % 3)
-                {
-                    case (int)Constants.LogInMenu.LogIn:
-                        accountController.LogIn();
-                        break;
-                    case (int)Constants.LogInMenu.SignUp:
-                        accountController.InputSignUp();
-                        break;
-                    case (int)Constants.LogInMenu.GoBack:
-                        Run();
-                        break;
-                }
+                case (int)Constants.ModeMenu.Quit:
+                    SelectYesNoMenu();
+                    if (menuValue % 2 == (int)Constants.YesNo.Yes)
+                        return;
+                    break;
+                case (int)Constants.ModeMenu.UserMode:
+                case (int)Constants.ModeMenu.ManagerMode:
+                    modeValue = menuValue;
+                    SelectLogInMenu();
+                    break;
             }
         }
 
@@ -70,6 +62,21 @@ namespace Library.Controller
             {
                 menuScreen.PrintLogInMenu(menuValue % 3);
                 isMenuSelect = InputMenu();
+            }
+
+            switch (menuValue % 3)
+            {
+                case (int)Constants.LogInMenu.LogIn:
+                    accountController.LogIn();
+                    Run();
+                    break;
+                case (int)Constants.LogInMenu.SignUp:
+                    accountController.SignUp(modeValue);
+                    Run();
+                    break;
+                case (int)Constants.LogInMenu.GoBack:
+                    Run();
+                    break;
             }
         }
 

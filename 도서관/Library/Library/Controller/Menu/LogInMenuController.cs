@@ -1,4 +1,5 @@
-﻿using Library.Utility;
+﻿using Library.Controller.Task;
+using Library.Utility;
 using Library.View;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace Library.Controller
     {
         private int modeValue;
         private ModeMenuController modeMenuController;
+        private UserAccountTaskController userAccountTask;
 
-        public LogInMenuController(int value) : base()
+        public LogInMenuController(int modeValue) : base()
         {
-            modeValue = value;
+            this.modeValue = modeValue;
+            this.userAccountTask = new UserAccountTaskController();
         }
 
         public override void Run()
@@ -33,11 +36,11 @@ namespace Library.Controller
 
             switch(menuValue)   
             {
-                case (int)Constants.LogInMenu.LogIn:    // 로그인 기능으로 가기
-
+                case (int)Constants.LogInMenu.LogIn:   
+                    userAccountTask.LogIn();
                     break;
                 case (int)Constants.LogInMenu.SignUp:   // 회원가입(user인지 manager인지 체크)기능으로 가기
-
+                    userAccountTask.SignUp(modeValue);
                     break;
                 case (int)Constants.LogInMenu.GoBack:
                     modeMenuController = new ModeMenuController();

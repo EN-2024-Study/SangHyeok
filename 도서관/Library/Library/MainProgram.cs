@@ -9,6 +9,9 @@ namespace Library
 
         public static void Main(string[] args)
         {
+            Console.SetWindowSize(100, 40);
+            Console.CursorVisible = false;
+
             ModeMenuController modeMenuController = new ModeMenuController();
             modeMenuController.Run();
         }

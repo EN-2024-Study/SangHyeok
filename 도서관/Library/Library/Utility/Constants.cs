@@ -50,6 +50,16 @@ namespace Library.Utility
             InfoModify
         }
 
+        public enum ManagerMenu
+        {
+            BookSearch,
+            BookAdd,
+            BookDelete,
+            BookModify,
+            UserControl,
+            RentalHistory
+        }
+
         public enum InfoMenu
         {
             Modify,

@@ -6,16 +6,12 @@ namespace Library.View
 {
     public class MenuScreen
     {
-        private Tuple<int, int> coordinate;
-
-        public MenuScreen()
-        {
-            coordinate = new Tuple<int, int>(20, 20);
-        }
-
         public void PrintThreeMenu(int modeValue, int menuValue)
         {
+            Console.Clear();
+
             string[] str = new string[3];
+            Tuple<int, int> coordinate = new Tuple<int, int>(20, 25);
             switch (modeValue)
             {
                 case (int)Constants.Type.UserManager:
@@ -45,7 +41,6 @@ namespace Library.View
                     break;
             }
 
-            Console.Clear();
             for (int i = 0; i < 3; i++)
             {
                 Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i * 2);
@@ -59,12 +54,15 @@ namespace Library.View
             Console.Write("방향키를 눌러 모드를");
             Console.SetCursorPosition(coordinate.Item1 + 30, coordinate.Item2 + 2);
             Console.Write("선택해 주세요.");
+
+            Console.CursorVisible = false;
         }
 
         public void PrintLibraryMenu(int currentMenuValue, int modeValue)
         {
             Console.Clear();
-            Tuple<int, int> currentCoordinate = new Tuple<int, int>(coordinate.Item1 + 50, coordinate.Item2 - 5);
+
+            Tuple<int, int> coordinate = new Tuple<int, int>(40, 15);
             string[] str = new string[6];
             str[0] = "도서 조회";
             switch (modeValue)
@@ -87,7 +85,7 @@ namespace Library.View
 
             for(int i = 0; i < 6; i++)
             {
-                Console.SetCursorPosition(currentCoordinate.Item1, currentCoordinate.Item2 + i);
+                Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i);
                 if (currentMenuValue == i)
                     Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write(str[i]);

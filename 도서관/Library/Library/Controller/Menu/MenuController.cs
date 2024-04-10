@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Controller
 {
-    public abstract class MenuController
+    public class MenuController
     {
         protected MenuScreen menuScreen;
         protected int menuValue;
@@ -18,9 +18,9 @@ namespace Library.Controller
             menuValue = 0;
         }
 
-        public abstract void Run();
+        public virtual void Run() { }
 
-        protected bool SelectMenu()
+        public bool SelectMenu()
         {
             Console.CursorVisible = false;
             ConsoleKeyInfo keyInfo = Console.ReadKey();

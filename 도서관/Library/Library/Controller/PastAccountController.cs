@@ -21,7 +21,7 @@
 //            this.accountsDto = new PastAccountsDto();
 //        }
 
-//        public void LogIn()    
+//        public void LogIn()
 //        {
 //            accountScreen.PrintLogInWindow();
 
@@ -33,17 +33,17 @@
 //                return;
 
 //            PastAccountInfo loginInfo = new PastAccountInfo(id, password);
-//            //List<AccountInfo> accounts = accountsDto.Accounts;
+//            List<AccountInfo> accounts = accountsDto.Accounts;
 
-//            //foreach(AccountInfo value in accounts)
-//            //{
-//            //    if (value.Id == loginInfo.Id && value.Password == loginInfo.Password)
-//            //    {
-//            //        // userModeMenu
-//            //    }
-//            //}
-//            //exceptionController.HandleInputException((int)Constants.Error.Correspond);
-//            //LogIn();
+//            foreach (AccountInfo value in accounts)
+//            {
+//                if (value.Id == loginInfo.Id && value.Password == loginInfo.Password)
+//                {
+//                    // userModeMenu
+//                }
+//            }
+//            exceptionController.HandleInputException((int)Constants.Error.Correspond);
+//            LogIn();
 //        }
 
 //        public void SignUp(int modeValue)
@@ -91,7 +91,7 @@
 //                if (info != null)
 //                {
 //                    List<PastAccountInfo> account = accountsDto.Accounts;
-//                    foreach(PastAccountInfo value in account)
+//                    foreach (PastAccountInfo value in account)
 //                    {
 
 //                    }

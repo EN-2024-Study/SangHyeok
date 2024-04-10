@@ -27,11 +27,9 @@ namespace Library.Controller
                 {
                     case (int)Constants.LibraryMode.User:
                         menuScreen.PrintThreeMenu((int)Constants.Type.UserInfo, menuValue);
-
                         break;
                     case (int)Constants.LibraryMode.Manager:
                         menuScreen.PrintThreeMenu((int)Constants.Type.ManagerInfo, menuValue);
-
                         break;
                 }
                 isMenuSelect = SelectMenu();

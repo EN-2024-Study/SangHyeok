@@ -99,7 +99,7 @@
 //            }
 
 //            char[] inputString = new char[lengthLimit];
-//            for(int i = 0; i < lengthLimit - 1; i++)
+//            for (int i = 0; i < lengthLimit - 1; i++)
 //            {
 //                Console.SetCursorPosition(coordinateX + i + 1, coordinateY);
 //                ConsoleKeyInfo keyInfo = Console.ReadKey();

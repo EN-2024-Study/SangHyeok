@@ -36,30 +36,32 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\ManagerMenuController.cs" />
-    <Compile Include="Controller\UserMenuController.cs" />
-    <Compile Include="Controller\LogInMenuController.cs" />
-    <Compile Include="Controller\MenuController.cs" />
-    <Compile Include="Controller\ModeMenuController.cs" />
+    <Compile Include="Controller\Menu\AccountInfoMenuController.cs" />
+    <Compile Include="Controller\Menu\ManagerMenuController.cs" />
+    <Compile Include="Controller\Menu\UserMenuController.cs" />
+    <Compile Include="Controller\Menu\LogInMenuController.cs" />
+    <Compile Include="Controller\Menu\MenuController.cs" />
+    <Compile Include="Controller\Menu\ModeMenuController.cs" />
     <Compile Include="Controller\PastAccountController.cs" />
     <Compile Include="Controller\PastExceptionController.cs" />
     <Compile Include="Controller\PastInputController.cs" />
+    <Compile Include="Controller\Task\AccountTaskController.cs" />
+    <Compile Include="Controller\Task\ManagerAccountTaskController.cs" />
+    <Compile Include="Controller\Task\TaskController.cs" />
+    <Compile Include="Controller\Task\UserAccountTaskController.cs" />
     <Compile Include="Controller\temp.cs" />
-    <Compile Include="Controller\YesNoMenuController.cs" />
+    <Compile Include="Controller\Menu\YesNoMenuController.cs" />
     <Compile Include="Model\PastAccountInfo.cs" />
     <Compile Include="Model\PastAccountsDto.cs" />
     <Compile Include="Model\PastBookInfo.cs" />
     <Compile Include="Model\PastBooksDto.cs" />
     <Compile Include="MainProgram.cs" />
     <Compile Include="Utility\Constants.cs" />
-    <Compile Include="View\PastAccountScreen.cs" />
+    <Compile Include="View\AccountScreen.cs" />
     <Compile Include="View\PastExceptionScreen.cs" />
     <Compile Include="View\MenuScreen.cs" />
     <Compile Include="View\PastBookScreen.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\Function\" />
-    <Folder Include="Controller\Menu\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

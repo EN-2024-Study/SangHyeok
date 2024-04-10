@@ -33,6 +33,16 @@ namespace Library.View
                     str[1] = "예.";
                     str[2] = "아니요.";
                     break;
+                case (int)Constants.Type.UserInfo:
+                    str[0] = "정보 수정";
+                    str[1] = "정보 삭제";
+                    str[2] = "뒤로가기";
+                    break;
+                case (int)Constants.Type.ManagerInfo:
+                    str[0] = "유저 정보 수정";
+                    str[1] = "유저 삭제";
+                    str[2] = "뒤로가기";
+                    break;
             }
 
             Console.Clear();

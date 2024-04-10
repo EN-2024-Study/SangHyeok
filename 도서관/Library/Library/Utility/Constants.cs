@@ -18,24 +18,6 @@ namespace Library.Utility
             GoBack
         }
 
-        public enum Error
-        {
-            Length,
-            Correspond
-        }
-
-
-        public enum User
-        {
-            Id,
-            Password,
-            Name,
-            Age,
-            PhoneNumber,
-            Address,
-            Check
-        }
-
         public enum LibraryMode
         {
             User,
@@ -46,7 +28,9 @@ namespace Library.Utility
         {
             UserManager,
             LogInSignUp,
-            YesNo
+            YesNo,
+            UserInfo,
+            ManagerInfo
         }
 
         public enum ModeMenu
@@ -64,6 +48,13 @@ namespace Library.Utility
             BookReturn,
             BookReturnHistory,
             InfoModify
+        }
+
+        public enum InfoMenu
+        {
+            Modify,
+            Delete,
+            GoBack
         }
     }
 }

@@ -4,6 +4,7 @@ using Library.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace Library.Controller
             char[] inputString = new char[length];
             bool isBreak = false;
 
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < length + 1; i++)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
                 switch (keyInfo.Key)
@@ -59,11 +60,8 @@ namespace Library.Controller
             if (!isBreak)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
-                if (keyInfo.Key != ConsoleKey.Enter)
-                {
-                    exceptionController.HandleInputException();
-                    return InputLogIn(coordinateX, coordinateY, length, isPassword);
-                }
+                exceptionController.HandleInputException((int)Constants.Error.Length);
+                return InputLogIn(coordinateX, coordinateY, length, isPassword);
             }
 
             for (int i = 0; i < length; i++)
@@ -74,10 +72,11 @@ namespace Library.Controller
         }
 
 
-        public string InputSignUp(int infoNumber)
+        public string InputSignUp(int coordinateX, int coordinateY, int infoNumber)
         {
             string str = null;
             int lengthLimit = 0;
+            bool isBreak = false;
 
             switch (infoNumber)
             {
@@ -100,13 +99,28 @@ namespace Library.Controller
             }
 
             char[] inputString = new char[lengthLimit];
-            for(int i = 0; i < lengthLimit; i++)
+            for(int i = 0; i < lengthLimit - 1; i++)
             {
-
+                Console.SetCursorPosition(coordinateX + i + 1, coordinateY);
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    isBreak = true;
+                    break;
+                }
             }
 
+            if (!isBreak)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                Console.SetCursorPosition(coordinateX, coordinateY);
+                Console.Write("                  ");
+                exceptionController.HandleInputException((int)Constants.Error.Length);
+                return InputSignUp(coordinateX, coordinateY, infoNumber);
+            }
 
-
+            for (int i = 0; i < lengthLimit - 1; i++)
+                str += inputString[i];
             return str;
         }
     }

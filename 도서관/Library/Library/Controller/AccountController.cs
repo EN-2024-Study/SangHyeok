@@ -2,6 +2,7 @@
 using Library.Model;
 using System;
 using Library.Utility;
+using System.Collections.Generic;
 
 namespace Library.Controller
 {
@@ -10,12 +11,14 @@ namespace Library.Controller
         private InputController inputController;
         private AccountScreen accountScreen;
         private ExceptionController exceptionController;
+        private AccountsDto accountsDto;
 
         public AccountController()
         {
             this.inputController = new InputController();
             this.accountScreen = new AccountScreen();
             this.exceptionController = new ExceptionController();
+            this.accountsDto = new AccountsDto();
         }
 
         public void LogIn()    
@@ -29,8 +32,18 @@ namespace Library.Controller
             if (password == null)
                 return;
 
+            AccountInfo loginInfo = new AccountInfo(id, password);
+            //List<AccountInfo> accounts = accountsDto.Accounts;
 
-
+            //foreach(AccountInfo value in accounts)
+            //{
+            //    if (value.Id == loginInfo.Id && value.Password == loginInfo.Password)
+            //    {
+            //        // userModeMenu
+            //    }
+            //}
+            //exceptionController.HandleInputException((int)Constants.Error.Correspond);
+            //LogIn();
         }
 
         public void SignUp(int modeValue)
@@ -42,19 +55,22 @@ namespace Library.Controller
             }
 
             Console.CursorVisible = true;
-            Console.SetCursorPosition(36, 21);
             bool isInput = true;
             int menuValue = 0;
             while (isInput)
             {
+                string info = null;
+                int coordinateX = 40;
+                int coordinateY = 21 + menuValue;
                 accountScreen.PrintSignUpWindow(menuValue);
+                Console.SetCursorPosition(coordinateX, coordinateY);
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.UpArrow:
                         menuValue--;
                         if (menuValue < 0)
-                            menuValue = 6;
+                            menuValue = 0;
                         break;
                     case ConsoleKey.DownArrow:
                         menuValue++;
@@ -64,13 +80,22 @@ namespace Library.Controller
                         {
                             // enter일 때
                         }
-                        menuValue++;
                         break;
                     default:
-                        string info = inputController.InputSignUp(menuValue % 7);
+                        info = inputController.InputSignUp(coordinateX, coordinateY, menuValue % 7);
                         break;
                 }
-                menuValue %= 7;
+                if (menuValue > 6)
+                    menuValue = 6;
+
+                if (info != null)
+                {
+                    List<AccountInfo> account = accountsDto.Accounts;
+                    foreach(AccountInfo value in account)
+                    {
+
+                    }
+                }
             }
             Console.CursorVisible = false;
         }

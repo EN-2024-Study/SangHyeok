@@ -10,15 +10,15 @@ namespace Library.Model
 
         public AccountsDto()
         {
-            manager = new AccountInfo("sanghyeok", 1234,
+            manager = new AccountInfo("sanghyeok", "1234",
                 "서상혁", 25, "010-3077-5666",
                 "서울시 군자동");
             accounts = new List<AccountInfo>
             {
-                new AccountInfo("sanghyeok", 1234,
+                new AccountInfo("sanghyeok", "1234",
                 "서상혁", 25, "010-3077-5666",
                 "서울시 군자동"),
-                new AccountInfo("SiWon", 1234, "김시원",
+                new AccountInfo("SiWon", "1234", "김시원",
                 26, "010-4030-3719",
                 "경기도 의정부시")
             };

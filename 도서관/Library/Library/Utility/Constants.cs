@@ -28,7 +28,7 @@ namespace Library.Utility
         public enum Error
         {
             Length,
-            Regex
+            Correspond
         }
 
 
@@ -39,7 +39,8 @@ namespace Library.Utility
             Name,
             Age,
             PhoneNumber,
-            Address
+            Address,
+            Check
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Library.Model
     public class AccountInfo
     {
         private string id;
-        private int password;
+        private string password;
         private string name;
         private int age;
         private string phoneNumber;
@@ -17,7 +17,7 @@ namespace Library.Model
         public AccountInfo()
         {
             id = null;
-            password = 0;
+            password = null;
             name = null;
             age = 0;
             phoneNumber = null;
@@ -25,14 +25,14 @@ namespace Library.Model
             RentalBooks = new List<BookInfo>();
         }
 
-        public AccountInfo(string id, int password)
+        public AccountInfo(string id, string password)
         {
             RentalBooks = new List<BookInfo>();
             this.id = id;
             this.password = password;
         }
 
-        public AccountInfo(string id, int password, string name, 
+        public AccountInfo(string id, string password, string name, 
             int age, string phoneNumber, string address) : this(id, password)
         {
             this.name = name;
@@ -47,7 +47,7 @@ namespace Library.Model
             set { id = value; }
         }
 
-        public int Password
+        public string Password
         {
             get { return password; }
             set { password = value; }

@@ -35,7 +35,7 @@ namespace Library.View
             Console.SetCursorPosition(5, 22);
             if (menuValue == (int)Constants.User.Password)
                 Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("User PW          (1 ~ 4 글자)    :                            ENTER");
+            Console.Write("User PW          (1 ~ 4 글자)    :");
             Console.ResetColor();
 
             Console.SetCursorPosition(5, 23);
@@ -57,9 +57,15 @@ namespace Library.View
             Console.ResetColor();
 
             Console.SetCursorPosition(5, 26);
-            if (menuValue == (int)Constants.User.PhoneNumber)
+            if (menuValue == (int)Constants.User.Address)
                 Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("User Address     (1 ~ 20 글자)   :");
+            Console.ResetColor();
+
+            Console.SetCursorPosition(5, 27);
+            if (menuValue == (int)Constants.User.Check)
+                Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("           가입완료              :");
             Console.ResetColor();
         }
 

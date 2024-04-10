@@ -19,7 +19,7 @@ namespace Library.View
                     Console.Write("입력 길이가 맞지 않습니다.");
                     break;
                 case 1:
-
+                    Console.Write("정보가 맞지 않습니다.");
                     break;
             }
 

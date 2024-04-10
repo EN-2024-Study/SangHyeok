@@ -30,8 +30,8 @@ namespace Library.Controller
             {
                 case (int)Constants.ModeMenu.Quit:
                     SelectYesNoMenu();
-                    if (menuValue % 2 == (int)Constants.YesNo.Yes)
-                        return;
+                    if (menuValue % 2 == (int)Constants.YesNo.No)
+                        Run();
                     break;
                 case (int)Constants.ModeMenu.UserMode:
                 case (int)Constants.ModeMenu.ManagerMode:
@@ -99,6 +99,10 @@ namespace Library.Controller
             switch (keyInfo.Key)
             {
                 case ConsoleKey.UpArrow:
+                    menuValue--;
+                    if (menuValue < 0)
+                        menuValue = 0;
+                    break;
                 case ConsoleKey.DownArrow:
                     menuValue++;
                     break;

@@ -15,24 +15,27 @@ namespace Library.Controller
 
         public override void Run()
         {
-            base.MenuValue = 0;
+            menuValue = 0;
             bool isMenuSelect = true;
 
             while (isMenuSelect)
             {
-                base.Screen.PrintModeMenu(base.MenuValue % 3);
-                isMenuSelect = base.SelectMenu();
+                menuScreen.PrintThreeMenu((int)Constants.ModeMenu.UserMode, menuValue);
+                isMenuSelect = SelectMenu();
+                if (menuValue > 2)
+                    menuValue = 2;
             }
 
-            switch(MenuValue % 3)
+            switch (menuValue)
             {
-                case (int)Constants.ModeMenu.Quit:
-                    yesNoMenu.Run();
-                    break;
                 case (int)Constants.ModeMenu.UserMode:
                 case (int)Constants.ModeMenu.ManagerMode:
-                    logInMenu = new LogInMenuController(MenuValue % 3);
+                    logInMenu = new LogInMenuController(menuValue);
                     logInMenu.Run();
+                    break;
+                case (int)Constants.ModeMenu.Quit:
+                    yesNoMenu = new YesNoMenuController();
+                    yesNoMenu.Run();
                     break;
             }
         }

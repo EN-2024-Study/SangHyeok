@@ -11,13 +11,6 @@ namespace Library.Utility
             Yes
         }
 
-        public enum ModeMenu
-        {
-            UserMode,
-            ManagerMode,
-            Quit
-        }
-
         public enum LogInMenu
         {
             LogIn,
@@ -41,6 +34,36 @@ namespace Library.Utility
             PhoneNumber,
             Address,
             Check
+        }
+
+        public enum LibraryMode
+        {
+            User,
+            Manager
+        }
+
+        public enum Type
+        {
+            UserManager,
+            LogInSignUp,
+            YesNo
+        }
+
+        public enum ModeMenu
+        {
+            UserMode,
+            ManagerMode,
+            Quit
+        }
+
+        public enum UserMenu
+        {
+            BookSearch,
+            BookRental,
+            BookRentalHistory,
+            BookReturn,
+            BookReturnHistory,
+            InfoModify
         }
     }
 }

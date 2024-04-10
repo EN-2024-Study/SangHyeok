@@ -9,12 +9,12 @@ namespace Library.Controller
 {
     public abstract class MenuController
     {
-        protected MenuScreen screen;
-        private int menuValue;
+        protected MenuScreen menuScreen;
+        protected int menuValue;
 
         protected MenuController()
         {
-            screen = new MenuScreen();
+            menuScreen = new MenuScreen();
             menuValue = 0;
         }
 
@@ -40,18 +40,6 @@ namespace Library.Controller
                     return false;
             }
             return true;
-        }
-
-        protected int MenuValue
-        {
-            get;
-            set;
-        }
-
-        protected MenuScreen Screen
-        {
-            get;
-            set;
         }
     }
 }

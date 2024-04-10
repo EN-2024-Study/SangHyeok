@@ -9,8 +9,8 @@ namespace Library
 
         public static void Main(string[] args)
         {
-            PastMenuController menuController = new PastMenuController();
-            menuController.Run();
+            ModeMenuController modeMenuController = new ModeMenuController();
+            modeMenuController.Run();
         }
     }
 }

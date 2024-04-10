@@ -1,108 +1,88 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Library.Utility;
 
 namespace Library.View
 {
     public class MenuScreen
     {
-        private int x = 20, y = 20;
+        private Tuple<int, int> coordinate;
 
-        public void PrintModeMenu(int menu)
+        public MenuScreen()
         {
-            Console.SetCursorPosition(x, y);
-            if (menu == (int)Constants.ModeMenu.UserMode)
-                Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("유저 모드");
-            Console.ResetColor();
+            coordinate = new Tuple<int, int>(20, 20);
+        }
 
-            Console.SetCursorPosition(x, y + 2);
-            if (menu == (int)Constants.ModeMenu.ManagerMode)
-                Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("관리자 모드");
-            Console.ResetColor();
+        public void PrintThreeMenu(int modeValue, int menuValue)
+        {
+            string[] str = new string[3];
+            switch (modeValue)
+            {
+                case (int)Constants.Type.UserManager:
+                    str[0] = "유저 모드";
+                    str[1] = "관리자 모드";
+                    str[2] = "종료하기";
+                    break;
+                case (int)Constants.Type.LogInSignUp:
+                    str[0] = "로그인";
+                    str[1] = "회원가입";
+                    str[2] = "뒤로가기";
+                    break;
+                case (int)Constants.Type.YesNo:
+                    str[0] = "정말이십니까?";
+                    str[1] = "예.";
+                    str[2] = "아니요.";
+                    break;
+            }
 
-            Console.SetCursorPosition(x, y + 4);
-            if (menu == (int)Constants.ModeMenu.Quit)
-                Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("종료하기");
-            Console.ResetColor();
+            Console.Clear();
+            for (int i = 0; i < 3; i++)
+            {
+                Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i * 2);
+                if (menuValue == i)
+                    Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(str[i]);
+                Console.ResetColor();
+            }
 
-            Console.SetCursorPosition(x + 30, y);
+            Console.SetCursorPosition(coordinate.Item1 + 30, coordinate.Item2);
             Console.Write("방향키를 눌러 모드를");
-            Console.SetCursorPosition(x + 30, y + 2);
+            Console.SetCursorPosition(coordinate.Item1 + 30, coordinate.Item2 + 2);
             Console.Write("선택해 주세요.");
         }
 
-        public void PrintLogInMenu(int menu)
+        public void PrintLibraryMenu(int currentMenuValue, int modeValue)
         {
-            Console.SetCursorPosition(x, y);
-            Console.Write("            ");
-            Console.SetCursorPosition(x, y + 2);
-            Console.Write("            ");
-            Console.SetCursorPosition(x, y + 4);
-            Console.Write("            ");
-            switch (menu)
+            Console.Clear();
+            Tuple<int, int> currentCoordinate = new Tuple<int, int>(coordinate.Item1 + 50, coordinate.Item2 - 5);
+            string[] str = new string[6];
+            str[0] = "도서 조회";
+            switch (modeValue)
             {
-                case (int)Constants.LogInMenu.LogIn:
-                    Console.SetCursorPosition(x, y);
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("로그인");
-                    Console.ResetColor();
-                    Console.SetCursorPosition(x, y + 2);
-                    Console.Write("회원가입");
-                    Console.SetCursorPosition(x, y + 4);
-                    Console.Write("뒤로가기");
+                case (int)Constants.LibraryMode.User:
+                    str[1] = "도서 대여";
+                    str[2] = "도서 대여 내역";
+                    str[3] = "도서 반납";
+                    str[4] = "도서 반납 내역";
+                    str[5] = "정보 수정";
                     break;
-                case (int)Constants.LogInMenu.SignUp:
-                    Console.SetCursorPosition(x, y);
-                    Console.Write("로그인");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.SetCursorPosition(x, y + 2);
-                    Console.Write("회원가입");
-                    Console.ResetColor();
-                    Console.SetCursorPosition(x, y + 4);
-                    Console.Write("뒤로가기");
-                    break;
-                case (int)Constants.LogInMenu.GoBack:
-                    Console.SetCursorPosition(x, y);
-                    Console.Write("로그인");
-                    Console.SetCursorPosition(x, y + 2);
-                    Console.Write("회원가입");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.SetCursorPosition(x, y + 4);
-                    Console.Write("뒤로가기");
-                    Console.ResetColor();
+                case (int)Constants.LibraryMode.Manager:
+                    str[1] = "도서 추가";
+                    str[2] = "도서 삭제";
+                    str[3] = "도서 수정";
+                    str[4] = "회원 관리";
+                    str[5] = "대여 내역";
                     break;
             }
-        }
 
-
-        public void PrintYesNoWindow(int menu)
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.SetWindowSize(50, 15);
-            Console.Write("정말이십니까?");
-
-            switch(menu)
+            for(int i = 0; i < 6; i++)
             {
-                case (int)Constants.YesNo.Yes:
-                    Console.SetCursorPosition(0, 2);
+                Console.SetCursorPosition(currentCoordinate.Item1, currentCoordinate.Item2 + i);
+                if (currentMenuValue == i)
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("예.");
-                    Console.ResetColor();
-                    Console.SetCursorPosition(0, 4);
-                    Console.Write("아니요.");
-                    break;
-                case (int)Constants.YesNo.No:
-                    Console.SetCursorPosition(0, 2);
-                    Console.Write("예.");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.SetCursorPosition(0, 4);
-                    Console.Write("아니요.");
-                    Console.ResetColor();
-                    break;
+                Console.Write(str[i]);
+                Console.ResetColor();
             }
         }
-
     }
 }

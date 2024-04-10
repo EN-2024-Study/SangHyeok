@@ -9,7 +9,7 @@ namespace Library.Controller
 {
     public class YesNoMenuController : MenuController
     {
-        private ModeMenuController modeMenu;    // stackOverFlowExceptoin 주의
+        private ModeMenuController modeMenu;   
 
         public YesNoMenuController()
         {
@@ -18,16 +18,20 @@ namespace Library.Controller
 
         public override void Run()
         {
+            menuValue = 0;
             bool isMenuSelect = true;
 
             while (isMenuSelect)
             {
-                base.Screen.PrintYesNoWindow(base.MenuValue % 2);
-                isMenuSelect = base.SelectMenu();
+                menuScreen.PrintThreeMenu((int)Constants.Type.YesNo, menuValue + 1);
+                isMenuSelect = SelectMenu();
+
+                if (menuValue > 1)
+                    menuValue = 1;
             }
 
-            if (base.MenuValue % 2 == (int)Constants.YesNo.No)
-                modeMenu.Run(); // stackOverFlowExceptoin 주의
+            if (menuValue == (int)Constants.YesNo.No + 1)
+                modeMenu.Run(); 
         }
     }
 }

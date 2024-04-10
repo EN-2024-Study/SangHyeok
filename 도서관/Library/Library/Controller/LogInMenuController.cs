@@ -1,4 +1,5 @@
-﻿using Library.View;
+﻿using Library.Utility;
+using Library.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Library.Controller
     public class LogInMenuController : MenuController
     {
         private int modeValue;
+        private ModeMenuController modeMenuController;
 
         public LogInMenuController(int value) : base()
         {
@@ -18,23 +20,43 @@ namespace Library.Controller
 
         public override void Run()
         {
+            menuValue = 0;
             bool isMenuSelect = true;
 
             while (isMenuSelect)
             {
-                base.Screen.PrintLogInMenu(base.MenuValue % 3);
-                isMenuSelect = base.SelectMenu();
+                menuScreen.PrintThreeMenu((int)Constants.Type.LogInSignUp, menuValue);
+                isMenuSelect = SelectMenu();
+                if (menuValue > 2)
+                    menuValue = 2;
             }
 
-            switch (modeValue)  // 기능으로 넘어가기
+            switch(menuValue)   
             {
-                case 0:
-                    
-                    break;
-                case 1:
+                case (int)Constants.LogInMenu.LogIn:    // 로그인 기능으로 가기
 
+                    break;
+                case (int)Constants.LogInMenu.SignUp:   // 회원가입(user인지 manager인지 체크)기능으로 가기
+
+                    break;
+                case (int)Constants.LogInMenu.GoBack:
+                    modeMenuController = new ModeMenuController();
+                    modeMenuController.Run();
                     break;
             }
         }
+
+        //private bool CheckMode(int modeValue)
+        //{
+        //    if (modeValue == )
+        //    switch (modeValue)  // 기능으로 넘어가기
+        //    {
+        //        case (int)Constants.ModeMenu.UserMode:
+
+        //        case 1:
+
+        //            break;
+        //    }
+        //}
     }
 }

@@ -50,11 +50,7 @@ namespace Library.View
                 Console.ResetColor();
             }
 
-            Console.SetCursorPosition(coordinate.Item1 + 30, coordinate.Item2);
-            Console.Write("방향키를 눌러 모드를");
-            Console.SetCursorPosition(coordinate.Item1 + 30, coordinate.Item2 + 2);
-            Console.Write("선택해 주세요.");
-
+            ExplainingScreen.ExplainDirectionKey();
             Console.CursorVisible = false;
         }
 

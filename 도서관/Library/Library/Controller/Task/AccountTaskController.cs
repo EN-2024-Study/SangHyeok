@@ -1,4 +1,5 @@
-﻿using Library.View;
+﻿using Library.Utility;
+using Library.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +10,51 @@ namespace Library.Controller.Task
 {
     public class AccountTaskController : TaskController
     {
-        private AccountScreen screen;
+        private MenuController menuController;
+        private AccountScreen accountScreen;
 
         public AccountTaskController()
         {
-            screen = new AccountScreen();
+            menuController = new MenuController();
+            accountScreen = new AccountScreen();
         }
 
 
-        public void LogIn()
+        public bool LogIn()
         {
-            screen.PrintLogInScreen();
-            //string inputString = LimitInputLength();
+            bool isLogIn = true;
+            string id = null, password = null;
+            Tuple<int, int> coordinate = new Tuple<int, int>(20, 25);
+
+            while (isLogIn)
+            {
+                accountScreen.PrintLogInScreen(menuController.menuValue + 1, false, coordinate);
+                isLogIn = menuController.SelectMenu();
+                if (menuController.menuValue > 1)
+                    menuController.menuValue = 1;
+            }
+
+            if (menuController.menuValue == -1)
+                return false;
+
+            isLogIn = true;
+            while (isLogIn)
+            {
+                accountScreen.PrintLogInScreen(menuController.menuValue, true, coordinate);
+                switch (menuController.menuValue)
+                {
+                    case (int)Constants.LogIn.Id:
+                        id = LimitInputLength(15, new Tuple<int, int>(coordinate.Item1 + 5, coordinate.Item2 + 1), false);
+                        ShouldReprocess(id);
+                        break;
+                    case (int)Constants.LogIn.Password:
+                        password = LimitInputLength(15, new Tuple<int, int>(coordinate.Item1 + 11, coordinate.Item2 + 2), true);
+                        ShouldReprocess(password);
+                        break;
+                }
+            }
+
+            return true;
         }
 
         public void SignUp(int modeValue)
@@ -36,6 +70,16 @@ namespace Library.Controller.Task
         public void DeletePersonalAccount()
         {
 
+        }
+
+        private void ShouldReprocess(string str)
+        {
+            if (str == null)
+                LogIn();
+            else
+            {
+                // 유효성 검사
+            }
         }
     }
 }

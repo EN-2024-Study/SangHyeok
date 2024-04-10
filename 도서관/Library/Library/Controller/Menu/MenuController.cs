@@ -10,9 +10,9 @@ namespace Library.Controller
     public class MenuController
     {
         protected MenuScreen menuScreen;
-        protected int menuValue;
+        public int menuValue;
 
-        protected MenuController()
+        public MenuController()
         {
             menuScreen = new MenuScreen();
             menuValue = 0;
@@ -37,6 +37,9 @@ namespace Library.Controller
                     break;
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
+                    return false;
+                case ConsoleKey.Escape:
+                    menuValue = -1;
                     return false;
             }
             return true;

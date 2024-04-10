@@ -25,6 +25,7 @@ namespace Library.Controller
         {
             menuValue = 0;
             bool isMenuSelect = true;
+            bool isLogIn = true;
 
             while (isMenuSelect)
             {
@@ -36,8 +37,8 @@ namespace Library.Controller
 
             switch(menuValue)   
             {
-                case (int)Constants.LogInMenu.LogIn:   
-                    userAccountTask.LogIn();
+                case (int)Constants.LogInMenu.LogIn:
+                    isLogIn = userAccountTask.LogIn();
                     break;
                 case (int)Constants.LogInMenu.SignUp:   // 회원가입(user인지 manager인지 체크)기능으로 가기
                     userAccountTask.SignUp(modeValue);
@@ -47,6 +48,9 @@ namespace Library.Controller
                     modeMenuController.Run();
                     break;
             }
+
+            if (!isLogIn)
+                Run();
         }
 
         //private bool CheckMode(int modeValue)

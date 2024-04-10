@@ -5,21 +5,36 @@ namespace Library.View
 {
     public class AccountScreen
     {
-        public void PrintLogInScreen()
+        public void PrintLogInScreen(int menuValue, bool isSelect, Tuple<int, int> coordinateValue)
         {
             Console.Clear();
-            Tuple<int, int> coordinate = new Tuple<int, int>(20, 25);
-            PrintInputExplain();
+            Tuple<int, int> coordinate = coordinateValue;
+            string[] str = new string[3];
+            str[0] = "로그인";
+            str[1] = "ID : ";
+            str[2] = "PASSWORD : ";
 
-            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);
-            Console.Write("로그인");
-            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + 1);
-            Console.Write("ID : ");
-            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + 2);
-            Console.Write("PASSWORD : ");
+            ExplainingScreen.ExplainSelectKey();
+            ExplainingScreen.ExplainDirectionKey();
+            ExplainingScreen.ExplainInputKey();
+            for (int i = 0; i < 3; i++)
+            {
+                Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i);
+                if (menuValue == i)
+                {
+                    if (isSelect)
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                Console.Write(str[i]);
+                Console.ResetColor();
+            }
         }
 
-        //public void PrintSignUpWindow(int menuValue)
+        public void PrintSignUpScreen(int menuValue)
+        {
+
+        }
         //{
 
         //    Console.SetCursorPosition(5, 21);
@@ -64,20 +79,5 @@ namespace Library.View
         //    Console.Write("           가입완료              :");
         //    Console.ResetColor();
         //}
-
-
-        private void PrintInputExplain()
-        {
-            Tuple<int, int> coordinate = new Tuple<int, int>(80, 20);
-
-            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + 1);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("ESC: 뒤로가기");
-
-            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + 2);
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("ENTER: 입력하기");
-            Console.ResetColor();
-        }
     }
 }

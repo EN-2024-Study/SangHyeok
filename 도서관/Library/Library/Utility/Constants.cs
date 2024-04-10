@@ -18,6 +18,12 @@ namespace Library.Utility
             GoBack
         }
 
+        public enum LogIn
+        {
+            Id,
+            Password
+        }
+
         public enum LibraryMode
         {
             User,

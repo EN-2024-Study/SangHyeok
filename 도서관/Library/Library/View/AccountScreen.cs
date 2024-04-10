@@ -9,22 +9,24 @@ namespace Library.View
         {
             Console.Clear();
             Tuple<int, int> coordinate = coordinateValue;
-            string[] str = new string[3];
-            str[0] = "로그인";
-            str[1] = "ID : ";
-            str[2] = "PASSWORD : ";
+            string[] str = new string[2];
+            str[0] = "ID : ";
+            str[1] = "PASSWORD : ";
 
             ExplainingScreen.ExplainSelectKey();
             ExplainingScreen.ExplainDirectionKey();
             ExplainingScreen.ExplainInputKey();
-            for (int i = 0; i < 3; i++)
+            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);
+            Console.Write("로그인");
+            for (int i = 0; i < 2; i++)
             {
-                Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i);
+                Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i + 1);
                 if (menuValue == i)
                 {
                     if (isSelect)
                         Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    else
+                        Console.ForegroundColor = ConsoleColor.Green;
                 }
                 Console.Write(str[i]);
                 Console.ResetColor();

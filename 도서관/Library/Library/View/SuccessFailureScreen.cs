@@ -12,13 +12,18 @@ namespace Library.View
 
         public void PrintSuccessFailure(Tuple<int, int> coordinate, bool success)
         {
+            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);
             if (success)
             {
-
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("[Sussess!]");
+                Console.ResetColor();
             }
             else
             {
-
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("[Fail]");
+                Console.ResetColor();
             }
 
         }

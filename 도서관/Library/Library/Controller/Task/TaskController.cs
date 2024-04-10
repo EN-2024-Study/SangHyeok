@@ -23,43 +23,54 @@ namespace Library.Controller.Task
             bool isBreak = false;
             int x = coordinate.Item1;
             int y = coordinate.Item2;
+            int index = 0;
+
             Console.CursorVisible = true;
-            Console.SetCursorPosition(x, y);
+            ResetField(x, y, length);
 
-            for (int i = 0; i < length + 2; i++)
+            while (!isBreak)
             {
-                ConsoleKeyInfo keyInfo = Console.ReadKey();
-                switch (keyInfo.Key)
-                {
-                    case ConsoleKey.Enter:
-                        isBreak = true;
-                        break;
-                    case ConsoleKey.Backspace:
-                        Console.SetCursorPosition(15, y - i - 1);
-                        Console.Write(" ");
-                        Console.SetCursorPosition(15, y - i);
-                        break;
-                    case ConsoleKey.Escape:
-                        return null;
-                }
-
-                if (isBreak)
+                if (index == length)
                     break;
-                else if (isPassword)
+                Console.SetCursorPosition(x + index, y);
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+                if (keyInfo.Key == ConsoleKey.Enter)
                 {
-                    Console.SetCursorPosition(x, 25);
-                    Console.Write("*");
-                    x++;
+                    isBreak = true;
+                    break;
                 }
-                inputString[i] = keyInfo.KeyChar;
+                else if (keyInfo.Key == ConsoleKey.Backspace)
+                {
+                    if (index == 0)
+                        continue;
+
+                    Erase(x + index - 1, y);
+                    inputString[--index] = '\0';
+                }
+                else if (keyInfo.Key == ConsoleKey.Escape)
+                    return null;
+                else
+                    inputString[index++] = keyInfo.KeyChar;
+
+                if (isPassword)
+                {
+                    Console.SetCursorPosition(x + index - 1, y);
+                    if (index == 0)
+                        continue;
+                    Console.Write("*");
+                }
             }
 
             if (!isBreak)
             {
                 SuccessFailureScreen successFailureScreen = new SuccessFailureScreen();
-                successFailureScreen.PrintSuccessFailure(new Tuple<int, int>(x, y), false);
+                successFailureScreen.PrintSuccessFailure(new Tuple<int, int>(x + index + 2, y), false);
                 return LimitInputLength(length, coordinate, isPassword);
             }
+
+            for (int i = 0; i < length; i++)
+                str += inputString[i];
 
             return str;
         }
@@ -74,6 +85,21 @@ namespace Library.Controller.Task
         protected void DeleteControl()
         {
 
+        }
+
+        private void Erase(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(" ");
+            Console.SetCursorPosition(x, y);
+        }
+
+        private void ResetField(int x, int y, int length)
+        {
+            Console.SetCursorPosition(x, y);
+            for (int i = 0; i < length; i++)
+                Console.Write(" ");
+            Console.SetCursorPosition(x, y);
         }
     }
 }

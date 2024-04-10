@@ -28,7 +28,7 @@ namespace Library.Controller.Task
 
             while (isLogIn)
             {
-                accountScreen.PrintLogInScreen(menuController.menuValue + 1, false, coordinate);
+                accountScreen.PrintLogInScreen(menuController.menuValue, false, coordinate);
                 isLogIn = menuController.SelectMenu();
                 if (menuController.menuValue > 1)
                     menuController.menuValue = 1;

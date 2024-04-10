@@ -9,7 +9,7 @@ namespace Library
 
         public static void Main(string[] args)
         {
-            MenuController menuController = new MenuController();
+            PastMenuController menuController = new PastMenuController();
             menuController.Run();
         }
     }

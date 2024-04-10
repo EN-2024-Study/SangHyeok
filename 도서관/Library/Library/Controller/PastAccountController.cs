@@ -8,17 +8,17 @@ namespace Library.Controller
 {
     public class AccountController
     {
-        private InputController inputController;
-        private AccountScreen accountScreen;
-        private ExceptionController exceptionController;
-        private AccountsDto accountsDto;
+        private PastInputController inputController;
+        private PastAccountScreen accountScreen;
+        private PastExceptionController exceptionController;
+        private PastAccountsDto accountsDto;
 
         public AccountController()
         {
-            this.inputController = new InputController();
-            this.accountScreen = new AccountScreen();
-            this.exceptionController = new ExceptionController();
-            this.accountsDto = new AccountsDto();
+            this.inputController = new PastInputController();
+            this.accountScreen = new PastAccountScreen();
+            this.exceptionController = new PastExceptionController();
+            this.accountsDto = new PastAccountsDto();
         }
 
         public void LogIn()    
@@ -32,7 +32,7 @@ namespace Library.Controller
             if (password == null)
                 return;
 
-            AccountInfo loginInfo = new AccountInfo(id, password);
+            PastAccountInfo loginInfo = new PastAccountInfo(id, password);
             //List<AccountInfo> accounts = accountsDto.Accounts;
 
             //foreach(AccountInfo value in accounts)
@@ -90,8 +90,8 @@ namespace Library.Controller
 
                 if (info != null)
                 {
-                    List<AccountInfo> account = accountsDto.Accounts;
-                    foreach(AccountInfo value in account)
+                    List<PastAccountInfo> account = accountsDto.Accounts;
+                    foreach(PastAccountInfo value in account)
                     {
 
                     }

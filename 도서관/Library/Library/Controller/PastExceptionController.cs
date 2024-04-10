@@ -9,13 +9,13 @@ using static Library.Utility.Constants;
 
 namespace Library.Controller
 {
-    public class ExceptionController
+    public class PastExceptionController
     {
-        ExceptionScreen exceptionScreen;
+        PastExceptionScreen exceptionScreen;
 
-        public ExceptionController()
+        public PastExceptionController()
         {
-            exceptionScreen = new ExceptionScreen();
+            exceptionScreen = new PastExceptionScreen();
         }
 
         public void HandleInputException(int errorNumber)

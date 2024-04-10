@@ -3,7 +3,7 @@ using System;
 
 namespace Library.View
 {
-    public class AccountScreen
+    public class PastAccountScreen
     {
         public void PrintLogInWindow()
         {

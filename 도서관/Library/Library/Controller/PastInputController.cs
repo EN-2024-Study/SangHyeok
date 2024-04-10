@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace Library.Controller
 {
-    public class InputController
+    public class PastInputController
     {
-        private ExceptionController exceptionController;
-        private AccountInfo accountInfo;
+        private PastExceptionController exceptionController;
+        private PastAccountInfo accountInfo;
 
-        public InputController()
+        public PastInputController()
         {
-            exceptionController = new ExceptionController();
-            accountInfo = new AccountInfo();
+            exceptionController = new PastExceptionController();
+            accountInfo = new PastAccountInfo();
         }
 
         public string InputLogIn(int coordinateX, int coordinateY, int length, bool isPassword)

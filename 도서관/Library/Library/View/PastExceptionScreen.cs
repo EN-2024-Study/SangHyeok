@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.View
 {
-    public class ExceptionScreen
+    public class PastExceptionScreen
     {
         public void PrintInputException(int errorNumber)
         {

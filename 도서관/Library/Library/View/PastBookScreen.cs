@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.View
 {
-    public class BookScreen
+    public class PastBookScreen
     {
     }
 }

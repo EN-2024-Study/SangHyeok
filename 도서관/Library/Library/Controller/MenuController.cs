@@ -1,99 +1,28 @@
 ﻿using Library.View;
-using Library.Utility;
-using Library.Model;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Library.Controller
 {
-    public class MenuController
+    public abstract class MenuController
     {
-        private MenuScreen menuScreen;
-        private AccountController accountController;
+        protected MenuScreen screen;
         private int menuValue;
-        private int modeValue;
 
-        public MenuController()
+        protected MenuController()
         {
-            this.menuScreen = new MenuScreen();
-            this.accountController = new AccountController();
+            screen = new MenuScreen();
+            menuValue = 0;
         }
 
-        public void Run()
+        public abstract void Run();
+
+        protected bool SelectMenu()
         {
-            Console.Clear();
-            Console.SetWindowSize(100, 30);
             Console.CursorVisible = false;
-            menuValue = 0;
-
-            SelectModeMenu();
-            switch (menuValue % 3)
-            {
-                case (int)Constants.ModeMenu.Quit:
-                    SelectYesNoMenu();
-                    if (menuValue % 2 == (int)Constants.YesNo.No)
-                        Run();
-                    break;
-                case (int)Constants.ModeMenu.UserMode:
-                case (int)Constants.ModeMenu.ManagerMode:
-                    modeValue = menuValue;
-                    SelectLogInMenu();
-                    break;
-            }
-        }
-
-        private void SelectModeMenu()
-        {
-            bool isMenuSelect = true;
-            menuValue = 0;
-
-            while (isMenuSelect)
-            {
-                menuScreen.PrintModeMenu(menuValue % 3);
-                isMenuSelect = InputMenu();
-            }
-        }
-
-        private void SelectLogInMenu()
-        {
-            menuValue = 0;
-            bool isMenuSelect = true;
-
-            while (isMenuSelect)
-            {
-                menuScreen.PrintLogInMenu(menuValue % 3);
-                isMenuSelect = InputMenu();
-            }
-
-            switch (menuValue % 3)
-            {
-                case (int)Constants.LogInMenu.LogIn:
-                    accountController.LogIn();
-                    Run();
-                    break;
-                case (int)Constants.LogInMenu.SignUp:
-                    accountController.SignUp(modeValue);
-                    Run();
-                    break;
-                case (int)Constants.LogInMenu.GoBack:
-                    Run();
-                    break;
-            }
-        }
-
-        private void SelectYesNoMenu()
-        {
-            bool isMenuSelect = true;
-            menuValue = 0;
-
-            while (isMenuSelect)
-            {
-                menuScreen.PrintYesNoWindow(menuValue % 2);
-                isMenuSelect = InputMenu();
-            }
-        }
-
-        private bool InputMenu()
-        {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
 
             switch (keyInfo.Key)
@@ -111,6 +40,18 @@ namespace Library.Controller
                     return false;
             }
             return true;
+        }
+
+        protected int MenuValue
+        {
+            get;
+            set;
+        }
+
+        protected MenuScreen Screen
+        {
+            get;
+            set;
         }
     }
 }

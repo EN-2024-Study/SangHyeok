@@ -36,20 +36,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\AccountController.cs" />
-    <Compile Include="Controller\ExceptionController.cs" />
-    <Compile Include="Controller\InputController.cs" />
     <Compile Include="Controller\MenuController.cs" />
-    <Compile Include="Model\AccountInfo.cs" />
-    <Compile Include="Model\AccountsDto.cs" />
-    <Compile Include="Model\BookInfo.cs" />
-    <Compile Include="Model\BooksDto.cs" />
+    <Compile Include="Controller\PastAccountController.cs" />
+    <Compile Include="Controller\PastExceptionController.cs" />
+    <Compile Include="Controller\PastInputController.cs" />
+    <Compile Include="Controller\PastMenuController.cs" />
+    <Compile Include="Model\PastAccountInfo.cs" />
+    <Compile Include="Model\PastAccountsDto.cs" />
+    <Compile Include="Model\PastBookInfo.cs" />
+    <Compile Include="Model\PastBooksDto.cs" />
     <Compile Include="MainProgram.cs" />
     <Compile Include="Utility\Constants.cs" />
-    <Compile Include="View\AccountScreen.cs" />
-    <Compile Include="View\ExceptionScreen.cs" />
-    <Compile Include="View\MenuScreen.cs" />
-    <Compile Include="View\BookScreen.cs" />
+    <Compile Include="View\PastAccountScreen.cs" />
+    <Compile Include="View\PastExceptionScreen.cs" />
+    <Compile Include="View\PastMenuScreen.cs" />
+    <Compile Include="View\PastBookScreen.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

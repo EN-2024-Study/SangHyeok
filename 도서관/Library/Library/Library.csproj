@@ -57,6 +57,9 @@
     <Compile Include="View\MenuScreen.cs" />
     <Compile Include="View\PastBookScreen.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controller\Function\" />
+    <Folder Include="Controller\Menu\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

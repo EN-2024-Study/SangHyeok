@@ -6,52 +6,53 @@ namespace Library.View
 {
     public class MenuScreen
     {
-        public void PrintThreeMenu(int modeValue, int menuValue)
+        public void PrintMenu(int modeValue, int CurrentMenuValue, Tuple<int, int> coordinate)
         {
             Console.Clear();
+            ExplainingScreen.ExplainDirectionKey();
+            ExplainingScreen.ExplainSelectKey();
 
             string[] str = new string[3];
-            Tuple<int, int> coordinate = new Tuple<int, int>(20, 25);
+            int stringLength = 0;
             switch (modeValue)
             {
                 case (int)Constants.Type.UserManager:
                     str[0] = "유저 모드";
                     str[1] = "관리자 모드";
-                    str[2] = "종료하기";
+                    stringLength = 2;
+                    PrintQuit();
                     break;
                 case (int)Constants.Type.LogInSignUp:
                     str[0] = "로그인";
                     str[1] = "회원가입";
-                    str[2] = "뒤로가기";
+                    stringLength = 2;
                     break;
                 case (int)Constants.Type.YesNo:
                     str[0] = "정말이십니까?";
                     str[1] = "예.";
                     str[2] = "아니요.";
+                    stringLength = 3;
                     break;
                 case (int)Constants.Type.UserInfo:
                     str[0] = "정보 수정";
                     str[1] = "정보 삭제";
-                    str[2] = "뒤로가기";
+                    stringLength = 2;
                     break;
                 case (int)Constants.Type.ManagerInfo:
                     str[0] = "유저 정보 수정";
                     str[1] = "유저 삭제";
-                    str[2] = "뒤로가기";
+                    stringLength = 2;
                     break;
             }
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < stringLength; i++)
             {
                 Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i * 2);
-                if (menuValue == i)
+                if (CurrentMenuValue == i)
                     Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write(str[i]);
                 Console.ResetColor();
             }
-
-            ExplainingScreen.ExplainDirectionKey();
-            Console.CursorVisible = false;
         }
 
         public void PrintLibraryMenu(int currentMenuValue, int modeValue)
@@ -87,6 +88,14 @@ namespace Library.View
                 Console.Write(str[i]);
                 Console.ResetColor();
             }
+        }
+
+        private void PrintQuit()
+        {
+            Console.SetCursorPosition(75, 21);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("ESC: 종료하기");
+            Console.ResetColor();
         }
     }
 }

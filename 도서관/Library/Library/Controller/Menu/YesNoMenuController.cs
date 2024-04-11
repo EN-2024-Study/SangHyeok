@@ -23,7 +23,7 @@ namespace Library.Controller
 
             while (isMenuSelect)
             {
-                menuScreen.PrintThreeMenu((int)Constants.Type.YesNo, menuValue + 1);
+                menuScreen.PrintMenu((int)Constants.Type.YesNo, menuValue + 1, coordinate);
                 isMenuSelect = SelectMenu();
 
                 if (menuValue > 1)

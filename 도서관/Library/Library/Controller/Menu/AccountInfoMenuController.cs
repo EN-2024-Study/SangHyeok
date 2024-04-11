@@ -26,27 +26,27 @@ namespace Library.Controller
                 switch(modeValue)
                 {
                     case (int)Constants.LibraryMode.User:
-                        menuScreen.PrintThreeMenu((int)Constants.Type.UserInfo, menuValue);
+                        menuScreen.PrintMenu((int)Constants.Type.UserInfo, menuValue, coordinate);
                         break;
                     case (int)Constants.LibraryMode.Manager:
-                        menuScreen.PrintThreeMenu((int)Constants.Type.ManagerInfo, menuValue);
+                        menuScreen.PrintMenu((int)Constants.Type.ManagerInfo, menuValue, coordinate);
                         break;
                 }
                 isMenuSelect = SelectMenu();
-                if (menuValue > 2)
-                    menuValue = 2;
+                if (menuValue > 1)
+                    menuValue = 1;
             }
 
             switch(menuValue)
             {
+                case (int)Constants.InfoMenu.GoBack:
+                    return;
                 case (int)Constants.InfoMenu.Modify:    // 개인 정보 수정 기능
 
                     break;
                 case (int)Constants.InfoMenu.Delete:    // 개인 정보 삭제 기능
 
                     break;
-                case (int)Constants.InfoMenu.GoBack:
-                    return;
             }
         }
     }

@@ -10,11 +10,14 @@ namespace Library.Controller
     public class MenuController
     {
         protected MenuScreen menuScreen;
+        protected Tuple<int, int> coordinate;
         public int menuValue;
+        
 
         public MenuController()
         {
             menuScreen = new MenuScreen();
+            coordinate = new Tuple<int, int>(20, 25);
             menuValue = 0;
         }
 

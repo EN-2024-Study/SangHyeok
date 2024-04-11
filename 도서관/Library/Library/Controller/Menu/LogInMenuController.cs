@@ -13,57 +13,44 @@ namespace Library.Controller
     {
         private int modeValue;
         private ModeMenuController modeMenuController;
-        private UserAccountTaskController userAccountTask;
+        private AccountTaskController accountTask;
 
         public LogInMenuController(int modeValue) : base()
         {
             this.modeValue = modeValue;
-            this.userAccountTask = new UserAccountTaskController();
+            this.accountTask = new UserAccountTaskController();
         }
 
         public override void Run()
         {
             menuValue = 0;
             bool isMenuSelect = true;
-            bool isLogIn = true;
+            bool isNoBack = true;
 
             while (isMenuSelect)
             {
-                menuScreen.PrintThreeMenu((int)Constants.Type.LogInSignUp, menuValue);
+                menuScreen.PrintMenu((int)Constants.Type.LogInSignUp, menuValue, coordinate);
                 isMenuSelect = SelectMenu();
-                if (menuValue > 2)
-                    menuValue = 2;
+                if (menuValue > 1)
+                    menuValue = 1;
             }
 
-            switch(menuValue)   
+            switch (menuValue)
             {
-                case (int)Constants.LogInMenu.LogIn:
-                    isLogIn = userAccountTask.LogIn(modeValue);
-                    break;
-                case (int)Constants.LogInMenu.SignUp:   // 회원가입(user인지 manager인지 체크)기능으로 가기
-                    userAccountTask.SignUp(modeValue);
-                    break;
                 case (int)Constants.LogInMenu.GoBack:
                     modeMenuController = new ModeMenuController();
                     modeMenuController.Run();
                     break;
+                case (int)Constants.LogInMenu.LogIn:
+                    isNoBack = accountTask.LogIn((int)Constants.LibraryMode.User);
+                    break;
+                case (int)Constants.LogInMenu.SignUp:   
+                    ((UserAccountTaskController)accountTask).SignUp();
+                    break;
             }
 
-            if (!isLogIn)
+            if (!isNoBack)
                 Run();
         }
-
-        //private bool CheckMode(int modeValue)
-        //{
-        //    if (modeValue == )
-        //    switch (modeValue)  // 기능으로 넘어가기
-        //    {
-        //        case (int)Constants.ModeMenu.UserMode:
-
-        //        case 1:
-
-        //            break;
-        //    }
-        //}
     }
 }

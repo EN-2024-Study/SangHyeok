@@ -13,21 +13,15 @@ namespace Library.Utility
 
         public enum LogInMenu
         {
-            LogIn,
-            SignUp,
-            GoBack
+            GoBack = -1,
+            LogIn = 0,
+            SignUp = 1,
         }
 
         public enum LogIn
         {
             Id,
             Password
-        }
-
-        public enum Error
-        {
-            Length,
-            Regex
         }
 
         public enum LibraryMode
@@ -47,9 +41,9 @@ namespace Library.Utility
 
         public enum ModeMenu
         {
-            UserMode,
-            ManagerMode,
-            Quit
+            Quit = -1,
+            UserMode = 0,
+            ManagerMode = 1,    
         }
 
         public enum UserMenu
@@ -74,9 +68,9 @@ namespace Library.Utility
 
         public enum InfoMenu
         {
-            Modify,
-            Delete,
-            GoBack
+            GoBack = -1,
+            Modify = 0,
+            Delete = 1,
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.Controller.Task
 {
-    public class ManagerAccountTaskController : AccountTaskController
+    public class ManagerAccountTaskController : TaskController
     {
 
         public void ManageMember()

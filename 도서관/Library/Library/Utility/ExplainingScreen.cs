@@ -21,9 +21,9 @@ namespace Library.Utility
 
         public static void ExplainDirectionKey()
         {
-            Console.SetCursorPosition(75, 23);
-            Console.Write("방향키를 눌러 모드를");
             Console.SetCursorPosition(75, 24);
+            Console.Write("방향키를 눌러 모드를");
+            Console.SetCursorPosition(75, 25);
             Console.Write("선택해 주세요.");
         }
 
@@ -31,7 +31,7 @@ namespace Library.Utility
 
         public static void ExplainInputKey()
         {
-            int x = 75, y = 26;
+            int x = 75, y = 27;
             Console.SetCursorPosition(x, y);
             Console.Write("커서가");
             Console.ForegroundColor = ConsoleColor.Green;

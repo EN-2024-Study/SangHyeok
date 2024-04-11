@@ -16,17 +16,17 @@ namespace Library.Controller.Task
         private UserMenuController userMenuController;
         private ManagerMenuController managerMenuController;
         private AccountScreen accountScreen;
-        AccountRepository accounts;
+        private AccountRepository accounts;
         private string id;
         private string password;
 
         public AccountTaskController() : base()
         {
-            menuController = new MenuController();
-            userMenuController = new UserMenuController();
-            managerMenuController = new ManagerMenuController();
-            accountScreen = new AccountScreen();
-            accounts = new AccountRepository();
+            this.menuController = new MenuController();
+            this.userMenuController = new UserMenuController();
+            this.managerMenuController = new ManagerMenuController();
+            this.accountScreen = new AccountScreen();
+            this.accounts = new AccountRepository();
         }
 
         public bool LogIn(int modeValue)
@@ -55,9 +55,9 @@ namespace Library.Controller.Task
                     isLogIn = false;
                     break;
                 }
-                else if (id != null)
+                else if (id != null)    // id만 입력 되었을 때
                     menuController.menuValue = 1;
-                else if (password != null)
+                else if (password != null)  // password만 입력 되었을 때
                     menuController.menuValue = 0;
 
                 accountScreen.PrintLogInScreen(menuController.menuValue, true, coordinate);
@@ -82,12 +82,12 @@ namespace Library.Controller.Task
             string[] ids = id.Split('\0');
             string[] passwords = password.Split('\0');
             
-            AccountInfo logInInfo = new AccountInfo(ids[0], passwords[0]);  // ID, PASSWORD 확인
+            AccountDto logInInfo = new AccountDto(ids[0], passwords[0]);  // ID, PASSWORD 확인
 
             if (modeValue == (int)Constants.LibraryMode.User)
             {
                 bool isCheck = false;
-                foreach (AccountInfo value in accounts.AccountList)
+                foreach (AccountDto value in accounts.AccountList)
                 {
                     if (logInInfo.Id == value.Id && logInInfo.Password == value.Password)
                     {
@@ -117,29 +117,6 @@ namespace Library.Controller.Task
             }
 
             return true;
-        }
-
-        public void SignUp(int modeValue)
-        {
-            if (modeValue == (int)Constants.LibraryMode.Manager)    // 관리자 모드에서 회원가입할 때
-            {
-
-            }
-        }
-
-        public void ModifyPersonalAccount()
-        {
-
-        }
-
-        public void DeletePersonalAccount()
-        {
-
-        }
-
-        private void ValidateInput()
-        {
-
         }
     }
 }

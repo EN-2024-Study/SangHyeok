@@ -8,6 +8,18 @@ namespace Library.Controller.Task
 {
     public class UserAccountTaskController : AccountTaskController
     {
+        public void SignUp()
+        {
 
+        }
+        public void ModifyPersonalAccount()
+        {
+
+        }
+
+        public void DeletePersonalAccount()
+        {
+
+        }
     }
 }

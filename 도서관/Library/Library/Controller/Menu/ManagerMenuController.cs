@@ -9,6 +9,13 @@ namespace Library.Controller
 {
     public class ManagerMenuController : MenuController
     {
+        private Tuple<int, int> libraryMenuCoordinate;
+
+        public ManagerMenuController() : base()
+        {
+            libraryMenuCoordinate = new Tuple<int, int>(coordinate.Item1 + 20, coordinate.Item2 - 10);
+        }
+
         public override void Run()
         {
             menuValue = 0;
@@ -16,7 +23,7 @@ namespace Library.Controller
 
             while (isMenuSelect)
             {
-                menuScreen.PrintLibraryMenu(menuValue, (int)Constants.ModeMenu.ManagerMode);
+                menuScreen.PrintMenu(menuValue, (int)Constants.Type.Manager, libraryMenuCoordinate);
                 isMenuSelect = base.SelectMenu();
                 if (menuValue > 5)
                     menuValue = 5;

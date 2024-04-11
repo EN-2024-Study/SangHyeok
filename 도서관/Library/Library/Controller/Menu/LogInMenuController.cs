@@ -29,7 +29,7 @@ namespace Library.Controller
 
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu((int)Constants.Type.LogInSignUp, menuValue, coordinate);
+                menuScreen.PrintMenu(menuValue, (int)Constants.Type.LogInSignUp, coordinate);
                 isMenuSelect = SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;

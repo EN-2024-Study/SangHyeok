@@ -9,7 +9,13 @@ namespace Library.Controller
 {
     public class UserMenuController : MenuController
     {
-        AccountInfoMenuController accountInfoMenu;
+        private AccountInfoMenuController accountInfoMenu;
+        private Tuple<int, int> libraryMenuCoordinate;
+
+        public UserMenuController() : base()
+        {
+            libraryMenuCoordinate = new Tuple<int, int>(coordinate.Item1 + 20, coordinate.Item2 - 10);
+        }
 
         public override void Run()
         {
@@ -18,7 +24,7 @@ namespace Library.Controller
 
             while (isMenuSelect)
             {
-                menuScreen.PrintLibraryMenu(menuValue, (int)Constants.Type.UserManager);
+                menuScreen.PrintMenu(menuValue, (int)Constants.Type.User, libraryMenuCoordinate);
                 isMenuSelect = SelectMenu();
                 if (menuValue > 5)
                     menuValue = 5;
@@ -44,7 +50,6 @@ namespace Library.Controller
                 case (int)Constants.UserMenu.InfoModify:
                     accountInfoMenu = new AccountInfoMenuController((int)Constants.LibraryMode.User);
                     accountInfoMenu.Run();
-                    Run();
                     break;
             }
         }

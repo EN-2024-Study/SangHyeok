@@ -36,7 +36,9 @@ namespace Library.Utility
             LogInSignUp,
             YesNo,
             UserInfo,
-            ManagerInfo
+            ManagerInfo,
+            User,
+            Manager
         }
 
         public enum ModeMenu

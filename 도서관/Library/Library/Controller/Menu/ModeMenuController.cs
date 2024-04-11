@@ -24,7 +24,7 @@ namespace Library.Controller
 
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu((int)Constants.ModeMenu.UserMode, menuValue, coordinate);
+                menuScreen.PrintMenu(menuValue, (int)Constants.ModeMenu.UserMode, coordinate);
                 isMenuSelect = SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;

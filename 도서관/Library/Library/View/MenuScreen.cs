@@ -6,7 +6,7 @@ namespace Library.View
 {
     public class MenuScreen
     {
-        public void PrintMenu(int modeValue, int CurrentMenuValue, Tuple<int, int> coordinate)
+        public void PrintMenu(int CurrentMenuValue, int modeValue, Tuple<int, int> coordinate)
         {
             Console.Clear();
             ExplainingScreen.ExplainDirectionKey();
@@ -20,7 +20,7 @@ namespace Library.View
                     str[0] = "유저 모드";
                     str[1] = "관리자 모드";
                     stringLength = 2;
-                    PrintQuit();
+                    ExplainingScreen.PrintQuit();
                     break;
                 case (int)Constants.Type.LogInSignUp:
                     str[0] = "로그인";
@@ -43,6 +43,24 @@ namespace Library.View
                     str[1] = "유저 삭제";
                     stringLength = 2;
                     break;
+                case (int)Constants.Type.User:
+                    str[0] = "도서 조회";
+                    str[1] = "도서 대여";
+                    str[2] = "도서 대여 내역";
+                    str[3] = "도서 반납";
+                    str[4] = "도서 반납 내역";
+                    str[5] = "정보 수정";
+                    ExplainingScreen.PrintQuit();
+                    break;
+                case (int)Constants.Type.Manager:
+                    str[0] = "도서 조회";
+                    str[1] = "도서 추가";
+                    str[2] = "도서 삭제";
+                    str[3] = "도서 수정";
+                    str[4] = "회원 관리";
+                    str[5] = "대여 내역";
+                    ExplainingScreen.PrintQuit();
+                    break;
             }
 
             for (int i = 0; i < stringLength; i++)
@@ -55,47 +73,42 @@ namespace Library.View
             }
         }
 
-        public void PrintLibraryMenu(int currentMenuValue, int modeValue)
-        {
-            Console.Clear();
+        //public void PrintLibraryMenu(int modeValue, int currentMenuValue, Tuple<int, int> coordinate)
+        //{
+        //    Console.Clear();
+        //    ExplainingScreen.ExplainDirectionKey();
+        //    ExplainingScreen.PrintQuit();
+        //    string[] str = new string[6];
+        //    str[0] = "도서 조회";
 
-            Tuple<int, int> coordinate = new Tuple<int, int>(40, 15);
-            string[] str = new string[6];
-            str[0] = "도서 조회";
-            switch (modeValue)
-            {
-                case (int)Constants.LibraryMode.User:
-                    str[1] = "도서 대여";
-                    str[2] = "도서 대여 내역";
-                    str[3] = "도서 반납";
-                    str[4] = "도서 반납 내역";
-                    str[5] = "정보 수정";
-                    break;
-                case (int)Constants.LibraryMode.Manager:
-                    str[1] = "도서 추가";
-                    str[2] = "도서 삭제";
-                    str[3] = "도서 수정";
-                    str[4] = "회원 관리";
-                    str[5] = "대여 내역";
-                    break;
-            }
+        //    switch (modeValue)
+        //    {
+        //        case (int)Constants.LibraryMode.User:
+        //            str[1] = "도서 대여";
+        //            str[2] = "도서 대여 내역";
+        //            str[3] = "도서 반납";
+        //            str[4] = "도서 반납 내역";
+        //            str[5] = "정보 수정";
+        //            break;
+        //        case (int)Constants.LibraryMode.Manager:
+        //            str[1] = "도서 추가";
+        //            str[2] = "도서 삭제";
+        //            str[3] = "도서 수정";
+        //            str[4] = "회원 관리";
+        //            str[5] = "대여 내역";
+        //            break;
+        //    }
 
-            for(int i = 0; i < 6; i++)
-            {
-                Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i);
-                if (currentMenuValue == i)
-                    Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write(str[i]);
-                Console.ResetColor();
-            }
-        }
+        //    for(int i = 0; i < 6; i++)
+        //    {
+        //        Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i);
+        //        if (currentMenuValue == i)
+        //            Console.ForegroundColor = ConsoleColor.Green;
+        //        Console.Write(str[i]);
+        //        Console.ResetColor();
+        //    }
+        //}
 
-        private void PrintQuit()
-        {
-            Console.SetCursorPosition(75, 21);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("ESC: 종료하기");
-            Console.ResetColor();
-        }
+
     }
 }

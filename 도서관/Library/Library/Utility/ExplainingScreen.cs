@@ -27,8 +27,6 @@ namespace Library.Utility
             Console.Write("선택해 주세요.");
         }
 
-
-
         public static void ExplainInputKey()
         {
             int x = 75, y = 27;
@@ -46,6 +44,14 @@ namespace Library.Utility
             Console.Write("으로 만든 후");
             Console.SetCursorPosition(x, y + 2);
             Console.Write("정보를 입력하세요.");
+        }
+
+        public static void PrintQuit()
+        {
+            Console.SetCursorPosition(75, 21);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("ESC: 종료하기");
+            Console.ResetColor();
         }
     }
 }

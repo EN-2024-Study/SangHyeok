@@ -55,7 +55,6 @@
     <Compile Include="Utility\Constants.cs" />
     <Compile Include="Utility\ExplainingScreen.cs" />
     <Compile Include="View\AccountScreen.cs" />
-    <Compile Include="View\PastExceptionScreen.cs" />
     <Compile Include="View\MenuScreen.cs" />
     <Compile Include="View\SuccessFailureScreen.cs" />
   </ItemGroup>

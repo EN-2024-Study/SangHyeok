@@ -26,10 +26,10 @@ namespace Library.Controller
                 switch(modeValue)
                 {
                     case (int)Constants.LibraryMode.User:
-                        menuScreen.PrintMenu((int)Constants.Type.UserInfo, menuValue, coordinate);
+                        menuScreen.PrintMenu(menuValue, (int)Constants.Type.UserInfo, coordinate);
                         break;
                     case (int)Constants.LibraryMode.Manager:
-                        menuScreen.PrintMenu((int)Constants.Type.ManagerInfo, menuValue, coordinate);
+                        menuScreen.PrintMenu(menuValue, (int)Constants.Type.ManagerInfo, coordinate);
                         break;
                 }
                 isMenuSelect = SelectMenu();

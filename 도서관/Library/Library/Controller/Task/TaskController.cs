@@ -10,11 +10,11 @@ namespace Library.Controller.Task
 {
     public class TaskController
     {
-        private AccountsDto accountsDto;
+        SuccessFailureScreen screen;
 
         public TaskController()
         {
-            accountsDto = new AccountsDto();
+            screen = new SuccessFailureScreen();
         }
 
         protected string LimitInputLength(int length, Tuple<int, int> coordinate, bool isPassword)
@@ -65,7 +65,7 @@ namespace Library.Controller.Task
 
             if (!isBreak)
             {
-                SuccessFailureScreen screen = new SuccessFailureScreen();
+                screen = new SuccessFailureScreen();
                 screen.PrintSuccessFailure(new Tuple<int, int>(x + index + 2, y), false);
                 return LimitInputLength(length, coordinate, isPassword);
             }

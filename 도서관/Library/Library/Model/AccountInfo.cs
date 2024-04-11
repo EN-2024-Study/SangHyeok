@@ -12,7 +12,6 @@ namespace Library.Model
         private string phoneNumber;
         private string address;
         private List<BookInfo> RentalBooks;
-        //private List<AccountInfo> accountsDto;
 
         public AccountInfo()
         {
@@ -23,7 +22,6 @@ namespace Library.Model
             phoneNumber = null;
             address = null;
             RentalBooks = new List<BookInfo>();
-
         }
 
         public AccountInfo(string id, string password) : this()

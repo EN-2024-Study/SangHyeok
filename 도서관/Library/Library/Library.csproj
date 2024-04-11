@@ -49,10 +49,10 @@
     <Compile Include="Controller\Task\UserAccountTaskController.cs" />
     <Compile Include="Controller\Menu\YesNoMenuController.cs" />
     <Compile Include="Model\AccountInfo.cs" />
-    <Compile Include="Model\AccountsDto.cs" />
+    <Compile Include="Model\AccountRepository.cs" />
     <Compile Include="Model\BookInfo.cs" />
-    <Compile Include="Model\BooksDto.cs" />
     <Compile Include="MainProgram.cs" />
+    <Compile Include="Model\BookRepository.cs" />
     <Compile Include="Utility\Constants.cs" />
     <Compile Include="Utility\ExplainingScreen.cs" />
     <Compile Include="View\AccountScreen.cs" />

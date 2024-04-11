@@ -24,6 +24,12 @@ namespace Library.Utility
             Password
         }
 
+        public enum Error
+        {
+            Length,
+            Regex
+        }
+
         public enum LibraryMode
         {
             User,

@@ -1,4 +1,5 @@
-﻿using Library.View;
+﻿using Library.Model;
+using Library.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,12 @@ namespace Library.Controller.Task
 {
     public class TaskController
     {
-        //SuccessFailureScreen successFailureScreen;
+        private AccountsDto accountsDto;
 
-        //public TaskController()
-        //{
-        //    successFailureScreen = new SuccessFailureScreen();
-        //}
+        public TaskController()
+        {
+            accountsDto = new AccountsDto();
+        }
 
         protected string LimitInputLength(int length, Tuple<int, int> coordinate, bool isPassword)
         {
@@ -75,11 +76,14 @@ namespace Library.Controller.Task
             return str;
         }
 
-        protected string LimitInputRegex()
+        protected string LimitInputRegex(string formerString)
         {
-            string str = null;
+            if (formerString == null)
+                return null;
 
-            return str;
+            string currentString = formerString;
+            // 정규식 구현 해야 함
+            return currentString;
         }
 
         protected void DeleteControl()

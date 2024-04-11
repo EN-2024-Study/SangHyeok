@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Library.Model
 {
-    public class PastAccountInfo
+    public class AccountInfo
     {
         private string id;
         private string password;
@@ -11,10 +11,10 @@ namespace Library.Model
         private int age;
         private string phoneNumber;
         private string address;
-        private List<PastBookInfo> RentalBooks;
+        private List<BookInfo> RentalBooks;
+        //private List<AccountInfo> accountsDto;
 
-
-        public PastAccountInfo()
+        public AccountInfo()
         {
             id = null;
             password = null;
@@ -22,17 +22,17 @@ namespace Library.Model
             age = 0;
             phoneNumber = null;
             address = null;
-            RentalBooks = new List<PastBookInfo>();
+            RentalBooks = new List<BookInfo>();
+
         }
 
-        public PastAccountInfo(string id, string password)
+        public AccountInfo(string id, string password) : this()
         {
-            RentalBooks = new List<PastBookInfo>();
             this.id = id;
             this.password = password;
         }
 
-        public PastAccountInfo(string id, string password, string name, 
+        public AccountInfo(string id, string password, string name, 
             int age, string phoneNumber, string address) : this(id, password)
         {
             this.name = name;

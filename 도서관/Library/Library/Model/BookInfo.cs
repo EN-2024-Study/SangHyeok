@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Library.Model
 {
-    public class PastBookInfo
+    public class BookInfo
     {
         private string title;
         private string writer;
@@ -14,7 +14,7 @@ namespace Library.Model
         private string iSBN;
         private string info;
 
-        public PastBookInfo(string title, string writer,
+        public BookInfo(string title, string writer,
             string publisher, int count, int price,
             string releaseDate, string iSBN, string info)
         {

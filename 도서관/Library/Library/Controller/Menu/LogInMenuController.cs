@@ -38,7 +38,7 @@ namespace Library.Controller
             switch(menuValue)   
             {
                 case (int)Constants.LogInMenu.LogIn:
-                    isLogIn = userAccountTask.LogIn();
+                    isLogIn = userAccountTask.LogIn(modeValue);
                     break;
                 case (int)Constants.LogInMenu.SignUp:   // 회원가입(user인지 manager인지 체크)기능으로 가기
                     userAccountTask.SignUp(modeValue);

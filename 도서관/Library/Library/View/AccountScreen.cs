@@ -5,12 +5,15 @@ namespace Library.View
 {
     public class AccountScreen
     {
-        public void PrintLogInScreen(int menuValue, bool isSelect, Tuple<int, int> coordinateValue)
+        public void PrintLogInScreen(int menuValue, bool isSelect, string Id, Tuple<int, int> coordinateValue)
         {
             Console.Clear();
             Tuple<int, int> coordinate = coordinateValue;
             string[] str = new string[2];
-            str[0] = "ID : ";
+            if (Id == null)
+                str[0] = "ID : ";
+            else
+                str[0] = "ID : " + Id;
             str[1] = "PASSWORD : ";
 
             ExplainingScreen.ExplainSelectKey();
@@ -37,6 +40,28 @@ namespace Library.View
         {
 
         }
+
+        public void PrintInputError(int errorNumber, Tuple<int, int> coordinate)
+        {
+            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);
+            switch (errorNumber)
+            {
+                case (int)Constants.Error.Length:
+                    Console.Write("입력 길이가 맞지 않습니다.");
+                    break;
+                case (int)Constants.Error.Regex:
+                    Console.Write("정보가 맞지 않습니다.");
+                    break;
+            }
+        }
+
+        public void Erase(Tuple<int, int> coordinate, int length)
+        {
+            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);
+            for (int i = 0; i < length; i++)
+                Console.Write(" ");
+        }
+
         //{
 
         //    Console.SetCursorPosition(5, 21);

@@ -12,7 +12,7 @@ namespace Library.View
             ExplainingScreen.ExplainDirectionKey();
             ExplainingScreen.ExplainSelectKey();
 
-            string[] str = new string[3];
+            string[] str = new string[6];
             int stringLength = 0;
             switch (modeValue)
             {
@@ -50,6 +50,7 @@ namespace Library.View
                     str[3] = "도서 반납";
                     str[4] = "도서 반납 내역";
                     str[5] = "정보 수정";
+                    stringLength = 6;
                     ExplainingScreen.PrintQuit();
                     break;
                 case (int)Constants.Type.Manager:
@@ -59,6 +60,7 @@ namespace Library.View
                     str[3] = "도서 수정";
                     str[4] = "회원 관리";
                     str[5] = "대여 내역";
+                    stringLength = 6;
                     ExplainingScreen.PrintQuit();
                     break;
             }

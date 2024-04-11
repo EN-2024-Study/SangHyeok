@@ -31,11 +31,11 @@ namespace Library.Utility
         {
             int x = 75, y = 27;
             Console.SetCursorPosition(x, y);
-            Console.Write("커서가");
+            Console.Write("커서가 ");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("초록색");
             Console.ResetColor();
-            Console.Write("이면 Enter를 한번 더");
+            Console.Write("이면 Enter를");
             Console.SetCursorPosition(x, y + 1);
             Console.Write("눌러");
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -51,6 +51,16 @@ namespace Library.Utility
             Console.SetCursorPosition(75, 21);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("ESC: 종료하기");
+            Console.ResetColor();
+        }
+
+        public static void PrintInputError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(75, 23);
+            Console.Write("잘못된 입력입니다.");
+            Console.SetCursorPosition(75, 24);
+            Console.Write("다시 입력하세요.");
             Console.ResetColor();
         }
     }

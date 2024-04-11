@@ -23,17 +23,18 @@ namespace Library.Controller.Task
         public AccountTaskController() : base()
         {
             this.menuController = new MenuController();
-            this.userMenuController = new UserMenuController();
-            this.managerMenuController = new ManagerMenuController();
             this.accountScreen = new AccountScreen();
             this.accounts = new AccountRepository();
+            this.id = null;
+            this.password = null;
         }
-
+         
         public bool LogIn(int modeValue)
         {
             id = null;
             password = null;
             bool isLogIn = true;
+            menuController.menuValue = 0;
             Tuple<int, int> coordinate = new Tuple<int, int>(20, 25);
 
             while (isLogIn)     // ID 입력과 Password 입력 중 선택
@@ -50,6 +51,7 @@ namespace Library.Controller.Task
             isLogIn = true;
             while (isLogIn)     // 입력
             {
+
                 if (id != null && password != null)
                 {
                     isLogIn = false;
@@ -68,51 +70,53 @@ namespace Library.Controller.Task
                     id = LimitInputRegex(id);
 
                     if (id == null)     // esc 입력 -> 다시 로그인
-                        return LogIn(modeValue);
+                        return false;
                 }
                 else if (menuController.menuValue == (int)Constants.LogIn.Password)
                 {
                     password = LimitInputLength(15, new Tuple<int, int>(coordinate.Item1 + 11, coordinate.Item2 + 2), true);
                     password = LimitInputRegex(password);
                     if (password == null)   // esc 입력 -> 다시 로그인
-                        return LogIn(modeValue);
+                        return false;
                 }
             }
 
             string[] ids = id.Split('\0');
             string[] passwords = password.Split('\0');
-            
+
             AccountDto logInInfo = new AccountDto(ids[0], passwords[0]);  // ID, PASSWORD 확인
 
             if (modeValue == (int)Constants.LibraryMode.User)
             {
-                bool isCheck = false;
+                bool isComplete = false;
                 foreach (AccountDto value in accounts.AccountList)
                 {
                     if (logInInfo.Id == value.Id && logInInfo.Password == value.Password)
                     {
+                        userMenuController = new UserMenuController();
                         userMenuController.Run();
-                        isCheck = true;
+                        isComplete = true;
                         break;
                     }
                 }
 
-                if (!isCheck)
+                if (!isComplete)
                 {
 
-                    return LogIn(modeValue);
+                    return false;
                 }
             }
             else
             {
                 if (logInInfo.Id == accounts.Manager.Id && logInInfo.Password == accounts.Manager.Password)
                 {
+                    managerMenuController = new ManagerMenuController();
                     managerMenuController.Run();
                 }
                 else
                 {
 
-                    return LogIn(modeValue);
+                    return false;
                 }
             }
 

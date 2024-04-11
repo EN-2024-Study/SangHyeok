@@ -9,8 +9,6 @@ namespace Library.Controller
 {
     public class ManagerMenuController : MenuController
     {
-        AccountInfoMenuController accountInfoMenu;
-
         public override void Run()
         {
             menuValue = 0;
@@ -39,7 +37,7 @@ namespace Library.Controller
 
                     break;
                 case (int)Constants.ManagerMenu.UserControl:
-                    accountInfoMenu = new AccountInfoMenuController((int)Constants.LibraryMode.Manager);
+                    AccountInfoMenuController accountInfoMenu = new AccountInfoMenuController((int)Constants.LibraryMode.Manager);
                     accountInfoMenu.Run();
                     Run();
                     break;

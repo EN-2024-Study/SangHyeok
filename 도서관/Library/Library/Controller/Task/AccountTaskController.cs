@@ -19,7 +19,6 @@ namespace Library.Controller.Task
             accountScreen = new AccountScreen();
         }
 
-
         public bool LogIn()
         {
             bool isLogIn = true;
@@ -45,11 +44,11 @@ namespace Library.Controller.Task
                 {
                     case (int)Constants.LogIn.Id:
                         id = LimitInputLength(15, new Tuple<int, int>(coordinate.Item1 + 5, coordinate.Item2 + 1), false);
-                        ShouldReprocess(id);
+                        MatchPattern(id);
                         break;
                     case (int)Constants.LogIn.Password:
                         password = LimitInputLength(15, new Tuple<int, int>(coordinate.Item1 + 11, coordinate.Item2 + 2), true);
-                        ShouldReprocess(password);
+                        MatchPattern(password);
                         break;
                 }
             }
@@ -72,13 +71,13 @@ namespace Library.Controller.Task
 
         }
 
-        private void ShouldReprocess(string str)
+        private void MatchPattern(string str)
         {
             if (str == null)
                 LogIn();
             else
-            {
-                // 유효성 검사
+            {   // 정규표현식 검사
+
             }
         }
     }

@@ -64,8 +64,8 @@ namespace Library.Controller.Task
 
             if (!isBreak)
             {
-                SuccessFailureScreen successFailureScreen = new SuccessFailureScreen();
-                successFailureScreen.PrintSuccessFailure(new Tuple<int, int>(x + index + 2, y), false);
+                SuccessFailureScreen screen = new SuccessFailureScreen();
+                screen.PrintSuccessFailure(new Tuple<int, int>(x + index + 2, y), false);
                 return LimitInputLength(length, coordinate, isPassword);
             }
 

@@ -35,6 +35,7 @@ namespace Library.Controller
             while (isMenuSelect)
             {
                 base.menuScreen.PrintMenu(menuString, menuValue, false);
+                ExplainingScreen.PrintQuit();
                 isMenuSelect = base.SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;

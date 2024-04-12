@@ -9,35 +9,44 @@ namespace Library.Utility
 {
     public class CheckInformation
     {
-
-        public bool Check(string[] s, int type)
+        public bool CheckUser(string s, int stringType)
         {
-            bool isCheck = false;
-            string[] str = s[0].Split('\0');
-            string id = str[0];
-            str = new string[1];
-            str = s[1].Split('\0');
-            string password = str[0];
-            //switch(type)  
-            //{
-            //    case (int)Constants.MenuType.LogInSignUp:
-            //        str[0]
-            //}
+            string[] str = s.Split('\0');
 
-            
-
-            if (type == (int)Constants.MenuType.LogInSignUp)
+            if (stringType == (int)Constants.InputType.Id)
             {
                 foreach (AccountDto value in AccountRepository.accountList)
                 {
-                    if (value.Id == id && value.Password == password)
+                    if (value.Id == str[0])
                         return true;
                 }
-                if (AccountRepository.manager.Id == id && AccountRepository.manager.Password == password)
-                    return true;
             }
-           
+            else if (stringType == (int)Constants.InputType.Password)
+            {
+                foreach (AccountDto value in AccountRepository.accountList)
+                {
+                    if (value.Password == str[0])
+                        return true;
+                }
+            }
             return false;
         }
+        public bool CheckManager(string s, int stringType)
+        {
+            string[] str = s.Split('\0');
+
+            if (stringType == (int)Constants.InputType.Id)
+            {
+                if (str[0] == AccountRepository.manager.Id)
+                    return true;
+            }
+            else if (stringType == (int)Constants.InputType.Password)
+            {
+                if (str[0] == AccountRepository.manager.Password)
+                    return true;
+            }
+            return false;
+        }
+
     }
 }

@@ -89,5 +89,12 @@ namespace Library.Utility
             PhoneNumber = 5,
             Address = 6
         }
+
+        public enum InputType
+        {
+            Id,
+            Password,
+
+        }
     }
 }

@@ -12,34 +12,38 @@ namespace Library.Controller.Menu
     public class LogInMenuController : MenuController
     {
         private InputTaskController inputTaskController;
-        private CheckInformation checkInformation;
         private UserMenuController userMenuController;
         private ManagerMenuController managerMenuController;
+        private CheckInformation checkInformation;
         private int modeValue;
 
         public LogInMenuController(int modeValue)
         {
             inputTaskController = new InputTaskController();
-            checkInformation = new CheckInformation();
             userMenuController = new UserMenuController();
             managerMenuController = new ManagerMenuController();
+            checkInformation = new CheckInformation();
             this.modeValue = modeValue;
         }
 
         public override bool Run()
         {
             base.menuValue = 0;
-            bool isLogIn = false;
+            bool isLogIn = true;
+            bool isCheckId = false;
+            bool isCheckPassword = false;
+            int isCheckCount = 0;
             string[] menuString = base.DecideMenuType((int)Constants.MenuType.LogIn);
             string id = null, password = null;
 
             base.menuScreen.EraseMenu();
-            while (!isLogIn)
+            while (isLogIn)
             {
                 bool isMenuSelect = true;
                 while (isMenuSelect)
                 {
                     menuScreen.PrintMenu(menuString, menuValue, false);
+                    ExplainingScreen.ExplainInputKey();
                     isMenuSelect = SelectMenu();
                     if (menuValue > 1)
                         menuValue = 1;
@@ -58,20 +62,40 @@ namespace Library.Controller.Menu
                         break;
                 }
 
-                if (id != null && password != null)
-                    break;
+                if (id != null)
+                {
+                    if (modeValue == (int)Constants.LibraryMode.User)
+                        isCheckId = checkInformation.CheckUser(id, (int)Constants.InputType.Id);
+                    else if (modeValue == (int)Constants.LibraryMode.Manager)
+                        isCheckId = checkInformation.CheckManager(id, (int)Constants.InputType.Id);
+                    isCheckCount++;
+                }
+                if (password != null)
+                {
+                    if (modeValue == (int)Constants.LibraryMode.User)
+                        isCheckPassword = checkInformation.CheckUser(password, (int)Constants.InputType.Password);
+                    else if (modeValue == (int)Constants.LibraryMode.Manager)
+                        isCheckPassword = checkInformation.CheckManager(password, (int)Constants.InputType.Password);
+                    isCheckCount++;
+                }
+
+                if (isCheckCount > 2)
+                {
+                    if (isCheckId && isCheckPassword)
+                        break;
+                    else
+                    {
+                        isLogIn = false;
+                        break;
+                    }
+                }
             }
-           
-            isLogIn = checkInformation.Check(new string[] {id, password}, (int)Constants.MenuType.LogInSignUp);
- 
+
             if (isLogIn)
             {
-                
-
                 switch (modeValue)
                 {
                     case (int)Constants.LibraryMode.User:
-
                         userMenuController.Run();
                         break;
                     case (int)Constants.LibraryMode.Manager:
@@ -80,7 +104,10 @@ namespace Library.Controller.Menu
                 }
             }
             else
-                Run();  // 입력정보가 없을 때
+            {
+                // 입력한 정보가 맞지 않다는 설명 출력
+                Run();  // 입력정보가 없을 떄
+            }
 
             return false;
         }

@@ -18,6 +18,7 @@ namespace Library.Controller
 
         public override bool Run()
         {
+            Console.Clear();
             base.menuValue = 0;
             bool isMenuSelect = true;
             string[] menuString = null;

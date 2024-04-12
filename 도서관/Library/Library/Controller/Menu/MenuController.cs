@@ -57,7 +57,7 @@ namespace Library.Controller
                 case (int)Constants.MenuType.LogInSignUp:
                 case (int)Constants.MenuType.UserInfo:
                 case (int)Constants.MenuType.ManagerInfo:
-                case (int)Constants.MenuType.IdPassword:
+                case (int)Constants.MenuType.LogIn:
                     arraySize = 2;
                     break;
                 case (int)Constants.MenuType.YesNo:

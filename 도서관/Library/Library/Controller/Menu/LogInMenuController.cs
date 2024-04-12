@@ -11,65 +11,78 @@ namespace Library.Controller.Menu
 {
     public class LogInMenuController : MenuController
     {
-        private TaskController task;
+        private InputTaskController inputTaskController;
+        private CheckInformation checkInformation;
+        private UserMenuController userMenuController;
+        private ManagerMenuController managerMenuController;
+        private int modeValue;
 
-        public LogInMenuController()
+        public LogInMenuController(int modeValue)
         {
-            task = new TaskController();
+            inputTaskController = new InputTaskController();
+            checkInformation = new CheckInformation();
+            userMenuController = new UserMenuController();
+            managerMenuController = new ManagerMenuController();
+            this.modeValue = modeValue;
         }
 
         public override bool Run()
         {
             base.menuValue = 0;
-            bool isMenuSelect = true;
-            bool isBack = false;
+            bool isLogIn = false;
             string[] menuString = base.DecideMenuType((int)Constants.MenuType.LogIn);
+            string id = null, password = null;
 
             base.menuScreen.EraseMenu();
-            while (isMenuSelect)
+            while (!isLogIn)
             {
-                menuScreen.PrintMenu(menuString, menuValue);
-                isMenuSelect = SelectMenu();
-                if (menuValue > 1)
-                    menuValue = 1;
-            }
+                bool isMenuSelect = true;
+                while (isMenuSelect)
+                {
+                    menuScreen.PrintMenu(menuString, menuValue, false);
+                    isMenuSelect = SelectMenu();
+                    if (menuValue > 1)
+                        menuValue = 1;
+                }
+                menuScreen.PrintMenu(menuString, menuValue, true);  // 선택한 메뉴를 파란색으로 다시 띄우기
 
-            while(!isBack)
-            {
                 switch (menuValue)
                 {
+                    case (int)Constants.LogInMenu.GoBack:
+                        return true;
                     case (int)Constants.LogInMenu.Id:
-                        isBack = accountTask.IdPasswordMenu((int)Constants.LibraryMode.User);
+                        id = inputTaskController.LimitInputLength(new Tuple<int, int>(25, 25), 15, false);
                         break;
                     case (int)Constants.LogInMenu.Password:
-                        isBack = ((UserAccountTaskController)accountTask).SignUp();
+                        password = inputTaskController.LimitInputLength(new Tuple<int, int>(31, 27), 15, true);
+                        break;
+                }
+
+                if (id != null && password != null)
+                    break;
+            }
+           
+            isLogIn = checkInformation.Check(new string[] {id, password}, (int)Constants.MenuType.LogInSignUp);
+ 
+            if (isLogIn)
+            {
+                
+
+                switch (modeValue)
+                {
+                    case (int)Constants.LibraryMode.User:
+
+                        userMenuController.Run();
+                        break;
+                    case (int)Constants.LibraryMode.Manager:
+                        managerMenuController.Run();
                         break;
                 }
             }
+            else
+                Run();  // 입력정보가 없을 때
 
-            if (isBack)
-                return true;
             return false;
         }
-
-        /*
-        public bool IdPasswordMenu()
-        {
-            Tuple<int, int> coordinate = new Tuple<int, int>(20, 25);
-            bool isLogIn = true;
-
-            while (isLogIn)     // ID 입력과 Password 입력 중 선택
-            {
-                accountScreen.PrintScreen(menuController.menuValue, false, true, coordinate);
-                isLogIn = menuController.SelectMenu();
-                if (menuController.menuValue > 1)
-                    menuController.menuValue = 1;
-            }
-
-            if (menuController.menuValue == -1) // esc 입력 -> mode 선택 화면
-                return false;
-            return true;
-        }
-        */
     }
 }

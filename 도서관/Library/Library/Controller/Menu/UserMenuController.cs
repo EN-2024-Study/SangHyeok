@@ -21,11 +21,11 @@ namespace Library.Controller
             base.menuValue = 0;
             bool isMenuSelect = true;
             bool isBack = false;
-            string[] menuString = base.DecideMenuType((int)Constants.Type.User);
+            string[] menuString = base.DecideMenuType((int)Constants.MenuType.User);
 
             while (isMenuSelect)
             {
-                base.menuScreen.PrintMenu(menuString, menuValue);
+                base.menuScreen.PrintMenu(menuString, menuValue, false);
                 isMenuSelect = SelectMenu();
                 if (menuValue > 5)
                     menuValue = 5;

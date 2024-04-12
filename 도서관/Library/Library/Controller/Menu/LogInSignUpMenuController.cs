@@ -12,13 +12,11 @@ namespace Library.Controller
 {
     public class LogInSignUpMenuController : MenuController
     {
-        private AccountTaskController accountTask;
         private LogInMenuController logInMenu;
         private SignUpMenuController signUpMenu;
         public LogInSignUpMenuController() : base()
         {
-            this.accountTask = new UserAccountTaskController();
-            this.logInMenu = new LogInMenuController();
+            this.logInMenu = new LogInMenuController((int)Constants.LibraryMode.User);
             this.signUpMenu = new SignUpMenuController();
         }
 
@@ -32,7 +30,7 @@ namespace Library.Controller
             base.menuScreen.EraseMenu();
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu(menuString, menuValue);
+                menuScreen.PrintMenu(menuString, menuValue, false);
                 isMenuSelect = SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;

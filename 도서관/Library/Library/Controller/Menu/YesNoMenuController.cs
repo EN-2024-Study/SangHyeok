@@ -14,7 +14,7 @@ namespace Library.Controller
             base.menuScreen.EraseMenu();
             while (isMenuSelect)
             {
-                base.menuScreen.PrintMenu(menuString, menuValue + 1);
+                base.menuScreen.PrintMenu(menuString, menuValue + 1, false);
                 isMenuSelect = SelectMenu();
 
                 if (menuValue > 1)

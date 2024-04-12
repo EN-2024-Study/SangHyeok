@@ -20,8 +20,9 @@ namespace Library.Utility
 
         public enum LogInMenu
         {
-            Id,
-            Password
+            GoBack = -1,
+            Id = 0,
+            Password = 1
         }
 
         public enum LibraryMode

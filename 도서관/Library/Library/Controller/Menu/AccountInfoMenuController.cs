@@ -33,7 +33,7 @@ namespace Library.Controller
 
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu(menuString, menuValue);
+                menuScreen.PrintMenu(menuString, menuValue, false);
                 isMenuSelect = SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;

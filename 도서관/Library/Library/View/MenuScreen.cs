@@ -5,7 +5,7 @@ namespace Library.View
 {
     public class MenuScreen
     {
-        public void PrintMenu(string[] menuString, int CurrentMenuValue)
+        public void PrintMenu(string[] menuString, int menuValue, bool isSelect)
         {
             Tuple<int, int> coordinate;
             if (menuString[0].Equals("도서 조회"))
@@ -14,14 +14,16 @@ namespace Library.View
                 coordinate = new Tuple<int, int>(20, 25);
             ExplainingScreen.ExplainDirectionKey();
             ExplainingScreen.ExplainSelectKey();
-            if (menuString[0].Equals("유저 모드") || menuString[0].Equals("도서 조회"))
-                ExplainingScreen.PrintQuit();
+            //if (menuString[0].Equals("유저 모드") || menuString[0].Equals("도서 조회"))
+            //    ExplainingScreen.PrintQuit();
 
 
             for (int i = 0; i < menuString.Length; i++)
             {
                 Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i * 2);
-                if (CurrentMenuValue == i)
+                if (isSelect && menuValue == i)
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                else if (menuValue == i)
                     Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write(menuString[i]);
                 Console.ResetColor();

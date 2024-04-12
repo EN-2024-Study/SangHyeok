@@ -1,4 +1,5 @@
-﻿using Library.Controller.Task;
+﻿using Library.Controller.Menu;
+using Library.Controller.Task;
 using Library.Utility;
 using Library.View;
 using System;
@@ -13,14 +14,14 @@ namespace Library.Controller
     public class ModeMenuController : MenuController
     {
         private LogInSignUpMenuController logInSignUpMenu;
+        private LogInMenuController logInMenuController;
         private YesNoMenuController quitMenu;
-        private AccountTaskController accountTask;
 
         public ModeMenuController()
         {
-            this.logInSignUpMenu = new LogInSignUpMenuController();
+            this.logInSignUpMenu = new LogInSignUpMenuController(); // 유저 모드로 가면 로그인회원가입 메뉴
+            this.logInMenuController = new LogInMenuController((int)Constants.LibraryMode.Manager); // 관리자 모드로 가면 로그인 메뉴
             this.quitMenu = new YesNoMenuController();
-            this.accountTask = new AccountTaskController();
         }
 
         public override bool Run()
@@ -33,7 +34,7 @@ namespace Library.Controller
             base.menuScreen.EraseMenu();
             while (isMenuSelect)
             {
-                base.menuScreen.PrintMenu(menuString, menuValue);
+                base.menuScreen.PrintMenu(menuString, menuValue, false);
                 isMenuSelect = base.SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;
@@ -48,7 +49,7 @@ namespace Library.Controller
                     isBack = logInSignUpMenu.Run();
                     break;
                 case (int)Constants.ModeMenu.ManagerMode:
-                    isBack = accountTask.LogIn((int)Constants.LibraryMode.Manager);
+                    isBack = logInMenuController.Run();
                     break;
             }
 

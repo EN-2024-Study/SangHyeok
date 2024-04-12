@@ -20,7 +20,7 @@ namespace Library.Controller.Menu
             base.menuScreen.EraseMenu();
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu(menuString, menuValue);
+                menuScreen.PrintMenu(menuString, menuValue, false);
                 isMenuSelect = SelectMenu();
                 if (menuValue > 6)
                     menuValue = 6;

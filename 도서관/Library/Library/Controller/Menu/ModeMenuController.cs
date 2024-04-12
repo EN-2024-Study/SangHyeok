@@ -12,20 +12,28 @@ namespace Library.Controller
 {
     public class ModeMenuController : MenuController
     {
-        private LogInMenuController logInMenu;
-        private YesNoMenuController yesNoMenu;
+        private LogInSignUpMenuController logInSignUpMenu;
+        private QuitMenuController quitMenu;
         private AccountTaskController accountTask;
+
+        public ModeMenuController()
+        {
+            this.logInSignUpMenu = new LogInSignUpMenuController();
+            this.quitMenu = new QuitMenuController();
+            this.accountTask = new AccountTaskController();
+        }
 
         public override void Run()
         {
-            menuValue = 0;
+            base.menuValue = 0;
             bool isMenuSelect = true;
             bool isNoBack = true;
+            string[] menuString = base.DecideMenuType((int)Constants.Type.UserManager);
 
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu(menuValue, (int)Constants.ModeMenu.UserMode, coordinate);
-                isMenuSelect = SelectMenu();
+                base.menuScreen.PrintMenu(menuString, menuValue, coordinate);
+                isMenuSelect = base.SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;
             }
@@ -33,15 +41,13 @@ namespace Library.Controller
             switch (menuValue)
             {
                 case (int)Constants.ModeMenu.Quit:
-                    yesNoMenu = new YesNoMenuController();
-                    yesNoMenu.Run();
+                    quitMenu.Run();
+                    Run();
                     break;
                 case (int)Constants.ModeMenu.UserMode:
-                    logInMenu = new LogInMenuController(menuValue);
-                    logInMenu.Run();
+                    logInSignUpMenu.Run();
                     break;
                 case (int)Constants.ModeMenu.ManagerMode:
-                    accountTask = new AccountTaskController();
                     isNoBack = accountTask.LogIn((int)Constants.LibraryMode.Manager);
                     break;
             }

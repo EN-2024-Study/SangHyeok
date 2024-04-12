@@ -9,22 +9,24 @@ namespace Library.Controller
 {
     public class UserMenuController : MenuController
     {
-        private AccountInfoMenuController accountInfoMenu;
         private Tuple<int, int> libraryMenuCoordinate;
+        private AccountInfoMenuController accountInfoMenuController;
 
         public UserMenuController() : base()
         {
-            libraryMenuCoordinate = new Tuple<int, int>(coordinate.Item1 + 20, coordinate.Item2 - 10);
+            this.libraryMenuCoordinate = new Tuple<int, int>(coordinate.Item1 + 20, coordinate.Item2 - 10);
+            this.accountInfoMenuController = new AccountInfoMenuController((int)Constants.LibraryMode.User);
         }
 
         public override void Run()
         {
-            menuValue = 0;
+            base.menuValue = 0;
             bool isMenuSelect = true;
+            string[] menuString = base.DecideMenuType((int)Constants.Type.User);
 
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu(menuValue, (int)Constants.Type.User, libraryMenuCoordinate);
+                base.menuScreen.PrintMenu(menuString, menuValue, libraryMenuCoordinate);
                 isMenuSelect = SelectMenu();
                 if (menuValue > 5)
                     menuValue = 5;
@@ -48,8 +50,8 @@ namespace Library.Controller
 
                     break;
                 case (int)Constants.UserMenu.InfoModify:
-                    accountInfoMenu = new AccountInfoMenuController((int)Constants.LibraryMode.User);
-                    accountInfoMenu.Run();
+                    accountInfoMenuController.Run();
+                    Run();
                     break;
             }
         }

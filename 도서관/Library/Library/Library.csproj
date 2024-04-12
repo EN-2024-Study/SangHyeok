@@ -39,24 +39,23 @@
     <Compile Include="Controller\Menu\AccountInfoMenuController.cs" />
     <Compile Include="Controller\Menu\ManagerMenuController.cs" />
     <Compile Include="Controller\Menu\UserMenuController.cs" />
-    <Compile Include="Controller\Menu\LogInMenuController.cs" />
+    <Compile Include="Controller\Menu\LogInSignUpMenuController.cs" />
     <Compile Include="Controller\Menu\MenuController.cs" />
     <Compile Include="Controller\Menu\ModeMenuController.cs" />
     <Compile Include="Controller\Task\AccountTaskController.cs" />
     <Compile Include="Controller\Task\ManagerAccountTaskController.cs" />
     <Compile Include="Controller\Task\TaskController.cs" />
     <Compile Include="Controller\Task\UserAccountTaskController.cs" />
-    <Compile Include="Controller\Menu\YesNoMenuController.cs" />
+    <Compile Include="Controller\Menu\QuitMenuController.cs" />
     <Compile Include="Model\AccountDto.cs" />
     <Compile Include="Model\AccountRepository.cs" />
     <Compile Include="Model\BookDto.cs" />
     <Compile Include="MainProgram.cs" />
     <Compile Include="Model\BookRepository.cs" />
     <Compile Include="Utility\Constants.cs" />
-    <Compile Include="Utility\ExplainingScreen.cs" />
+    <Compile Include="View\ExplainingScreen.cs" />
     <Compile Include="View\AccountScreen.cs" />
     <Compile Include="View\MenuScreen.cs" />
-    <Compile Include="View\SuccessFailureScreen.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

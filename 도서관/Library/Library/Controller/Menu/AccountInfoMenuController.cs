@@ -18,20 +18,22 @@ namespace Library.Controller
 
         public override void Run()
         {
-            menuValue = 0;
+            base.menuValue = 0;
             bool isMenuSelect = true;
+            string[] menuString = null;
+            switch (modeValue)
+            {
+                case (int)Constants.LibraryMode.User:
+                    menuString = base.DecideMenuType((int)Constants.Type.UserInfo);
+                    break;
+                case (int)Constants.LibraryMode.Manager:
+                    menuString = base.DecideMenuType((int)Constants.Type.ManagerInfo);
+                    break;
+            }
 
             while (isMenuSelect)
             {
-                switch(modeValue)
-                {
-                    case (int)Constants.LibraryMode.User:
-                        menuScreen.PrintMenu(menuValue, (int)Constants.Type.UserInfo, coordinate);
-                        break;
-                    case (int)Constants.LibraryMode.Manager:
-                        menuScreen.PrintMenu(menuValue, (int)Constants.Type.ManagerInfo, coordinate);
-                        break;
-                }
+                menuScreen.PrintMenu(menuString, menuValue, coordinate);
                 isMenuSelect = SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;
@@ -41,10 +43,10 @@ namespace Library.Controller
             {
                 case (int)Constants.InfoMenu.GoBack:
                     return;
-                case (int)Constants.InfoMenu.Modify:    // 개인 정보 수정 기능
+                case (int)Constants.InfoMenu.Modify:    // 개인 또는 회원 정보 수정 기능
 
                     break;
-                case (int)Constants.InfoMenu.Delete:    // 개인 정보 삭제 기능
+                case (int)Constants.InfoMenu.Delete:    // 개인 또는 회원 정보 삭제 기능
 
                     break;
             }

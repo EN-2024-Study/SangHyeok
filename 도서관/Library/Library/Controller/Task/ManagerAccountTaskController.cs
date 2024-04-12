@@ -9,7 +9,7 @@ namespace Library.Controller.Task
     public class ManagerAccountTaskController : TaskController
     {
 
-        public void ManageMember()
+        public void ManageMember()  // 회원 관리
         {
 
         }

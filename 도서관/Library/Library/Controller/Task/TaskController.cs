@@ -1,4 +1,5 @@
 ﻿using Library.Model;
+using Library.Utility;
 using Library.View;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,6 @@ namespace Library.Controller.Task
 {
     public class TaskController
     {
-        SuccessFailureScreen screen;
-
-        public TaskController()
-        {
-            screen = new SuccessFailureScreen();
-        }
 
         protected string LimitInputLength(int length, Tuple<int, int> coordinate, bool isPassword)
         {
@@ -65,8 +60,7 @@ namespace Library.Controller.Task
 
             if (!isBreak)
             {
-                screen = new SuccessFailureScreen();
-                screen.PrintSuccessFailure(new Tuple<int, int>(x + index + 2, y), false);
+                ExplainingScreen.PrintInputFailure(new Tuple<int, int>(x + index + 2, y));
                 return LimitInputLength(length, coordinate, isPassword);
             }
 
@@ -86,10 +80,10 @@ namespace Library.Controller.Task
             return currentString;
         }
 
-        protected void DeleteControl()
-        {
+        //protected void DeleteControl()
+        //{
 
-        }
+        //}
 
         private void Erase(int x, int y)
         {

@@ -39,7 +39,7 @@ namespace Library.Controller.Task
 
             while (isLogIn)     // ID 입력과 Password 입력 중 선택
             {
-                accountScreen.PrintLogInScreen(menuController.menuValue, false, coordinate);
+                accountScreen.PrintScreen(menuController.menuValue, false, true, coordinate);
                 isLogIn = menuController.SelectMenu();
                 if (menuController.menuValue > 1)
                     menuController.menuValue = 1;
@@ -62,7 +62,7 @@ namespace Library.Controller.Task
                 else if (password != null)  // password만 입력 되었을 때
                     menuController.menuValue = 0;
 
-                accountScreen.PrintLogInScreen(menuController.menuValue, true, coordinate);
+                accountScreen.PrintScreen(menuController.menuValue, true, true, coordinate);
 
                 if (menuController.menuValue == (int)Constants.LogIn.Id)
                 {

@@ -10,20 +10,23 @@ namespace Library.Controller
     public class ManagerMenuController : MenuController
     {
         private Tuple<int, int> libraryMenuCoordinate;
+        private AccountInfoMenuController accountInfoMenuController;
 
         public ManagerMenuController() : base()
         {
-            libraryMenuCoordinate = new Tuple<int, int>(coordinate.Item1 + 20, coordinate.Item2 - 10);
+            this.libraryMenuCoordinate = new Tuple<int, int>(coordinate.Item1 + 20, coordinate.Item2 - 10);
+            this.accountInfoMenuController = new AccountInfoMenuController((int)Constants.LibraryMode.Manager);
         }
 
         public override void Run()
         {
-            menuValue = 0;
+            base.menuValue = 0;
             bool isMenuSelect = true;
+            string[] menuString = base.DecideMenuType((int)Constants.Type.Manager);
 
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu(menuValue, (int)Constants.Type.Manager, libraryMenuCoordinate);
+                menuScreen.PrintMenu(menuString, menuValue, libraryMenuCoordinate);
                 isMenuSelect = base.SelectMenu();
                 if (menuValue > 5)
                     menuValue = 5;
@@ -44,8 +47,7 @@ namespace Library.Controller
 
                     break;
                 case (int)Constants.ManagerMenu.UserControl:
-                    AccountInfoMenuController accountInfoMenu = new AccountInfoMenuController((int)Constants.LibraryMode.Manager);
-                    accountInfoMenu.Run();
+                    accountInfoMenuController.Run();
                     Run();
                     break;
                 case (int)Constants.ManagerMenu.RentalHistory:

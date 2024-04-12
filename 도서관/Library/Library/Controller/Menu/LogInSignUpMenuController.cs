@@ -9,27 +9,25 @@ using System.Threading.Tasks;
 
 namespace Library.Controller
 {
-    public class LogInMenuController : MenuController
+    public class LogInSignUpMenuController : MenuController
     {
-        private int modeValue;
-        private ModeMenuController modeMenuController;
         private AccountTaskController accountTask;
 
-        public LogInMenuController(int modeValue) : base()
+        public LogInSignUpMenuController() : base()
         {
-            this.modeValue = modeValue;
             this.accountTask = new UserAccountTaskController();
         }
 
         public override void Run()
         {
-            menuValue = 0;
+            base.menuValue = 0;
             bool isMenuSelect = true;
             bool isNoBack = true;
+            string[] menuString = base.DecideMenuType((int)Constants.Type.LogInSignUp);
 
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu(menuValue, (int)Constants.Type.LogInSignUp, coordinate);
+                menuScreen.PrintMenu(menuString, menuValue, coordinate);
                 isMenuSelect = SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;
@@ -38,14 +36,14 @@ namespace Library.Controller
             switch (menuValue)
             {
                 case (int)Constants.LogInMenu.GoBack:
-                    modeMenuController = new ModeMenuController();
+                    ModeMenuController modeMenuController = new ModeMenuController();
                     modeMenuController.Run();
                     break;
                 case (int)Constants.LogInMenu.LogIn:
                     isNoBack = accountTask.LogIn((int)Constants.LibraryMode.User);
                     break;
                 case (int)Constants.LogInMenu.SignUp:   
-                    ((UserAccountTaskController)accountTask).SignUp();
+                    isNoBack = ((UserAccountTaskController)accountTask).SignUp();
                     break;
             }
 

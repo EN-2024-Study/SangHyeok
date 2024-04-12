@@ -7,8 +7,9 @@ namespace Library.Utility
     {
         public enum YesNo
         {
-            No,
-            Yes
+            GoBack = -1,
+            Yes = 0,
+            No = 1,
         }
 
         public enum LogInMenu
@@ -73,6 +74,18 @@ namespace Library.Utility
             GoBack = -1,
             Modify = 0,
             Delete = 1,
+        }
+
+        public enum Account
+        {
+            GoBack = -1,
+            Id = 0,
+            Password = 1,
+            PasswordCheck = 2,
+            Name = 3,
+            Age = 4,
+            PhoneNumber = 5,
+            Address = 6
         }
     }
 }

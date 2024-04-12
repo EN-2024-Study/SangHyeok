@@ -26,12 +26,12 @@ namespace Library.Controller
 
         public override bool Run()
         {
+            Console.Clear();
             base.menuValue = 0;
             bool isMenuSelect = true;
             bool isBack = false;
             string[] menuString = base.DecideMenuType((int)Constants.MenuType.UserManager);
 
-            base.menuScreen.EraseMenu();
             while (isMenuSelect)
             {
                 base.menuScreen.PrintMenu(menuString, menuValue, false);

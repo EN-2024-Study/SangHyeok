@@ -31,9 +31,11 @@ namespace Library.Controller
                 if (menuValue > 5)
                     menuValue = 5;
             }
-
-            switch(menuValue)  // 기능 구현
+           
+            switch (menuValue)  // 기능 구현
             {
+                case (int)Constants.UserMenu.GoBack:
+                    return true;
                 case (int)Constants.UserMenu.BookSearch:
 
                     break;

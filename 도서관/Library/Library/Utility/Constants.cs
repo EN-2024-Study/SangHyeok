@@ -53,22 +53,24 @@ namespace Library.Utility
 
         public enum UserMenu
         {
-            BookSearch,
-            BookRental,
-            BookRentalHistory,
-            BookReturn,
-            BookReturnHistory,
-            InfoModify
+            GoBack = -1,
+            BookSearch = 0,
+            BookRental = 1,
+            BookRentalHistory = 2,
+            BookReturn = 3,
+            BookReturnHistory = 4,
+            InfoModify = 5
         }
 
         public enum ManagerMenu
         {
-            BookSearch,
-            BookAdd,
-            BookDelete,
-            BookModify,
-            UserControl,
-            RentalHistory
+            GoBack = -1,
+            BookSearch = 0,
+            BookAdd = 1,
+            BookDelete = 2,
+            BookModify = 3,
+            UserControl = 4,
+            RentalHistory = 5
         }
 
         public enum InfoMenu

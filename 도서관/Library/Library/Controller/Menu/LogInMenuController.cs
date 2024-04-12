@@ -28,6 +28,7 @@ namespace Library.Controller.Menu
 
         public override bool Run()
         {
+            bool isBack = false;
             base.menuValue = 0;
             bool isLogIn = true;
             bool isCheckId = false;
@@ -96,10 +97,10 @@ namespace Library.Controller.Menu
                 switch (modeValue)
                 {
                     case (int)Constants.LibraryMode.User:
-                        userMenuController.Run();
+                        isBack = userMenuController.Run();
                         break;
                     case (int)Constants.LibraryMode.Manager:
-                        managerMenuController.Run();
+                        isBack = managerMenuController.Run();
                         break;
                 }
             }
@@ -109,6 +110,8 @@ namespace Library.Controller.Menu
                 Run();  // 입력정보가 없을 떄
             }
 
+            if (isBack)
+                return true;
             return false;
         }
     }

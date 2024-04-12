@@ -31,6 +31,7 @@ namespace Library.Utility
             }
             return false;
         }
+
         public bool CheckManager(string s, int stringType)
         {
             string[] str = s.Split('\0');

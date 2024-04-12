@@ -34,6 +34,8 @@ namespace Library.Controller
 
             switch (menuValue)  // 기능 구현
             {
+                case (int)Constants.UserMenu.GoBack:
+                    return true;
                 case (int)Constants.ManagerMenu.BookSearch:
 
                     break;

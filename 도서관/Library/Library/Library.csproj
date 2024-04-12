@@ -44,7 +44,7 @@
     <Compile Include="Controller\Menu\LogInSignUpMenuController.cs" />
     <Compile Include="Controller\Menu\MenuController.cs" />
     <Compile Include="Controller\Menu\ModeMenuController.cs" />
-    <Compile Include="Controller\Task\InputTaskController.cs" />
+    <Compile Include="Controller\Task\InputController.cs" />
     <Compile Include="Controller\Task\PastAccountTaskController.cs" />
     <Compile Include="Controller\Task\PastManagerAccountTaskController.cs" />
     <Compile Include="Controller\Task\PastTaskController.cs" />
@@ -55,7 +55,7 @@
     <Compile Include="Model\BookDto.cs" />
     <Compile Include="MainProgram.cs" />
     <Compile Include="Model\BookRepository.cs" />
-    <Compile Include="Utility\CheckInformation.cs" />
+    <Compile Include="Controller\Task\InformationValidatorController.cs" />
     <Compile Include="Utility\Constants.cs" />
     <Compile Include="View\ExplainingScreen.cs" />
     <Compile Include="View\PastAccountScreen.cs" />

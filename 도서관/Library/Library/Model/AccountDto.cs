@@ -8,20 +8,20 @@ namespace Library.Model
         private string id;
         private string password;
         private string name;
-        private int age;
+        private string age;
         private string phoneNumber;
         private string address;
         private List<BookDto> RentalBooks;
 
         public AccountDto()
         {
-            id = null;
-            password = null;
-            name = null;
-            age = 0;
-            phoneNumber = null;
-            address = null;
-            RentalBooks = new List<BookDto>();
+            this.id = null;
+            this.password = null;
+            this.name = null;
+            this.age = null;
+            this.phoneNumber = null;
+            this.address = null;
+            this.RentalBooks = new List<BookDto>();
         }
 
         public AccountDto(string id, string password) : this()
@@ -31,7 +31,7 @@ namespace Library.Model
         }
 
         public AccountDto(string id, string password, string name, 
-            int age, string phoneNumber, string address) : this(id, password)
+            string age, string phoneNumber, string address) : this(id, password)
         {
             this.name = name;
             this.age = age;
@@ -57,7 +57,7 @@ namespace Library.Model
             set { name = value; }
         }
 
-        public int Age
+        public string Age
         {
             get { return age; }
             set { age = value; }

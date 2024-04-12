@@ -8,11 +8,7 @@ namespace Library.Model
 {
     public class BookRepository
     {
-        private List<BookDto> bookList;
-
-        public BookRepository()
-        {
-            bookList = new List<BookDto>()
+        public static List<BookDto> bookList = new List<BookDto>()
             {
                         new BookDto
                         ("패밀리 레스토랑 가자.", "야마",
@@ -23,17 +19,5 @@ namespace Library.Model
                         3, 18000, "2024.03.01",
                         "321a 321", "자기계발")
             };
-        }
-
-        public List<BookDto> BookList
-        {
-            get { return BookList; }
-        }
-
-        public void SetBookList(BookDto value)
-        {
-            bookList.Add(value);
-        }
-
     }
 }

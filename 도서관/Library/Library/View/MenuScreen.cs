@@ -14,9 +14,6 @@ namespace Library.View
                 coordinate = new Tuple<int, int>(20, 25);
             ExplainingScreen.ExplainDirectionKey();
             ExplainingScreen.ExplainSelectKey();
-            //if (menuString[0].Equals("유저 모드") || menuString[0].Equals("도서 조회"))
-            //    ExplainingScreen.PrintQuit();
-
 
             for (int i = 0; i < menuString.Length; i++)
             {

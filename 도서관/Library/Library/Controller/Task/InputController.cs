@@ -5,7 +5,7 @@ using Library.Utility;
 
 namespace Library.Controller.Task
 {
-    public class InputTaskController
+    public class InputController
     {
         public string LimitInputLength(Tuple<int, int> coordinate, int stringLength, bool isPassword)
         {
@@ -67,7 +67,7 @@ namespace Library.Controller.Task
             return CheckRegularExpression(resultString);
         }
 
-        private string CheckRegularExpression(string str)   // 정규 표현식 쓰기
+        private string CheckRegularExpression(string str)   // 정규 표현식 구현
         {
 
             return str;

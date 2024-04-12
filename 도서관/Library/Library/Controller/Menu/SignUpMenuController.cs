@@ -10,13 +10,13 @@ namespace Library.Controller.Menu
 {
     public class SignUpMenuController : MenuController
     {
-        private InputTaskController inputTaskController;
-        private CheckInformation checkInformation;
+        private InputController inputController;
+        private InformationValidatorController checkInformation;
 
         public SignUpMenuController()
         {
-            inputTaskController = new InputTaskController();
-            checkInformation = new CheckInformation();
+            inputController = new InputController();
+            checkInformation = new InformationValidatorController();
         }
 
         public override bool Run()
@@ -51,25 +51,25 @@ namespace Library.Controller.Menu
                     case (int)Constants.SignUpMenu.GoBack:
                         return true;
                     case (int)Constants.SignUpMenu.Id:
-                        inputString[0] = inputTaskController.LimitInputLength(new Tuple<int, int>(35, 15), 15, false);
+                        inputString[0] = inputController.LimitInputLength(new Tuple<int, int>(35, 15), 15, false);
                         break;
                     case (int)Constants.SignUpMenu.Password:
-                        inputString[1] = inputTaskController.LimitInputLength(new Tuple<int, int>(35, 17), 15, true);
+                        inputString[1] = inputController.LimitInputLength(new Tuple<int, int>(35, 17), 15, true);
                         break;
                     case (int)Constants.SignUpMenu.PasswordCheck:
-                        inputString[2] = inputTaskController.LimitInputLength(new Tuple<int, int>(35, 19), 15, true);
+                        inputString[2] = inputController.LimitInputLength(new Tuple<int, int>(35, 19), 15, true);
                         break;
                     case (int)Constants.SignUpMenu.Name:
-                        inputString[3] = inputTaskController.LimitInputLength(new Tuple<int, int>(35, 21), 15, false);
+                        inputString[3] = inputController.LimitInputLength(new Tuple<int, int>(35, 21), 15, false);
                         break;
                     case (int)Constants.SignUpMenu.Age:
-                        inputString[4] = inputTaskController.LimitInputLength(new Tuple<int, int>(35, 23), 15, false);
+                        inputString[4] = inputController.LimitInputLength(new Tuple<int, int>(35, 23), 15, false);
                         break;
                     case (int)Constants.SignUpMenu.PhoneNumber:
-                        inputString[5] = inputTaskController.LimitInputLength(new Tuple<int, int>(35, 25), 15, false);
+                        inputString[5] = inputController.LimitInputLength(new Tuple<int, int>(35, 25), 15, false);
                         break;
                     case (int)Constants.SignUpMenu.Address:
-                        inputString[6] = inputTaskController.LimitInputLength(new Tuple<int, int>(35, 27), 15, false);
+                        inputString[6] = inputController.LimitInputLength(new Tuple<int, int>(35, 27), 15, false);
                         break;
                 }
 
@@ -86,6 +86,7 @@ namespace Library.Controller.Menu
                 {
                     ExplainingScreen.PrintEnterCheck();
                     Console.ReadLine();
+                    checkInformation.SaveUserData(inputString);
                     return true;
                 }
             }

@@ -11,18 +11,18 @@ namespace Library.Controller.Menu
 {
     public class LogInMenuController : MenuController
     {
-        private InputTaskController inputTaskController;
+        private InputController inputController;
         private UserMenuController userMenuController;
         private ManagerMenuController managerMenuController;
-        private CheckInformation checkInformation;
+        private InformationValidatorController infoController;
         private int modeValue;
 
         public LogInMenuController(int modeValue)
         {
-            inputTaskController = new InputTaskController();
+            inputController = new InputController();
             userMenuController = new UserMenuController();
             managerMenuController = new ManagerMenuController();
-            checkInformation = new CheckInformation();
+            infoController = new InformationValidatorController();
             this.modeValue = modeValue;
         }
 
@@ -56,27 +56,27 @@ namespace Library.Controller.Menu
                     case (int)Constants.LogInMenu.GoBack:
                         return true;
                     case (int)Constants.LogInMenu.Id:
-                        id = inputTaskController.LimitInputLength(new Tuple<int, int>(25, 25), 15, false);
+                        id = inputController.LimitInputLength(new Tuple<int, int>(25, 25), 15, false);
                         break;
                     case (int)Constants.LogInMenu.Password:
-                        password = inputTaskController.LimitInputLength(new Tuple<int, int>(31, 27), 15, true);
+                        password = inputController.LimitInputLength(new Tuple<int, int>(31, 27), 15, true);
                         break;
                 }
 
                 if (id != null)
                 {
                     if (modeValue == (int)Constants.LibraryMode.User)
-                        isCheckId = checkInformation.CheckUser(id, (int)Constants.InputType.Id);
+                        isCheckId = infoController.CheckUserLogIn(id, (int)Constants.InputType.Id);
                     else if (modeValue == (int)Constants.LibraryMode.Manager)
-                        isCheckId = checkInformation.CheckManager(id, (int)Constants.InputType.Id);
+                        isCheckId = infoController.CheckManagerLogIn(id, (int)Constants.InputType.Id);
                     isCheckCount++;
                 }
                 if (password != null)
                 {
                     if (modeValue == (int)Constants.LibraryMode.User)
-                        isCheckPassword = checkInformation.CheckUser(password, (int)Constants.InputType.Password);
+                        isCheckPassword = infoController.CheckUserLogIn(password, (int)Constants.InputType.Password);
                     else if (modeValue == (int)Constants.LibraryMode.Manager)
-                        isCheckPassword = checkInformation.CheckManager(password, (int)Constants.InputType.Password);
+                        isCheckPassword = infoController.CheckManagerLogIn(password, (int)Constants.InputType.Password);
                     isCheckCount++;
                 }
 

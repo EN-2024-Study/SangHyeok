@@ -10,23 +10,23 @@ namespace Library.View
             string[] str = new string[7];
             int stringLength = 0;
 
-            if (isLogIn)
-            {
-                str[0] = "ID : ";
-                str[1] = "PASSWORD : ";
-                stringLength = 2;
-            }
-            else
-            {
-                str[0] = "ID           :";
-                str[1] = "비밀번호     :";
-                str[2] = "비밀번호 확인:";
-                str[3] = "이름         :";
-                str[4] = "나이         :";
-                str[5] = "전화번호     :";
-                str[6] = "주소         :";
-                stringLength = 7;
-            }
+            //if (isLogIn)
+            //{
+            //    str[0] = "ID : ";
+            //    str[1] = "PASSWORD : ";
+            //    stringLength = 2;
+            //}
+            //else
+            //{
+            //    str[0] = "ID           :";
+            //    str[1] = "비밀번호     :";
+            //    str[2] = "비밀번호 확인:";
+            //    str[3] = "이름         :";
+            //    str[4] = "나이         :";
+            //    str[5] = "전화번호     :";
+            //    str[6] = "주소         :";
+            //    stringLength = 7;
+            //}
 
 
             ExplainingScreen.ExplainSelectKey();

@@ -24,10 +24,10 @@ namespace Library.Controller
             switch (modeValue)
             {
                 case (int)Constants.LibraryMode.User:
-                    menuString = base.DecideMenuType((int)Constants.Type.UserInfo);
+                    menuString = base.DecideMenuType((int)Constants.MenuType.UserInfo);
                     break;
                 case (int)Constants.LibraryMode.Manager:
-                    menuString = base.DecideMenuType((int)Constants.Type.ManagerInfo);
+                    menuString = base.DecideMenuType((int)Constants.MenuType.ManagerInfo);
                     break;
             }
 

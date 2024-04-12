@@ -8,21 +8,18 @@ using System.Threading.Tasks;
 
 namespace Library.Controller
 {
-    public class MenuController
+    public abstract class MenuController
     {
         protected MenuScreen menuScreen;
         public int menuValue;
         
-        public MenuController()
+        protected MenuController()
         {
             this.menuScreen = new MenuScreen();
             this.menuValue = 0;
         }
 
-        public virtual bool Run() 
-        {
-            return false;
-        }
+        public abstract bool Run();
 
         public bool SelectMenu()
         {
@@ -52,53 +49,57 @@ namespace Library.Controller
 
         protected string[] DecideMenuType(int modeValue)
         {
-            int arrayLength;
+            int arraySize;
 
             switch(modeValue)
             {
-                case (int)Constants.Type.UserManager:
-                case (int)Constants.Type.LogInSignUp:
-                case (int)Constants.Type.UserInfo:
-                case (int)Constants.Type.ManagerInfo:
-                    arrayLength = 2;
+                case (int)Constants.MenuType.UserManager:
+                case (int)Constants.MenuType.LogInSignUp:
+                case (int)Constants.MenuType.UserInfo:
+                case (int)Constants.MenuType.ManagerInfo:
+                case (int)Constants.MenuType.IdPassword:
+                    arraySize = 2;
                     break;
-                case (int)Constants.Type.YesNo:
-                    arrayLength = 3;
+                case (int)Constants.MenuType.YesNo:
+                    arraySize = 3;
                     break;
-                case (int)Constants.Type.User:
-                case (int)Constants.Type.Manager:
-                    arrayLength = 6;
+                case (int)Constants.MenuType.User:
+                case (int)Constants.MenuType.Manager:
+                    arraySize = 6;
+                    break;
+                case (int)Constants.MenuType.SignUp:
+                    arraySize = 7;
                     break;
                 default:
                     return null;
             }
 
-            string[] str = new string[arrayLength];
+            string[] str = new string[arraySize];
 
             switch (modeValue)
             {
-                case (int)Constants.Type.UserManager:
+                case (int)Constants.MenuType.UserManager:
                     str[0] = "유저 모드";
                     str[1] = "관리자 모드";
                     break;
-                case (int)Constants.Type.LogInSignUp:
+                case (int)Constants.MenuType.LogInSignUp:
                     str[0] = "로그인";
                     str[1] = "회원가입";
                     break;
-                case (int)Constants.Type.YesNo:
+                case (int)Constants.MenuType.YesNo:
                     str[0] = "정말이십니까?";
                     str[1] = "예.";
                     str[2] = "아니요.";
                     break;
-                case (int)Constants.Type.UserInfo:
+                case (int)Constants.MenuType.UserInfo:
                     str[0] = "정보 수정";
                     str[1] = "정보 삭제";
                     break;
-                case (int)Constants.Type.ManagerInfo:
+                case (int)Constants.MenuType.ManagerInfo:
                     str[0] = "유저 정보 수정";
                     str[1] = "유저 삭제";
                     break;
-                case (int)Constants.Type.User:
+                case (int)Constants.MenuType.User:
                     str[0] = "도서 조회";
                     str[1] = "도서 대여";
                     str[2] = "도서 대여 내역";
@@ -106,13 +107,26 @@ namespace Library.Controller
                     str[4] = "도서 반납 내역";
                     str[5] = "정보 수정";
                     break;
-                case (int)Constants.Type.Manager:
+                case (int)Constants.MenuType.Manager:
                     str[0] = "도서 조회";
                     str[1] = "도서 추가";
                     str[2] = "도서 삭제";
                     str[3] = "도서 수정";
                     str[4] = "회원 관리";
                     str[5] = "대여 내역";
+                    break;
+                case (int)Constants.MenuType.LogIn:
+                    str[0] = "ID : ";
+                    str[1] = "PASSWORD : "; 
+                    break;
+                case (int)Constants.MenuType.SignUp:
+                    str[0] = "ID           :";
+                    str[1] = "비밀번호     :";
+                    str[2] = "비밀번호 확인:";
+                    str[3] = "이름         :";
+                    str[4] = "나이         :";
+                    str[5] = "전화번호     :";
+                    str[6] = "주소         :";
                     break;
             }
             return str;

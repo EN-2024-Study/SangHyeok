@@ -7,7 +7,6 @@ namespace Library.Controller.Task
 {
     public class AccountTaskController : TaskController
     {
-        private MenuController menuController;
         private UserMenuController userMenuController;
         private ManagerMenuController managerMenuController;
         private AccountScreen accountScreen;
@@ -17,14 +16,13 @@ namespace Library.Controller.Task
 
         public AccountTaskController() : base()
         {
-            this.menuController = new MenuController();
             this.accountScreen = new AccountScreen();
             this.accounts = new AccountRepository();
             this.id = null;
             this.password = null;
         }
 
-        public bool SelectLogInMenu(int modeValue)
+        public bool IdPasswordMenu()
         {
             Tuple<int, int> coordinate = new Tuple<int, int>(20, 25);
             bool isLogIn = true;

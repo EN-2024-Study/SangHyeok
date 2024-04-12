@@ -3,13 +3,13 @@ using System;
 
 namespace Library.Controller
 {
-    public class QuitMenuController : MenuController
+    public class YesNoMenuController : MenuController
     {
         public override bool Run()
         {
             base.menuValue = 0;
             bool isMenuSelect = true;
-            string[] menuString = base.DecideMenuType((int)Constants.Type.YesNo);
+            string[] menuString = base.DecideMenuType((int)Constants.MenuType.YesNo);
 
             base.menuScreen.EraseMenu();
             while (isMenuSelect)

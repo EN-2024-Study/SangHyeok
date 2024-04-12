@@ -1,4 +1,5 @@
-﻿using Library.Controller.Task;
+﻿using Library.Controller.Menu;
+using Library.Controller.Task;
 using Library.Utility;
 using Library.View;
 using System;
@@ -12,9 +13,13 @@ namespace Library.Controller
     public class LogInSignUpMenuController : MenuController
     {
         private AccountTaskController accountTask;
+        private LogInMenuController logInMenu;
+        private SignUpMenuController signUpMenu;
         public LogInSignUpMenuController() : base()
         {
             this.accountTask = new UserAccountTaskController();
+            this.logInMenu = new LogInMenuController();
+            this.signUpMenu = new SignUpMenuController();
         }
 
         public override bool Run()
@@ -22,7 +27,7 @@ namespace Library.Controller
             base.menuValue = 0;
             bool isMenuSelect = true;
             bool isBack = false;
-            string[] menuString = base.DecideMenuType((int)Constants.Type.LogInSignUp);
+            string[] menuString = base.DecideMenuType((int)Constants.MenuType.LogInSignUp);
 
             base.menuScreen.EraseMenu();
             while (isMenuSelect)
@@ -35,13 +40,13 @@ namespace Library.Controller
 
             switch (menuValue)
             {
-                case (int)Constants.LogInMenu.GoBack:
+                case (int)Constants.LogInSigInMenu.GoBack:
                     return true;
-                case (int)Constants.LogInMenu.LogIn:
-                    isBack = accountTask.LogIn((int)Constants.LibraryMode.User);
+                case (int)Constants.LogInSigInMenu.LogIn:
+                    isBack = logInMenu.Run();
                     break;
-                case (int)Constants.LogInMenu.SignUp:
-                    isBack = ((UserAccountTaskController)accountTask).SignUp();
+                case (int)Constants.LogInSigInMenu.SignUp:
+                    isBack = signUpMenu.Run();
                     break;
             }
 

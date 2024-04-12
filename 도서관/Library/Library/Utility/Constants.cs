@@ -11,14 +11,14 @@ namespace Library.Utility
             No = 1,
         }
 
-        public enum LogInMenu
+        public enum LogInSigInMenu
         {
             GoBack = -1,
             LogIn = 0,
             SignUp = 1,
         }
 
-        public enum LogIn
+        public enum LogInMenu
         {
             Id,
             Password
@@ -30,7 +30,7 @@ namespace Library.Utility
             Manager
         }
 
-        public enum Type
+        public enum MenuType
         {
             UserManager,
             LogInSignUp,
@@ -38,7 +38,9 @@ namespace Library.Utility
             UserInfo,
             ManagerInfo,
             User,
-            Manager
+            Manager,
+            LogIn,
+            SignUp
         }
 
         public enum ModeMenu
@@ -75,7 +77,7 @@ namespace Library.Utility
             Delete = 1,
         }
 
-        public enum Account
+        public enum SignUpMenu
         {
             GoBack = -1,
             Id = 0,

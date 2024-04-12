@@ -13,13 +13,13 @@ namespace Library.Controller
     public class ModeMenuController : MenuController
     {
         private LogInSignUpMenuController logInSignUpMenu;
-        private QuitMenuController quitMenu;
+        private YesNoMenuController quitMenu;
         private AccountTaskController accountTask;
 
         public ModeMenuController()
         {
             this.logInSignUpMenu = new LogInSignUpMenuController();
-            this.quitMenu = new QuitMenuController();
+            this.quitMenu = new YesNoMenuController();
             this.accountTask = new AccountTaskController();
         }
 
@@ -28,7 +28,7 @@ namespace Library.Controller
             base.menuValue = 0;
             bool isMenuSelect = true;
             bool isBack = false;
-            string[] menuString = base.DecideMenuType((int)Constants.Type.UserManager);
+            string[] menuString = base.DecideMenuType((int)Constants.MenuType.UserManager);
 
             base.menuScreen.EraseMenu();
             while (isMenuSelect)

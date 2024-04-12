@@ -82,6 +82,8 @@ namespace Library.Controller.Menu
 
                 if (isCheckCount > 2)
                 {
+                    ExplainingScreen.PrintEnterCheck();
+                    Console.ReadLine();
                     if (isCheckId && isCheckPassword)
                         break;
                     else
@@ -106,8 +108,9 @@ namespace Library.Controller.Menu
             }
             else
             {
-                // 입력한 정보가 맞지 않다는 설명 출력
-                Run();  // 입력정보가 없을 떄
+                ExplainingScreen.PrintIncorrectInput();
+                Console.ReadLine();
+                return true;
             }
 
             if (isBack)

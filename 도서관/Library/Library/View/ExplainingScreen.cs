@@ -61,5 +61,25 @@ namespace Library.Utility
             Console.Write("[Fail]");
             Console.ResetColor();
         }
+
+        public static void PrintEnterCheck()
+        {
+            Console.SetCursorPosition(60, 32);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("입력을 완료하려면 Enter키를 눌러주세요.");
+            Console.ResetColor();
+        }
+
+        public static void PrintIncorrectInput()
+        {
+            Console.SetCursorPosition(60, 32);
+            Console.Write("                                            ");
+            Console.SetCursorPosition(60, 32);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("입력 정보가 맞지 않습니다.");
+            Console.SetCursorPosition(60, 33);
+            Console.Write("돌아가려면 Enter를 눌러주세요.");
+            Console.ResetColor();
+        }
     }
 }

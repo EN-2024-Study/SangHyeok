@@ -8,8 +8,8 @@ namespace Library.View
         public void PrintMenu(string[] menuString, int menuValue, bool isSelect)
         {
             Tuple<int, int> coordinate;
-            if (menuString[0].Equals("도서 조회"))
-                coordinate = new Tuple<int, int>(40, 15);
+            if (menuString.Length > 5)
+                coordinate = new Tuple<int, int>(20, 15);
             else
                 coordinate = new Tuple<int, int>(20, 25);
             ExplainingScreen.ExplainDirectionKey();

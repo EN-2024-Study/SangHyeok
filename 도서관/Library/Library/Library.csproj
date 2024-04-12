@@ -45,10 +45,6 @@
     <Compile Include="Controller\Menu\MenuController.cs" />
     <Compile Include="Controller\Menu\ModeMenuController.cs" />
     <Compile Include="Controller\Task\InputController.cs" />
-    <Compile Include="Controller\Task\PastAccountTaskController.cs" />
-    <Compile Include="Controller\Task\PastManagerAccountTaskController.cs" />
-    <Compile Include="Controller\Task\PastTaskController.cs" />
-    <Compile Include="Controller\Task\PastUserAccountTaskController.cs" />
     <Compile Include="Controller\Menu\YesNoMenuController.cs" />
     <Compile Include="Model\AccountDto.cs" />
     <Compile Include="Model\AccountRepository.cs" />

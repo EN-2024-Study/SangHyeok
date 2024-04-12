@@ -7,13 +7,9 @@ namespace Library.View
     {
         public void PrintScreen(int menuValue, bool isSelect, bool isLogIn, Tuple<int, int> coordinate)
         {
-            Console.Clear();
             string[] str = new string[7];
             int stringLength = 0;
-            //if (Id == null)
-            //    str[0] = "ID : ";
-            //else
-            //    str[0] = "ID : " + Id;
+
             if (isLogIn)
             {
                 str[0] = "ID : ";
@@ -52,15 +48,6 @@ namespace Library.View
                 Console.Write(str[i]);
                 Console.ResetColor();
             }
-        }
-
-       
-
-        public void Erase(Tuple<int, int> coordinate, int length)
-        {
-            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);
-            for (int i = 0; i < length; i++)
-                Console.Write(" ");
         }
     }
 }

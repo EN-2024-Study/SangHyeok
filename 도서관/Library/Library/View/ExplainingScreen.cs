@@ -54,16 +54,6 @@ namespace Library.Utility
             Console.ResetColor();
         }
 
-        //public static void PrintInputError()
-        //{
-        //    Console.ForegroundColor = ConsoleColor.Red;
-        //    Console.SetCursorPosition(75, 23);
-        //    Console.Write("잘못된 입력입니다.");
-        //    Console.SetCursorPosition(75, 24);
-        //    Console.Write("다시 입력하세요.");
-        //    Console.ResetColor();
-        //}
-
         public static void PrintInputFailure(Tuple<int, int> coordinate)
         {
             Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);

@@ -2,11 +2,6 @@
 using Library.View;
 using Library.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
 
 namespace Library.Controller.Task
 {
@@ -28,14 +23,11 @@ namespace Library.Controller.Task
             this.id = null;
             this.password = null;
         }
-         
-        public bool LogIn(int modeValue)
+
+        public bool SelectLogInMenu(int modeValue)
         {
-            id = null;
-            password = null;
-            bool isLogIn = true;
-            menuController.menuValue = 0;
             Tuple<int, int> coordinate = new Tuple<int, int>(20, 25);
+            bool isLogIn = true;
 
             while (isLogIn)     // ID 입력과 Password 입력 중 선택
             {
@@ -47,6 +39,20 @@ namespace Library.Controller.Task
 
             if (menuController.menuValue == -1) // esc 입력 -> mode 선택 화면
                 return false;
+            return true;
+        }
+
+        public bool LogIn(int modeValue)
+        {
+            id = null;
+            password = null;
+            menuController.menuValue = 0;
+            bool isLogIn = true;
+            Tuple<int, int> coordinate = new Tuple<int, int>(20, 25);
+
+
+
+        
 
             isLogIn = true;
             while (isLogIn)     // 입력

@@ -23,16 +23,17 @@ namespace Library.Controller
             this.accountTask = new AccountTaskController();
         }
 
-        public override void Run()
+        public override bool Run()
         {
             base.menuValue = 0;
             bool isMenuSelect = true;
-            bool isNoBack = true;
+            bool isBack = false;
             string[] menuString = base.DecideMenuType((int)Constants.Type.UserManager);
 
+            base.menuScreen.EraseMenu();
             while (isMenuSelect)
             {
-                base.menuScreen.PrintMenu(menuString, menuValue, coordinate);
+                base.menuScreen.PrintMenu(menuString, menuValue);
                 isMenuSelect = base.SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;
@@ -41,19 +42,19 @@ namespace Library.Controller
             switch (menuValue)
             {
                 case (int)Constants.ModeMenu.Quit:
-                    quitMenu.Run();
-                    Run();
+                    isBack = quitMenu.Run();
                     break;
                 case (int)Constants.ModeMenu.UserMode:
-                    logInSignUpMenu.Run();
+                    isBack = logInSignUpMenu.Run();
                     break;
                 case (int)Constants.ModeMenu.ManagerMode:
-                    isNoBack = accountTask.LogIn((int)Constants.LibraryMode.Manager);
+                    isBack = accountTask.LogIn((int)Constants.LibraryMode.Manager);
                     break;
             }
 
-            if (!isNoBack)
+            if (isBack)
                 Run();
+            return false;
         }
     }
 }

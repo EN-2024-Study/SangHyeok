@@ -9,24 +9,23 @@ namespace Library.Controller
 {
     public class ManagerMenuController : MenuController
     {
-        private Tuple<int, int> libraryMenuCoordinate;
         private AccountInfoMenuController accountInfoMenuController;
 
         public ManagerMenuController() : base()
         {
-            this.libraryMenuCoordinate = new Tuple<int, int>(coordinate.Item1 + 20, coordinate.Item2 - 10);
             this.accountInfoMenuController = new AccountInfoMenuController((int)Constants.LibraryMode.Manager);
         }
 
-        public override void Run()
+        public override bool Run()
         {
             base.menuValue = 0;
             bool isMenuSelect = true;
+            bool isBack = false;
             string[] menuString = base.DecideMenuType((int)Constants.Type.Manager);
 
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu(menuString, menuValue, libraryMenuCoordinate);
+                menuScreen.PrintMenu(menuString, menuValue);
                 isMenuSelect = base.SelectMenu();
                 if (menuValue > 5)
                     menuValue = 5;
@@ -47,14 +46,16 @@ namespace Library.Controller
 
                     break;
                 case (int)Constants.ManagerMenu.UserControl:
-                    accountInfoMenuController.Run();
-                    Run();
+                    isBack = accountInfoMenuController.Run();
                     break;
                 case (int)Constants.ManagerMenu.RentalHistory:
 
                     break;
             }
 
+            if (isBack)
+                return true;
+            return false;
         }
     }
 }

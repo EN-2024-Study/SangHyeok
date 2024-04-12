@@ -16,7 +16,7 @@ namespace Library.Controller
             this.modeValue = modeValue;
         }
 
-        public override void Run()
+        public override bool Run()
         {
             base.menuValue = 0;
             bool isMenuSelect = true;
@@ -33,7 +33,7 @@ namespace Library.Controller
 
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu(menuString, menuValue, coordinate);
+                menuScreen.PrintMenu(menuString, menuValue);
                 isMenuSelect = SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;
@@ -42,7 +42,7 @@ namespace Library.Controller
             switch(menuValue)
             {
                 case (int)Constants.InfoMenu.GoBack:
-                    return;
+                    return true;
                 case (int)Constants.InfoMenu.Modify:    // 개인 또는 회원 정보 수정 기능
 
                     break;
@@ -50,6 +50,8 @@ namespace Library.Controller
 
                     break;
             }
+
+            return false;
         }
     }
 }

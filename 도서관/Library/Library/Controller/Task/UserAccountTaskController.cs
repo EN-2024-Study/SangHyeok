@@ -13,12 +13,12 @@ namespace Library.Controller.Task
         MenuController menuController;
         AccountScreen accountScreen;
         private string[] inputString;
+
         public UserAccountTaskController()
         {
             menuController = new MenuController();
             accountScreen = new AccountScreen();
             inputString = new string[7];
-
         }
 
         public bool SignUp()

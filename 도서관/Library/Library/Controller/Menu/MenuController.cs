@@ -11,18 +11,18 @@ namespace Library.Controller
     public class MenuController
     {
         protected MenuScreen menuScreen;
-        protected Tuple<int, int> coordinate;
         public int menuValue;
         
-
         public MenuController()
         {
             this.menuScreen = new MenuScreen();
-            this.coordinate = new Tuple<int, int>(20, 25);
             this.menuValue = 0;
         }
 
-        public virtual void Run() { }
+        public virtual bool Run() 
+        {
+            return false;
+        }
 
         public bool SelectMenu()
         {
@@ -52,7 +52,7 @@ namespace Library.Controller
 
         protected string[] DecideMenuType(int modeValue)
         {
-            int stringLength;
+            int arrayLength;
 
             switch(modeValue)
             {
@@ -60,20 +60,20 @@ namespace Library.Controller
                 case (int)Constants.Type.LogInSignUp:
                 case (int)Constants.Type.UserInfo:
                 case (int)Constants.Type.ManagerInfo:
-                    stringLength = 2;
+                    arrayLength = 2;
                     break;
                 case (int)Constants.Type.YesNo:
-                    stringLength = 3;
+                    arrayLength = 3;
                     break;
                 case (int)Constants.Type.User:
                 case (int)Constants.Type.Manager:
-                    stringLength = 6;
+                    arrayLength = 6;
                     break;
                 default:
                     return null;
             }
 
-            string[] str = new string[stringLength];
+            string[] str = new string[arrayLength];
 
             switch (modeValue)
             {
@@ -115,7 +115,6 @@ namespace Library.Controller
                     str[5] = "대여 내역";
                     break;
             }
-
             return str;
         }
     }

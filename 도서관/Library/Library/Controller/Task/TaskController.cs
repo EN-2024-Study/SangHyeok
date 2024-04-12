@@ -2,15 +2,20 @@
 using Library.Utility;
 using Library.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Library.Controller.Task
 {
     public class TaskController
     {
+        string test_inputString;
+        char[] test_inputChar;
+
+        public TaskController()
+        {
+            test_inputString = null;
+            test_inputChar = null;
+        }
 
         protected string LimitInputLength(int length, Tuple<int, int> coordinate, bool isPassword)
         {

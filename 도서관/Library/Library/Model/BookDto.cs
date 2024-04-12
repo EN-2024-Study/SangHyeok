@@ -8,14 +8,14 @@ namespace Library.Model
         private string title;
         private string writer;
         private string publisher;
-        private int count;
-        private int price;
+        private string count;
+        private string price;
         private string releaseDate;
         private string iSBN;
         private string info;
 
         public BookDto(string title, string writer,
-            string publisher, int count, int price,
+            string publisher, string count, string price,
             string releaseDate, string iSBN, string info)
         {
             this.title = title;

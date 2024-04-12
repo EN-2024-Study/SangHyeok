@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace Library.Model
 {
-
     public class AccountRepository
     {
         public static AccountDto manager = new AccountDto("sanghyeok", "1234",

@@ -25,12 +25,18 @@ namespace Library.View
             }
         }
 
-        public void PrintIdSearch()
+        public void PrintIdSearch(string str)
         {
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine("대여할 책의 ID를 입력해 주세요");
+            Console.WriteLine(str);
             Console.WriteLine("ID 값은 1부터 999 사이의 값입니다.");
             Console.WriteLine("입력 : ");
+        }
+
+        public void PrintRentalBooksList()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("대여한 책의 리스트 입니다.");
         }
     }
 }

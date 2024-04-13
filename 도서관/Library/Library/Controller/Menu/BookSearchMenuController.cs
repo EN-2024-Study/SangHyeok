@@ -24,7 +24,8 @@ namespace Library.Controller.Menu
         {
             Console.Clear();
             ExplainingScreen.ExplainInputKey();
-            ExplainingScreen.PrintSearchBook();
+            ExplainingScreen.PrintEsc();
+            ExplainingScreen.PrintEnter();
             infoController.ShowAllBookInfo();
             base.menuValue = 0;
             bool isInput = false;

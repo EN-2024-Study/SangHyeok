@@ -11,7 +11,6 @@ namespace Library.Model
         private string age;
         private string phoneNumber;
         private string address;
-        private List<BookDto> RentalBooks;
 
         public AccountDto()
         {
@@ -21,7 +20,6 @@ namespace Library.Model
             this.age = null;
             this.phoneNumber = null;
             this.address = null;
-            this.RentalBooks = new List<BookDto>();
         }
 
         public AccountDto(string id, string password) : this()

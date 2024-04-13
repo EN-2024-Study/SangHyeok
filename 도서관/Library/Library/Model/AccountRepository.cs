@@ -10,6 +10,7 @@ namespace Library.Model
         private static AccountRepository instance;
         private AccountDto manager;
         private List<AccountDto> userList;
+        private List<BookDto> rentalBookList;
 
         private AccountRepository() 
             {
@@ -22,6 +23,7 @@ namespace Library.Model
                             "26", "010-4030-3719",
                             "경기도 의정부시")
             };
+            rentalBookList = new List<BookDto>();
         }
 
         public static AccountRepository Instance
@@ -45,6 +47,12 @@ namespace Library.Model
             userList.Add(value);
         }
 
+        public List<BookDto> RentalBookList
+        { get { return rentalBookList; } }
 
+        public void SetRentalBookList(BookDto value)
+        {
+            rentalBookList.Add(value);
+        }
     }
 }

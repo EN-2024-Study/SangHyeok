@@ -51,7 +51,7 @@ namespace Library.Controller
                     isBack = func2();
                     break;
                 case (int)Constants.UserMenu.BookRentalHistory:
-
+                    isBack = func3();
                     break;
                 case (int)Constants.UserMenu.BookReturn:
 
@@ -86,8 +86,12 @@ namespace Library.Controller
             bool isBack = bookSearchMenuController.Run();
             if (isBack)
             {
-                bookScreen.PrintIdSearch();
+                bookScreen.PrintIdSearch("대여할 책의 ID를 입력해 주세요");
+                Console.SetCursorPosition(8, 2);
+                Console.CursorVisible = true;
                 int id = int.Parse(Console.ReadLine());
+                Console.CursorVisible = false;
+
                 BookDto book = informationController.SearchIdBooks(id);
                 if (book != null)
                 {
@@ -98,6 +102,21 @@ namespace Library.Controller
                     return true;
                 }
             }
+            return false;
+        }
+
+        private bool func3()
+        {
+            List<BookDto> rentalBookList = informationController.GetRentalBook();
+            if (rentalBookList != null)
+            {
+                Console.Clear();
+                bookScreen.PrintBookInfo(rentalBookList);
+                ExplainingScreen.PrintEnterCheck();
+                Console.ReadLine();
+                return true;
+            }
+
             return false;
         }
     }

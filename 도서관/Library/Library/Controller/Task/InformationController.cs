@@ -134,7 +134,12 @@ namespace Library.Utility
 
         public void RentalBook(BookDto book)
         {
-            bookInstance.SetBookDict(book);
+            accountInstance.SetRentalBookList(book);
+        }
+
+        public List<BookDto> GetRentalBook()
+        {
+            return accountInstance.RentalBookList;
         }
     }
 }

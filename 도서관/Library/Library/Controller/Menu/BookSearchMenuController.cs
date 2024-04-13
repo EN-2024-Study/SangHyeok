@@ -76,9 +76,6 @@ namespace Library.Controller.Menu
 
                     List<BookDto> searchedBooks = infoController.SearchBooks(inputString);
                     bookScreen.PrintBookInfo(searchedBooks);
-
-                    ExplainingScreen.PrintEnterCheck();
-                    Console.ReadLine();
                     return true;
                 }
             }

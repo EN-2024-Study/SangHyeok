@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Library.Model;
+using Library.Utility;
 
 namespace Library.View
 {
@@ -22,6 +23,14 @@ namespace Library.View
                 Console.WriteLine("ISBN       : " + bookList[i].ISBN);
                 Console.WriteLine("책 정보    : " + bookList[i].Info);
             }
+        }
+
+        public void PrintIdSearch()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("대여할 책의 ID를 입력해 주세요");
+            Console.WriteLine("ID 값은 1부터 999 사이의 값입니다.");
+            Console.WriteLine("입력 : ");
         }
     }
 }

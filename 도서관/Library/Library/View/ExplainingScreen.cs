@@ -92,5 +92,13 @@ namespace Library.Utility
             Console.ResetColor();
         }
 
+        public static void PrintComplete(string str)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.SetCursorPosition(20, 10);
+            Console.WriteLine(str);
+            ExplainingScreen.PrintEnterCheck();
+            Console.ResetColor();
+        }
     }
 }

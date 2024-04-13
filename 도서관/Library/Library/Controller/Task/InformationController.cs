@@ -124,7 +124,17 @@ namespace Library.Utility
             string[] result = s.Split('\0');
             return result[0];
         }
+        
+        public BookDto SearchIdBooks(int id)
+        {
+            if (bookInstance.BookDict.TryGetValue(id, out BookDto book))
+                return book;
+            return null;
+        }
 
-
+        public void RentalBook(BookDto book)
+        {
+            bookInstance.SetBookDict(book);
+        }
     }
 }

@@ -141,5 +141,18 @@ namespace Library.Utility
         {
             return accountInstance.RentalBookList;
         }
+
+        public bool RemoveReturnBook(BookDto book)
+        {
+            bool isReturn =  accountInstance.RemoveRentalBook(book);
+            if (isReturn)
+                accountInstance.SetReturnBookList(book);
+            return isReturn;
+        }
+
+        public List<BookDto> GetReturnBook()
+        {
+            return accountInstance.ReturnBookList;
+        }
     }
 }

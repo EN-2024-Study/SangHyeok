@@ -11,6 +11,7 @@ namespace Library.Model
         private AccountDto manager;
         private List<AccountDto> userList;
         private List<BookDto> rentalBookList;
+        private List<BookDto> returnBookList;
 
         private AccountRepository() 
             {
@@ -24,6 +25,7 @@ namespace Library.Model
                             "경기도 의정부시")
             };
             rentalBookList = new List<BookDto>();
+            returnBookList = new List<BookDto>();
         }
 
         public static AccountRepository Instance
@@ -53,6 +55,19 @@ namespace Library.Model
         public void SetRentalBookList(BookDto value)
         {
             rentalBookList.Add(value);
+        }
+
+        public bool RemoveRentalBook(BookDto value)
+        {
+            return rentalBookList.Remove(value);
+        }
+
+        public List<BookDto> ReturnBookList
+        { get { return returnBookList; } }
+
+        public void SetReturnBookList(BookDto value)
+        {
+            returnBookList.Add(value);
         }
     }
 }

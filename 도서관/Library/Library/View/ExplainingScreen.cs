@@ -106,5 +106,11 @@ namespace Library.Utility
             ExplainingScreen.PrintEnterCheck();
             Console.ResetColor();
         }
+
+        public static void PrintIdInputString(string str)
+        {
+            Console.SetCursorPosition(5, 3);
+            Console.WriteLine(str);
+        }
     }
 }

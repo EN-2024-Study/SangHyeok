@@ -33,10 +33,6 @@ namespace Library.View
             Console.WriteLine("입력 : ");
         }
 
-        public void PrintRentalBooksList()
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("대여한 책의 리스트 입니다.");
-        }
+ 
     }
 }

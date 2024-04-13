@@ -54,10 +54,10 @@ namespace Library.Controller
                     isBack = func3();
                     break;
                 case (int)Constants.UserMenu.BookReturn:
-
+                    isBack = func4();
                     break;
                 case (int)Constants.UserMenu.BookReturnHistory:
-
+                    isBack = func5();
                     break;
                 case (int)Constants.UserMenu.InfoModify:
                     isBack = accountInfoMenuController.Run();
@@ -111,7 +111,50 @@ namespace Library.Controller
             if (rentalBookList != null)
             {
                 Console.Clear();
+                ExplainingScreen.PrintIdInputString("대여한 책의 리스트 입니다.");
                 bookScreen.PrintBookInfo(rentalBookList);
+                ExplainingScreen.PrintEnterCheck();
+                Console.ReadLine();
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool func4()
+        {
+            Console.Clear();
+            List<BookDto> rentalBookList = informationController.GetRentalBook();
+            if (rentalBookList != null)
+            {
+                bookScreen.PrintBookInfo(rentalBookList);
+                bookScreen.PrintIdSearch("반납할 책의 ID를 입력해 주세요");
+                Console.SetCursorPosition(8, 2);
+                Console.CursorVisible = true;
+                int id = int.Parse(Console.ReadLine());
+                Console.CursorVisible = false;
+                BookDto book = informationController.SearchIdBooks(id);
+                if (book != null)
+                {
+                    Console.Clear();
+                    ExplainingScreen.PrintComplete("책을 반납하는데 성공!");
+                    Console.ReadLine();
+                    bool isReturnBook = informationController.RemoveReturnBook(book);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool func5()
+        {
+            List<BookDto> returnBookList = informationController.GetReturnBook();
+            if (returnBookList != null)
+            {
+                Console.Clear();
+                ExplainingScreen.PrintIdInputString("반납한 책의 리스트 입니다.");
+                bookScreen.PrintBookInfo(returnBookList);
                 ExplainingScreen.PrintEnterCheck();
                 Console.ReadLine();
                 return true;

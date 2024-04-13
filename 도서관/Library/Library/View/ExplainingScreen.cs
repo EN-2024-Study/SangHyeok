@@ -66,7 +66,7 @@ namespace Library.Utility
         {
             Console.SetCursorPosition(60, 32);
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("입력을 완료하려면 Enter키를 눌러주세요.");
+            Console.Write("다음은 Enter키를 눌러주세요.");
             Console.ResetColor();
         }
 

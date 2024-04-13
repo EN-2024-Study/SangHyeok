@@ -1,4 +1,5 @@
 ﻿using Library.Controller.Task;
+using Library.Model;
 using Library.Utility;
 using Library.View;
 using System;
@@ -10,11 +11,13 @@ namespace Library.Controller.Menu
     {
         private InputController inputController;
         private InformationController infoController;
+        private BookScreen bookScreen;
 
         public BookSearchMenuController()
         {
             inputController = new InputController();
             infoController = new InformationController();
+            bookScreen = new BookScreen();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.SearchBook);
         }
         public override bool Run()
@@ -22,7 +25,7 @@ namespace Library.Controller.Menu
             Console.Clear();
             ExplainingScreen.ExplainInputKey();
             ExplainingScreen.PrintSearchBook();
-            infoController.ShowAllBook();
+            infoController.ShowAllBookInfo();
             base.menuValue = 0;
             bool isInput = false;
             string[] inputString = new string[3];
@@ -69,7 +72,13 @@ namespace Library.Controller.Menu
                 {
                     ExplainingScreen.PrintEnterCheck();
                     Console.ReadLine();
-                    infoController.SearchBook(inputString);
+                    Console.Clear();
+
+                    List<BookDto> searchedBooks = infoController.SearchBooks(inputString);
+                    bookScreen.PrintBookInfo(searchedBooks);
+
+                    ExplainingScreen.PrintEnterCheck();
+                    Console.ReadLine();
                     return true;
                 }
             }

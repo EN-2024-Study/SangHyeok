@@ -68,6 +68,7 @@ namespace Library.Controller.Menu
 
                 if (id != null)
                 {
+                    id = infoController.TrimString(id);
                     if (modeValue == (int)Constants.LibraryMode.User)
                         isCheckId = infoController.CheckUserLogIn(id, (int)Constants.InputType.Id);
                     else if (modeValue == (int)Constants.LibraryMode.Manager)
@@ -76,6 +77,7 @@ namespace Library.Controller.Menu
                 }
                 if (password != null)
                 {
+                    password = infoController.TrimString(password);
                     if (modeValue == (int)Constants.LibraryMode.User)
                         isCheckPassword = infoController.CheckUserLogIn(password, (int)Constants.InputType.Password);
                     else if (modeValue == (int)Constants.LibraryMode.Manager)

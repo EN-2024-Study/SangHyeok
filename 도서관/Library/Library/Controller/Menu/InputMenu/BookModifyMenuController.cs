@@ -31,6 +31,7 @@ namespace Library.Controller.Menu
 
             Console.Clear();
             ExplainingScreen.PrintBookInfo("도    서    수    정");
+            ExplainingScreen.ExplainInputKey();
 
             while (!isSignUp)
             {
@@ -51,25 +52,25 @@ namespace Library.Controller.Menu
                     case (int)Constants.BookInfo.GoBack:
                         return true;
                     case (int)Constants.BookInfo.Title:
-                        inputString[0] = inputController.LimitInputLength(new Tuple<int, int>(35, 15), 15, false);
+                        inputString[0] = inputController.LimitInputLength(new Tuple<int, int>(20, 7), 15, false);
                         break;
                     case (int)Constants.BookInfo.Writer:
-                        inputString[1] = inputController.LimitInputLength(new Tuple<int, int>(35, 17), 15, true);
+                        inputString[1] = inputController.LimitInputLength(new Tuple<int, int>(20, 9), 15, true);
                         break;
                     case (int)Constants.BookInfo.Publisher:
-                        inputString[2] = inputController.LimitInputLength(new Tuple<int, int>(35, 19), 15, true);
+                        inputString[2] = inputController.LimitInputLength(new Tuple<int, int>(20, 11), 15, true);
                         break;
                     case (int)Constants.BookInfo.Count:
-                        inputString[3] = inputController.LimitInputLength(new Tuple<int, int>(35, 21), 15, false);
+                        inputString[3] = inputController.LimitInputLength(new Tuple<int, int>(20, 13), 15, false);
                         break;
                     case (int)Constants.BookInfo.Price:
-                        inputString[4] = inputController.LimitInputLength(new Tuple<int, int>(35, 23), 15, false);
+                        inputString[4] = inputController.LimitInputLength(new Tuple<int, int>(20, 15), 15, false);
                         break;
                     case (int)Constants.BookInfo.ReleaseDate:
-                        inputString[5] = inputController.LimitInputLength(new Tuple<int, int>(35, 25), 15, false);
+                        inputString[5] = inputController.LimitInputLength(new Tuple<int, int>(20, 17), 15, false);
                         break;
                     case (int)Constants.BookInfo.Info - 1:
-                        inputString[6] = inputController.LimitInputLength(new Tuple<int, int>(35, 27), 15, false);
+                        inputString[6] = inputController.LimitInputLength(new Tuple<int, int>(20, 19), 15, false);
                         break;
                 }
 

@@ -16,12 +16,14 @@ namespace Library.Controller.Menu
         private UserModifyScreen userModifyScreen;
         private InformationController informationController;
         private InputController inputController;
+        private YesNoMenuController yesNoMenuController;
 
         public UserModifyMenuController() : base()
         {
             this.userModifyScreen = new UserModifyScreen();
             this.informationController = new InformationController();
             this.inputController = new InputController();
+            this.yesNoMenuController = new YesNoMenuController();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.UserModify);
         }
 
@@ -86,11 +88,14 @@ namespace Library.Controller.Menu
 
                 if (!isNull)
                 {
-                    ExplainingScreen.PrintEnterCheck();
-                    Console.ReadLine();
-
+                    if (yesNoMenuController.Run())
+                        return false;
                     AccountDto newAccount = new AccountDto(account.Id, inputString[0], inputString[1], inputString[2], inputString[3], inputString[4]);
                     informationController.ModifyAccount(newAccount, account);
+                    Console.Clear();
+                    ExplainingScreen.PrintComplete("수정 성공!");
+                    ExplainingScreen.PrintEnterCheck();
+                    Console.ReadLine();
                     return true;
                  }
             }

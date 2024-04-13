@@ -1,4 +1,5 @@
-﻿using Library.Utility;
+﻿using Library.Model;
+using Library.Utility;
 using Library.View;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,15 @@ namespace Library.Controller.Menu
 {
     public class UserModifyDeleteMenuController : MenuController
     {
-        public UserModifyMenuController userModifyMenuController;
+        private UserModifyMenuController userModifyMenuController;
+        private InformationController informationController;
+        private YesNoMenuController yesNoMenuController;
 
         public UserModifyDeleteMenuController() : base()
         {
             this.userModifyMenuController = new UserModifyMenuController();
+            this.informationController = new InformationController();
+            this.yesNoMenuController = new YesNoMenuController();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.UserInfo);
         }
 
@@ -54,8 +59,16 @@ namespace Library.Controller.Menu
 
         private bool Delete()
         {
-
-
+            AccountDto account = informationController.GetAccount();
+            if(informationController.DeleteAccount(account))
+            {
+                if (yesNoMenuController.Run())
+                    return false;
+                ExplainingScreen.PrintComplete("삭제 성공!");
+                ExplainingScreen.PrintEnterCheck();
+                Console.ReadLine();
+                return true;
+            }
             return false;
         }
     }

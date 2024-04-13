@@ -13,13 +13,15 @@ namespace Library.Utility
     {
         private AccountRepository accountInstance;
         private BookRepository bookInstance;
+        private ManagerRepository managerInstance;
         private BookScreen bookScreen;
 
         public InformationController()
         {
-            accountInstance = AccountRepository.Instance;  // singleton 생성
-            bookInstance = BookRepository.Instance; // singleton 생성
-            bookScreen = new BookScreen();
+            this.accountInstance = AccountRepository.Instance;   // singleton 생성
+            this.bookInstance = BookRepository.Instance;         // singleton 생성
+            this.managerInstance = ManagerRepository.Instance;   // singleton 생성
+            this.bookScreen = new BookScreen();
         }
 
         public bool CheckUserLogIn(string str, int stringType)
@@ -47,7 +49,7 @@ namespace Library.Utility
 
         public bool CheckManagerLogIn(string str, int stringType)
         {
-            AccountDto manager = accountInstance.Manager;
+            AccountDto manager = managerInstance.Manager;
 
             if (stringType == (int)Constants.InputType.Id)
             {
@@ -82,7 +84,7 @@ namespace Library.Utility
             for (int i = 0; i < 8; i++)
                 inputString[i] = str[i][0];
 
-            BookDto book = new BookDto(inputString[0], inputString[1], inputString[2], 
+            BookDto book = new BookDto(inputString[0], inputString[1], inputString[2],
                 inputString[3], inputString[4], inputString[5], inputString[6], inputString[7]);
             bookInstance.SetBookDict(book);
         }
@@ -138,7 +140,7 @@ namespace Library.Utility
             string[] result = s.Split('\0');
             return result[0];
         }
-        
+
         public BookDto SearchIdBooks(int id)
         {
             if (bookInstance.BookDict.TryGetValue(id, out BookDto book))
@@ -158,7 +160,7 @@ namespace Library.Utility
 
         public bool RemoveReturnBook(BookDto book)
         {
-            bool isReturn =  accountInstance.RemoveRentalBook(book);
+            bool isReturn = accountInstance.RemoveRentalBook(book);
             if (isReturn)
                 accountInstance.SetReturnBookList(book);
             return isReturn;
@@ -169,7 +171,7 @@ namespace Library.Utility
             return accountInstance.ReturnBookList;
         }
 
-        public AccountDto GetAccount()
+        public AccountDto GetAccount()  // 수정 필요
         {
             return accountInstance.UserList.Last();
         }
@@ -183,5 +185,13 @@ namespace Library.Utility
         {
             bookInstance.DeleteBook(value);
         }
+
+        public bool DeleteAccount(AccountDto account)
+        {
+            return accountInstance.DeleteAccount(account);
+        }
+
+        public AccountDto GetManager()
+        { return managerInstance.Manager; }
     }
 }

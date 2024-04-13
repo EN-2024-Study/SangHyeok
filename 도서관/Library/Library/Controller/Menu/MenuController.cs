@@ -119,7 +119,7 @@ namespace Library.Controller
                     str[2] = "도서 대여 내역";
                     str[3] = "도서 반납";
                     str[4] = "도서 반납 내역";
-                    str[5] = "정보 수정";
+                    str[5] = "  정보 ";
                     break;
                 case (int)Constants.MenuType.Manager:
                     str[0] = "도서 조회";

@@ -73,7 +73,7 @@ namespace Library.Controller.Menu
                         break;
                 }
 
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 8; i++)
                 {
                     if (inputString[i] == null)
                     {
@@ -87,7 +87,12 @@ namespace Library.Controller.Menu
                     ExplainingScreen.PrintEnterCheck();
                     Console.ReadLine();
 
-                    //infoController.SaveUserData(inputString);
+                    infoController.SaveBookData(inputString);
+                    Console.Clear();
+                    Console.SetCursorPosition(50, 15);
+                    Console.Write("책 추가 성공!");
+                    ExplainingScreen.PrintEnterCheck();
+                    Console.ReadLine();
                     return true;
                 }
             }

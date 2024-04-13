@@ -73,6 +73,20 @@ namespace Library.Utility
             accountInstance.SetUserList(account);
         }
 
+        public void SaveBookData(string[] inputString)
+        {
+            string[][] str = new string[8][];
+            for (int i = 0; i < 8; i++)
+                str[i] = inputString[i].Split('\0');
+            inputString = new string[8];
+            for (int i = 0; i < 8; i++)
+                inputString[i] = str[i][0];
+
+            BookDto book = new BookDto(inputString[0], inputString[1], inputString[2], 
+                inputString[3], inputString[4], inputString[5], inputString[6], inputString[7]);
+            bookInstance.SetBookDict(book);
+        }
+
         public void ShowAllBookInfo()
         {
             bookScreen.PrintBookInfo(bookInstance.BookDict.Values.ToList<BookDto>());

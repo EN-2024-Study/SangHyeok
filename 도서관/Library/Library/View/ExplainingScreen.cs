@@ -116,7 +116,7 @@ namespace Library.Utility
         public static void PrintBookAdd()
         {
             Console.SetCursorPosition(50, 0);
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write(@"
                                 도    서    추    가
 

@@ -1,4 +1,5 @@
 ﻿using Library.Model;
+using Library.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,19 +9,23 @@ using System.Threading.Tasks;
 
 namespace Library.Utility
 {
-    public class InformationValidatorController
+    public class InformationController
     {
-        private AccountRepository instance;
+        private AccountRepository accountInstance;
+        private BookRepository bookInstance;
+        private BookScreen bookScreen;
 
-        public InformationValidatorController()
+        public InformationController()
         {
-            instance = AccountRepository.Instance;  // singleton 생성
+            accountInstance = AccountRepository.Instance;  // singleton 생성
+            bookInstance = BookRepository.Instance; // singleton 생성
+            bookScreen = new BookScreen();
         }
 
         public bool CheckUserLogIn(string s, int stringType)
         {
             string[] str = s.Split('\0');
-            List<AccountDto> list = instance.UserList;
+            List<AccountDto> list = accountInstance.UserList;
 
             if (stringType == (int)Constants.InputType.Id)
             {
@@ -44,7 +49,7 @@ namespace Library.Utility
         public bool CheckManagerLogIn(string s, int stringType)
         {
             string[] str = s.Split('\0');
-            AccountDto manager = instance.Manager;
+            AccountDto manager = accountInstance.Manager;
 
             if (stringType == (int)Constants.InputType.Id)
             {
@@ -67,8 +72,26 @@ namespace Library.Utility
 
             AccountDto account = new AccountDto(stringData[0][0], stringData[1][0],
                 stringData[3][0], stringData[4][0], stringData[5][0], stringData[6][0]);
-            instance.SetUserList(account);
+            accountInstance.SetUserList(account);
         }
 
+        public void ShowAllBook()
+        {
+            bookScreen.PrintAllBook(bookInstance.BookList);
+        }
+
+        public void SearchBook(string[] inputString)
+        {
+            List<BookDto> bookList = bookInstance.BookList;
+            bookScreen.PrintAllBook(bookList);
+            Console.ReadLine();
+            //foreach(BookDto book in bookList)
+            //{
+            //    foreach(BookDto str in inputString)
+            //    {
+            //        if (str)
+            //    }
+            //}
+        }
     }
 }

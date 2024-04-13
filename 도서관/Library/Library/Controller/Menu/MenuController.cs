@@ -13,7 +13,7 @@ namespace Library.Controller
         protected MenuScreen menuScreen;
         protected string[] menuString;
         protected int menuValue;
-        
+
         protected MenuController()
         {
             this.menuScreen = new MenuScreen();
@@ -23,7 +23,7 @@ namespace Library.Controller
 
         public abstract bool Run();
 
-        public bool SelectMenu()
+        protected bool SelectMenu()
         {
             Console.CursorVisible = false;
             ConsoleKeyInfo keyInfo = Console.ReadKey();
@@ -71,6 +71,9 @@ namespace Library.Controller
                     break;
                 case (int)Constants.MenuType.SignUp:
                     arraySize = 7;
+                    break;
+                case (int)Constants.MenuType.SearchBook:
+                    arraySize = 3;
                     break;
                 default:
                     return null;
@@ -129,6 +132,11 @@ namespace Library.Controller
                     str[4] = "나이         :";
                     str[5] = "전화번호     :";
                     str[6] = "주소         :";
+                    break;
+                case (int)Constants.MenuType.SearchBook:
+                    str[0] = "제목으로 찾기       :";
+                    str[1] = "작가명으로 찾기     :";
+                    str[2] = "출판사로 찾기       :";
                     break;
             }
             return str;

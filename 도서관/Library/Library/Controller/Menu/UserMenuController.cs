@@ -1,22 +1,21 @@
-﻿using Library.Controller.Task;
+﻿using Library.Controller.Menu;
+using Library.Controller.Task;
 using Library.Utility;
+using Library.View;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Controller
 {
     public class UserMenuController : MenuController
     {
         private AccountInfoMenuController accountInfoMenuController;
-        private BookController bookController;
+        private BookSearchMenuController bookSearchMenuController;
 
         public UserMenuController() : base()
         {
             this.accountInfoMenuController = new AccountInfoMenuController((int)Constants.LibraryMode.User);
-            this.bookController = new BookController();
+            this.bookSearchMenuController = new BookSearchMenuController();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.User);
         }
 
@@ -24,31 +23,43 @@ namespace Library.Controller
         {
             Console.Clear();
             base.menuValue = 0;
-            bool isMenuSelect = true;
             bool isBack = false;
+            bool isMenuSelect = true;
 
             while (isMenuSelect)
             {
                 base.menuScreen.PrintMenu(menuString, menuValue, false);
                 isMenuSelect = SelectMenu();
-                if (menuValue > 5)
-                    menuValue = 5;
+                if (menuValue > 6)
+                    menuValue = 6;
             }
-           
-            switch (menuValue)  
+
+
+            switch (menuValue)
             {
                 case (int)Constants.UserMenu.GoBack:
                     return true;
+                case (int)Constants.UserMenu.BookSearch:
+                    isBack = bookSearchMenuController.Run();
+                    break;
+                case (int)Constants.UserMenu.BookRental:
+                    break;
+                case (int)Constants.UserMenu.BookRentalHistory:
+
+                    break;
+                case (int)Constants.UserMenu.BookReturn:
+
+                    break;
+                case (int)Constants.UserMenu.BookReturnHistory:
+
+                    break;
                 case (int)Constants.UserMenu.InfoModify:
                     isBack = accountInfoMenuController.Run();
                     break;
-                default:
-                    isBack = bookController.ControlUserBook(menuValue);
-                    break;
             }
-
+            
             if (isBack)
-                return true;
+                Run();
             return false;
         }
     }

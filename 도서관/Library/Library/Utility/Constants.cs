@@ -42,7 +42,8 @@ namespace Library.Utility
             User,
             Manager,
             LogIn,
-            SignUp
+            SignUp,
+            SearchBook
         }
 
         public enum UserMenu
@@ -90,6 +91,14 @@ namespace Library.Utility
         {
             Id,
             Password
+        }
+
+        public enum SearchBook
+        {
+            GoBack = -1,
+            Title = 0,
+            Writer = 1,
+            Publisher = 2
         }
     }
 }

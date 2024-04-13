@@ -81,5 +81,16 @@ namespace Library.Utility
             Console.Write("돌아가려면 Enter를 눌러주세요.");
             Console.ResetColor();
         }
+
+        public static void PrintSearchBook()
+        {
+            Console.SetCursorPosition(0, 6);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("ESC : 뒤로가기");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("ENTER : 선택하기");
+            Console.ResetColor();
+        }
+
     }
 }

@@ -11,12 +11,12 @@ namespace Library.Controller.Menu
     public class SignUpMenuController : MenuController
     {
         private InputController inputController;
-        private InformationValidatorController checkInformation;
+        private InformationController infoController;
 
         public SignUpMenuController() : base()
         {
             inputController = new InputController();
-            checkInformation = new InformationValidatorController();
+            infoController = new InformationController();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.SignUp);
         }
 
@@ -86,7 +86,7 @@ namespace Library.Controller.Menu
                 {
                     ExplainingScreen.PrintEnterCheck();
                     Console.ReadLine();
-                    checkInformation.SaveUserData(inputString);
+                    infoController.SaveUserData(inputString);
                     return true;
                 }
             }

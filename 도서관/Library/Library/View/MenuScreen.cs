@@ -10,6 +10,8 @@ namespace Library.View
             Tuple<int, int> coordinate;
             if (menuString.Length > 5)
                 coordinate = new Tuple<int, int>(20, 15);
+            else if (menuString[0].Equals("제목으로 찾기       :"))
+                coordinate = new Tuple<int, int>(0, 0);
             else
                 coordinate = new Tuple<int, int>(20, 25);
             ExplainingScreen.ExplainDirectionKey();

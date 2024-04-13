@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Menu\AccountInfoMenuController.cs" />
+    <Compile Include="Controller\Menu\BookSearchMenuController.cs" />
     <Compile Include="Controller\Menu\LogInMenuController.cs" />
     <Compile Include="Controller\Menu\ManagerMenuController.cs" />
     <Compile Include="Controller\Menu\SignUpMenuController.cs" />
@@ -44,7 +45,6 @@
     <Compile Include="Controller\Menu\LogInSignUpMenuController.cs" />
     <Compile Include="Controller\Menu\MenuController.cs" />
     <Compile Include="Controller\Menu\ModeMenuController.cs" />
-    <Compile Include="Controller\Task\BookController.cs" />
     <Compile Include="Controller\Task\InputController.cs" />
     <Compile Include="Controller\Menu\YesNoMenuController.cs" />
     <Compile Include="Model\AccountDto.cs" />
@@ -52,7 +52,7 @@
     <Compile Include="Model\BookDto.cs" />
     <Compile Include="MainProgram.cs" />
     <Compile Include="Model\BookRepository.cs" />
-    <Compile Include="Controller\Task\InformationValidatorController.cs" />
+    <Compile Include="Controller\Task\InformationController.cs" />
     <Compile Include="Utility\Constants.cs" />
     <Compile Include="View\BookScreen.cs" />
     <Compile Include="View\ExplainingScreen.cs" />

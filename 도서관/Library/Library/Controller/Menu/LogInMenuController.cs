@@ -14,7 +14,7 @@ namespace Library.Controller.Menu
         private InputController inputController;
         private UserMenuController userMenuController;
         private ManagerMenuController managerMenuController;
-        private InformationValidatorController infoController;
+        private InformationController infoController;
         private int modeValue;
         private bool isCheckId;
         private bool isCheckPassword;
@@ -25,7 +25,7 @@ namespace Library.Controller.Menu
             this.inputController = new InputController();
             this.userMenuController = new UserMenuController();
             this.managerMenuController = new ManagerMenuController();
-            this.infoController = new InformationValidatorController();
+            this.infoController = new InformationController();
             this.modeValue = modeValue;
             this.isCheckId = false;
             this.isCheckPassword = false;

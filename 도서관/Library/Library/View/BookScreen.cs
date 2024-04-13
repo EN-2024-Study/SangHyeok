@@ -23,21 +23,5 @@ namespace Library.View
                 Console.WriteLine("책 정보    : " + book[i].Info);
             }
         }
-
-        public void PrintSearchBook()
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("제목으로 찾기       :");
-            Console.WriteLine("작가명으로 찾기     :");
-            Console.WriteLine("출판사로 찾기       :");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("ESC : 뒤로가기");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("ENTER : 선택하기");
-            Console.ResetColor();
-        }
-
     }
 }

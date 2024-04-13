@@ -29,6 +29,7 @@ namespace Library.Controller
             Console.Clear();
             base.menuValue = 0;
             bool isBack = false;
+            bool isBackToMenu = false;
             bool isMenuSelect = true;
 
             while (isMenuSelect)
@@ -45,31 +46,33 @@ namespace Library.Controller
                 case (int)Constants.UserMenu.GoBack:
                     return true;
                 case (int)Constants.UserMenu.BookSearch:
-                    isBack = func1();
+                    isBack = SearchBook();
                     break;
                 case (int)Constants.UserMenu.BookRental:
-                    isBack = func2();
+                    isBack = RentalBook();
                     break;
                 case (int)Constants.UserMenu.BookRentalHistory:
-                    isBack = func3();
+                    isBack = ShowRentalBookHistory();
                     break;
                 case (int)Constants.UserMenu.BookReturn:
-                    isBack = func4();
+                    isBack = ReturnBook();
                     break;
                 case (int)Constants.UserMenu.BookReturnHistory:
-                    isBack = func5();
+                    isBack = ShowReturnBookHistory();
                     break;
                 case (int)Constants.UserMenu.InfoModify:
-                    isBack = userModifyDeleteMenuController.Run();
+                    isBackToMenu = userModifyDeleteMenuController.Run();
                     break;
             }
-            
+
             if (isBack)
                 Run();
+            if (isBackToMenu)
+                return true;
             return false;
         }
 
-        private bool func1()
+        private bool SearchBook()
         {
             bool isBack = bookSearchMenuController.Run();
             if (isBack)
@@ -81,7 +84,7 @@ namespace Library.Controller
             return false;
         }
 
-        private bool func2()
+        private bool RentalBook()
         {
             bool isBack = bookSearchMenuController.Run();
             if (isBack)
@@ -105,7 +108,7 @@ namespace Library.Controller
             return false;
         }
 
-        private bool func3()
+        private bool ShowRentalBookHistory()
         {
             List<BookDto> rentalBookList = informationController.GetRentalBook();
             if (rentalBookList != null)
@@ -121,7 +124,7 @@ namespace Library.Controller
             return false;
         }
 
-        private bool func4()
+        private bool ReturnBook()
         {
             Console.Clear();
             List<BookDto> rentalBookList = informationController.GetRentalBook();
@@ -147,7 +150,7 @@ namespace Library.Controller
             return false;
         }
 
-        private bool func5()
+        private bool ShowReturnBookHistory()
         {
             List<BookDto> returnBookList = informationController.GetReturnBook();
             if (returnBookList != null)

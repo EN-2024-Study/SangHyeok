@@ -45,7 +45,8 @@ namespace Library.Utility
             SignUp,
             SearchBook,
             UserModify,
-            ManagerModify
+            ManagerModify,
+            BookAdd
         }
 
         public enum UserMenu
@@ -95,12 +96,17 @@ namespace Library.Utility
             Password
         }
 
-        public enum SearchBook
+        public enum BookInfo
         {
             GoBack = -1,
             Title = 0,
             Writer = 1,
-            Publisher = 2
+            Publisher = 2,
+            Count = 3,
+            Price = 4,
+            ReleaseDate = 5,
+            ISBN = 6,
+            Info = 7
         }
 
         public enum UserModifyMenu

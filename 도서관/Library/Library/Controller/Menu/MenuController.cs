@@ -78,6 +78,9 @@ namespace Library.Controller
                 case (int)Constants.MenuType.UserModify:
                     arraySize = 5;
                     break;
+                case (int)Constants.MenuType.BookAdd:
+                    arraySize = 8;
+                    break;
                 default:
                     return null;
             }
@@ -147,6 +150,24 @@ namespace Library.Controller
                     str[2] = "USER AGE(자연수 0 ~ 200세)            :";
                     str[3] = "USER PHONENUMBER(010-xxxx-xxxx)       :";
                     str[4] = "USER ADDRESS(도로면 주소 형식)        :";
+                    break;
+                case (int)Constants.MenuType.BookAdd:
+                    str[0] = "책 제목 :";
+                    str[1] = "작가    :";
+                    str[2] = "출판사  :";
+                    str[3] = "수량    :";
+                    str[4] = "가격    :";
+                    str[5] = "출시일  :";
+                    str[6] = "ISBN    :";
+                    str[7] = "정보    :";
+                    //str[0] = "책 제목 - 영어, 한글, 숫자 1개 이상";
+                    //str[1] = "작가    - 영어, 한글 1글자 이상";
+                    //str[2] = "출판사  - 영어, 한글, 숫자 1개 이상";
+                    //str[3] = "수량    - 1 ~ 999 사이의 자연수";
+                    //str[4] = "가격    - 1 ~ 99999 사이의 자연수";
+                    //str[5] = "출시일  - 20xx-xx-xx";
+                    //str[6] = "ISBN    - 정수 9개 + 영어 1개 + 공백 + 정수 13개";
+                    //str[7] = "정보    - 최소 1개의 문자 (공백 포함)";
                     break;
             }
             return str;

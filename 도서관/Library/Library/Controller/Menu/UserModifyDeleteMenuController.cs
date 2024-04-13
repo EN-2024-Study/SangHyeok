@@ -46,6 +46,8 @@ namespace Library.Controller.Menu
                     break;
             }
 
+            if (isBack)
+                return true;
             return false;
         }
 

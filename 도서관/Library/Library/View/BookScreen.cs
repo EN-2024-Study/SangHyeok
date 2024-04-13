@@ -32,7 +32,5 @@ namespace Library.View
             Console.WriteLine("ID 값은 1부터 999 사이의 값입니다.");
             Console.WriteLine("입력 : ");
         }
-
- 
     }
 }

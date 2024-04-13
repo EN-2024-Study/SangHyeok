@@ -11,10 +11,13 @@ namespace Library.Controller
     public class ManagerMenuController : MenuController
     {
         private ManagerModifyDeleteMenuController managerModifyDeleteMenuController;
-
+        private BookSearchMenuController bookSearchMenuController;
+        private BookAddMenuController bookAddMenuController;
         public ManagerMenuController() : base()
         {
             this.managerModifyDeleteMenuController = new ManagerModifyDeleteMenuController();
+            this.bookSearchMenuController = new BookSearchMenuController();
+            this.bookAddMenuController = new BookAddMenuController();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.Manager);
         }
 
@@ -38,10 +41,10 @@ namespace Library.Controller
                 case (int)Constants.UserMenu.GoBack:
                     return true;
                 case (int)Constants.ManagerMenu.BookSearch:
-
+                    isBack = SearchBook();
                     break;
                 case (int)Constants.ManagerMenu.BookAdd:
-
+                    isBack = bookAddMenuController.Run();
                     break;
                 case (int)Constants.ManagerMenu.BookDelete:
 
@@ -59,6 +62,18 @@ namespace Library.Controller
 
             if (isBack)
                 return true;
+            return false;
+        }
+
+        private bool SearchBook()
+        {
+            bool isBack = bookSearchMenuController.Run();
+            if (isBack)
+            {
+                ExplainingScreen.PrintEnterCheck();
+                Console.ReadLine();
+                return true;
+            }
             return false;
         }
     }

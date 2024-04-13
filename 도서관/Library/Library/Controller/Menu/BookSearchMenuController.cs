@@ -47,15 +47,15 @@ namespace Library.Controller.Menu
                 menuScreen.PrintMenu(menuString, menuValue, true);  // 선택한 메뉴를 파란색으로 다시 띄우기
                 switch (menuValue)
                 {
-                    case (int)Constants.SearchBook.GoBack:
+                    case (int)Constants.BookInfo.GoBack:
                         return true;
-                    case (int)Constants.SearchBook.Title:
+                    case (int)Constants.BookInfo.Title:
                         inputString[0] = inputController.LimitInputLength(new Tuple<int, int>(21, 0), 15, false);
                         break;
-                    case (int)Constants.SearchBook.Writer:
+                    case (int)Constants.BookInfo.Writer:
                         inputString[1] = inputController.LimitInputLength(new Tuple<int, int>(21, 2), 15, false);
                         break;
-                    case (int)Constants.SearchBook.Publisher:
+                    case (int)Constants.BookInfo.Publisher:
                         inputString[2] = inputController.LimitInputLength(new Tuple<int, int>(21, 4), 15, false);
                         break;
                 }

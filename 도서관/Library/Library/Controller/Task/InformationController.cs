@@ -98,7 +98,7 @@ namespace Library.Utility
                 {
                     switch (i)
                     {
-                        case (int)Constants.SearchBook.Title:
+                        case (int)Constants.BookInfo.Title:
                             if (book.Title.Contains(inputString[i]))
                                 temp.Add(book);
                             break;

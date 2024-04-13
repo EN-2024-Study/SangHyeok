@@ -112,5 +112,45 @@ namespace Library.Utility
             Console.SetCursorPosition(5, 3);
             Console.WriteLine(str);
         }
+
+        public static void PrintBookAdd()
+        {
+            Console.SetCursorPosition(50, 0);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(@"
+                                도    서    추    가
+
+=======================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            책 제목 - 영어, 한글, 숫자 1개 이상
+                            작가    - 영어, 한글 1글자 이상
+                            출판사  - 영어, 한글, 숫자 1개 이상
+                            수량    - 1 ~ 999 사이의 자연수
+                            가격    - 1 ~ 99999 사이의 자연수
+                            출시일  - 20xx-xx-xx
+                            ISBN    - 정수 9개 + 영어 1개 + 공백 + 정수 13개
+                            정보    - 최소 1개의 문자 (공백 포함)
+");
+            Console.ResetColor();
+        }
     }
 }

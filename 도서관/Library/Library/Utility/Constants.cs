@@ -27,8 +27,9 @@ namespace Library.Utility
 
         public enum LibraryMode
         {
-            User,
-            Manager
+            Quit = -1,
+            User = 0,
+            Manager = 1
         }
 
         public enum MenuType
@@ -42,13 +43,6 @@ namespace Library.Utility
             Manager,
             LogIn,
             SignUp
-        }
-
-        public enum ModeMenu
-        {
-            Quit = -1,
-            UserMode = 0,
-            ManagerMode = 1,    
         }
 
         public enum UserMenu
@@ -95,8 +89,7 @@ namespace Library.Utility
         public enum InputType
         {
             Id,
-            Password,
-
+            Password
         }
     }
 }

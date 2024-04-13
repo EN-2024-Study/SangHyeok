@@ -29,9 +29,7 @@ namespace Library.Model
             get
             {
                 if (instance == null)
-                {
                     instance = new AccountRepository();
-                }
                 return instance;
             }
         }

@@ -11,12 +11,14 @@ namespace Library.Controller
     public abstract class MenuController
     {
         protected MenuScreen menuScreen;
-        public int menuValue;
+        protected string[] menuString;
+        protected int menuValue;
         
         protected MenuController()
         {
             this.menuScreen = new MenuScreen();
             this.menuValue = 0;
+            this.menuString = null;
         }
 
         public abstract bool Run();

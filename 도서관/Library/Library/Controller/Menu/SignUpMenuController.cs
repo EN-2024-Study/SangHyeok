@@ -13,10 +13,11 @@ namespace Library.Controller.Menu
         private InputController inputController;
         private InformationValidatorController checkInformation;
 
-        public SignUpMenuController()
+        public SignUpMenuController() : base()
         {
             inputController = new InputController();
             checkInformation = new InformationValidatorController();
+            base.menuString = base.DecideMenuType((int)Constants.MenuType.SignUp);
         }
 
         public override bool Run()
@@ -25,7 +26,6 @@ namespace Library.Controller.Menu
             base.menuValue = 0;
             bool isSignUp = false;
             string[] inputString = new string[7];
-            string[] menuString = base.DecideMenuType((int)Constants.MenuType.SignUp);
 
             //bool isId = false, isPassword = false, isPasswordCheck = false, isName = false,
             //    isAge = false, isPhoneNumber = false, isAddress = false;

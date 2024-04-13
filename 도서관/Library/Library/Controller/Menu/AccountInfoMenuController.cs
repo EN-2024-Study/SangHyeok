@@ -21,14 +21,13 @@ namespace Library.Controller
             Console.Clear();
             base.menuValue = 0;
             bool isMenuSelect = true;
-            string[] menuString = null;
             switch (modeValue)
             {
                 case (int)Constants.LibraryMode.User:
-                    menuString = base.DecideMenuType((int)Constants.MenuType.UserInfo);
+                    base.menuString = base.DecideMenuType((int)Constants.MenuType.UserInfo);
                     break;
                 case (int)Constants.LibraryMode.Manager:
-                    menuString = base.DecideMenuType((int)Constants.MenuType.ManagerInfo);
+                    base.menuString = base.DecideMenuType((int)Constants.MenuType.ManagerInfo);
                     break;
             }
 

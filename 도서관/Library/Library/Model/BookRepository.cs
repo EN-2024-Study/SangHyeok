@@ -36,15 +36,13 @@ namespace Library.Model
             get
             {
                 if (instance == null)
-                {
                     instance = new BookRepository();
-                }
                 return instance;
             }
         }
 
         public List<BookDto> BookList
-        { get { return BookList; } }
+        { get { return bookList; } }
 
         public void SetBookList(BookDto value)
         {

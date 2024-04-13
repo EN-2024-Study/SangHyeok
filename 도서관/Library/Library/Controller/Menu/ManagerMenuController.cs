@@ -14,6 +14,7 @@ namespace Library.Controller
         public ManagerMenuController() : base()
         {
             this.accountInfoMenuController = new AccountInfoMenuController((int)Constants.LibraryMode.Manager);
+            base.menuString = base.DecideMenuType((int)Constants.MenuType.Manager);
         }
 
         public override bool Run()
@@ -22,7 +23,6 @@ namespace Library.Controller
             base.menuValue = 0;
             bool isMenuSelect = true;
             bool isBack = false;
-            string[] menuString = base.DecideMenuType((int)Constants.MenuType.Manager);
 
             while (isMenuSelect)
             {

@@ -16,14 +16,21 @@ namespace Library.Controller.Menu
         private ManagerMenuController managerMenuController;
         private InformationValidatorController infoController;
         private int modeValue;
+        private bool isCheckId;
+        private bool isCheckPassword;
+        private int checkCount;
 
-        public LogInMenuController(int modeValue)
+        public LogInMenuController(int modeValue) : base()
         {
-            inputController = new InputController();
-            userMenuController = new UserMenuController();
-            managerMenuController = new ManagerMenuController();
-            infoController = new InformationValidatorController();
+            this.inputController = new InputController();
+            this.userMenuController = new UserMenuController();
+            this.managerMenuController = new ManagerMenuController();
+            this.infoController = new InformationValidatorController();
             this.modeValue = modeValue;
+            this.isCheckId = false;
+            this.isCheckPassword = false;
+            this.checkCount = 0;
+            base.menuString = base.DecideMenuType((int)Constants.MenuType.LogIn);
         }
 
         public override bool Run()
@@ -31,10 +38,6 @@ namespace Library.Controller.Menu
             bool isBack = false;
             base.menuValue = 0;
             bool isLogIn = true;
-            bool isCheckId = false;
-            bool isCheckPassword = false;
-            int isCheckCount = 0;
-            string[] menuString = base.DecideMenuType((int)Constants.MenuType.LogIn);
             string id = null, password = null;
 
             base.menuScreen.EraseMenu();
@@ -69,7 +72,7 @@ namespace Library.Controller.Menu
                         isCheckId = infoController.CheckUserLogIn(id, (int)Constants.InputType.Id);
                     else if (modeValue == (int)Constants.LibraryMode.Manager)
                         isCheckId = infoController.CheckManagerLogIn(id, (int)Constants.InputType.Id);
-                    isCheckCount++;
+                    checkCount++;
                 }
                 if (password != null)
                 {
@@ -77,10 +80,10 @@ namespace Library.Controller.Menu
                         isCheckPassword = infoController.CheckUserLogIn(password, (int)Constants.InputType.Password);
                     else if (modeValue == (int)Constants.LibraryMode.Manager)
                         isCheckPassword = infoController.CheckManagerLogIn(password, (int)Constants.InputType.Password);
-                    isCheckCount++;
+                    checkCount++;
                 }
 
-                if (isCheckCount > 2)
+                if (checkCount > 2)
                 {
                     ExplainingScreen.PrintEnterCheck();
                     Console.ReadLine();

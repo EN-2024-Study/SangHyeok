@@ -14,10 +14,12 @@ namespace Library.Controller
     {
         private LogInMenuController logInMenu;
         private SignUpMenuController signUpMenu;
+
         public LogInSignUpMenuController() : base()
         {
             this.logInMenu = new LogInMenuController((int)Constants.LibraryMode.User);
             this.signUpMenu = new SignUpMenuController();
+            base.menuString = base.DecideMenuType((int)Constants.MenuType.LogInSignUp);
         }
 
         public override bool Run()
@@ -25,7 +27,6 @@ namespace Library.Controller
             base.menuValue = 0;
             bool isMenuSelect = true;
             bool isBack = false;
-            string[] menuString = base.DecideMenuType((int)Constants.MenuType.LogInSignUp);
 
             base.menuScreen.EraseMenu();
             while (isMenuSelect)

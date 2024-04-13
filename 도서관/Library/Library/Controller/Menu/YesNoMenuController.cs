@@ -5,11 +5,16 @@ namespace Library.Controller
 {
     public class YesNoMenuController : MenuController
     {
+
+        public YesNoMenuController() : base()
+        {
+            base.menuString = base.DecideMenuType((int)Constants.MenuType.YesNo);
+        }
+
         public override bool Run()
         {
             base.menuValue = 0;
             bool isMenuSelect = true;
-            string[] menuString = base.DecideMenuType((int)Constants.MenuType.YesNo);
 
             base.menuScreen.EraseMenu();
             while (isMenuSelect)

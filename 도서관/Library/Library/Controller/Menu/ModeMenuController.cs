@@ -18,11 +18,12 @@ namespace Library.Controller
         private LogInMenuController logInMenuController;
         private YesNoMenuController quitMenu;
 
-        public ModeMenuController()
+        public ModeMenuController() : base()
         {
             this.logInSignUpMenu = new LogInSignUpMenuController(); // 유저 모드로 가면 로그인회원가입 메뉴
             this.logInMenuController = new LogInMenuController((int)Constants.LibraryMode.Manager); // 관리자 모드로 가면 로그인 메뉴
             this.quitMenu = new YesNoMenuController();
+            base.menuString = base.DecideMenuType((int)Constants.MenuType.UserManager);
         }
 
         public override bool Run()
@@ -31,7 +32,6 @@ namespace Library.Controller
             base.menuValue = 0;
             bool isMenuSelect = true;
             bool isBack = false;
-            string[] menuString = base.DecideMenuType((int)Constants.MenuType.UserManager);
 
             while (isMenuSelect)
             {
@@ -44,13 +44,13 @@ namespace Library.Controller
 
             switch (menuValue)
             {
-                case (int)Constants.ModeMenu.Quit:
+                case (int)Constants.LibraryMode.Quit:
                     isBack = quitMenu.Run();
                     break;
-                case (int)Constants.ModeMenu.UserMode:
+                case (int)Constants.LibraryMode.User:
                     isBack = logInSignUpMenu.Run();
                     break;
-                case (int)Constants.ModeMenu.ManagerMode:
+                case (int)Constants.LibraryMode.Manager:
                     isBack = logInMenuController.Run();
                     break;
             }

@@ -30,14 +30,44 @@ namespace Library.Model
 
         public string Title
         {
-            get;
-            set;
+            get { return title; }
+            set { title = value; }
         }
 
         public string Writer
         {
-            get;
-            set;
+            get { return writer; }
+            set { writer = value; }
+        }
+        public string Publisher
+        {
+            get { return publisher; }
+            set { publisher = value; }
+        }
+        public string Count
+        {
+            get { return count; }
+            set { count = value; }
+        }
+        public string Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+        public string ReleaseDate
+        {
+            get { return releaseDate; }
+            set { releaseDate = value; }
+        }
+        public string ISBN
+        {
+            get { return iSBN; }
+            set { iSBN = value; }
+        }
+        public string Info
+        {
+            get { return info; }
+            set { info = value; }
         }
     }
 }

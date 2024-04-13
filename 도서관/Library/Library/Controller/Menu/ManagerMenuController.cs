@@ -16,6 +16,7 @@ namespace Library.Controller
         private BookSearchMenuController bookSearchMenuController;
         private BookAddMenuController bookAddMenuController;
         private InformationController informationController;
+        private BookModifyMenuController bookModifyMenuController;
         private BookScreen bookScreen;
         public ManagerMenuController() : base()
         {
@@ -23,6 +24,7 @@ namespace Library.Controller
             this.bookSearchMenuController = new BookSearchMenuController();
             this.bookAddMenuController = new BookAddMenuController();
             this.informationController = new InformationController();
+            this.bookModifyMenuController = new BookModifyMenuController();
             this.bookScreen = new BookScreen();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.Manager);
         }
@@ -56,7 +58,7 @@ namespace Library.Controller
                     isBack = DeleteBook();
                     break;
                 case (int)Constants.ManagerMenu.BookModify:
-
+                    isBack = bookModifyMenuController.Run();
                     break;
                 case (int)Constants.ManagerMenu.UserControll:
                     isBack = managerModifyDeleteMenuController.Run();

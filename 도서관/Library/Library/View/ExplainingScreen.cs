@@ -113,12 +113,12 @@ namespace Library.Utility
             Console.WriteLine(str);
         }
 
-        public static void PrintBookAdd()
+        public static void PrintBookInfo(string str)
         {
-            Console.SetCursorPosition(50, 0);
+            Console.SetCursorPosition(35, 1); ;
             Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(str);
             Console.Write(@"
-                                도    서    추    가
 
 =======================================================================================
 

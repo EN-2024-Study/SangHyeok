@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Menu\BookAddMenuController.cs" />
+    <Compile Include="Controller\Menu\BookModifyMenuController.cs" />
     <Compile Include="Controller\Menu\BookSearchMenuController.cs" />
     <Compile Include="Controller\Menu\LogInMenuController.cs" />
     <Compile Include="Controller\Menu\ManagerMenuController.cs" />

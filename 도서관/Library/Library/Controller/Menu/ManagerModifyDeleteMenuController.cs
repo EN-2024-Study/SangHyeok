@@ -31,13 +31,15 @@ namespace Library.Controller.Menu
                     menuValue = 1;
             }
 
-            switch (menuValue)  // 수정 ㄱㄱ
+            switch (menuValue)  
             {
                 case (int)Constants.InfoMenu.GoBack:
                     return true;
-                case (int)Constants.InfoMenu.Modify:    
+                case (int)Constants.InfoMenu.Modify:  // 유저 정보 수정
+                    
                     break;
-                case (int)Constants.InfoMenu.Delete:    
+                case (int)Constants.InfoMenu.Delete:   // 유저 계정 삭제
+                    
                     break;
             }
 

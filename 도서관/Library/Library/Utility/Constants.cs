@@ -46,7 +46,8 @@ namespace Library.Utility
             SearchBook,
             UserModify,
             ManagerModify,
-            BookAdd
+            BookAdd,
+            
         }
 
         public enum UserMenu

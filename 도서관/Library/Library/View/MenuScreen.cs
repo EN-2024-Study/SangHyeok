@@ -10,6 +10,8 @@ namespace Library.View
             Tuple<int, int> coordinate;
             if (menuString.Length == 8) // 도서 추가 화면
                 coordinate = new Tuple<int, int>(10, 7);
+            else if (menuString.Length == 7)    // 도서 수정 화면
+                coordinate = new Tuple<int, int>(10, 7);    
             else if (menuString.Length > 5)
                 coordinate = new Tuple<int, int>(20, 15);
             else if (menuString[0].Equals("제목으로 찾기       :"))

@@ -5,7 +5,7 @@ using Library.Utility;
 
 namespace Library.View
 {
-    public class BookScreen
+    public class InformationScreen
     {
         public void PrintBookInfo(List<BookDto> bookList)
         {
@@ -31,6 +31,20 @@ namespace Library.View
             Console.WriteLine(str);
             Console.WriteLine("ID 값은 1부터 999 사이의 값입니다.");
             Console.WriteLine("입력 : ");
+        }
+
+        public void AccountScreen(List<AccountDto> accountList)
+        {
+            Console.SetCursorPosition(0, 8);
+            foreach (AccountDto accout in accountList)
+            {
+                Console.WriteLine("========================================================================");
+                Console.WriteLine("USER ID            : " + accout.Id);
+                Console.WriteLine("USER NAME          : " + accout.Name);
+                Console.WriteLine("USER AGE           : " + accout.Age);
+                Console.WriteLine("USER PHONENUMBER   : " + accout.PhoneNumber);
+                Console.WriteLine("USER ADDRESS       : " + accout.Address);
+            }
         }
     }
 }

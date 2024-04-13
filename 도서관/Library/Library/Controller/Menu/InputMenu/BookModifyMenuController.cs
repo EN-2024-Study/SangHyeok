@@ -16,7 +16,7 @@ namespace Library.Controller.Menu
         private InputController inputController;
         private InformationController informationController;
         private BookSearchMenuController bookSearchMenuController;
-        private BookScreen bookScreen;
+        private InformationScreen screen;
         private int bookId;
 
         public BookModifyMenuController() : base()
@@ -24,7 +24,7 @@ namespace Library.Controller.Menu
             this.inputController = new InputController();
             this.informationController = new InformationController();
             this.bookSearchMenuController = new BookSearchMenuController();
-            this.bookScreen = new BookScreen();
+            this.screen = new InformationScreen();
             this.bookId = 0;
             base.menuString = base.DecideMenuType((int)Constants.MenuType.ManagerModify);
         }
@@ -105,8 +105,8 @@ namespace Library.Controller.Menu
         public bool FindBookToEdit()
         {
             Console.Clear();
-            bookScreen.PrintBookInfo(informationController.GetBookList());
-            bookScreen.PrintIdSearch("수정할 책의 ID를 입력해 주세요");
+            screen.PrintBookInfo(informationController.GetBookList());
+            screen.PrintIdSearch("수정할 책의 ID를 입력해 주세요");
             bookId = bookSearchMenuController.SearchId();
             if (bookId != 0)
                 return true;

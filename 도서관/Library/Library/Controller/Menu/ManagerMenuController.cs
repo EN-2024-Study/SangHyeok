@@ -13,20 +13,20 @@ namespace Library.Controller
 {
     public class ManagerMenuController : MenuController
     {
-        private ManagerModifyDeleteMenuController managerModifyDeleteMenuController;
+        private MemberModifyDeleteMenuController memberModifyDeleteMenuController;
         private BookSearchMenuController bookSearchMenuController;
         private BookAddMenuController bookAddMenuController;
         private InformationController informationController;
         private BookModifyMenuController bookModifyMenuController;
-        private BookScreen bookScreen;
+        private InformationScreen screen;
         public ManagerMenuController() : base()
         {
-            this.managerModifyDeleteMenuController = new ManagerModifyDeleteMenuController();
+            this.memberModifyDeleteMenuController = new MemberModifyDeleteMenuController();
             this.bookSearchMenuController = new BookSearchMenuController();
             this.bookAddMenuController = new BookAddMenuController();
             this.informationController = new InformationController();
             this.bookModifyMenuController = new BookModifyMenuController();
-            this.bookScreen = new BookScreen();
+            this.screen = new InformationScreen();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.Manager);
         }
 
@@ -62,7 +62,7 @@ namespace Library.Controller
                     isBack = ModifyBook();
                     break;
                 case (int)Constants.ManagerMenu.UserControll:
-                    isBack = managerModifyDeleteMenuController.Run();
+                    isBack = memberModifyDeleteMenuController.Run();
                     break;
                 case (int)Constants.ManagerMenu.AccountDelete:
 
@@ -90,11 +90,8 @@ namespace Library.Controller
         {
             Console.Clear();
 
-            bookScreen.PrintIdSearch("삭제할 책의 ID를 입력해 주세요");
-            Console.SetCursorPosition(8, 2);
-            Console.CursorVisible = true;
-            int id = int.Parse(Console.ReadLine());
-            Console.CursorVisible = false;
+            screen.PrintIdSearch("삭제할 책의 ID를 입력해 주세요");
+            int id = bookSearchMenuController.SearchId();
 
             BookDto book = informationController.SearchIdBooks(id);
             if (book != null)

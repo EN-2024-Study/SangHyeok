@@ -9,8 +9,6 @@ namespace Library.View
 {
     public class UserModifyScreen
     {
-
-
         public void PrintAccountInfomation(AccountDto account)
         {
             Console.SetCursorPosition(40, 2);

@@ -14,14 +14,14 @@ namespace Library.Utility
         private AccountRepository accountInstance;
         private BookRepository bookInstance;
         private ManagerRepository managerInstance;
-        private BookScreen bookScreen;
+        private InformationScreen bookScreen;
 
         public InformationController()
         {
             this.accountInstance = AccountRepository.Instance;   // singleton 생성
             this.bookInstance = BookRepository.Instance;         // singleton 생성
             this.managerInstance = ManagerRepository.Instance;   // singleton 생성
-            this.bookScreen = new BookScreen();
+            this.bookScreen = new InformationScreen();
         }
 
         public bool CheckUserLogIn(string str, int stringType)
@@ -169,6 +169,11 @@ namespace Library.Utility
         public List<BookDto> GetReturnBook()
         {
             return accountInstance.ReturnBookList;
+        }
+
+        public List<AccountDto> GetAccoutList()
+        {
+            return accountInstance.UserList;
         }
 
         public AccountDto GetAccount()  // 수정 필요

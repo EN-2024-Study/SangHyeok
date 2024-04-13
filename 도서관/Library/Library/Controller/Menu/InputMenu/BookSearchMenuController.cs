@@ -11,13 +11,13 @@ namespace Library.Controller.Menu
     {
         private InputController inputController;
         private InformationController informationController;
-        private BookScreen bookScreen;
+        private InformationScreen screen;
 
         public BookSearchMenuController()
         {
             inputController = new InputController();
             informationController = new InformationController();
-            bookScreen = new BookScreen();
+            screen = new InformationScreen();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.SearchBook);
         }
         public override bool Run()
@@ -76,7 +76,7 @@ namespace Library.Controller.Menu
                     Console.Clear();
 
                     List<BookDto> searchedBooks = informationController.SearchBooks(inputString);
-                    bookScreen.PrintBookInfo(searchedBooks);
+                    screen.PrintBookInfo(searchedBooks);
                     return true;
                 }
             }

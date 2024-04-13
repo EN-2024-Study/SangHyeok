@@ -15,8 +15,8 @@ namespace Library.Controller.Menu
 
         public SignUpMenuController() : base()
         {
-            inputController = new InputController();
-            infoController = new InformationController();
+            this.inputController = new InputController();
+            this.infoController = new InformationController();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.SignUp);
         }
 

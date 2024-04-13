@@ -15,8 +15,8 @@ namespace Library.Controller.Menu
 
         public BookAddMenuController() : base()
         {
-            inputController = new InputController();
-            infoController = new InformationController();
+            this.inputController = new InputController();
+            this.infoController = new InformationController();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.BookAdd);
         }
 
@@ -87,12 +87,10 @@ namespace Library.Controller.Menu
                     ExplainingScreen.PrintEnterCheck();
                     Console.ReadLine();
 
-                    infoController.SaveBookData(inputString);
-                    Console.Clear();
-                    Console.SetCursorPosition(50, 15);
-                    Console.Write("책 추가 성공!");
+                    ExplainingScreen.PrintComplete("책 추가 성공!");
                     ExplainingScreen.PrintEnterCheck();
                     Console.ReadLine();
+                    infoController.SaveBookData(inputString);
                     return true;
                 }
             }

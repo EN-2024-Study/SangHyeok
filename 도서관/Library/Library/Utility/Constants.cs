@@ -67,8 +67,8 @@ namespace Library.Utility
             BookAdd = 1,
             BookDelete = 2,
             BookModify = 3,
-            UserControl = 4,
-            RentalHistory = 5
+            UserControll = 4,
+            AccountDelete = 5
         }
 
         public enum InfoMenu

@@ -178,5 +178,10 @@ namespace Library.Utility
         {
             accountInstance.ModifyAccount(oldAccount, newAccount);
         }
+
+        public void DeleteBook(int value)
+        {
+            bookInstance.DeleteBook(value);
+        }
     }
 }

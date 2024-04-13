@@ -16,21 +16,21 @@ namespace Library.Model
             bookDict = new Dictionary<int, BookDto>
             {
                 {
-                    0,
+                    1,
                     new BookDto
                         ("패밀리 레스토랑 가자.", "야마",
                         "문학동네", "4", "12900", "2024.04.01",
                         "123a 123", "소설")
                 },
                 {
-                    1,
+                    2,
                     new BookDto
                         ("일류의 조건", "다카시", "필름",
                         "3", "18000", "2024.03.01",
                         "321a 321", "자기계발")
                 },
                 {
-                    2,
+                    3,
                     new BookDto
                         (
                             "불변의 법칙", "하우절",
@@ -39,7 +39,7 @@ namespace Library.Model
                         )
                 }
             };
-            keyValue = 3;
+            keyValue = 4;
         }
 
         public static BookRepository Instance
@@ -58,6 +58,11 @@ namespace Library.Model
         public void SetBookDict(BookDto value)
         {
             bookDict.Add(keyValue++, value);
+        }
+
+        public void DeleteBook(int value)
+        {
+            bookDict.Remove(value);
         }
     }
 }

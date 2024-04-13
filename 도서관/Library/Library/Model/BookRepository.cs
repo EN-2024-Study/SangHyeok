@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace Library.Model
 {
-    public class BookRepository
+    public class BookRepository // singleton
     {
-        public static List<BookDto> bookList = new List<BookDto>()
+        private static BookRepository instance;
+        private List<BookDto> bookList;
+        private BookRepository() 
+        {
+            bookList = new List<BookDto>()
             {
                         new BookDto
                         ("패밀리 레스토랑 가자.", "야마",
@@ -21,9 +25,30 @@ namespace Library.Model
                         new BookDto
                         (
                             "불변의 법칙", "하우절",
-                            "서삼독", "0", "22500", 
+                            "서삼독", "0", "22500",
                             "2000.09.08", "567a 567", "자기계발"
                         )
             };
+        }
+
+        public static BookRepository Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new BookRepository();
+                }
+                return instance;
+            }
+        }
+
+        public List<BookDto> BookList
+        { get { return BookList; } }
+
+        public void SetBookList(BookDto value)
+        {
+            bookList.Add(value);
+        }
     }
 }

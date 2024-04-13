@@ -10,11 +10,17 @@ namespace Library.Utility
 {
     public class InformationValidatorController
     {
+        private AccountRepository instance;
+
+        public InformationValidatorController()
+        {
+            instance = AccountRepository.Instance;  // singleton 생성
+        }
 
         public bool CheckUserLogIn(string s, int stringType)
         {
             string[] str = s.Split('\0');
-            List<AccountDto> list = AccountRepository.userList;
+            List<AccountDto> list = instance.UserList;
 
             if (stringType == (int)Constants.InputType.Id)
             {
@@ -38,7 +44,7 @@ namespace Library.Utility
         public bool CheckManagerLogIn(string s, int stringType)
         {
             string[] str = s.Split('\0');
-            AccountDto manager = AccountRepository.manager;
+            AccountDto manager = instance.Manager;
 
             if (stringType == (int)Constants.InputType.Id)
             {
@@ -61,7 +67,7 @@ namespace Library.Utility
 
             AccountDto account = new AccountDto(stringData[0][0], stringData[1][0],
                 stringData[3][0], stringData[4][0], stringData[5][0], stringData[6][0]);
-            AccountRepository.userList.Add(account);
+            instance.SetUserList(account);
         }
 
     }

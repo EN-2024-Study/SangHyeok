@@ -1,4 +1,5 @@
-﻿using Library.Utility;
+﻿using Library.Controller.Menu;
+using Library.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Library.Controller
 {
     public class ManagerMenuController : MenuController
     {
-        private AccountInfoMenuController accountInfoMenuController;
+        private ManagerModifyDeleteMenuController managerModifyDeleteMenuController;
 
         public ManagerMenuController() : base()
         {
-            this.accountInfoMenuController = new AccountInfoMenuController((int)Constants.LibraryMode.Manager);
+            this.managerModifyDeleteMenuController = new ManagerModifyDeleteMenuController();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.Manager);
         }
 
@@ -49,7 +50,7 @@ namespace Library.Controller
 
                     break;
                 case (int)Constants.ManagerMenu.UserControl:
-                    isBack = accountInfoMenuController.Run();
+                    isBack = managerModifyDeleteMenuController.Run();
                     break;
                 case (int)Constants.ManagerMenu.RentalHistory:
 

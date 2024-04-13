@@ -69,5 +69,11 @@ namespace Library.Model
         {
             returnBookList.Add(value);
         }
+
+        public void ModifyAccount(AccountDto deleteAccount, AccountDto addAccount)
+        {
+            bool isCheck = userList.Remove(deleteAccount);
+            userList.Add(addAccount);
+        }
     }
 }

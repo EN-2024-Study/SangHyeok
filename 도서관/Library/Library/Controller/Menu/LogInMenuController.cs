@@ -59,9 +59,11 @@ namespace Library.Controller.Menu
                     case (int)Constants.LogInMenu.GoBack:
                         return true;
                     case (int)Constants.LogInMenu.Id:
+                        id = null;
                         id = inputController.LimitInputLength(new Tuple<int, int>(25, 25), 15, false);
                         break;
                     case (int)Constants.LogInMenu.Password:
+                        password = null;
                         password = inputController.LimitInputLength(new Tuple<int, int>(31, 27), 15, true);
                         break;
                 }

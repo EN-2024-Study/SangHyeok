@@ -75,6 +75,9 @@ namespace Library.Controller
                 case (int)Constants.MenuType.SearchBook:
                     arraySize = 3;
                     break;
+                case (int)Constants.MenuType.UserModify:
+                    arraySize = 5;
+                    break;
                 default:
                     return null;
             }
@@ -137,6 +140,13 @@ namespace Library.Controller
                     str[0] = "제목으로 찾기       :";
                     str[1] = "작가명으로 찾기     :";
                     str[2] = "출판사로 찾기       :";
+                    break;
+                case (int)Constants.MenuType.UserModify:
+                    str[0] = "USER PW (8 ~ 15글자 영어, 숫자 포함)  :";
+                    str[1] = "USER NAME(한글, 영어 포함 2글자 이상) :";
+                    str[2] = "USER AGE(자연수 0 ~ 200세)            :";
+                    str[3] = "USER PHONENUMBER(010-xxxx-xxxx)       :";
+                    str[4] = "USER ADDRESS(도로면 주소 형식)        :";
                     break;
             }
             return str;

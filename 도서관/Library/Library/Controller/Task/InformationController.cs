@@ -154,5 +154,15 @@ namespace Library.Utility
         {
             return accountInstance.ReturnBookList;
         }
+
+        public AccountDto GetAccount()
+        {
+            return accountInstance.UserList.Last();
+        }
+
+        public void ModifyAccount(AccountDto newAccount, AccountDto oldAccount)
+        {
+            accountInstance.ModifyAccount(oldAccount, newAccount);
+        }
     }
 }

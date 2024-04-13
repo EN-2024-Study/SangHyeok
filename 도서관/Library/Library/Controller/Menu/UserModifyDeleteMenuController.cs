@@ -1,55 +1,58 @@
 ﻿using Library.Utility;
+using Library.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Controller
+namespace Library.Controller.Menu
 {
-    public class AccountInfoMenuController : MenuController
+    public class UserModifyDeleteMenuController : MenuController
     {
-        private int modeValue;
+        public UserModifyMenuController userModifyMenuController;
 
-        public AccountInfoMenuController(int modeValue) : base()
+        public UserModifyDeleteMenuController() : base()
         {
-            this.modeValue = modeValue;
+            this.userModifyMenuController = new UserModifyMenuController();
+            base.menuString = base.DecideMenuType((int)Constants.MenuType.UserInfo);
         }
 
         public override bool Run()
         {
             Console.Clear();
             base.menuValue = 0;
+            bool isBack = false;
             bool isMenuSelect = true;
-            switch (modeValue)
-            {
-                case (int)Constants.LibraryMode.User:
-                    base.menuString = base.DecideMenuType((int)Constants.MenuType.UserInfo);
-                    break;
-                case (int)Constants.LibraryMode.Manager:
-                    base.menuString = base.DecideMenuType((int)Constants.MenuType.ManagerInfo);
-                    break;
-            }
 
             while (isMenuSelect)
             {
-                menuScreen.PrintMenu(menuString, menuValue, false);
-                isMenuSelect = SelectMenu();
+                base.menuScreen.PrintMenu(menuString, menuValue, false);
+                isMenuSelect = base.SelectMenu();
                 if (menuValue > 1)
                     menuValue = 1;
             }
 
-            switch(menuValue)
+            switch (menuValue)
             {
                 case (int)Constants.InfoMenu.GoBack:
                     return true;
                 case (int)Constants.InfoMenu.Modify:    // 개인 또는 회원 정보 수정 기능
-
+                    isBack = userModifyMenuController.Run();
                     break;
                 case (int)Constants.InfoMenu.Delete:    // 개인 또는 회원 정보 삭제 기능
-
+                    isBack = Delete();
                     break;
             }
+
+            return false;
+        }
+
+
+        private bool Delete()
+        {
+
 
             return false;
         }

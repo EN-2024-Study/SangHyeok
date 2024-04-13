@@ -10,14 +10,14 @@ namespace Library.Controller
 {
     public class UserMenuController : MenuController
     {
-        private AccountInfoMenuController accountInfoMenuController;
+        private  UserModifyDeleteMenuController userModifyDeleteMenuController;
         private InformationController informationController;
         private BookSearchMenuController bookSearchMenuController;
         private BookScreen bookScreen;
 
         public UserMenuController() : base()
         {
-            this.accountInfoMenuController = new AccountInfoMenuController((int)Constants.LibraryMode.User);
+            this.userModifyDeleteMenuController = new UserModifyDeleteMenuController();
             this.informationController = new InformationController();
             this.bookSearchMenuController = new BookSearchMenuController();
             this.bookScreen = new BookScreen();
@@ -60,7 +60,7 @@ namespace Library.Controller
                     isBack = func5();
                     break;
                 case (int)Constants.UserMenu.InfoModify:
-                    isBack = accountInfoMenuController.Run();
+                    isBack = userModifyDeleteMenuController.Run();
                     break;
             }
             

@@ -1,14 +1,10 @@
 ﻿using Library.Utility;
 using Library.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Controller
 {
-    public abstract class MenuController
+    public abstract class MenuController    // 모든 MenuController에서 상속 받는 추상 Class
     {
         protected MenuScreen menuScreen;
         protected string[] menuString;

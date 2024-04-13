@@ -3,6 +3,7 @@ using Library.Model;
 using Library.Utility;
 using Library.View;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,7 +59,7 @@ namespace Library.Controller
                     isBack = DeleteBook();
                     break;
                 case (int)Constants.ManagerMenu.BookModify:
-                    isBack = bookModifyMenuController.Run();
+                    isBack = ModifyBook();
                     break;
                 case (int)Constants.ManagerMenu.UserControll:
                     isBack = managerModifyDeleteMenuController.Run();
@@ -104,6 +105,13 @@ namespace Library.Controller
                 informationController.DeleteBook(id);
                 return true;
             }
+            return false;
+        }
+
+        private bool ModifyBook()
+        {
+            if (bookModifyMenuController.FindBookToEdit())
+                return bookModifyMenuController.Run();
             return false;
         }
     }

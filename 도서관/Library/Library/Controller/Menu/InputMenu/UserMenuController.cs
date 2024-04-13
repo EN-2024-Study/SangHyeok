@@ -90,12 +90,9 @@ namespace Library.Controller
             if (isBack)
             {
                 bookScreen.PrintIdSearch("대여할 책의 ID를 입력해 주세요");
-                Console.SetCursorPosition(8, 2);
-                Console.CursorVisible = true;
-                int id = int.Parse(Console.ReadLine());
-                Console.CursorVisible = false;
-
+                int id = bookSearchMenuController.SearchId();
                 BookDto book = informationController.SearchIdBooks(id);
+
                 if (book != null)
                 {
                     Console.Clear();
@@ -132,11 +129,9 @@ namespace Library.Controller
             {
                 bookScreen.PrintBookInfo(rentalBookList);
                 bookScreen.PrintIdSearch("반납할 책의 ID를 입력해 주세요");
-                Console.SetCursorPosition(8, 2);
-                Console.CursorVisible = true;
-                int id = int.Parse(Console.ReadLine());
-                Console.CursorVisible = false;
+                int id = bookSearchMenuController.SearchId();
                 BookDto book = informationController.SearchIdBooks(id);
+
                 if (book != null)
                 {
                     Console.Clear();

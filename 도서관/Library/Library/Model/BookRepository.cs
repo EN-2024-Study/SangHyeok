@@ -55,6 +55,11 @@ namespace Library.Model
         public Dictionary<int, BookDto> BookDict
         { get { return bookDict; } }
 
+        public List<BookDto> GetBookList()
+        {
+            return BookDict.Values.ToList<BookDto>();
+        }
+
         public void SetBookDict(BookDto value)
         {
             bookDict.Add(keyValue++, value);

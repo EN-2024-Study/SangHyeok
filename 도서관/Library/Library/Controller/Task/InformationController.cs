@@ -91,12 +91,12 @@ namespace Library.Utility
 
         public void ShowAllBookInfo()
         {
-            bookScreen.PrintBookInfo(bookInstance.BookDict.Values.ToList<BookDto>());
+            bookScreen.PrintBookInfo(bookInstance.GetBookList());
         }
 
         public List<BookDto> SearchBooks(string[] inputString)
         {
-            List<BookDto> books = bookInstance.BookDict.Values.ToList<BookDto>();
+            List<BookDto> books = bookInstance.GetBookList();
             List<BookDto> searchedBooks = books;
 
             string[][] str = new string[3][];
@@ -189,6 +189,11 @@ namespace Library.Utility
         public bool DeleteAccount(AccountDto account)
         {
             return accountInstance.DeleteAccount(account);
+        }
+
+        public List<BookDto> GetBookList()
+        {
+            return bookInstance.GetBookList();
         }
 
         public AccountDto GetManager()

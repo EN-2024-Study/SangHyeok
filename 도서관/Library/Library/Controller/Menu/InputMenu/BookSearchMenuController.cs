@@ -10,13 +10,13 @@ namespace Library.Controller.Menu
     public class BookSearchMenuController : MenuController
     {
         private InputController inputController;
-        private InformationController infoController;
+        private InformationController informationController;
         private BookScreen bookScreen;
 
         public BookSearchMenuController()
         {
             inputController = new InputController();
-            infoController = new InformationController();
+            informationController = new InformationController();
             bookScreen = new BookScreen();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.SearchBook);
         }
@@ -26,7 +26,7 @@ namespace Library.Controller.Menu
             ExplainingScreen.ExplainInputKey();
             ExplainingScreen.PrintEsc();
             ExplainingScreen.PrintEnter();
-            infoController.ShowAllBookInfo();
+            informationController.ShowAllBookInfo();
             base.menuValue = 0;
             bool isInput = false;
             string[] inputString = new string[3];
@@ -75,13 +75,22 @@ namespace Library.Controller.Menu
                     Console.ReadLine();
                     Console.Clear();
 
-                    List<BookDto> searchedBooks = infoController.SearchBooks(inputString);
+                    List<BookDto> searchedBooks = informationController.SearchBooks(inputString);
                     bookScreen.PrintBookInfo(searchedBooks);
                     return true;
                 }
             }
 
             return false;
+        }
+
+        public int SearchId()
+        {
+            Console.SetCursorPosition(8, 2);
+            Console.CursorVisible = true;
+            int id = int.Parse(Console.ReadLine());
+            Console.CursorVisible = false;
+            return id;
         }
     }
 }

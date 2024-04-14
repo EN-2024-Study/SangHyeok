@@ -11,12 +11,12 @@ namespace Library.Controller.Menu
     public class BookAddMenuController : MenuController
     {
         private InputController inputController;
-        private InformationController infoController;
+        private InformationController informationController;
 
         public BookAddMenuController() : base()
         {
             this.inputController = new InputController();
-            this.infoController = new InformationController();
+            this.informationController = new InformationController();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.BookAdd);
         }
 
@@ -24,7 +24,7 @@ namespace Library.Controller.Menu
         {
             base.menuValue = 0;
             bool isModify = true;
-            string[] inputString = new string[8];
+            string[] inputString = new string[8] { "", "", "", "", "", "", "", "" };
 
             Console.Clear();
             ExplainingScreen.PrintBookInfo("도    서    추    가");
@@ -32,13 +32,12 @@ namespace Library.Controller.Menu
             while (isModify)
             {
                 bool isMenuSelect = true;
-                bool isNull = false;
                 while (isMenuSelect)
                 {
                     menuScreen.PrintMenu(menuString, menuValue, false);
                     isMenuSelect = SelectMenu();
-                    if (menuValue > 7)
-                        menuValue = 7;
+                    if (menuValue > 9)
+                        menuValue = 9;
                 }
 
                 menuScreen.PrintMenu(menuString, menuValue, true);  
@@ -71,30 +70,24 @@ namespace Library.Controller.Menu
                     case (int)Constants.BookInfo.Info:
                         inputString[7] = inputController.LimitInputLength(new Tuple<int, int>(20, 21), 15, false);
                         break;
-                }
-
-                for (int i = 0; i < 8; i++)
-                {
-                    if (inputString[i] == null)
-                    {
-                        isNull = true;
+                    case (int)Constants.BookInfo.Check:
+                        isModify = false;
                         break;
-                    }
                 }
 
-                if (!isNull)
-                {
-                    ExplainingScreen.PrintEnterCheck();
-                    Console.ReadLine();
-
-                    ExplainingScreen.PrintComplete("책 추가 성공!");
-                    ExplainingScreen.PrintEnterCheck();
-                    Console.ReadLine();
-                    infoController.SaveBookData(inputString);
-                    return true;
-                }
+                if (!isModify)
+                    break;
             }
-            return false;
+
+            for (int i = 0; i < 8; i++)
+                if (inputString[i] != "")
+                    inputString[i] = informationController.TrimString(inputString[i]);
+           
+            ExplainingScreen.PrintComplete("책 추가 성공!");
+            ExplainingScreen.PrintEnterCheck();
+            Console.ReadLine();
+            informationController.SaveBookData(inputString);
+            return true;
         }
 
 

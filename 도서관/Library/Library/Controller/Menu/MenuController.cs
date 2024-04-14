@@ -78,7 +78,7 @@ namespace Library.Controller
                     arraySize = 7;
                     break;
                 case (int)Constants.MenuType.BookAdd:
-                    arraySize = 8;
+                    arraySize = 9;
                     break;
                 default:
                     return null;
@@ -171,7 +171,9 @@ namespace Library.Controller
                     str[5] = "출시일  :";
                     str[6] = "ISBN    :";
                     str[7] = "정보    :";
+                    str[8] = "확인";
                     break;
+
             }
             return str;
         }

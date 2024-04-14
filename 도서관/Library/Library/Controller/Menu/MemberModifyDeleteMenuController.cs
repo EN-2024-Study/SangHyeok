@@ -58,13 +58,7 @@ namespace Library.Controller.Menu
         {
             AccountDto account = SearchId();
             if (account != null)
-            {
                 return userModifyMenuController.Run();
-                //Console.Clear();
-                //ExplainingScreen.PrintComplete("계정을 수정하는데 성공!");
-                //ExplainingScreen.PrintEnterCheck();
-                //Console.ReadLine();
-            }
             return false;
         }
 

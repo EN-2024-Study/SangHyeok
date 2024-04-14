@@ -89,10 +89,10 @@ namespace Library.Controller
         private bool DeleteBook()
         {
             Console.Clear();
+            screen.PrintBookInfo(informationController.GetBookList());
 
             screen.PrintIdSearch("삭제할 책의 ID를 입력해 주세요");
             int id = bookSearchMenuController.SearchId();
-
             BookDto book = informationController.SearchIdBooks(id);
             if (book != null)
             {

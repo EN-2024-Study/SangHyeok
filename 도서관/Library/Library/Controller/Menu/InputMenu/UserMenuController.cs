@@ -43,7 +43,7 @@ namespace Library.Controller
 
             switch (menuValue)
             {
-                case (int)Constants.UserMenu.GoBack:
+                case (int)Constants.UserMenu.GoBack:    // 도서 검색 하고 돌아와서 누르면 false 반환이 됨
                     return true;
                 case (int)Constants.UserMenu.BookSearch:
                     isBack = SearchBook();
@@ -104,58 +104,44 @@ namespace Library.Controller
         private bool ShowRentalBookHistory()
         {
             List<BookDto> rentalBookList = informationController.GetRentalBook();
-            if (rentalBookList != null)
-            {
-                Console.Clear();
-                ExplainingScreen.PrintIdInputString("대여한 책의 리스트 입니다.");
-                screen.PrintBookInfo(rentalBookList);
-                ExplainingScreen.PrintEnterCheck();
-                Console.ReadLine();
-                return true;
-            }
-
-            return false;
+           
+            Console.Clear();
+            ExplainingScreen.PrintIdInputString("대여한 책의 리스트 입니다.");
+            screen.PrintBookInfo(rentalBookList);
+            ExplainingScreen.PrintEnterCheck();
+            Console.ReadLine();
+            return true;
+          
         }
 
         private bool ReturnBook()
         {
             Console.Clear();
             List<BookDto> rentalBookList = informationController.GetRentalBook();
-            if (rentalBookList != null)
-            {
-                screen.PrintBookInfo(rentalBookList);
-                screen.PrintIdSearch("반납할 책의 ID를 입력해 주세요");
-                int id = bookSearchMenuController.SearchId();
-                BookDto book = informationController.SearchIdBooks(id);
+            
+            screen.PrintBookInfo(rentalBookList);
+            screen.PrintIdSearch("반납할 책의 ID를 입력해 주세요");
+            int id = bookSearchMenuController.SearchId();
+            BookDto book = informationController.SearchIdBooks(id);
 
-                if (book != null)
-                {
-                    Console.Clear();
-                    ExplainingScreen.PrintComplete("책을 반납하는데 성공!");
-                    ExplainingScreen.PrintEnterCheck();
-                    Console.ReadLine();
-                    bool isReturnBook = informationController.RemoveReturnBook(book);
-                    return true;
-                }
-            }
-
-            return false;
+            Console.Clear();
+            ExplainingScreen.PrintComplete("책을 반납하는데 성공!");
+            ExplainingScreen.PrintEnterCheck();
+            Console.ReadLine();
+            bool isReturnBook = informationController.RemoveReturnBook(book);
+            return true;
         }
 
         private bool ShowReturnBookHistory()
         {
             List<BookDto> returnBookList = informationController.GetReturnBook();
-            if (returnBookList != null)
-            {
-                Console.Clear();
-                ExplainingScreen.PrintIdInputString("반납한 책의 리스트 입니다.");
-                screen.PrintBookInfo(returnBookList);
-                ExplainingScreen.PrintEnterCheck();
-                Console.ReadLine();
-                return true;
-            }
-
-            return false;
+            
+            Console.Clear();
+            ExplainingScreen.PrintIdInputString("반납한 책의 리스트 입니다.");
+            screen.PrintBookInfo(returnBookList);
+            ExplainingScreen.PrintEnterCheck();
+            Console.ReadLine();
+            return true;
         }
     }
 }

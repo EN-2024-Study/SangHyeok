@@ -96,6 +96,8 @@ namespace Library.Controller.Menu
                 {
                     case (int)Constants.LibraryMode.User:
                         isBack = userMenuController.Run();
+                        //Console.WriteLine(isBack);
+                        //Console.ReadLine();
                         break;
                     case (int)Constants.LibraryMode.Manager:
                         isBack = managerMenuController.Run();

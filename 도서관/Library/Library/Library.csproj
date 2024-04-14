@@ -40,7 +40,7 @@
     <Compile Include="Controller\Menu\InputMenu\BookModifyMenuController.cs" />
     <Compile Include="Controller\Menu\InputMenu\BookSearchMenuController.cs" />
     <Compile Include="Controller\Menu\InputMenu\LogInMenuController.cs" />
-    <Compile Include="Controller\Menu\ManagerMenuController.cs" />
+    <Compile Include="Controller\Menu\InputMenu\ManagerMenuController.cs" />
     <Compile Include="Controller\Menu\MemberModifyDeleteMenuController.cs" />
     <Compile Include="Controller\Menu\InputMenu\SignUpMenuController.cs" />
     <Compile Include="Controller\Menu\UserModifyDeleteMenuController.cs" />

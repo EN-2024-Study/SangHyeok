@@ -88,7 +88,8 @@ namespace Library.Utility
             Name = 3,
             Age = 4,
             PhoneNumber = 5,
-            Address = 6
+            Address = 6,
+            Check = 7
         }
 
         public enum InputType

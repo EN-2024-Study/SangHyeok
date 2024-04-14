@@ -10,11 +10,12 @@ namespace Library.View
         public void PrintMenu(string[] menuString, int menuValue, bool isSelect)
         {
             Tuple<int, int> coordinate;
-            if (menuString.Length == 8) // 도서 추가 화면
+            if (menuString.Length > 7 && menuString[0].Equals("책 제목 :")) // 도서 추가 화면
                 coordinate = new Tuple<int, int>(10, 7);
-            else if (menuString.Length == 7)    // 도서 수정 화면
+            else if (menuString[0].Equals("책 제목 :"))    // 도서 수정 화면
                 coordinate = new Tuple<int, int>(10, 7);    
-            else if (menuString.Length > 5)
+            else if (menuString[0].Equals("도서 조회") || 
+                menuString[0].Equals("ID           :"))
                 coordinate = new Tuple<int, int>(20, 15);
             else if (menuString[0].Equals("제목으로 찾기       :"))
                 coordinate = new Tuple<int, int>(0, 0);

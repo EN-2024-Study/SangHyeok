@@ -66,7 +66,7 @@ namespace Library.Controller
                     arraySize = 6;
                     break;
                 case (int)Constants.MenuType.SignUp:
-                    arraySize = 7;
+                    arraySize = 8;
                     break;
                 case (int)Constants.MenuType.SearchBook:
                     arraySize = 3;
@@ -138,6 +138,7 @@ namespace Library.Controller
                     str[4] = "나이         :";
                     str[5] = "전화번호     :";
                     str[6] = "주소         :";
+                    str[7] = "    확인     ";
                     break;
                 case (int)Constants.MenuType.SearchBook:
                     str[0] = "제목으로 찾기       :";

@@ -3,22 +3,19 @@ using Library.Utility;
 using Library.View;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Controller.Menu
 {
-    public class MemberModifyDeleteMenuController : MenuController
+    public class MemberModifyDeleteMenu : MenuController
     {
         private InformationController informationController;
         private InformationScreen bookScreen;
-        private UserModifyMenuController userModifyMenuController;
-        public MemberModifyDeleteMenuController() : base()
+        private UserModifyMenu userModifyMenu;
+        public MemberModifyDeleteMenu() : base()
         {
             this.informationController = new InformationController();
             this.bookScreen = new InformationScreen();
-            this.userModifyMenuController = new UserModifyMenuController();
+            this.userModifyMenu = new UserModifyMenu();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.ManagerInfo);
         }
 
@@ -58,7 +55,7 @@ namespace Library.Controller.Menu
         {
             AccountDto account = SearchId();
             if (account != null)
-                return userModifyMenuController.Run();
+                return userModifyMenu.Run();
             return false;
         }
 

@@ -2,37 +2,33 @@
 using Library.Utility;
 using Library.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Controller.Menu
 {
-    public class LogInMenuController : MenuController
+    public class LogInMenu : MenuController
     {
         private InputController inputController;
-        private UserMenuController userMenuController;
-        private ManagerMenuController managerMenuController;
+        private UserMenu userMenu;
+        private ManagerMenu managerMenu;
         private InformationController informationController;
         private int modeValue;
         private bool isCheckId;
         private bool isCheckPassword;
 
-        public LogInMenuController(int modeValue) : base()
+        public LogInMenu(int modeValue) : base()
         {
             this.inputController = new InputController();
-            this.userMenuController = new UserMenuController();
-            this.managerMenuController = new ManagerMenuController();
+            this.userMenu = new UserMenu();
+            this.managerMenu = new ManagerMenu();
             this.informationController = new InformationController();
             this.modeValue = modeValue;
-            this.isCheckId = false;
-            this.isCheckPassword = false;
             base.menuString = base.DecideMenuType((int)Constants.MenuType.LogIn);
         }
 
         public override bool Run()
         {
+            isCheckId = false;
+            isCheckPassword = false;
             bool isBack = false;
             base.menuValue = 0;
             bool isLogIn = true;
@@ -95,12 +91,12 @@ namespace Library.Controller.Menu
                 switch (modeValue)
                 {
                     case (int)Constants.LibraryMode.User:
-                        isBack = userMenuController.Run();
+                        isBack = userMenu.Run();
                         //Console.WriteLine(isBack);
                         //Console.ReadLine();
                         break;
                     case (int)Constants.LibraryMode.Manager:
-                        isBack = managerMenuController.Run();
+                        isBack = managerMenu.Run();
                         break;
                 }
             }

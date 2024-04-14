@@ -3,29 +3,24 @@ using Library.Model;
 using Library.Utility;
 using Library.View;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Controller
 {
-    public class ManagerMenuController : MenuController
+    public class ManagerMenu : MenuController
     {
-        private MemberModifyDeleteMenuController memberModifyDeleteMenuController;
-        private BookSearchMenuController bookSearchMenuController;
-        private BookAddMenuController bookAddMenuController;
+        private MemberModifyDeleteMenu memberModifyDeleteMenu;
+        private BookSearchMenu bookSearchMenu;
+        private BookAddMenu bookAddMenu;
         private InformationController informationController;
-        private BookModifyMenuController bookModifyMenuController;
+        private BookModifyMenu bookModifyMenuController;
         private InformationScreen screen;
-        public ManagerMenuController() : base()
+        public ManagerMenu() : base()
         {
-            this.memberModifyDeleteMenuController = new MemberModifyDeleteMenuController();
-            this.bookSearchMenuController = new BookSearchMenuController();
-            this.bookAddMenuController = new BookAddMenuController();
+            this.memberModifyDeleteMenu = new MemberModifyDeleteMenu();
+            this.bookSearchMenu = new BookSearchMenu();
+            this.bookAddMenu = new BookAddMenu();
             this.informationController = new InformationController();
-            this.bookModifyMenuController = new BookModifyMenuController();
+            this.bookModifyMenuController = new BookModifyMenu();
             this.screen = new InformationScreen();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.Manager);
         }
@@ -53,7 +48,7 @@ namespace Library.Controller
                     isBack = SearchBook();
                     break;
                 case (int)Constants.ManagerMenu.BookAdd:
-                    isBack = bookAddMenuController.Run();
+                    isBack = bookAddMenu.Run();
                     break;
                 case (int)Constants.ManagerMenu.BookDelete:
                     isBack = DeleteBook();
@@ -62,7 +57,7 @@ namespace Library.Controller
                     isBack = ModifyBook();
                     break;
                 case (int)Constants.ManagerMenu.UserControll:
-                    isBack = memberModifyDeleteMenuController.Run();
+                    isBack = memberModifyDeleteMenu.Run();
                     break;
                 case (int)Constants.ManagerMenu.AccountDelete:
 
@@ -76,7 +71,7 @@ namespace Library.Controller
 
         private bool SearchBook()
         {
-            bool isBack = bookSearchMenuController.Run();
+            bool isBack = bookSearchMenu.Run();
             if (isBack)
             {
                 ExplainingScreen.PrintEnterCheck();
@@ -92,7 +87,7 @@ namespace Library.Controller
             screen.PrintBookInfo(informationController.GetBookList());
 
             screen.PrintIdSearch("삭제할 책의 ID를 입력해 주세요");
-            int id = bookSearchMenuController.SearchId();
+            int id = bookSearchMenu.SearchId();
             BookDto book = informationController.SearchIdBooks(id);
             if (book != null)
             {

@@ -2,28 +2,23 @@
 using Library.View;
 using Library.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading.Tasks;
 using Library.Controller.Task;
 
 namespace Library.Controller.Menu
 {
-    public class UserModifyMenuController : MenuController
+    public class UserModifyMenu : MenuController
     {
         private InformationController informationController;
         private InputController inputController;
-        private YesNoMenuController yesNoMenuController;
+        private YesNoMenu yesNoMenu;
         private InformationScreen screen;
 
-        public UserModifyMenuController() : base()
+        public UserModifyMenu() : base()
         {
             this.screen = new InformationScreen();
             this.informationController = new InformationController();
             this.inputController = new InputController();
-            this.yesNoMenuController = new YesNoMenuController();
+            this.yesNoMenu = new YesNoMenu();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.UserModify);
         }
 
@@ -88,7 +83,7 @@ namespace Library.Controller.Menu
 
                 if (!isNull)
                 {
-                    if (yesNoMenuController.Run())
+                    if (yesNoMenu.Run())
                         return false;
                     AccountDto newAccount = new AccountDto(account.Id, inputString[0], inputString[1], inputString[2], inputString[3], inputString[4]);
                     informationController.ModifyAccount(newAccount, account);

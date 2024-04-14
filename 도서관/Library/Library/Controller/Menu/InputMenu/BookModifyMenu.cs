@@ -3,27 +3,22 @@ using Library.Model;
 using Library.Utility;
 using Library.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Controller.Menu
 {
-    public class BookModifyMenuController : MenuController
+    public class BookModifyMenu : MenuController
     {
         private InputController inputController;
         private InformationController informationController;
-        private BookSearchMenuController bookSearchMenuController;
+        private BookSearchMenu bookSearchMenu;
         private InformationScreen screen;
         private int bookId;
 
-        public BookModifyMenuController() : base()
+        public BookModifyMenu() : base()
         {
             this.inputController = new InputController();
             this.informationController = new InformationController();
-            this.bookSearchMenuController = new BookSearchMenuController();
+            this.bookSearchMenu = new BookSearchMenu();
             this.screen = new InformationScreen();
             this.bookId = 0;
             base.menuString = base.DecideMenuType((int)Constants.MenuType.ManagerModify);
@@ -99,7 +94,7 @@ namespace Library.Controller.Menu
             Console.Clear();
             screen.PrintBookInfo(informationController.GetBookList());
             screen.PrintIdSearch("수정할 책의 ID를 입력해 주세요");
-            bookId = bookSearchMenuController.SearchId();
+            bookId = bookSearchMenu.SearchId();
             if (bookId != 0)
                 return true;
             return false;

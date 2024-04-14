@@ -1,19 +1,15 @@
 ﻿using Library.Controller.Task;
 using Library.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Controller.Menu
 {
-    public class BookAddMenuController : MenuController
+    public class BookAddMenu : MenuController
     {
         private InputController inputController;
         private InformationController informationController;
 
-        public BookAddMenuController() : base()
+        public BookAddMenu() : base()
         {
             this.inputController = new InputController();
             this.informationController = new InformationController();
@@ -89,7 +85,5 @@ namespace Library.Controller.Menu
             informationController.SaveBookData(inputString);
             return true;
         }
-
-
     }
 }

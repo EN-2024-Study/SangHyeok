@@ -7,13 +7,13 @@ using System.Collections.Generic;
 
 namespace Library.Controller.Menu
 {
-    public class BookSearchMenuController : MenuController
+    public class BookSearchMenu : MenuController
     {
         private InputController inputController;
         private InformationController informationController;
         private InformationScreen screen;
 
-        public BookSearchMenuController()
+        public BookSearchMenu()
         {
             this.inputController = new InputController();
             this.informationController = new InformationController();

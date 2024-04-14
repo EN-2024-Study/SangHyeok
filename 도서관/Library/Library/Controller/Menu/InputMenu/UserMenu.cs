@@ -8,18 +8,18 @@ using System.Collections.Generic;
 
 namespace Library.Controller
 {
-    public class UserMenuController : MenuController
+    public class UserMenu : MenuController
     {
-        private  UserModifyDeleteMenuController userModifyDeleteMenuController;
+        private  UserModifyDeleteMenu userModifyDeleteMenu;
         private InformationController informationController;
-        private BookSearchMenuController bookSearchMenuController;
+        private BookSearchMenu bookSearchMenuController;
         private InformationScreen screen;
 
-        public UserMenuController() : base()
+        public UserMenu() : base()
         {
-            this.userModifyDeleteMenuController = new UserModifyDeleteMenuController();
+            this.userModifyDeleteMenu = new UserModifyDeleteMenu();
             this.informationController = new InformationController();
-            this.bookSearchMenuController = new BookSearchMenuController();
+            this.bookSearchMenuController = new BookSearchMenu();
             this.screen = new InformationScreen();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.User);
         }
@@ -61,7 +61,7 @@ namespace Library.Controller
                     isBack = ShowReturnBookHistory();
                     break;
                 case (int)Constants.UserMenu.InfoModify:
-                    isBackToMenu = userModifyDeleteMenuController.Run();
+                    isBackToMenu = userModifyDeleteMenu.Run();
                     break;
             }
 

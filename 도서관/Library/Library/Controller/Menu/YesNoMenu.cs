@@ -3,10 +3,10 @@ using System;
 
 namespace Library.Controller
 {
-    public class YesNoMenuController : MenuController
+    public class YesNoMenu : MenuController
     {
 
-        public YesNoMenuController() : base()
+        public YesNoMenu() : base()
         {
             base.menuString = base.DecideMenuType((int)Constants.MenuType.YesNo);
         }

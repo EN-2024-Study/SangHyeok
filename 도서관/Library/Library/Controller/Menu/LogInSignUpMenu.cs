@@ -3,22 +3,18 @@ using Library.Controller.Task;
 using Library.Utility;
 using Library.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Controller
 {
-    public class LogInSignUpMenuController : MenuController
+    public class LogInSignUpMenu : MenuController
     {
-        private LogInMenuController logInMenu;
-        private SignUpMenuController signUpMenu;
+        private LogInMenu logInMenu;
+        private SignUpMenu signUpMenu;
 
-        public LogInSignUpMenuController() : base()
+        public LogInSignUpMenu() : base()
         {
-            this.logInMenu = new LogInMenuController((int)Constants.LibraryMode.User);
-            this.signUpMenu = new SignUpMenuController();
+            this.logInMenu = new LogInMenu((int)Constants.LibraryMode.User);
+            this.signUpMenu = new SignUpMenu();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.LogInSignUp);
         }
 

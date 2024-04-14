@@ -2,25 +2,20 @@
 using Library.Utility;
 using Library.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Controller.Menu
 {
-    public class UserModifyDeleteMenuController : MenuController
+    public class UserModifyDeleteMenu : MenuController
     {
-        private UserModifyMenuController userModifyMenuController;
+        private UserModifyMenu userModifyMenu;
         private InformationController informationController;
-        private YesNoMenuController yesNoMenuController;
+        private YesNoMenuController yesNoMenu;
 
-        public UserModifyDeleteMenuController() : base()
+        public UserModifyDeleteMenu() : base()
         {
-            this.userModifyMenuController = new UserModifyMenuController();
+            this.userModifyMenu = new UserModifyMenu();
             this.informationController = new InformationController();
-            this.yesNoMenuController = new YesNoMenuController();
+            this.yesNoMenu = new YesNoMenuController();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.UserInfo);
         }
 
@@ -44,7 +39,7 @@ namespace Library.Controller.Menu
                 case (int)Constants.InfoMenu.GoBack:
                     return true;
                 case (int)Constants.InfoMenu.Modify:    // 개인 또는 회원 정보 수정 기능
-                    isBack = userModifyMenuController.Run();
+                    isBack = userModifyMenu.Run();
                     break;
                 case (int)Constants.InfoMenu.Delete:    // 개인 또는 회원 정보 삭제 기능
                     isBack = Delete();
@@ -62,7 +57,7 @@ namespace Library.Controller.Menu
             AccountDto account = informationController.GetAccount();
             if(informationController.DeleteAccount(account))
             {
-                if (yesNoMenuController.Run())
+                if (yesNoMenu.Run())
                     return false;
                 ExplainingScreen.PrintComplete("삭제 성공!");
                 ExplainingScreen.PrintEnterCheck();

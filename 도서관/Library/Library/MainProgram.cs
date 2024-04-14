@@ -12,7 +12,7 @@ namespace Library
             Console.SetWindowSize(100, 35);
             Console.CursorVisible = false;
 
-            ModeMenuController controller = new ModeMenuController();
+            ModeMenu controller = new ModeMenu();
             controller.Run();
         }
     }

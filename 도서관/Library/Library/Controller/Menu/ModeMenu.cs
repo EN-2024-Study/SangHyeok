@@ -9,17 +9,17 @@ using static Library.Utility.Constants;
 
 namespace Library.Controller
 {
-    public class ModeMenuController : MenuController
+    public class ModeMenu : MenuController
     {
-        private LogInSignUpMenuController logInSignUpMenu;
-        private LogInMenuController logInMenuController;
-        private YesNoMenuController quitMenu;
+        private LogInSignUpMenu logInSignUpMenu;
+        private Menu.LogInMenu logInMenu; // 폴더명 Menu
+        private YesNoMenu quitMenu;
 
-        public ModeMenuController() : base()
+        public ModeMenu() : base()
         {
-            this.logInSignUpMenu = new LogInSignUpMenuController(); // 유저 모드로 가면 로그인회원가입 메뉴
-            this.logInMenuController = new LogInMenuController((int)Constants.LibraryMode.Manager); // 관리자 모드로 가면 로그인 메뉴
-            this.quitMenu = new YesNoMenuController();
+            this.logInSignUpMenu = new LogInSignUpMenu(); // 유저 모드로 가면 로그인회원가입 메뉴
+            this.logInMenu = new Menu.LogInMenu((int)Constants.LibraryMode.Manager); // 관리자 모드로 가면 로그인 메뉴
+            this.quitMenu = new YesNoMenu();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.UserManager);
         }
 
@@ -48,7 +48,7 @@ namespace Library.Controller
                     isBack = logInSignUpMenu.Run();
                     break;
                 case (int)Constants.LibraryMode.Manager:
-                    isBack = logInMenuController.Run();
+                    isBack = logInMenu.Run();
                     break;
             }
 

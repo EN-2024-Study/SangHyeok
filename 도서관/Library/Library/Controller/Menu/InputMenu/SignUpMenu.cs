@@ -1,19 +1,15 @@
 ﻿using Library.Controller.Task;
 using Library.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Controller.Menu
 {
-    public class SignUpMenuController : MenuController
+    public class SignUpMenu : MenuController
     {
         private InputController inputController;
         private InformationController informationController;
 
-        public SignUpMenuController() : base()
+        public SignUpMenu() : base()
         {
             this.inputController = new InputController();
             this.informationController = new InformationController();

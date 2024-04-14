@@ -13,14 +13,14 @@ namespace Library.Controller.Menu
 {
     public class UserModifyMenuController : MenuController
     {
-        private UserModifyScreen userModifyScreen;
         private InformationController informationController;
         private InputController inputController;
         private YesNoMenuController yesNoMenuController;
+        private InformationScreen screen;
 
         public UserModifyMenuController() : base()
         {
-            this.userModifyScreen = new UserModifyScreen();
+            this.screen = new InformationScreen();
             this.informationController = new InformationController();
             this.inputController = new InputController();
             this.yesNoMenuController = new YesNoMenuController();
@@ -35,7 +35,7 @@ namespace Library.Controller.Menu
             bool isModify = true;
             string[] inputString = new string[5];
 
-            userModifyScreen.PrintAccountInfomation(account);
+            screen.PrintAccountInfomation(account);
             ExplainingScreen.ExplainInputKey();
             
             while(isModify)

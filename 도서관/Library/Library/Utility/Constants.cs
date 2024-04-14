@@ -108,7 +108,8 @@ namespace Library.Utility
             Price = 4,
             ReleaseDate = 5,
             ISBN = 6,
-            Info = 7
+            Info = 7,
+            Check = 8
         }
 
         public enum UserModifyMenu

@@ -99,10 +99,10 @@ namespace Library.Utility
             List<BookDto> books = bookInstance.GetBookList();
             List<BookDto> searchedBooks = books;
 
-            string[][] str = new string[3][];
-            for (int i = 0; i < 3; i++)
-                str[i] = inputString[i].Split('\0');
-            inputString = new string[3] { str[0][0], str[1][0], str[2][0] };
+            //string[][] str = new string[3][];
+            //for (int i = 0; i < 3; i++)
+            //    str[i] = inputString[i].Split('\0');
+            //inputString = new string[3] { str[0][0], str[1][0], str[2][0] };
 
             for (int i = 0; i < 3; i++)
             {

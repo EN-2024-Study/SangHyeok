@@ -84,7 +84,7 @@ namespace Library.Utility
 
         public static void PrintEsc()
         {
-            Console.SetCursorPosition(0, 6);
+            Console.SetCursorPosition(20, 6);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("ESC : 뒤로가기");
             Console.ResetColor();
@@ -92,8 +92,8 @@ namespace Library.Utility
 
         public static void PrintEnter()
         {
-            Console.SetCursorPosition(0, 7);
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.SetCursorPosition(20, 7);
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("ENTER : 선택하기");
             Console.ResetColor();
         }

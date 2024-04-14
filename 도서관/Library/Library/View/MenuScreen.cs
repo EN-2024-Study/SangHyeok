@@ -19,7 +19,7 @@ namespace Library.View
                 coordinate = new Tuple<int, int>(20, 15);
             else if (menuString[0].Equals("제목으로 찾기       :"))
                 coordinate = new Tuple<int, int>(0, 0);
-            else if (menuString.Length == 5)    // UserModifyMenu
+            else if (menuString[0].Equals("USER PW (8 ~ 15글자 영어, 숫자 포함)  :"))    // UserModifyMenu
                 coordinate = new Tuple<int, int>(1, 15);
             else
                 coordinate = new Tuple<int, int>(20, 25);

@@ -89,6 +89,9 @@ namespace Library.Controller.Menu
             
             if(isCheckId && isCheckPassword)
             {
+                ExplainingScreen.PrintComplete("로그인 성공!");
+                Console.ReadLine();
+
                 switch (modeValue)
                 {
                     case (int)Constants.LibraryMode.User:

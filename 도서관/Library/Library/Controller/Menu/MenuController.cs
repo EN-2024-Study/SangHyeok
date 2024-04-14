@@ -69,7 +69,7 @@ namespace Library.Controller
                     arraySize = 8;
                     break;
                 case (int)Constants.MenuType.SearchBook:
-                    arraySize = 3;
+                    arraySize = 4;
                     break;
                 case (int)Constants.MenuType.UserModify:
                     arraySize = 5;
@@ -144,6 +144,7 @@ namespace Library.Controller
                     str[0] = "제목으로 찾기       :";
                     str[1] = "작가명으로 찾기     :";
                     str[2] = "출판사로 찾기       :";
+                    str[3] = "    확인";
                     break;
                 case (int)Constants.MenuType.UserModify:
                     str[0] = "USER PW (8 ~ 15글자 영어, 숫자 포함)  :";

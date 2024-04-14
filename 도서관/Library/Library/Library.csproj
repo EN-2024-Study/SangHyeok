@@ -62,7 +62,6 @@
     <Compile Include="View\InformationScreen.cs" />
     <Compile Include="View\ExplainingScreen.cs" />
     <Compile Include="View\MenuScreen.cs" />
-    <Compile Include="View\UserModifyScreen.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

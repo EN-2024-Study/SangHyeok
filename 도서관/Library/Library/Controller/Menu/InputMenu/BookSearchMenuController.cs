@@ -15,11 +15,12 @@ namespace Library.Controller.Menu
 
         public BookSearchMenuController()
         {
-            inputController = new InputController();
-            informationController = new InformationController();
-            screen = new InformationScreen();
+            this.inputController = new InputController();
+            this.informationController = new InformationController();
+            this.screen = new InformationScreen();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.SearchBook);
         }
+
         public override bool Run()
         {
             Console.Clear();
@@ -29,19 +30,17 @@ namespace Library.Controller.Menu
             informationController.ShowAllBookInfo();
             base.menuValue = 0;
             bool isInput = false;
-            string[] inputString = new string[3];
+            string[] inputString = new string[3] { "", "", "" };
 
             while (!isInput)
             {
                 bool isMenuSelect = true;
-                bool isNull = false;
-
                 while (isMenuSelect)
                 {
                     menuScreen.PrintMenu(menuString, menuValue, false);
                     isMenuSelect = SelectMenu();
-                    if (menuValue > 2)
-                        menuValue = 2;
+                    if (menuValue > 3)
+                        menuValue = 3;
                 }
 
                 menuScreen.PrintMenu(menuString, menuValue, true);  // 선택한 메뉴를 파란색으로 다시 띄우기
@@ -58,30 +57,27 @@ namespace Library.Controller.Menu
                     case (int)Constants.BookInfo.Publisher:
                         inputString[2] = inputController.LimitInputLength(new Tuple<int, int>(21, 4), 15, false);
                         break;
-                }
-
-                for (int i = 0; i < 3; i++)
-                {
-                    if (inputString[i] == null)
-                    {
-                        isNull = true;
+                    case 3:  // 확인 버튼
+                        isInput = true;
                         break;
-                    }
                 }
 
-                if (!isNull)
-                {
-                    ExplainingScreen.PrintEnterCheck();
-                    Console.ReadLine();
-                    Console.Clear();
-
-                    List<BookDto> searchedBooks = informationController.SearchBooks(inputString);
-                    screen.PrintBookInfo(searchedBooks);
-                    return true;
-                }
+                if (isInput)
+                    break;
             }
 
-            return false;
+            for (int i = 0; i < 3; i++)
+                if (inputString[i] != "")
+                    inputString[i] = informationController.TrimString(inputString[i]);
+            
+            Console.Clear();
+
+            List<BookDto> searchedBooks = informationController.SearchBooks(inputString);
+            screen.PrintBookInfo(searchedBooks);
+            ExplainingScreen.PrintEnterCheck();
+            Console.ReadLine();
+
+            return true;
         }
 
         public int SearchId()

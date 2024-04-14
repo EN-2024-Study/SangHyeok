@@ -76,11 +76,7 @@ namespace Library.Controller
         {
             bool isBack = bookSearchMenuController.Run();
             if (isBack)
-            {
-                ExplainingScreen.PrintEnterCheck();
-                Console.ReadLine();
                 return true;
-            }
             return false;
         }
 

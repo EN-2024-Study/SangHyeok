@@ -65,7 +65,7 @@ namespace Library.Controller
             }
 
             if (isBack)
-                Run();
+                Run();  // while문으로 처리하기
             if (isBackToMenu)
                 return true;
             return false;

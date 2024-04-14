@@ -191,6 +191,11 @@ namespace Library.Utility
             bookInstance.DeleteBook(value);
         }
 
+        public void ModifyBook(int deletedBookKey, BookDto newBook)
+        {
+            bookInstance.ModifyBook(deletedBookKey, newBook);
+        }
+
         public bool DeleteAccount(AccountDto account)
         {
             return accountInstance.DeleteAccount(account);

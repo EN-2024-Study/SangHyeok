@@ -69,5 +69,11 @@ namespace Library.Model
         {
             bookDict.Remove(value);
         }
+
+        public void ModifyBook(int deletedBookKey, BookDto newBook)
+        {
+            bookDict.Remove(deletedBookKey);
+            bookDict.Add(keyValue++, newBook);
+        }
     }
 }

@@ -75,7 +75,7 @@ namespace Library.Controller
                     arraySize = 5;
                     break;
                 case (int)Constants.MenuType.ManagerModify:
-                    arraySize = 7;
+                    arraySize = 8;
                     break;
                 case (int)Constants.MenuType.BookAdd:
                     arraySize = 9;
@@ -161,6 +161,7 @@ namespace Library.Controller
                     str[4] = "가격    :";
                     str[5] = "출시일  :";
                     str[6] = "정보    :";
+                    str[7] = "    확인";
                     break;
                 case (int)Constants.MenuType.BookAdd:
                     str[0] = "책 제목 :";
@@ -171,7 +172,7 @@ namespace Library.Controller
                     str[5] = "출시일  :";
                     str[6] = "ISBN    :";
                     str[7] = "정보    :";
-                    str[8] = "확인";
+                    str[8] = "    확인";
                     break;
 
             }

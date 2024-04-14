@@ -33,23 +33,22 @@ namespace Library.Controller.Menu
         {
             base.menuScreen.EraseMenu();
             base.menuValue = 0;
-            bool isSignUp = false;
-            string[] inputString = new string[7];
+            bool isModify = false;
+            string[] inputString = new string[7] { "", "", "", "", "", "", ""};
 
             Console.Clear();
             ExplainingScreen.PrintBookInfo("도    서    수    정");
             ExplainingScreen.ExplainInputKey();
 
-            while (!isSignUp)
+            while (!isModify)
             {
                 bool isMenuSelect = true;
-                bool isNull = false;
                 while (isMenuSelect)
                 {
                     menuScreen.PrintMenu(menuString, menuValue, false);
                     isMenuSelect = SelectMenu();
-                    if (menuValue > 6)
-                        menuValue = 6;
+                    if (menuValue > 7)
+                        menuValue = 7;
                 }
 
                 menuScreen.PrintMenu(menuString, menuValue, true); // LimitInputLength 좌표 수정하기
@@ -79,27 +78,20 @@ namespace Library.Controller.Menu
                     case (int)Constants.BookInfo.Info - 1:
                         inputString[6] = inputController.LimitInputLength(new Tuple<int, int>(20, 19), 15, false);
                         break;
-                }
-
-                for (int i = 0; i < 7; i++)
-                {
-                    if (inputString[i] == null)
-                    {
-                        isNull = true;
+                    case 7:     // 확인 버튼
+                        isModify = true;
                         break;
-                    }
                 }
 
-                if (!isNull)
-                {
-                    ExplainingScreen.PrintEnterCheck();
-                    Console.ReadLine();
-
-                    //infoController.SaveUserData(inputString);
-                    return true;
-                }
+                if (isModify)
+                    break;
             }
-            return false;
+
+            for (int i = 0; i < 7; i++)
+                if (inputString[i] != "")
+                    inputString[i] = informationController.TrimString(inputString[i]);
+
+            return Modify(inputString);
         }
 
         public bool FindBookToEdit()
@@ -111,6 +103,15 @@ namespace Library.Controller.Menu
             if (bookId != 0)
                 return true;
             return false;
+        }
+
+        private bool Modify(string[] inputString)
+        {
+            BookDto newBook = new BookDto(inputString[0], inputString[1],
+                inputString[2], inputString[3], inputString[4],
+                inputString[5], inputString[6], inputString[7]);
+            informationController.ModifyBook(bookId, newBook);
+            return true;
         }
     }
 }

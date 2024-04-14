@@ -27,11 +27,6 @@ namespace Library.Controller.Menu
             bool isSignUp = false;
             string[] inputString = new string[7];
 
-            //bool isId = false, isPassword = false, isPasswordCheck = false, isName = false,
-            //    isAge = false, isPhoneNumber = false, isAddress = false;
-            //string id = null, password = null, passwordCheck = null, name = null, age = null,
-            //    phoneNumber = null, address = null;
-
             while (!isSignUp)
             {
                 bool isMenuSelect = true;
@@ -51,25 +46,25 @@ namespace Library.Controller.Menu
                     case (int)Constants.SignUpMenu.GoBack:
                         return true;
                     case (int)Constants.SignUpMenu.Id:
-                        inputString[0] = inputController.LimitInputLength(new Tuple<int, int>(35, 15), 15, false);
+                        inputString[0] = inputController.LimitInputLength(new Tuple<int, int>(25, 7), 15, false);
                         break;
                     case (int)Constants.SignUpMenu.Password:
-                        inputString[1] = inputController.LimitInputLength(new Tuple<int, int>(35, 17), 15, true);
+                        inputString[1] = inputController.LimitInputLength(new Tuple<int, int>(25, 9), 15, true);
                         break;
                     case (int)Constants.SignUpMenu.PasswordCheck:
-                        inputString[2] = inputController.LimitInputLength(new Tuple<int, int>(35, 19), 15, true);
+                        inputString[2] = inputController.LimitInputLength(new Tuple<int, int>(25, 11), 15, true);
                         break;
                     case (int)Constants.SignUpMenu.Name:
-                        inputString[3] = inputController.LimitInputLength(new Tuple<int, int>(35, 21), 15, false);
+                        inputString[3] = inputController.LimitInputLength(new Tuple<int, int>(25, 13), 15, false);
                         break;
                     case (int)Constants.SignUpMenu.Age:
-                        inputString[4] = inputController.LimitInputLength(new Tuple<int, int>(35, 23), 15, false);
+                        inputString[4] = inputController.LimitInputLength(new Tuple<int, int>(25, 15), 15, false);
                         break;
                     case (int)Constants.SignUpMenu.PhoneNumber:
-                        inputString[5] = inputController.LimitInputLength(new Tuple<int, int>(35, 25), 15, false);
+                        inputString[5] = inputController.LimitInputLength(new Tuple<int, int>(25, 17), 15, false);
                         break;
                     case (int)Constants.SignUpMenu.Address:
-                        inputString[6] = inputController.LimitInputLength(new Tuple<int, int>(35, 27), 15, false);
+                        inputString[6] = inputController.LimitInputLength(new Tuple<int, int>(25, 19), 15, false);
                         break;
                 }
 

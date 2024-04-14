@@ -55,9 +55,9 @@ namespace Library.Controller
                 case (int)Constants.MenuType.LogInSignUp:
                 case (int)Constants.MenuType.UserInfo:
                 case (int)Constants.MenuType.ManagerInfo:
-                case (int)Constants.MenuType.LogIn:
                     arraySize = 2;
                     break;
+                case (int)Constants.MenuType.LogIn:
                 case (int)Constants.MenuType.YesNo:
                     arraySize = 3;
                     break;
@@ -127,7 +127,8 @@ namespace Library.Controller
                     break;
                 case (int)Constants.MenuType.LogIn:
                     str[0] = "ID : ";
-                    str[1] = "PASSWORD : "; 
+                    str[1] = "PASSWORD : ";
+                    str[2] = "확인";
                     break;
                 case (int)Constants.MenuType.SignUp:
                     str[0] = "ID           :";

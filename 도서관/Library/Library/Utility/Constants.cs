@@ -22,7 +22,8 @@ namespace Library.Utility
         {
             GoBack = -1,
             Id = 0,
-            Password = 1
+            Password = 1,
+            Check = 2
         }
 
         public enum LibraryMode

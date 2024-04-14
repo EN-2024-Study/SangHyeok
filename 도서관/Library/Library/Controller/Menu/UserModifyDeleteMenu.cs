@@ -9,13 +9,13 @@ namespace Library.Controller.Menu
     {
         private UserModifyMenu userModifyMenu;
         private InformationController informationController;
-        private YesNoMenuController yesNoMenu;
+        private YesNoMenu yesNoMenu;
 
         public UserModifyDeleteMenu() : base()
         {
             this.userModifyMenu = new UserModifyMenu();
             this.informationController = new InformationController();
-            this.yesNoMenu = new YesNoMenuController();
+            this.yesNoMenu = new YesNoMenu();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.UserInfo);
         }
 

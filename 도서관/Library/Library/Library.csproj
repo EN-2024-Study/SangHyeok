@@ -36,21 +36,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\Menu\InputMenu\BookAddMenuController.cs" />
-    <Compile Include="Controller\Menu\InputMenu\BookModifyMenuController.cs" />
-    <Compile Include="Controller\Menu\InputMenu\BookSearchMenuController.cs" />
-    <Compile Include="Controller\Menu\InputMenu\LogInMenuController.cs" />
-    <Compile Include="Controller\Menu\InputMenu\ManagerMenuController.cs" />
-    <Compile Include="Controller\Menu\MemberModifyDeleteMenuController.cs" />
-    <Compile Include="Controller\Menu\InputMenu\SignUpMenuController.cs" />
-    <Compile Include="Controller\Menu\UserModifyDeleteMenuController.cs" />
-    <Compile Include="Controller\Menu\InputMenu\UserMenuController.cs" />
-    <Compile Include="Controller\Menu\LogInSignUpMenuController.cs" />
+    <Compile Include="Controller\Menu\InputMenu\BookAddMenu.cs" />
+    <Compile Include="Controller\Menu\InputMenu\BookModifyMenu.cs" />
+    <Compile Include="Controller\Menu\InputMenu\BookSearchMenu.cs" />
+    <Compile Include="Controller\Menu\InputMenu\LogInMenu.cs" />
+    <Compile Include="Controller\Menu\InputMenu\ManagerMenu.cs" />
+    <Compile Include="Controller\Menu\MemberModifyDeleteMenu.cs" />
+    <Compile Include="Controller\Menu\InputMenu\SignUpMenu.cs" />
+    <Compile Include="Controller\Menu\UserModifyDeleteMenu.cs" />
+    <Compile Include="Controller\Menu\InputMenu\UserMenu.cs" />
+    <Compile Include="Controller\Menu\LogInSignUpMenu.cs" />
     <Compile Include="Controller\Menu\MenuController.cs" />
-    <Compile Include="Controller\Menu\ModeMenuController.cs" />
-    <Compile Include="Controller\Menu\InputMenu\UserModifyMenuController.cs" />
+    <Compile Include="Controller\Menu\ModeMenu.cs" />
+    <Compile Include="Controller\Menu\InputMenu\UserModifyMenu.cs" />
     <Compile Include="Controller\Task\InputController.cs" />
-    <Compile Include="Controller\Menu\YesNoMenuController.cs" />
+    <Compile Include="Controller\Menu\YesNoMenu.cs" />
     <Compile Include="Model\AccountDto.cs" />
     <Compile Include="Model\AccountRepository.cs" />
     <Compile Include="Model\BookDto.cs" />

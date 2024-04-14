@@ -3,6 +3,7 @@ using Library.View;
 using Library.Model;
 using System;
 using Library.Controller.Task;
+using System.Collections.Generic;
 
 namespace Library.Controller.Menu
 {
@@ -25,24 +26,22 @@ namespace Library.Controller.Menu
         public override bool Run()
         {
             Console.Clear();
-            AccountDto account = informationController.GetAccount();
             base.menuValue = 0;
             bool isModify = true;
-            string[] inputString = new string[5];
+            string[] inputString = new string[5] { "", "", "", "", "" };
 
             screen.PrintAccountInfomation(account);
             ExplainingScreen.ExplainInputKey();
             
             while(isModify)
             {
-                bool isNull = false;
                 bool isMenuSelect = true;
                 while (isMenuSelect)
                 {
                     base.menuScreen.PrintMenu(menuString, menuValue, false);
                     isMenuSelect = base.SelectMenu();
-                    if (menuValue > 4)
-                        menuValue = 4;
+                    if (menuValue > 5)
+                        menuValue = 5;
                 }
                 base.menuScreen.PrintMenu(menuString, menuValue, true);
 
@@ -70,32 +69,36 @@ namespace Library.Controller.Menu
                         inputString[4] = null;
                         inputString[4] = inputController.LimitInputLength(new Tuple<int, int>(41, 23), 15, false);
                         break;
-                }
-
-                foreach(string s in inputString)
-                {
-                    if (s == null)
-                    {
-                        isNull = true;
+                    case (int)Constants.UserModifyMenu.Check:
+                        isModify = false;
                         break;
-                    }
                 }
 
-                if (!isNull)
-                {
-                    if (yesNoMenu.Run())
-                        return false;
-                    AccountDto newAccount = new AccountDto(account.Id, inputString[0], inputString[1], inputString[2], inputString[3], inputString[4]);
-                    informationController.ModifyAccount(newAccount, account);
-                    Console.Clear();
-                    ExplainingScreen.PrintComplete("수정 성공!");
-                    ExplainingScreen.PrintEnterCheck();
-                    Console.ReadLine();
-                    return true;
-                 }
+                if (!isModify)
+                    break;
             }
 
-            return false;
+            for (int i = 0; i < 5; i++)
+                if (inputString[i] != "")
+                    inputString[i] = informationController.TrimString(inputString[i]);
+            
+            if (yesNoMenu.Run())
+                return true;
+
+            Modify(inputString);
+            return true;
+        }
+
+        private void Modify(string[] inputString)
+        {
+            AccountDto account = informationController.GetAccount();
+            AccountDto newAccount = new AccountDto(account.Id, inputString[0], inputString[1], inputString[2], inputString[3], inputString[4]);
+            informationController.ModifyAccount(newAccount, account);
+
+            Console.Clear();
+            ExplainingScreen.PrintComplete("수정 성공!");
+            ExplainingScreen.PrintEnterCheck();
+            Console.ReadLine();
         }
     }
 }

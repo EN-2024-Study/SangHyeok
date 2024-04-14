@@ -119,7 +119,8 @@ namespace Library.Utility
             Name = 1,
             Age = 2,
             PhoneNumber = 3,
-            Address = 4
+            Address = 4,
+            Check = 5
         }
     }
 }

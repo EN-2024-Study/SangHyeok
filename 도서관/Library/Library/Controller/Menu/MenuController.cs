@@ -72,7 +72,7 @@ namespace Library.Controller
                     arraySize = 4;
                     break;
                 case (int)Constants.MenuType.UserModify:
-                    arraySize = 5;
+                    arraySize = 6;
                     break;
                 case (int)Constants.MenuType.ManagerModify:
                     arraySize = 8;
@@ -152,6 +152,7 @@ namespace Library.Controller
                     str[2] = "USER AGE(자연수 0 ~ 200세)            :";
                     str[3] = "USER PHONENUMBER(010-xxxx-xxxx)       :";
                     str[4] = "USER ADDRESS(도로면 주소 형식)        :";
+                    str[5] = "          확      인";
                     break;
                 case (int)Constants.MenuType.ManagerModify:
                     str[0] = "책 제목 :";

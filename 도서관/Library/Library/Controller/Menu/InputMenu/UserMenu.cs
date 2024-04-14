@@ -12,14 +12,14 @@ namespace Library.Controller
     {
         private  UserModifyDeleteMenu userModifyDeleteMenu;
         private InformationController informationController;
-        private BookSearchMenu bookSearchMenuController;
+        private BookSearchMenu bookSearchMenu;
         private InformationScreen screen;
 
         public UserMenu() : base()
         {
             this.userModifyDeleteMenu = new UserModifyDeleteMenu();
             this.informationController = new InformationController();
-            this.bookSearchMenuController = new BookSearchMenu();
+            this.bookSearchMenu = new BookSearchMenu();
             this.screen = new InformationScreen();
             base.menuString = base.DecideMenuType((int)Constants.MenuType.User);
         }
@@ -36,10 +36,9 @@ namespace Library.Controller
             {
                 base.menuScreen.PrintMenu(menuString, menuValue, false);
                 isMenuSelect = SelectMenu();
-                if (menuValue > 6)
-                    menuValue = 6;
+                if (menuValue > 5)
+                    menuValue = 5;
             }
-
 
             switch (menuValue)
             {
@@ -74,7 +73,7 @@ namespace Library.Controller
 
         private bool SearchBook()
         {
-            bool isBack = bookSearchMenuController.Run();
+            bool isBack = bookSearchMenu.Run();
             if (isBack)
                 return true;
             return false;
@@ -82,11 +81,11 @@ namespace Library.Controller
 
         private bool RentalBook()
         {
-            bool isBack = bookSearchMenuController.Run();
+            bool isBack = bookSearchMenu.Run();
             if (isBack)
             {
                 screen.PrintIdSearch("대여할 책의 ID를 입력해 주세요");
-                int id = bookSearchMenuController.SearchId();
+                int id = bookSearchMenu.SearchId();
                 BookDto book = informationController.SearchIdBooks(id);
 
                 if (book != null)
@@ -121,7 +120,7 @@ namespace Library.Controller
             
             screen.PrintBookInfo(rentalBookList);
             screen.PrintIdSearch("반납할 책의 ID를 입력해 주세요");
-            int id = bookSearchMenuController.SearchId();
+            int id = bookSearchMenu.SearchId();
             BookDto book = informationController.SearchIdBooks(id);
 
             Console.Clear();

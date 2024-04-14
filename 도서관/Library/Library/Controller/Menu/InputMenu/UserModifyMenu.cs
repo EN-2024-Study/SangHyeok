@@ -29,6 +29,7 @@ namespace Library.Controller.Menu
             base.menuValue = 0;
             bool isModify = true;
             string[] inputString = new string[5] { "", "", "", "", "" };
+            AccountDto account = informationController.GetAccount();
 
             screen.PrintAccountInfomation(account);
             ExplainingScreen.ExplainInputKey();
@@ -85,13 +86,14 @@ namespace Library.Controller.Menu
             if (yesNoMenu.Run())
                 return true;
 
-            Modify(inputString);
-            return true;
+            return Modify(inputString);
         }
 
-        private void Modify(string[] inputString)
+        private bool Modify(string[] inputString)
         {
             AccountDto account = informationController.GetAccount();
+            //string password, name, age, phone, address;
+                
             AccountDto newAccount = new AccountDto(account.Id, inputString[0], inputString[1], inputString[2], inputString[3], inputString[4]);
             informationController.ModifyAccount(newAccount, account);
 
@@ -99,6 +101,7 @@ namespace Library.Controller.Menu
             ExplainingScreen.PrintComplete("수정 성공!");
             ExplainingScreen.PrintEnterCheck();
             Console.ReadLine();
+            return true;
         }
     }
 }

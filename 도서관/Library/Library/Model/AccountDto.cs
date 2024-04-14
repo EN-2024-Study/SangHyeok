@@ -22,18 +22,34 @@ namespace Library.Model
             this.address = null;
         }
 
-        public AccountDto(string id, string password) : this()
+        public AccountDto(string password) : this()
         {
-            this.id = id;
             this.password = password;
         }
 
-        public AccountDto(string id, string password, string name, 
-            string age, string phoneNumber, string address) : this(id, password)
+        public AccountDto(string id, string password) : this(password)
+        {
+            this.id = id;
+        }
+
+        public AccountDto(string id, string password, string name) : this(id, password)
         {
             this.name = name;
+        }
+
+        public AccountDto(string id, string password, string name, string age) : this(id, password, name)
+        {
             this.age = age;
+        }
+
+        public AccountDto(string id, string password, string name, string age, string phoneNumber) : this(id, password, name, age)
+        {
             this.phoneNumber = phoneNumber;
+        }
+
+        public AccountDto(string id, string password, string name, 
+            string age, string phoneNumber, string address) : this(id, password, name, age, phoneNumber)
+        {
             this.address = address;
         }
 

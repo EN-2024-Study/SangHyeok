@@ -12,8 +12,6 @@ namespace Library.Controller.Menu
         private ManagerMenu managerMenu;
         private InformationController informationController;
         private int modeValue;
-        private bool isCheckId;
-        private bool isCheckPassword;
 
         public LogInMenu(int modeValue) : base()
         {
@@ -27,8 +25,8 @@ namespace Library.Controller.Menu
 
         public override bool Run()
         {
-            isCheckId = false;
-            isCheckPassword = false;
+            bool isCheckId = false;
+            bool isCheckPassword = false;
             bool isBack = false;
             base.menuValue = 0;
             bool isLogIn = true;
@@ -82,8 +80,8 @@ namespace Library.Controller.Menu
                 isCheckId = informationController.CheckManagerLogIn(id, (int)Constants.InputType.Id);
                 isCheckPassword = informationController.CheckManagerLogIn(password, (int)Constants.InputType.Password);
             }
-            
-            if(isCheckId && isCheckPassword)
+
+            if (isCheckId && isCheckPassword)
             {
                 ExplainingScreen.PrintComplete("로그인 성공!");
                 Console.ReadLine();
@@ -91,9 +89,8 @@ namespace Library.Controller.Menu
                 switch (modeValue)
                 {
                     case (int)Constants.LibraryMode.User:
+                        //informationController.LogInUser()
                         isBack = userMenu.Run();
-                        //Console.WriteLine(isBack);
-                        //Console.ReadLine();
                         break;
                     case (int)Constants.LibraryMode.Manager:
                         isBack = managerMenu.Run();

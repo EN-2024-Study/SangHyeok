@@ -14,6 +14,7 @@ namespace Library.Controller
         private InformationController informationController;
         private BookModifyMenu bookModifyMenuController;
         private InformationScreen screen;
+
         public ManagerMenu() : base()
         {
             this.memberModifyDeleteMenu = new MemberModifyDeleteMenu();

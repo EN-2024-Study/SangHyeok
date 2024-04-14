@@ -1,6 +1,0 @@
-manager ID: sanghyeok
-manager password: 1234
-
-user ID: siwon
-user password: 1234
-

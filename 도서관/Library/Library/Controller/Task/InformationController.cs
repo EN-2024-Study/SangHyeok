@@ -14,6 +14,7 @@ namespace Library.Utility
         private AccountRepository accountInstance;
         private BookRepository bookInstance;
         private ManagerRepository managerInstance;
+        private UserRepository userInstance;
         private InformationScreen bookScreen;
 
         public InformationController()
@@ -21,6 +22,7 @@ namespace Library.Utility
             this.accountInstance = AccountRepository.Instance;   // singleton 생성
             this.bookInstance = BookRepository.Instance;         // singleton 생성
             this.managerInstance = ManagerRepository.Instance;   // singleton 생성
+            this.userInstance = UserRepository.Instance;   // singleton 생성
             this.bookScreen = new InformationScreen();
         }
 
@@ -206,7 +208,11 @@ namespace Library.Utility
             return bookInstance.GetBookList();
         }
 
-        public AccountDto GetManager()
-        { return managerInstance.Manager; }
+        public void LogInUser(AccountDto account)
+        {
+            userInstance.User = account;
+        }
+
+
     }
 }

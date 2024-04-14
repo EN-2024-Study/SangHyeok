@@ -41,7 +41,7 @@
     <Compile Include="Controller\Menu\InputMenu\BookSearchMenu.cs" />
     <Compile Include="Controller\Menu\InputMenu\LogInMenu.cs" />
     <Compile Include="Controller\Menu\InputMenu\ManagerMenu.cs" />
-    <Compile Include="Controller\Menu\MemberModifyDeleteMenu.cs" />
+    <Compile Include="Controller\Menu\InputMenu\MemberModifyDeleteMenu.cs" />
     <Compile Include="Controller\Menu\InputMenu\SignUpMenu.cs" />
     <Compile Include="Controller\Menu\UserModifyDeleteMenu.cs" />
     <Compile Include="Controller\Menu\InputMenu\UserMenu.cs" />
@@ -58,6 +58,7 @@
     <Compile Include="Model\BookRepository.cs" />
     <Compile Include="Controller\Task\InformationController.cs" />
     <Compile Include="Model\ManagerRepository.cs" />
+    <Compile Include="Model\UserRepository.cs" />
     <Compile Include="Utility\Constants.cs" />
     <Compile Include="View\InformationScreen.cs" />
     <Compile Include="View\ExplainingScreen.cs" />

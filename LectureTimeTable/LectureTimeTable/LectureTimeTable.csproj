@@ -44,12 +44,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\LectureInfoController.cs" />
+    <Compile Include="Controller\MenuController.cs" />
+    <Compile Include="Controller\UserInfoController.cs" />
     <Compile Include="MainProgramcs.cs" />
+    <Compile Include="Model\LectureDto.cs" />
+    <Compile Include="Model\LectureRepository.cs" />
+    <Compile Include="Model\UserDto.cs" />
+    <Compile Include="Model\UserRepository.cs" />
+    <Compile Include="Utility\Constants.cs" />
+    <Compile Include="Utility\InputManager.cs" />
+    <Compile Include="View\ExplainingScreen.cs" />
+    <Compile Include="View\MenuScreen.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\" />
-    <Folder Include="Model\" />
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

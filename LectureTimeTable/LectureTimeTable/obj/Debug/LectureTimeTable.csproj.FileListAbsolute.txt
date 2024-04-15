@@ -1,0 +1,8 @@
+C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\obj\Debug\LectureTimeTable.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\obj\Debug\LectureTimeTable.csproj.SuggestedBindingRedirects.cache
+C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\obj\Debug\LectureTimeTable.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\bin\Debug\LectureTimeTable.exe.config
+C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\bin\Debug\LectureTimeTable.exe
+C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\bin\Debug\LectureTimeTable.pdb
+C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\obj\Debug\LectureTimeTable.exe
+C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\obj\Debug\LectureTimeTable.pdb

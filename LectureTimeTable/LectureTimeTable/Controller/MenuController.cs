@@ -1,5 +1,6 @@
 ﻿using LectureTimeTable.Utility;
 using LectureTimeTable.View;
+using LectureTimeTable.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,17 @@ namespace LectureTimeTable.Controller
     {
         private MenuScreen menuScreen;
         private InputManager inputManager;
-        private UserInfoController userInfoController;
+        private UserDao userDao;
+        private LectureDao lectureDao;
         private int menuValue;
+        private int[] searchValues;
 
         public MenuController()
         {
             this.menuScreen = new MenuScreen();
             this.inputManager = new InputManager();
-            this.userInfoController = new UserInfoController();
+            this.userDao = new UserDao();
+            this.lectureDao = new LectureDao();
         }
 
         public void ControlLogInMenu()
@@ -27,6 +31,7 @@ namespace LectureTimeTable.Controller
             bool isSelected = true;
             string id = null, password = null;
 
+            Console.SetWindowSize(80, 40);
             while (isSelected)
             {
                 isSelected = IsMenuSelection((int)Constants.MenuType.LogIn, true);
@@ -47,7 +52,7 @@ namespace LectureTimeTable.Controller
                 if (id == null || password == null)
                     continue;
 
-                if (userInfoController.IsLogIn(id, password))
+                if (userDao.IsLogIn(id, password))
                 {
                     ControllMainMenu();
                     menuScreen.ClearBottomScreen();
@@ -172,21 +177,27 @@ namespace LectureTimeTable.Controller
         {
             bool isSelected = true;
             string subjectName = "", professorName = "";
+            searchValues = new int[] { -1, -1, -1 };
+
             menuScreen.ClearBottomScreen();
+            Console.SetWindowSize(130, 40);
 
             while (isSelected)
             {
+                List<LectureVo> lectureList = null;
                 isSelected = IsMenuSelection((int)Constants.MenuType.Search, true);
                 if (!isSelected)
                     continue;
-
+                
                 switch (menuValue)
                 {
                     case (int)Constants.SearchMenu.Major:   // 개설 학과 전공
                         IsMenuSelection((int)Constants.MenuType.Major, false);
+                        searchValues[0] = menuValue;
                         break;
                     case (int)Constants.SearchMenu.CreditClassification:    // 이수 구분
                         IsMenuSelection((int)Constants.MenuType.CreditClassification, false);
+                        searchValues[1] = menuValue;
                         break;
                     case (int)Constants.SearchMenu.subjectName: // 교과목 명
                         subjectName = "";
@@ -198,13 +209,15 @@ namespace LectureTimeTable.Controller
                         break;
                     case (int)Constants.SearchMenu.Grade:   // 학년
                         IsMenuSelection((int)Constants.MenuType.Grade, false);
+                        searchValues[2] = menuValue;
                         break;
                     case (int)Constants.SearchMenu.Enter:   // 강의 시간표 차트 띄우기
-
+                        lectureList = lectureDao.ManageSchedule(searchValues, subjectName, professorName);
                         break;
                 }
-                
-               
+
+                //if (!lectureList)
+
             }
         }
 
@@ -230,6 +243,9 @@ namespace LectureTimeTable.Controller
                         case ConsoleKey.DownArrow:
                             menuValue++;
                             break;
+                        case ConsoleKey.Enter:
+                            menuScreen.DrawMenu(screenValue, menuValue, true, isMenuVisible);
+                            return true;
                     }
                 }
                 else    // 부가 메뉴일 때
@@ -241,16 +257,14 @@ namespace LectureTimeTable.Controller
                             break;
                         case ConsoleKey.RightArrow:
                             menuValue++;
-                            break;                           
+                            break;
+                        case ConsoleKey.Enter:  // 수정하기
+                            menuScreen.DrawMenu(screenValue, menuValue, true, isMenuVisible);
+                            return true;
                     }
                 }
 
-                if (keyInfo.Key == ConsoleKey.Enter)
-                {
-                    menuScreen.DrawMenu(screenValue, menuValue, true, isMenuVisible);
-                    return true;
-                }
-                else if (keyInfo.Key == ConsoleKey.Escape)
+                if (keyInfo.Key == ConsoleKey.Escape)
                 {
                     menuScreen.DrawMenu(screenValue, -1, false, isMenuVisible);
                     return false;

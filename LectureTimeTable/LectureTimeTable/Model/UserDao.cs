@@ -1,17 +1,16 @@
-﻿using LectureTimeTable.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LectureTimeTable.Controller
+namespace LectureTimeTable.Model
 {
-    public class UserInfoController
+    public class UserDao
     {
         private UserRepository user;
 
-        public UserInfoController()
+        public UserDao()
         {
             this.user = UserRepository.Instance;
         }
@@ -20,6 +19,5 @@ namespace LectureTimeTable.Controller
         {
             return user.GetUserId().Equals(id) && user.GetUserPassword().Equals(password);
         }
-
     }
 }

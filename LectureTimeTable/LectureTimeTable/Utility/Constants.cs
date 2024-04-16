@@ -66,7 +66,22 @@ namespace LectureTimeTable.Utility
             Grade,
             Enter
         }
-        
-       
+
+        public enum MajorMenu
+        {
+            All,
+            Computer,
+            Software,
+            Inteligent,
+            space
+        }
+
+        public enum CreditClassificationMenu
+        {
+            All,
+            Culture,
+            Essential,
+            Selected
+        }
     }
 }

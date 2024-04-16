@@ -41,9 +41,9 @@ namespace LectureTimeTable.View
 
         public void ClearBottomScreen()
         {
-            for (int i = 30; i < 40; i++)
+            for (int i = 30; i < Console.WindowHeight; i++)
             {
-                for (int j = 0; j < 130; j++)
+                for (int j = 0; j < Console.WindowWidth; j++)
                 {
                     Console.SetCursorPosition(j, i);
                     Console.Write(" ");
@@ -78,7 +78,7 @@ namespace LectureTimeTable.View
                 case (int)Constants.MenuType.Main:
                 case (int)Constants.MenuType.FavoriteSubject:
                 case (int)Constants.MenuType.CourseApply:
-                    x = 35;
+                    x = 15;
                     y = 30;
                     break;
                 case (int)Constants.MenuType.SearchAndApply:

@@ -10,12 +10,12 @@ namespace LectureTimeTable.Model
     public class LectureVo
     {
         private Double id;
-        private string major, number, group, subjectName, 
+        private string major, number, group, subjectTitle, 
             creditClassification, grade, score, day, room, 
             professorName, language;
 
         public LectureVo(Double id, string major, string number,
-            string group, string subjectName,
+            string group, string subjectTitle,
             string creditClassification, string grade, string score,
             string day, string room, string professorName, string language)
         {
@@ -23,7 +23,7 @@ namespace LectureTimeTable.Model
             this.major = major;
             this.number = number;
             this.group = group;
-            this.subjectName = subjectName;
+            this.subjectTitle = subjectTitle;
             this.creditClassification = creditClassification;
             this.grade = grade;
             this.score = score;
@@ -41,8 +41,8 @@ namespace LectureTimeTable.Model
         { get { return number; } }
         public string Group
         { get { return group; } }
-        public string SubjectName
-        { get { return subjectName; } }
+        public string SubjectTitle
+        { get { return subjectTitle; } }
         public string CreditClassification
         { get { return creditClassification; } }
         public string Grade

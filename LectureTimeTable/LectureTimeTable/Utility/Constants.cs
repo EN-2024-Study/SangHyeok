@@ -28,13 +28,7 @@ namespace LectureTimeTable.Utility
             SubjectTitle,
             ProfessorName,
         }
-
-        public enum LogInMenu
-        {
-            Id,
-            Password
-        }
-
+     
         public enum MainMenu
         {
             LectureScheduleSearch,
@@ -61,7 +55,7 @@ namespace LectureTimeTable.Utility
         {
             Major,
             CreditClassification,
-            subjectName,
+            SubjectTitle,
             ProfessorName,
             Grade,
             Enter

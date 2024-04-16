@@ -51,7 +51,7 @@ namespace LectureTimeTable.View
                 Console.SetCursorPosition(coordinateX[index++], y);
                 Console.Write(lecture.Group);
                 Console.SetCursorPosition(coordinateX[index++], y);
-                Console.Write(lecture.SubjectName);
+                Console.Write(lecture.SubjectTitle);
                 Console.SetCursorPosition(coordinateX[index++], y);
                 Console.Write(lecture.CreditClassification); 
                 Console.SetCursorPosition(coordinateX[index++], y);

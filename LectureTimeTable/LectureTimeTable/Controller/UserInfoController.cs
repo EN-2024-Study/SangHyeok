@@ -13,7 +13,6 @@ namespace LectureTimeTable.Model
         private UserRepository user;
         private InputManager inputManager;
         private MenuScreen menuScreen;
-        private string inputId, inputPassword;
 
         public UserInfoController()
         {
@@ -26,8 +25,7 @@ namespace LectureTimeTable.Model
         {
             while (true)
             {
-                inputId = "";
-                inputPassword = "";
+                string  inputId = "", inputPassword = "";
                 switch (digitValue)
                 {
                     case (int)Constants.DigitType.Id:

@@ -10,16 +10,41 @@ namespace LectureTimeTable.Model
 {
     public class LectureInfoController
     {
-        private LectureRepository lecture;
+        private LectureRepository lecture;  
         private LectureTimeScreen lectureTimeScreen;
+        private InputManager inputManager;
+        private string inputSubjectTitle, inputProfessorName;
 
         public LectureInfoController()
         {
-            this.lecture = LectureRepository.Instance;
+            this.lecture = LectureRepository.Instance;  // singleton 생성
             this.lectureTimeScreen = new LectureTimeScreen();
+            this.inputManager = new InputManager();
+            this.inputSubjectTitle = "";
+            this.inputProfessorName = "";
         }
 
-        public List<LectureVo> ManageLectureList(int[] searchValues, string subjectName, string professorName)
+        public bool IsLectureValid(int digitValue)
+        {
+            
+            switch (digitValue)
+            {
+                case (int)Constants.DigitType.SubjectTitle:
+                    inputSubjectTitle = "";
+                    inputSubjectTitle = inputManager.LimitInputLength((int)Constants.DigitType.SubjectTitle, 10, false);
+                    break;
+                case (int)Constants.DigitType.ProfessorName:
+                    inputProfessorName = "";
+                    inputProfessorName = inputManager.LimitInputLength((int)Constants.DigitType.ProfessorName, 10, false);
+                    break;
+            }
+
+            if (inputSubjectTitle == null || inputProfessorName == null)
+                return false;
+            return true;
+        }
+
+        public List<LectureVo> ManageLectureList(int[] searchValues)
         {
             string[] searchString = GetSearchStrings(searchValues);
             List<LectureVo> lectureList = lecture.LectureList;
@@ -43,7 +68,17 @@ namespace LectureTimeTable.Model
                 else if (lecture.Grade.Contains(searchString[2]))
                     count++;
 
-                if (count == 3)
+                if (inputSubjectTitle == "")
+                    count++;
+                else if (lecture.SubjectTitle.Contains(inputSubjectTitle))
+                    count++;
+
+                if (inputProfessorName == "")
+                    count++;
+                else if (lecture.ProfessorName.Contains(inputProfessorName))
+                    count++;
+
+                if (count == 5)
                     resultLectureList.Add(lecture);
             }
 

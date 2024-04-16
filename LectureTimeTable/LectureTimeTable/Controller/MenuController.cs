@@ -12,7 +12,6 @@ namespace LectureTimeTable.Controller
     public class MenuController
     {
         private MenuScreen menuScreen;
-        private InputManager inputManager;
         private UserInfoController userInfoController;
         private LectureInfoController lectureInfoController;
         private int menuValue;
@@ -21,7 +20,6 @@ namespace LectureTimeTable.Controller
         public MenuController()
         {
             this.menuScreen = new MenuScreen();
-            this.inputManager = new InputManager();
             this.userInfoController = new UserInfoController();
             this.lectureInfoController = new LectureInfoController();
         }
@@ -166,7 +164,7 @@ namespace LectureTimeTable.Controller
         private void ControllSearchMenu()
         {
             bool isSelected = true;
-            string subjectName = "", professorName = "";
+            string subjectTitle = "", professorName = "";
             searchValues = new int[] { -1, -1, -1 };
 
             menuScreen.ClearBottomScreen();
@@ -189,20 +187,17 @@ namespace LectureTimeTable.Controller
                         IsMenuSelection((int)Constants.MenuType.CreditClassification, false);
                         searchValues[1] = menuValue;
                         break;
-                    case (int)Constants.SearchMenu.subjectName: // 교과목 명
-                        subjectName = "";
-                        subjectName = inputManager.LimitInputLength((int)Constants.DigitType.SubjectTitle, 10, false);
-                        break;
+                    case (int)Constants.SearchMenu.SubjectTitle: // 교과목 명
                     case (int)Constants.SearchMenu.ProfessorName:   // 교수 명
-                        professorName = "";
-                        professorName = inputManager.LimitInputLength((int)Constants.DigitType.ProfessorName, 10, false);
+                        if (lectureInfoController.IsLectureValid(menuValue))
+                            continue;
                         break;
                     case (int)Constants.SearchMenu.Grade:   // 학년
                         IsMenuSelection((int)Constants.MenuType.Grade, false);
                         searchValues[2] = menuValue;
                         break;
                     case (int)Constants.SearchMenu.Enter:   // 강의 시간표 차트 띄우기
-                        lectureList = lectureInfoController.ManageLectureList(searchValues, subjectName, professorName);
+                        lectureList = lectureInfoController.ManageLectureList(searchValues);
                         break;
                 }
 

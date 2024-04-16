@@ -25,12 +25,12 @@ namespace LectureTimeTable.Controller
         public void ControlLogIn()
         {
             bool isSelected = true;
+            string id = null, password = null;
             menuValue = 0;
             menuScreen.ClearBottomScreen();
 
             while (isSelected)
             {
-                string id = null, password = null;
                 isSelected = IsPromptMenuSelection((int)Constants.MenuType.LogIn);
                 switch(menuValue)
                 {
@@ -38,10 +38,12 @@ namespace LectureTimeTable.Controller
                         isSelected = false;
                         break;
                     case (int)Constants.LogInMenu.Id:
-                        id = inputManager.LimitInputLength((int)Constants.DigitType.Id, 8, false);
+                        id = null;
+                        id = inputManager.LimitInputLength((int)Constants.DigitType.Id, 9, false);
                         break;
                     case (int)Constants.LogInMenu.Password:
-                        password = inputManager.LimitInputLength((int)Constants.DigitType.Password, 10, true);
+                        password = null;
+                        password = inputManager.LimitInputLength((int)Constants.DigitType.Password, 5, true);
                         break;
                 }
                 if (id == null || password == null)
@@ -70,7 +72,7 @@ namespace LectureTimeTable.Controller
                     case (int)Constants.MainMenu.CourseRegistration:
                     case (int)Constants.MainMenu.CourseRegistrationHistoryCheck:
                         break;
-                }   // 여기부터
+                }   
             }
         }
 

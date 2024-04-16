@@ -45,7 +45,7 @@ namespace LectureTimeTable.View
                     Console.Write(" ");
                 }
             }
-               
+
         }
 
         private string[] SelectmenuString(int screenValue, int menuCount)
@@ -99,6 +99,10 @@ namespace LectureTimeTable.View
             {
                 case (int)Constants.MenuType.LogIn:
                     x = 5;
+                    y = 30;
+                    break;
+                case (int)Constants.MenuType.Main:
+                    x = 35;
                     y = 30;
                     break;
             }

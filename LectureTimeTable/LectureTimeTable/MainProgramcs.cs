@@ -12,7 +12,7 @@ namespace LectureTimeTable
         {
             Console.SetWindowSize(130, 40);
             MenuController menu = new MenuController();
-            menu.ControlLogIn();
+            menu.ControlLogInMenu();
         }
     }
 }

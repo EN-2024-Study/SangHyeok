@@ -22,7 +22,6 @@ namespace LectureTimeTable.Utility
             Tuple<int, int> coordinate = GetCoordinate(digitValue);
             int x = coordinate.Item1;
             int y = coordinate.Item2;
-            string resultString = null;
             bool isInput = false;
 
             while (!isInput)

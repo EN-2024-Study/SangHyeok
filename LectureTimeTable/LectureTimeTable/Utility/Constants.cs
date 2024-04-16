@@ -29,18 +29,27 @@ namespace LectureTimeTable.Utility
 
         public enum LogInMenu
         {
-            Quit = -1,
-            Id = 0,
-            Password = 1
+            Id,
+            Password
         }
 
         public enum MainMenu
         {
-            GoBack = -1,
             LectureScheduleSearch,
             FavoriteSubjectsPut,
             CourseRegistration,
             CourseRegistrationHistoryCheck
         }
+
+        public enum RegistrationMenu
+        {
+            Registration,
+            Statement,
+            Schedule,
+            Delete
+        }
+
+        
+        
     }
 }

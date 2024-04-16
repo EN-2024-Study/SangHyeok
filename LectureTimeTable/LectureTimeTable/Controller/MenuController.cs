@@ -22,7 +22,7 @@ namespace LectureTimeTable.Controller
             this.userInfoController = new UserInfoController();
         }
 
-        public void ControlLogIn()
+        public void ControlLogInMenu()
         {
             bool isSelected = true;
             string id = null, password = null;
@@ -34,9 +34,6 @@ namespace LectureTimeTable.Controller
                 isSelected = IsPromptMenuSelection((int)Constants.MenuType.LogIn);
                 switch(menuValue)
                 {
-                    case (int)Constants.LogInMenu.Quit:
-                        isSelected = false;
-                        break;
                     case (int)Constants.LogInMenu.Id:
                         id = null;
                         id = inputManager.LimitInputLength((int)Constants.DigitType.Id, 9, false);
@@ -50,11 +47,11 @@ namespace LectureTimeTable.Controller
                     continue;
 
                 if (userInfoController.IsLogIn(id, password))
-                    ControllMainScreen();
+                    ControllMainMenu();
             }
         }
 
-        private void ControllMainScreen()
+        private void ControllMainMenu()
         {
             bool isSelected = true;
             menuValue = 0;
@@ -65,16 +62,90 @@ namespace LectureTimeTable.Controller
                 isSelected = IsPromptMenuSelection((int)Constants.MenuType.Main);
                 switch(menuValue)
                 {
-                    case (int)Constants.MainMenu.GoBack:
-                        return;
                     case (int)Constants.MainMenu.LectureScheduleSearch:
+
+                        break;
                     case (int)Constants.MainMenu.FavoriteSubjectsPut:
-                    case (int)Constants.MainMenu.CourseRegistration:
-                    case (int)Constants.MainMenu.CourseRegistrationHistoryCheck:
+                        ControllFavoriteSubjectsMenu();
+                        break;
+                    case (int)Constants.MainMenu.CourseApply:
+                        ControllCourseRegistrationMenu();
+                        break;
+                    case (int)Constants.MainMenu.CourseApplyHistoryCheck:
                         break;
                 }   
             }
         }
+
+        private void ControllFavoriteSubjectsMenu()
+        {
+            bool isSelected = true;
+            menuValue = 0;
+            menuScreen.ClearBottomScreen();
+
+            while (isSelected)
+            {
+                isSelected = IsPromptMenuSelection((int)Constants.MenuType.FavoriteSubject);
+                switch (menuValue)
+                {
+                    case (int)Constants.ApplyMenu.Apply:
+
+                        break;
+                    case (int)Constants.ApplyMenu.Statement:
+
+                        break;
+                    case (int)Constants.ApplyMenu.Schedule:
+
+                        break;
+                    case (int)Constants.ApplyMenu.Delete:
+                        break;
+                }
+            }
+        }
+
+        private void ControllCourseRegistrationMenu()
+        {
+            bool isSelected = true;
+            menuValue = 0;
+            menuScreen.ClearBottomScreen();
+
+            while (isSelected)
+            {
+                isSelected = IsPromptMenuSelection((int)Constants.MenuType.CourseApply);
+                switch (menuValue)
+                {
+                    case (int)Constants.ApplyMenu.Apply:
+                        ControllSearchAndApplyMenu();
+                        break;
+                    case (int)Constants.ApplyMenu.Statement:
+
+                        break;
+                    case (int)Constants.ApplyMenu.Schedule:
+
+                        break;
+                    case (int)Constants.ApplyMenu.Delete:
+
+                        break;
+                }
+            }
+        }
+
+        private void ControllSearchAndApplyMenu()
+        {
+            bool isSelected = true;
+            menuValue = 0;
+            menuScreen.ClearBottomScreen();
+
+            while (isSelected)
+            {
+                isSelected = IsPromptMenuSelection((int)Constants.MenuType.Search);
+                switch (menuValue)
+                {
+                    
+                }
+            }
+        }
+
 
         private bool IsPromptMenuSelection(int screenValue)
         {
@@ -86,6 +157,7 @@ namespace LectureTimeTable.Controller
             {
                 menuScreen.DrawMenu(screenValue, menuCount, menuValue, false);
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
+
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.Escape:
@@ -119,7 +191,7 @@ namespace LectureTimeTable.Controller
                     break;
                 case (int)Constants.MenuType.Main:
                 case (int)Constants.MenuType.FavoriteSubject:
-                case (int)Constants.MenuType.CourseRegistration:
+                case (int)Constants.MenuType.CourseApply:
                     length = 4;
                     break;
                 case (int)Constants.MenuType.InputSearch:

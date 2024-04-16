@@ -20,6 +20,7 @@ namespace LectureTimeTable.Utility
         {
             Console.CursorVisible = true;
             Tuple<int, int> coordinate = GetCoordinate(digitValue);
+            Tuple<int, int> failCoordinate = null;
             int x = coordinate.Item1;
             int y = coordinate.Item2;
             bool isInput = false;
@@ -31,13 +32,14 @@ namespace LectureTimeTable.Utility
                 bool isError = false;
 
                 for (int i = x; i < x + stringLength; i++)  // 입력란 지우기
-                    Erase(i, y);
+                    menuScreen.EraseDigit(i, y);
 
                 while (!isError)
                 {
                     if (index == stringLength)  // 입력 길이 초과
                     {
-                        menuScreen.DrawInputFailure(new Tuple<int, int>(x + index + 2, y));
+                        failCoordinate = new Tuple<int, int>(x + index + 2, y);
+                        menuScreen.DrawInputFailure(failCoordinate);
                         isError = true;
                         continue;
                     }
@@ -46,19 +48,23 @@ namespace LectureTimeTable.Utility
                     ConsoleKeyInfo keyInfo = Console.ReadKey();
 
                     if (keyInfo.Key == ConsoleKey.Enter)
+                    {
+                        menuScreen.EraseFail(failCoordinate);
                         break;
+                    }
                     else if (keyInfo.Key == ConsoleKey.Backspace)
                     {
                         if (index == 0)
                             continue;
 
-                        Erase(x + index - 1, y);
+                        menuScreen.EraseDigit(x + index - 1, y);
                         inputString[--index] = '\0';
                     }
                     else if (keyInfo.Key == ConsoleKey.Escape)
                     {
                         for (int i = x; i < x + stringLength; i++)  // 입력란 지우기
-                            Erase(i, y);
+                            menuScreen.EraseDigit(i, y);
+                        menuScreen.EraseFail(failCoordinate);
                         return null;
                     }
                     else
@@ -82,13 +88,6 @@ namespace LectureTimeTable.Utility
 
             Console.CursorVisible = false;
             return null;
-        }
-
-        private void Erase(int x, int y)
-        {
-            Console.SetCursorPosition(x, y);
-            Console.Write(" ");
-            Console.SetCursorPosition(x, y);
         }
 
         private string SetResultString(char[] inputString)
@@ -117,12 +116,13 @@ namespace LectureTimeTable.Utility
                     x = 40;
                     y = 31;
                     break;
-                case (int)Constants.DigitType.CourseTitle:
-                case (int)Constants.DigitType.ProfessorName:
-
+                case (int)Constants.DigitType.SubjectTitle:
+                    x = 17;
+                    y = 32;
                     break;
-                case (int)Constants.DigitType.Grade:
-
+                case (int)Constants.DigitType.ProfessorName:
+                    x = 17;
+                    y = 33;
                     break;
             }
             return new Tuple<int, int>(x, y);

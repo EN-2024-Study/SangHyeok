@@ -29,8 +29,7 @@ namespace LectureTimeTable.Controller
 
             while (isSelected)
             {
-                menuValue = 0;
-                isSelected = IsPromptMenuSelection((int)Constants.MenuType.LogIn);
+                isSelected = IsMenuSelection((int)Constants.MenuType.LogIn, true);
                 if (!isSelected)
                     continue;
 
@@ -64,9 +63,8 @@ namespace LectureTimeTable.Controller
 
             while (isSelected)
             {
-                menuValue = 0;
                 menuScreen.ClearBottomScreen();
-                isSelected = IsPromptMenuSelection((int)Constants.MenuType.Main);
+                isSelected = IsMenuSelection((int)Constants.MenuType.Main, true);
                 if (!isSelected)
                     continue;
 
@@ -95,9 +93,8 @@ namespace LectureTimeTable.Controller
 
             while (isSelected)
             {
-                menuValue = 0;
                 menuScreen.ClearBottomScreen();
-                isSelected = IsPromptMenuSelection((int)Constants.MenuType.FavoriteSubject);
+                isSelected = IsMenuSelection((int)Constants.MenuType.FavoriteSubject, true);
                 if (!isSelected)
                     continue;
 
@@ -125,9 +122,8 @@ namespace LectureTimeTable.Controller
 
             while (isSelected)
             {
-                menuValue = 0;
                 menuScreen.ClearBottomScreen();
-                isSelected = IsPromptMenuSelection((int)Constants.MenuType.CourseApply);
+                isSelected = IsMenuSelection((int)Constants.MenuType.CourseApply, true);
                 if (!isSelected)
                     continue;
 
@@ -155,9 +151,8 @@ namespace LectureTimeTable.Controller
 
             while (isSelected)
             {
-                menuValue = 0;
                 menuScreen.ClearBottomScreen();
-                isSelected = IsPromptMenuSelection((int)Constants.MenuType.SearchAndApply);
+                isSelected = IsMenuSelection((int)Constants.MenuType.SearchAndApply, true);
                 if (!isSelected)
                     continue;
 
@@ -176,62 +171,91 @@ namespace LectureTimeTable.Controller
         private void ControllSearchMenu()
         {
             bool isSelected = true;
+            string subjectName = "", professorName = "";
+            menuScreen.ClearBottomScreen();
 
             while (isSelected)
             {
-                menuValue = 0;
-                menuScreen.ClearBottomScreen();
-                isSelected = IsPromptMenuSelection((int)Constants.MenuType.Search);
+                isSelected = IsMenuSelection((int)Constants.MenuType.Search, true);
                 if (!isSelected)
                     continue;
 
                 switch (menuValue)
                 {
                     case (int)Constants.SearchMenu.Major:   // 개설 학과 전공
-
+                        IsMenuSelection((int)Constants.MenuType.Major, false);
                         break;
                     case (int)Constants.SearchMenu.CreditClassification:    // 이수 구분
-
+                        IsMenuSelection((int)Constants.MenuType.CreditClassification, false);
                         break;
                     case (int)Constants.SearchMenu.subjectName: // 교과목 명
-
+                        subjectName = "";
+                        subjectName = inputManager.LimitInputLength((int)Constants.DigitType.SubjectTitle, 10, false);
                         break;
                     case (int)Constants.SearchMenu.ProfessorName:   // 교수 명
-
+                        professorName = "";
+                        professorName = inputManager.LimitInputLength((int)Constants.DigitType.ProfessorName, 10, false);
                         break;
                     case (int)Constants.SearchMenu.Grade:   // 학년
+                        IsMenuSelection((int)Constants.MenuType.Grade, false);
+                        break;
+                    case (int)Constants.SearchMenu.Enter:   // 강의 시간표 차트 띄우기
 
                         break;
                 }
+                
+               
             }
         }
 
-
-        private bool IsPromptMenuSelection(int screenValue)
+        private bool IsMenuSelection(int screenValue, bool isMenuVisible)
         {
             bool isMenuSelect = true;
             int menuCount = GetMenuCount(screenValue);
+            menuValue = 0;
             Console.CursorVisible = false;
 
             while (isMenuSelect)
             {
-                menuScreen.DrawMenu(screenValue, menuCount, menuValue, false);
+                menuScreen.DrawMenu(screenValue, menuValue, false, isMenuVisible);
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
 
-                switch (keyInfo.Key)
+                if (isMenuVisible)  // 메뉴일 때
                 {
-                    case ConsoleKey.Escape:
-                        return false;
-                    case ConsoleKey.UpArrow:
-                        menuValue--;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        menuValue++;
-                        break;
-                    case ConsoleKey.Enter:
-                        menuScreen.DrawMenu(screenValue, menuCount, menuValue, true);
-                        return true;
+                    switch (keyInfo.Key)
+                    {
+                        case ConsoleKey.UpArrow:
+                            menuValue--;
+                            break;
+                        case ConsoleKey.DownArrow:
+                            menuValue++;
+                            break;
+                    }
                 }
+                else    // 부가 메뉴일 때
+                {
+                    switch (keyInfo.Key)
+                    {
+                        case ConsoleKey.LeftArrow:
+                            menuValue--;
+                            break;
+                        case ConsoleKey.RightArrow:
+                            menuValue++;
+                            break;                           
+                    }
+                }
+
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    menuScreen.DrawMenu(screenValue, menuValue, true, isMenuVisible);
+                    return true;
+                }
+                else if (keyInfo.Key == ConsoleKey.Escape)
+                {
+                    menuScreen.DrawMenu(screenValue, -1, false, isMenuVisible);
+                    return false;
+                }
+
                 if (menuValue < 0)
                     menuValue = 0;
                 else if (menuValue > menuCount - 1)
@@ -252,10 +276,15 @@ namespace LectureTimeTable.Controller
                 case (int)Constants.MenuType.Main:
                 case (int)Constants.MenuType.FavoriteSubject:
                 case (int)Constants.MenuType.CourseApply:
+                case (int)Constants.MenuType.CreditClassification:
+                case (int)Constants.MenuType.Grade:
                     length = 4;
                     break;
-                case (int)Constants.MenuType.Search:
+                case (int)Constants.MenuType.Major:
                     length = 5;
+                    break;
+                case (int)Constants.MenuType.Search:
+                    length = 6;
                     break;
             }
             return length;

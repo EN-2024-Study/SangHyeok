@@ -9,19 +9,23 @@ namespace LectureTimeTable.View
 {
     public class MenuScreen
     {
-        public void DrawMenu(int screenValue, int menuCount, int selectValue, bool isEnter)
+        public void DrawMenu(int screenValue, int selectValue, bool isEnter, bool isMenuVisible)
         {
-            string[] menuString = SelectmenuString(screenValue, menuCount);
+            string[] menuString = SelectmenuString(screenValue);
             Tuple<int, int> coordinate = SetCoordinate(screenValue);
 
             DrawLogo();
-            for (int i = 0; i < menuString.Length; i++)
+            for (int i = 0, x = 0; i < menuString.Length; i++, x+=20)
             {
-                if (isEnter && i == selectValue)
+                if (isEnter && i == selectValue)    // 엔터 입력과 선택한 메뉴값
                     Console.ForegroundColor = ConsoleColor.Blue;
-                else if (i == selectValue)
+                else if (i == selectValue)  // 선택한 메뉴값
                     Console.ForegroundColor = ConsoleColor.Green;
-                Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i);
+
+                if (isMenuVisible)  // 메뉴
+                    Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i);
+                else    // 부가 메뉴
+                    Console.SetCursorPosition(coordinate.Item1 + i + x, coordinate.Item2);
                 Console.Write(menuString[i]);
                 Console.ResetColor();
             }
@@ -45,53 +49,23 @@ namespace LectureTimeTable.View
                     Console.Write(" ");
                 }
             }
-
         }
 
-        private string[] SelectmenuString(int screenValue, int menuCount)
+        public void EraseFail(Tuple<int, int> coordinate)
         {
-            int length = menuCount;
-
-            string[] menuString = new string[length];
-            switch (screenValue)
-            {
-                case (int)Constants.MenuType.LogIn:
-                    menuString[0] = "        학번(8자리 숫자)         : ";
-                    menuString[1] = "비밀번호(영어 & 숫자 6 ~ 10글자) : ";
-                    break;
-                case (int)Constants.MenuType.Main:
-                    menuString[0] = "강의 시간표 조회 ";
-                    menuString[1] = " 관심 과목 담기";
-                    menuString[2] = "  수강 신청 ";
-                    menuString[3] = "수강 내역 조회";
-                    break;
-                case (int)Constants.MenuType.FavoriteSubject:
-                    menuString[0] = "관심 과목 검색";
-                    menuString[1] = "관심 과목 내역";
-                    menuString[2] = "관심 과목 시간표";
-                    menuString[3] = "관심 과목 삭제";
-                    break;
-                case (int)Constants.MenuType.CourseApply:
-                    menuString[0] = "수강 신청";
-                    menuString[1] = "수강 신청 내역";
-                    menuString[2] = "수강 신청 시간표";
-                    menuString[3] = "수강 과목 삭제";
-                    break;
-                case (int)Constants.MenuType.SearchAndApply:
-                    menuString[0] = "검색 후 신청";
-                    menuString[1] = "관심 과목 신청";
-                    break;
-                case (int)Constants.MenuType.Search:
-                    menuString[0] = "개설 학과 전공 :";
-                    menuString[1] = "   이수 구분   :";
-                    menuString[2] = "   교과목 명   :";
-                    menuString[3] = "    교수명     :";
-                    menuString[4] = "     학년      :";
-                    break;
-            }
-            return menuString;
+            if (coordinate == null)
+                return;
+            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);
+            Console.Write("        ");
         }
 
+        public void EraseDigit(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(" ");
+            Console.SetCursorPosition(x, y);
+        }
+        
         private Tuple<int, int> SetCoordinate(int screenValue)
         {
             int x = 0, y = 0;
@@ -112,12 +86,65 @@ namespace LectureTimeTable.View
                     y = 30;
                     break;
                 case (int)Constants.MenuType.Search:
-                    x = 35;
+                    x = 0;
                     y = 30;
+                    break;
+                case (int)Constants.MenuType.Major:
+                    x = 20;
+                    y = 30;
+                    break;
+                case (int)Constants.MenuType.CreditClassification:
+                    x = 20;
+                    y = 31;
+                    break;
+                case (int)Constants.MenuType.Grade:
+                    x = 20;
+                    y = 34;
                     break;
             }
 
             return new Tuple<int, int>(x, y);
+        }
+
+        private string[] SelectmenuString(int screenValue)
+        {
+            string[] menuString = null;
+            switch (screenValue)
+            {
+                case (int)Constants.MenuType.LogIn:
+                    menuString = new string[] { "        학번(8자리 숫자)         : ",
+                        "비밀번호(영어 & 숫자 6 ~ 10글자) : " };
+                    break;
+                case (int)Constants.MenuType.Main:
+                    menuString = new string[] { "강의 시간표 조회 ", " 관심 과목 담기",
+                        "  수강 신청 ", "수강 내역 조회" };
+                    break;
+                case (int)Constants.MenuType.FavoriteSubject:
+                    menuString = new string[] { "관심 과목 검색", "관심 과목 내역",
+                    "관심 과목 시간표","관심 과목 삭제"};
+                    break;
+                case (int)Constants.MenuType.CourseApply:
+                    menuString = new string[] { "수강 신청", "수강 신청 내역" ,
+                    "수강 신청 시간표","수강 과목 삭제"};
+                    break;
+                case (int)Constants.MenuType.SearchAndApply:
+                    menuString = new string[] { "검색 후 신청", "관심 과목 신청" };
+                    break;
+                case (int)Constants.MenuType.Search:
+                    menuString = new string[] { "개설 학과 전공 :", "   이수 구분   :",
+                        "   교과목 명   :", "    교수명     :", "     학년      :", "           < 검색 >"};
+                    break;
+                case (int)Constants.MenuType.Major:
+                    menuString = new string[] { " 전체", "컴퓨터학과", "소프트웨어학과", "지능기전공학부", "기계항공우주공학부" };
+                    break;
+                case (int)Constants.MenuType.CreditClassification:
+                    menuString = new string[] { " 전체", "교양필수", "전공필수", "전공선택" };
+                    break;
+                case (int)Constants.MenuType.Grade:
+                    menuString = new string[] { "1학년", "2학년", "3학년", "4학년" };
+                    break;
+            }
+            return menuString;
         }
 
         private void DrawLogo()     // y = 0 ~ 25
@@ -140,14 +167,14 @@ namespace LectureTimeTable.View
  ##  ##  ##  ##   ##  ##    ##           ##  ##
   ####    ####     ######  ####     ######    #####
 
- ######                       ##                ##                         ##       ##
-  ##  ##                                        ##                         ##
-  ##  ##   ####     ### ##   ###      #####    #####   ######    ####     #####    ###      ####    #####
-  #####   ##  ##   ##  ##     ##     ##         ##      ##  ##      ##     ##       ##     ##  ##   ##  ##
-  ## ##   ######   ##  ##     ##      #####     ##      ##       #####     ##       ##     ##  ##   ##  ##
-  ##  ##  ##        #####     ##          ##    ## ##   ##      ##  ##     ## ##    ##     ##  ##   ##  ##
- #### ##   #####       ##    ####    ######      ###   ####      #####      ###    ####     ####    ##  ##
-                   #####
+    ##                        ###
+  ####                        ##
+ ##  ##   ######   ######     ##     ##  ##
+ ##  ##    ##  ##   ##  ##    ##     ##  ##
+ ######    ##  ##   ##  ##    ##     ##  ##
+ ##  ##    #####    #####     ##      #####
+ ##  ##    ##       ##       ####        ##
+          ####     ####              #####
 ");
         }
     }

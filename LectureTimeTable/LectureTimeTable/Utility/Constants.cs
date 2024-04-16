@@ -15,16 +15,18 @@ namespace LectureTimeTable.Utility
             FavoriteSubject,
             CourseApply,
             SearchAndApply,
-            Search
+            Search,
+            Major,
+            CreditClassification,
+            Grade
         }
 
         public enum DigitType
         {
             Id,
             Password,
-            CourseTitle,
+            SubjectTitle,
             ProfessorName,
-            Grade
         }
 
         public enum LogInMenu
@@ -61,8 +63,10 @@ namespace LectureTimeTable.Utility
             CreditClassification,
             subjectName,
             ProfessorName,
-            Grade
+            Grade,
+            Enter
         }
         
+       
     }
 }

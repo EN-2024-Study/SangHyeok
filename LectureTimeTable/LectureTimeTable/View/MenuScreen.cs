@@ -71,17 +71,17 @@ namespace LectureTimeTable.View
                     menuString[2] = "관심 과목 시간표";
                     menuString[3] = "관심 과목 삭제";
                     break;
-                case (int)Constants.MenuType.CourseRegistration:
+                case (int)Constants.MenuType.CourseApply:
                     menuString[0] = "수강 신청";
                     menuString[1] = "수강 신청 내역";
                     menuString[2] = "수강 신청 시간표";
                     menuString[3] = "수강 과목 삭제";
                     break;
-                case (int)Constants.MenuType.Search:
+                case (int)Constants.MenuType.SearchAndApply:
                     menuString[0] = "검색 후 신청";
                     menuString[1] = "관심 과목 신청";
                     break;
-                case (int)Constants.MenuType.InputSearch:
+                case (int)Constants.MenuType.Search:
                     menuString[0] = "개설 학과 전공 :";
                     menuString[1] = "   이수 구분   :";
                     menuString[2] = "   교과목 명   :";
@@ -102,6 +102,16 @@ namespace LectureTimeTable.View
                     y = 30;
                     break;
                 case (int)Constants.MenuType.Main:
+                case (int)Constants.MenuType.FavoriteSubject:
+                case (int)Constants.MenuType.CourseApply:
+                    x = 35;
+                    y = 30;
+                    break;
+                case (int)Constants.MenuType.SearchAndApply:
+                    x = 25;
+                    y = 30;
+                    break;
+                case (int)Constants.MenuType.Search:
                     x = 35;
                     y = 30;
                     break;

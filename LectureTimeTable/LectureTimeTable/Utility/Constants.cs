@@ -13,9 +13,9 @@ namespace LectureTimeTable.Utility
             LogIn,
             Main,
             FavoriteSubject,
-            CourseRegistration,
-            Search,
-            InputSearch
+            CourseApply,
+            SearchAndApply,
+            Search
         }
 
         public enum DigitType
@@ -37,19 +37,32 @@ namespace LectureTimeTable.Utility
         {
             LectureScheduleSearch,
             FavoriteSubjectsPut,
-            CourseRegistration,
-            CourseRegistrationHistoryCheck
+            CourseApply,
+            CourseApplyHistoryCheck
         }
 
-        public enum RegistrationMenu
+        public enum ApplyMenu
         {
-            Registration,
+            Apply,
             Statement,
             Schedule,
             Delete
         }
 
-        
+        public enum SearchAndApplyMenu
+        {
+            Search,
+            FavoriteSubjects
+        }
+
+        public enum SearchMenu
+        {
+            Major,
+            CreditClassification,
+            subjectName,
+            ProfessorName,
+            Grade
+        }
         
     }
 }

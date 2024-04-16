@@ -26,12 +26,14 @@ namespace LectureTimeTable.Controller
         {
             bool isSelected = true;
             string id = null, password = null;
-            menuValue = 0;
-            menuScreen.ClearBottomScreen();
 
             while (isSelected)
             {
+                menuValue = 0;
                 isSelected = IsPromptMenuSelection((int)Constants.MenuType.LogIn);
+                if (!isSelected)
+                    continue;
+
                 switch(menuValue)
                 {
                     case (int)Constants.LogInMenu.Id:
@@ -47,33 +49,42 @@ namespace LectureTimeTable.Controller
                     continue;
 
                 if (userInfoController.IsLogIn(id, password))
+                {
                     ControllMainMenu();
+                    menuScreen.ClearBottomScreen();
+                    id = null;
+                    password = null;
+                }
             }
         }
 
         private void ControllMainMenu()
         {
             bool isSelected = true;
-            menuValue = 0;
-            menuScreen.ClearBottomScreen();
 
             while (isSelected)
             {
+                menuValue = 0;
+                menuScreen.ClearBottomScreen();
                 isSelected = IsPromptMenuSelection((int)Constants.MenuType.Main);
-                switch(menuValue)
-                {
-                    case (int)Constants.MainMenu.LectureScheduleSearch:
+                if (!isSelected)
+                    continue;
 
+                switch (menuValue)
+                {
+                    case (int)Constants.MainMenu.LectureScheduleSearch: // 강의 시간표 조회
+                        ControllSearchMenu();
                         break;
-                    case (int)Constants.MainMenu.FavoriteSubjectsPut:
+                    case (int)Constants.MainMenu.FavoriteSubjectsPut:   // 관심 과목 담기
                         ControllFavoriteSubjectsMenu();
                         break;
-                    case (int)Constants.MainMenu.CourseApply:
-                        ControllCourseRegistrationMenu();
+                    case (int)Constants.MainMenu.CourseApply:   // 수강 신청
+                        ControllCourseApplyMenu();
                         break;
-                    case (int)Constants.MainMenu.CourseApplyHistoryCheck:
+                    case (int)Constants.MainMenu.CourseApplyHistoryCheck:   // 수강 내역 조회
+                       
                         break;
-                }   
+                }
             }
         }
 
@@ -81,49 +92,57 @@ namespace LectureTimeTable.Controller
         {
             bool isSelected = true;
             menuValue = 0;
-            menuScreen.ClearBottomScreen();
 
             while (isSelected)
             {
+                menuValue = 0;
+                menuScreen.ClearBottomScreen();
                 isSelected = IsPromptMenuSelection((int)Constants.MenuType.FavoriteSubject);
+                if (!isSelected)
+                    continue;
+
                 switch (menuValue)
                 {
-                    case (int)Constants.ApplyMenu.Apply:
+                    case (int)Constants.ApplyMenu.Apply:    // 관심 과목 신청
+                        ControllSearchMenu();
+                        break;
+                    case (int)Constants.ApplyMenu.Statement:    //관심 과목 내역
 
                         break;
-                    case (int)Constants.ApplyMenu.Statement:
+                    case (int)Constants.ApplyMenu.Schedule: // 관심 과목 시간표
 
                         break;
-                    case (int)Constants.ApplyMenu.Schedule:
-
-                        break;
-                    case (int)Constants.ApplyMenu.Delete:
+                    case (int)Constants.ApplyMenu.Delete:   // 관심 과목 삭제
                         break;
                 }
             }
         }
 
-        private void ControllCourseRegistrationMenu()
+        private void ControllCourseApplyMenu()
         {
             bool isSelected = true;
             menuValue = 0;
-            menuScreen.ClearBottomScreen();
 
             while (isSelected)
             {
+                menuValue = 0;
+                menuScreen.ClearBottomScreen();
                 isSelected = IsPromptMenuSelection((int)Constants.MenuType.CourseApply);
+                if (!isSelected)
+                    continue;
+
                 switch (menuValue)
                 {
-                    case (int)Constants.ApplyMenu.Apply:
+                    case (int)Constants.ApplyMenu.Apply:    // 수강 신청
                         ControllSearchAndApplyMenu();
                         break;
-                    case (int)Constants.ApplyMenu.Statement:
+                    case (int)Constants.ApplyMenu.Statement:    // 수강 신청 내역
 
                         break;
-                    case (int)Constants.ApplyMenu.Schedule:
+                    case (int)Constants.ApplyMenu.Schedule: // 수강 신청 시간표
 
                         break;
-                    case (int)Constants.ApplyMenu.Delete:
+                    case (int)Constants.ApplyMenu.Delete:   // 수강 과목 삭제
 
                         break;
                 }
@@ -133,15 +152,56 @@ namespace LectureTimeTable.Controller
         private void ControllSearchAndApplyMenu()
         {
             bool isSelected = true;
-            menuValue = 0;
-            menuScreen.ClearBottomScreen();
 
             while (isSelected)
             {
-                isSelected = IsPromptMenuSelection((int)Constants.MenuType.Search);
+                menuValue = 0;
+                menuScreen.ClearBottomScreen();
+                isSelected = IsPromptMenuSelection((int)Constants.MenuType.SearchAndApply);
+                if (!isSelected)
+                    continue;
+
                 switch (menuValue)
                 {
-                    
+                    case (int)Constants.SearchAndApplyMenu.Search:  // 검색 후 신청
+                        ControllSearchMenu();
+                        break;
+                    case (int)Constants.SearchAndApplyMenu.FavoriteSubjects:    // 관심 과목 신청
+
+                        break;
+                }
+            }
+        }
+
+        private void ControllSearchMenu()
+        {
+            bool isSelected = true;
+
+            while (isSelected)
+            {
+                menuValue = 0;
+                menuScreen.ClearBottomScreen();
+                isSelected = IsPromptMenuSelection((int)Constants.MenuType.Search);
+                if (!isSelected)
+                    continue;
+
+                switch (menuValue)
+                {
+                    case (int)Constants.SearchMenu.Major:   // 개설 학과 전공
+
+                        break;
+                    case (int)Constants.SearchMenu.CreditClassification:    // 이수 구분
+
+                        break;
+                    case (int)Constants.SearchMenu.subjectName: // 교과목 명
+
+                        break;
+                    case (int)Constants.SearchMenu.ProfessorName:   // 교수 명
+
+                        break;
+                    case (int)Constants.SearchMenu.Grade:   // 학년
+
+                        break;
                 }
             }
         }
@@ -186,7 +246,7 @@ namespace LectureTimeTable.Controller
             switch (screenValue)
             {
                 case (int)Constants.MenuType.LogIn:
-                case (int)Constants.MenuType.Search:
+                case (int)Constants.MenuType.SearchAndApply:
                     length = 2;
                     break;
                 case (int)Constants.MenuType.Main:
@@ -194,7 +254,7 @@ namespace LectureTimeTable.Controller
                 case (int)Constants.MenuType.CourseApply:
                     length = 4;
                     break;
-                case (int)Constants.MenuType.InputSearch:
+                case (int)Constants.MenuType.Search:
                     length = 5;
                     break;
             }

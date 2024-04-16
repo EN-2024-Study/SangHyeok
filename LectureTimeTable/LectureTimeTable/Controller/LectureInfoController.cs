@@ -4,39 +4,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LectureTimeTable.View;
 
 namespace LectureTimeTable.Model
 {
-    public class LectureDao
+    public class LectureInfoController
     {
         private LectureRepository lecture;
-        public LectureDao()
+        private LectureTimeScreen lectureTimeScreen;
+
+        public LectureInfoController()
         {
             this.lecture = LectureRepository.Instance;
+            this.lectureTimeScreen = new LectureTimeScreen();
         }
 
-        public List<LectureVo> ManageSchedule(int[] searchValues, string subjectName, string professorName)
+        public List<LectureVo> ManageLectureList(int[] searchValues, string subjectName, string professorName)
         {
             string[] searchString = GetSearchStrings(searchValues);
             List<LectureVo> lectureList = lecture.LectureList;
             List<LectureVo> resultLectureList = new List<LectureVo>();
-
-            foreach(LectureVo lecture in lectureList)
+            
+            foreach (LectureVo lecture in lectureList)
             {
                 int count = 0;
                 if (searchString[0] == "")
                     count++;
-                else if (lecture.Major.Equals(searchString[(int)Constants.SearchMenu.Major]))
+                else if (lecture.Major.Contains(searchString[(int)Constants.SearchMenu.Major]))
                     count++;
 
                 if (searchString[1] == "")
                     count++;
-                else if (lecture.CreditClassification.Equals(searchString[(int)Constants.SearchMenu.CreditClassification]))
+                else if (lecture.CreditClassification.Contains(searchString[(int)Constants.SearchMenu.CreditClassification]))
                     count++;
 
                 if (searchString[2] == "")
                     count++;
-                else if (lecture.Grade.Equals(searchString[2]))
+                else if (lecture.Grade.Contains(searchString[2]))
                     count++;
 
                 if (count == 3)
@@ -46,7 +50,14 @@ namespace LectureTimeTable.Model
             return resultLectureList;
         }
 
-        //public void IsLecture
+        public void ManageLectureTimeSheet(List<LectureVo> lectureList)
+        {
+            Console.SetWindowSize(180, 40);
+            Console.Clear();
+            lectureTimeScreen.DrawSheetScreen(lectureList);
+            Console.ReadLine();
+            Console.Clear();
+        }
 
         private string[] GetSearchStrings(int[] searchValues)
         {

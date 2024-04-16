@@ -13,7 +13,7 @@ namespace LectureTimeTable.View
         public void DrawSheetScreen(List<LectureVo> lectureList)
         {
             int[] coordinateX = new int[] { 0, 4, 23, 31, 36, 69, 83, 85, 88, 119, 133, 160, 167};
-            int y = 0;
+            int y = 1;
             Console.SetCursorPosition(coordinateX[0], y);
             Console.Write("NO");
             Console.SetCursorPosition(coordinateX[1], y);

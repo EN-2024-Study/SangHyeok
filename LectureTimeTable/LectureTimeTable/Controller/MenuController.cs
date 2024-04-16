@@ -12,54 +12,42 @@ namespace LectureTimeTable.Controller
     public class MenuController
     {
         private MenuScreen menuScreen;
-        private LectureTimeScreen lectureTimeScreen;
         private InputManager inputManager;
-        private UserDao userDao;
-        private LectureDao lectureDao;
+        private UserInfoController userInfoController;
+        private LectureInfoController lectureInfoController;
         private int menuValue;
         private int[] searchValues;
 
         public MenuController()
         {
             this.menuScreen = new MenuScreen();
-            this.lectureTimeScreen = new LectureTimeScreen();
             this.inputManager = new InputManager();
-            this.userDao = new UserDao();
-            this.lectureDao = new LectureDao();
+            this.userInfoController = new UserInfoController();
+            this.lectureInfoController = new LectureInfoController();
         }
 
         public void ControlLogInMenu()
         {
             bool isSelected = true;
-            string id = null, password = null;
-
+            int loginCount = 0;
             Console.SetWindowSize(80, 40);
+
             while (isSelected)
             {
                 isSelected = IsMenuSelection((int)Constants.MenuType.LogIn, true);
                 if (!isSelected)
                     continue;
 
-                switch(menuValue)
-                {
-                    case (int)Constants.LogInMenu.Id:
-                        id = null;
-                        id = inputManager.LimitInputLength((int)Constants.DigitType.Id, 9, false);
-                        break;
-                    case (int)Constants.LogInMenu.Password:
-                        password = null;
-                        password = inputManager.LimitInputLength((int)Constants.DigitType.Password, 5, true);
-                        break;
-                }
-                if (id == null || password == null)
-                    continue;
+                if (userInfoController.IsUserLogInValid(menuValue))
+                    loginCount++;
+                else
+                    loginCount = 0;
 
-                if (userDao.IsLogIn(id, password))
+                if (loginCount == 2)
                 {
                     ControllMainMenu();
                     menuScreen.ClearBottomScreen();
-                    id = null;
-                    password = null;
+                    loginCount = 0;
                 }
             }
         }
@@ -214,17 +202,12 @@ namespace LectureTimeTable.Controller
                         searchValues[2] = menuValue;
                         break;
                     case (int)Constants.SearchMenu.Enter:   // 강의 시간표 차트 띄우기
-                        lectureList = lectureDao.ManageSchedule(searchValues, subjectName, professorName);
+                        lectureList = lectureInfoController.ManageLectureList(searchValues, subjectName, professorName);
                         break;
                 }
 
-                if (lectureList == null)
-                    continue;
-
-                Console.SetWindowSize(180, 40);
-                Console.Clear();
-                lectureTimeScreen.DrawSheetScreen(lectureList);
-                Console.ReadLine();
+                if (lectureList != null)
+                    lectureInfoController.ManageLectureTimeSheet(lectureList);
             }
         }
 

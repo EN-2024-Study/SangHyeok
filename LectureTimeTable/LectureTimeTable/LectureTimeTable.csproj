@@ -46,10 +46,10 @@
   <ItemGroup>
     <Compile Include="Controller\MenuController.cs" />
     <Compile Include="MainProgramcs.cs" />
-    <Compile Include="Model\LectureDao.cs" />
+    <Compile Include="Controller\LectureInfoController.cs" />
     <Compile Include="Model\LectureVo.cs" />
     <Compile Include="Model\LectureRepository.cs" />
-    <Compile Include="Model\UserDao.cs" />
+    <Compile Include="Controller\UserInfoController.cs" />
     <Compile Include="Model\UserDto.cs" />
     <Compile Include="Model\UserRepository.cs" />
     <Compile Include="Utility\Constants.cs" />

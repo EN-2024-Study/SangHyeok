@@ -35,7 +35,7 @@ namespace LectureTimeTable.Model
                 LectureVo lectureVo = null;
                 for (int i = 1; i <= data.GetLength(0); i++)
                 {
-                    lectureVo = new LectureVo((Double)data.GetValue(i, 1), 
+                    lectureVo = new LectureVo((Double)data.GetValue(i, 1),
                         (string)data.GetValue(i, 2), (string)data.GetValue(i, 3),
                         (string)data.GetValue(i, 4), (string)data.GetValue(i, 5),
                         (string)data.GetValue(i, 6), (string)data.GetValue(i, 7),
@@ -48,7 +48,7 @@ namespace LectureTimeTable.Model
             catch (SystemException e)
             {
                 Console.WriteLine(e.Message);
-            }            
+            }
         }
 
         public static LectureRepository Instance

@@ -26,7 +26,6 @@ namespace LectureTimeTable.Model
 
         public bool IsLectureValid(int digitValue)
         {
-            
             switch (digitValue)
             {
                 case (int)Constants.DigitType.SubjectTitle:

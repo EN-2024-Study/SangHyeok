@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using LectureTimeTable.Controller;
 using LectureTimeTable.Model;
 using LectureTimeTable.View;
@@ -14,6 +15,8 @@ namespace LectureTimeTable
         {
             MenuController menu = new MenuController();
             menu.ControlLogInMenu();
+
+
 
             //Console.SetWindowSize(180, 40);
             //LectureTimeScreen a = new LectureTimeScreen();

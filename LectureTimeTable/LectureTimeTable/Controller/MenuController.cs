@@ -164,7 +164,6 @@ namespace LectureTimeTable.Controller
         private void ControllSearchMenu()
         {
             bool isSelected = true;
-            string subjectTitle = "", professorName = "";
             searchValues = new int[] { -1, -1, -1 };
 
             menuScreen.ClearBottomScreen();

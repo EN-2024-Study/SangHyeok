@@ -20,74 +20,94 @@ namespace LectureTimeTable.Utility
         {
             Console.CursorVisible = true;
             Tuple<int, int> coordinate = GetCoordinate(digitValue);
-            Tuple<int, int> failCoordinate = null;
+            //Tuple<int, int> failCoordinate = null;
             int x = coordinate.Item1;
             int y = coordinate.Item2;
-            bool isInput = false;
+            bool isError = false;
 
-            while (!isInput)
+            char[] inputString = new char[stringLength];
+            int[] bytes = new int[stringLength];
+            int index = 0;
+
+            Console.SetCursorPosition(x, y);
+            for (int i = 0; i < stringLength * 2; i++)  // 입력란 지우기
+                Console.Write(" ");
+            Console.SetCursorPosition(x, y);
+
+            while (!isError)
             {
-                char[] inputString = new char[stringLength];
-                int index = 0;
-                bool isError = false;
-
-                for (int i = x; i < x + stringLength; i++)  // 입력란 지우기
-                    menuScreen.EraseDigit(i, y);
-
-                while (!isError)
+                if (index == stringLength)  // 입력 길이 초과
                 {
-                    if (index == stringLength)  // 입력 길이 초과
-                    {
-                        failCoordinate = new Tuple<int, int>(x + index + 2, y);
-                        menuScreen.DrawInputFailure(failCoordinate);
-                        isError = true;
-                        continue;
-                    }
+                    //failCoordinate = new Tuple<int, int>(x + index + 2, y);
+                    //menuScreen.DrawInputFailure(failCoordinate);
+                    //isError = true;
+                    inputString = new char[stringLength];
+                    bytes = new int[stringLength];
+                    index = 0;
 
-                    Console.SetCursorPosition(x + index, y);
-                    ConsoleKeyInfo keyInfo = Console.ReadKey();
-
-                    if (keyInfo.Key == ConsoleKey.Enter)
-                    {
-                        menuScreen.EraseFail(failCoordinate);
-                        break;
-                    }
-                    else if (keyInfo.Key == ConsoleKey.Backspace)
-                    {
-                        if (index == 0)
-                            continue;
-
-                        menuScreen.EraseDigit(x + index - 1, y);
-                        inputString[--index] = '\0';
-                    }
-                    else if (keyInfo.Key == ConsoleKey.Escape)
-                    {
-                        for (int i = x; i < x + stringLength; i++)  // 입력란 지우기
-                            menuScreen.EraseDigit(i, y);
-                        menuScreen.EraseFail(failCoordinate);
-                        return null;
-                    }
-                    else
-                        inputString[index++] = keyInfo.KeyChar;
-
-                    if (isPassword) // * 비밀번호 입력일 때 표시 처리
-                    {
-                        Console.SetCursorPosition(x + index - 1, y);
-                        if (index == 0)
-                            continue;
-                        Console.Write("*");
-                    }
+                    Console.SetCursorPosition(x, y);
+                    for (int i = 0; i < stringLength * 2; i++)  // 입력란 지우기
+                        Console.Write(" ");
+                    Console.SetCursorPosition(x, y);
+                    continue;
                 }
 
-                if (!isError)
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                if (keyInfo.Key == ConsoleKey.Enter)
                 {
-                    Console.CursorVisible = false;
-                    return SetResultString(inputString);
+                    //menuScreen.EraseFail(failCoordinate);
+                    break;
+                }
+                else if (keyInfo.Key == ConsoleKey.Backspace)
+                {
+                    if (index == 0)
+                        continue;
+
+                    int totalByte = 0;
+                    for (int i = 0; i < index; i++)
+                        totalByte += bytes[i];
+
+                    Console.SetCursorPosition(x + totalByte - bytes[index - 1], y);
+                    if (bytes[index - 1] == 2)
+                        Console.Write("  ");
+                    else
+                        Console.Write(" ");
+                    Console.SetCursorPosition(x + totalByte - bytes[index - 1], y);
+
+                    inputString[--index] = '\0';
+                }
+                else if (keyInfo.Key == ConsoleKey.Escape)
+                {
+                    Console.SetCursorPosition(x, y);
+                    for (int i = 0; i < stringLength * 2; i++)  // 입력란 지우기
+                        Console.Write(" ");
+                    //menuScreen.EraseFail(failCoordinate);
+                    return null;
+                }
+                else
+                {
+                    inputString[index] = keyInfo.KeyChar;
+                    bytes[index++] = Encoding.Default.GetByteCount(keyInfo.KeyChar.ToString());
+                    Console.Write(keyInfo.KeyChar);
+                }
+
+                if (isPassword) // * 비밀번호 입력일 때 표시 처리
+                {
+                    if (index == 0)
+                        continue;
+
+                    int totalByte = 0;
+                    for (int i = 0; i < index; i++)
+                        totalByte += bytes[i];
+
+                    Console.SetCursorPosition(x + totalByte - bytes[index - 1], y);
+                    Console.Write("*");
                 }
             }
 
             Console.CursorVisible = false;
-            return null;
+            return SetResultString(inputString);
         }
 
         private string SetResultString(char[] inputString)

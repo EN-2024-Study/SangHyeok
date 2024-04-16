@@ -31,13 +31,13 @@ namespace LectureTimeTable.View
             }
         }
 
-        public void DrawInputFailure(Tuple<int, int> coordinate)
-        {
-            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("[Fail]");
-            Console.ResetColor();
-        }
+        //public void DrawInputFailure(Tuple<int, int> coordinate)
+        //{
+        //    Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);
+        //    Console.ForegroundColor = ConsoleColor.Red;
+        //    Console.Write("[Fail]");
+        //    Console.ResetColor();
+        //}
 
         public void ClearBottomScreen()
         {
@@ -51,20 +51,13 @@ namespace LectureTimeTable.View
             }
         }
 
-        public void EraseFail(Tuple<int, int> coordinate)
-        {
-            if (coordinate == null)
-                return;
-            Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);
-            Console.Write("        ");
-        }
-
-        public void EraseDigit(int x, int y)
-        {
-            Console.SetCursorPosition(x, y);
-            Console.Write(" ");
-            Console.SetCursorPosition(x, y);
-        }
+        //public void EraseFail(Tuple<int, int> coordinate)
+        //{
+        //    if (coordinate == null)
+        //        return;
+        //    Console.SetCursorPosition(coordinate.Item1, coordinate.Item2);
+        //    Console.Write("        ");
+        //}
         
         private Tuple<int, int> SetCoordinate(int screenValue)
         {

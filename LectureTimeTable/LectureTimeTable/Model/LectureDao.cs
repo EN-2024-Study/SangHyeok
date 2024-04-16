@@ -17,7 +17,7 @@ namespace LectureTimeTable.Model
 
         public List<LectureVo> ManageSchedule(int[] searchValues, string subjectName, string professorName)
         {
-            string[] searchString = GetSchedule(searchValues);
+            string[] searchString = GetSearchStrings(searchValues);
             List<LectureVo> lectureList = lecture.LectureList;
             List<LectureVo> resultLectureList = new List<LectureVo>();
 
@@ -46,7 +46,9 @@ namespace LectureTimeTable.Model
             return resultLectureList;
         }
 
-        private string[] GetSchedule(int[] searchValues)
+        //public void IsLecture
+
+        private string[] GetSearchStrings(int[] searchValues)
         {
             // int [0] : Major, [1] : CreditClassification, [2] : grade
             string[] resultString = new string[3] { "", "", ""};

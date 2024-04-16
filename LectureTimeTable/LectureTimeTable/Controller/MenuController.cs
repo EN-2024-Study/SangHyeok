@@ -12,6 +12,7 @@ namespace LectureTimeTable.Controller
     public class MenuController
     {
         private MenuScreen menuScreen;
+        private LectureTimeScreen lectureTimeScreen;
         private InputManager inputManager;
         private UserDao userDao;
         private LectureDao lectureDao;
@@ -21,6 +22,7 @@ namespace LectureTimeTable.Controller
         public MenuController()
         {
             this.menuScreen = new MenuScreen();
+            this.lectureTimeScreen = new LectureTimeScreen();
             this.inputManager = new InputManager();
             this.userDao = new UserDao();
             this.lectureDao = new LectureDao();
@@ -216,8 +218,13 @@ namespace LectureTimeTable.Controller
                         break;
                 }
 
-                //if (!lectureList)
+                if (lectureList == null)
+                    continue;
 
+                Console.SetWindowSize(180, 40);
+                Console.Clear();
+                lectureTimeScreen.DrawSheetScreen(lectureList);
+                Console.ReadLine();
             }
         }
 

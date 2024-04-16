@@ -26,7 +26,7 @@ namespace LectureTimeTable.Model
 
                 Sheets sheets = workbook.Sheets;
                 Worksheet worksheet = sheets["Sheet1"] as Worksheet;
-                Range cellRange = worksheet.Range["A2", "L184"];
+                Range cellRange = worksheet.Range["A2", "L185"];
                 Array data = cellRange.Cells.Value2;
 
                 application.Workbooks.Close();

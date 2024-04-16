@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using LectureTimeTable.Controller;
 using LectureTimeTable.Model;
+using LectureTimeTable.View;
 using Microsoft.Office.Interop.Excel;
 //using Excel = Microsoft.Office.Interop.Excel;
 
@@ -14,10 +15,14 @@ namespace LectureTimeTable
             MenuController menu = new MenuController();
             menu.ControlLogInMenu();
 
-
+            //Console.SetWindowSize(180, 40);
+            //LectureTimeScreen a = new LectureTimeScreen();
             //LectureRepository lecture = LectureRepository.Instance;
-            //Array data = lecture.Data;
+            //List<LectureVo> b = lecture.LectureList;
+            //a.DrawSheetScreen(b);
+
             //Console.SetWindowSize(170, 40);
+            //Array data = lecture.Data;
 
             //for (int j = 1; j <= data.GetLength(1); j++)
             //{

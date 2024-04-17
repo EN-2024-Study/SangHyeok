@@ -89,15 +89,15 @@ namespace LectureTimeTable.View
             switch (screenValue)
             {
                 case (int)Constants.MenuType.LogIn:
-                    menuString = new string[] { "        학번(8자리 숫자)         : ",
-                        "비밀번호(영어 & 숫자 6 ~ 10글자) : " };
+                    menuString = new string[] { "    학번(8자리 숫자)             : ",
+                        "비밀번호(4자리 숫자)             : " };
                     break;
                 case (int)Constants.MenuType.Main:
                     menuString = new string[] { "강의 시간표 조회 ", " 관심 과목 담기",
                         "  수강 신청 ", "수강 내역 조회" };
                     break;
                 case (int)Constants.MenuType.FavoriteSubject:
-                    menuString = new string[] { "관심 과목 검색", "관심 과목 내역",
+                    menuString = new string[] { "관심 과목 추가", "관심 과목 내역",
                     "관심 과목 시간표","관심 과목 삭제"};
                     break;
                 case (int)Constants.MenuType.CourseApply:

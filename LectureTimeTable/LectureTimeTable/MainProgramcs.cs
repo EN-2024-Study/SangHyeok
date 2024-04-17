@@ -16,18 +16,6 @@ namespace LectureTimeTable
         {
             MenuController menu = new MenuController();
             menu.ControlLogInMenu();
-
-            //Console.SetWindowSize(130, 40);
-            //LectureRepository instance = LectureRepository.Instance;
-            //List<LectureVo> lectureList = instance.LectureList;
-            //List<LectureVo> test = new List<LectureVo>()
-            //{
-            //    lectureList[0],
-            //    lectureList[19],
-            //    lectureList[21]
-            //};
-            //LectureTimeScreen lectureScreen = new LectureTimeScreen();
-            //lectureScreen.DrawScheduleScreen(test);
         }
     }
 }

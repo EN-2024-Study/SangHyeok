@@ -6,3 +6,4 @@ C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\b
 C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\bin\Debug\LectureTimeTable.pdb
 C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\obj\Debug\LectureTimeTable.exe
 C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\obj\Debug\LectureTimeTable.pdb
+C:\Users\user\Desktop\EN#스터디\SangHyeok\LectureTimeTable\LectureTimeTable\obj\Debug\LectureTimeTable.csproj.ResolveComReference.cache

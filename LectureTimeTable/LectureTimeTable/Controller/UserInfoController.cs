@@ -62,27 +62,29 @@ namespace LectureTimeTable.Model
             if (!IsCheckDuplication(typeValue, course))
                 return false;
 
-            switch (typeValue)
+            if (typeValue == (int)Constants.LectureType.FavoriteSubjectApply)
             {
-                case (int)Constants.LectureType.FavoriteSubjectApply:
-                    if (exceptionManager.IsOverlapCheck(user.FavoriteSubjectList, course))
-                        user.AddFavoriteSubject(course);
-                    else return false;
-                    break;
-                case (int)Constants.LectureType.ApplyAfterSearch:
-                case (int)Constants.LectureType.ApplyForFavoriteSubject:
-                    if (exceptionManager.IsOverlapCheck(user.AppliedCourseList, course))
-                        user.AddAppliedCourse(course);
-                    else return false;
-                    break;
-                case (int)Constants.LectureType.FavoriteSubjectDelete:
-                    user.RemoveFavoriteSubject(course);
-                    break;
-                case (int)Constants.LectureType.CourseDelete:
-                    user.RemoveAppliedCourse(course);
-                    break;
+                if (!exceptionManager.IsOverlapCheck(user.FavoriteSubjectList, course))
+                    return false;
+                else if (user.FavoriteSubjectScore + int.Parse(course.Score) > 24)
+                    return false;
+                else
+                    user.AddFavoriteSubject(course);
             }
-
+            else if (typeValue == (int)Constants.LectureType.ApplyAfterSearch ||
+                typeValue == (int)Constants.LectureType.ApplyForFavoriteSubject)
+            {
+                if (!exceptionManager.IsOverlapCheck(user.AppliedCourseList, course))
+                    return false;
+                else if (user.AppliedCourseScore + int.Parse(course.Score) > 21)
+                    return false;
+                else
+                    user.AddAppliedCourse(course);
+            }
+            else if (typeValue == (int)Constants.LectureType.FavoriteSubjectDelete)
+                user.RemoveFavoriteSubject(course);
+            else if (typeValue == (int)Constants.LectureType.CourseDelete)
+                user.RemoveAppliedCourse(course);
             return true;
         }
 

@@ -32,6 +32,7 @@ namespace LectureTimeTable.Controller
 
             while (isSelected)
             {
+                ExplaningScreen.ExplaningArrowPress();
                 isSelected = IsMenuSelection((int)Constants.MenuType.LogIn, true);
                 if (!isSelected)
                     continue;
@@ -64,6 +65,7 @@ namespace LectureTimeTable.Controller
             {
                 Console.SetWindowSize(80, 40);
                 menuScreen.ClearBottomScreen();
+                ExplaningScreen.ExplaningArrowPress();
                 isSelected = IsMenuSelection((int)Constants.MenuType.Main, true);
                 if (!isSelected)
                     continue;
@@ -95,6 +97,7 @@ namespace LectureTimeTable.Controller
             {
                 Console.SetWindowSize(80, 40);
                 menuScreen.ClearBottomScreen();
+                ExplaningScreen.ExplaningArrowPress();
                 isSelected = IsMenuSelection((int)Constants.MenuType.FavoriteSubject, true);
                 if (!isSelected)
                     continue;
@@ -126,6 +129,7 @@ namespace LectureTimeTable.Controller
             {
                 Console.SetWindowSize(80, 40);
                 menuScreen.ClearBottomScreen();
+                ExplaningScreen.ExplaningArrowPress();
                 isSelected = IsMenuSelection((int)Constants.MenuType.CourseApply, true);
                 if (!isSelected)
                     continue;
@@ -156,6 +160,7 @@ namespace LectureTimeTable.Controller
             {
                 Console.SetWindowSize(80, 40);
                 menuScreen.ClearBottomScreen();
+                ExplaningScreen.ExplaningArrowPress();
                 isSelected = IsMenuSelection((int)Constants.MenuType.SearchAndApply, true);
                 if (!isSelected)
                     continue;
@@ -182,6 +187,7 @@ namespace LectureTimeTable.Controller
             while (isSelected)
             {
                 Console.SetWindowSize(130, 40);
+                ExplaningScreen.ExplaningArrowPress();
                 isSelected = IsMenuSelection((int)Constants.MenuType.Search, true);
                 if (!isSelected)
                     continue;

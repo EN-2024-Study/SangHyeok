@@ -141,7 +141,7 @@ namespace LectureTimeTable.Utility
                     y = 33;
                     break;
                 case (int)Constants.DigitType.SubjectId:
-
+                    x = 4;
                     break;
             }
             return new Tuple<int, int>(x, y);

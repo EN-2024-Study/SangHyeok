@@ -55,9 +55,13 @@ namespace LectureTimeTable.Model
             List<LectureVo> lectureList = GetLectureList(typeValue);
             Console.SetWindowSize(130, 40);
             Console.Clear();
-
+            ExplaningScreen.ExplaningEscPress();
             screen.DrawScheduleScreen(lectureList);
-            Console.ReadLine();
+
+            ConsoleKeyInfo keyinfo;
+            do keyinfo = Console.ReadKey(true); 
+            while (keyinfo.Key != ConsoleKey.Escape);
+            Console.Clear();
         }
 
         public void ManageLectureTimeSheet(int typeValue)   // 강의 시간표 차트 관리 함수
@@ -69,20 +73,27 @@ namespace LectureTimeTable.Model
                 Console.SetWindowSize(180, 40);
                 Console.Clear();
                 screen.DrawLectureTimeSheetScreen(lectureList);
-                // ConsoleKeyInfo의 할당은 무조건 사용자의 입력이 있어야 하므로 do while문 사용
+                ExplaningScreen.ExplaningEscPress();
                 if (typeValue == (int)Constants.LectureType.FavoriteSubjectHistory ||
                     typeValue == (int)Constants.LectureType.AppliedCourseHistory ||
                     typeValue == (int)Constants.LectureType.CourseSearch)
                 {
                     ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                     if (keyInfo.Key == ConsoleKey.Escape)   // 뒤로가기 입력만 받기
+                    {
+                        Console.Clear();
                         break;
+                    }
                 }
                 else
                 {
+                    ExplaningScreen.ExplaningEnterPress();
                     string subjectId = inputManager.LimitInputLength((int)Constants.DigitType.SubjectId, 4, false);
                     if (subjectId == null)
+                    {
+                        Console.Clear();
                         break;
+                    }
                     else
                         isSuccess = IsSetSuccessful(typeValue, subjectId);
 
@@ -100,12 +111,7 @@ namespace LectureTimeTable.Model
                 lectureList = lecture.LectureList;
             else
                 lectureList = GetLectureList(typeValue);
-            //else if (typeValue == (int)Constants.LectureType.FavoriteSubjectDelete ||
-            //    typeValue == (int)Constants.LectureType.ApplyForFavoriteSubject)
-            //    lectureList = userInfoController.GetFavoriteSubjectList();
-            //else if (typeValue == (int)Constants.LectureType.CourseDelete)
-            //    lectureList = userInfoController.GetAppliedCourseList();
-
+         
             foreach (LectureVo value in lectureList)
             {
                 if (subjectId.Equals(value.Id.ToString()))

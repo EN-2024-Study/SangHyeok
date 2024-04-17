@@ -53,6 +53,7 @@ namespace LectureTimeTable.Model
         public void ManageSchedule(int typeValue)
         {
             List<LectureVo> lectureList = GetLectureList(typeValue);
+            Console.SetWindowSize(130, 40);
             Console.Clear();
 
 
@@ -90,11 +91,13 @@ namespace LectureTimeTable.Model
             if (typeValue == (int)Constants.LectureType.FavoriteSubjectApply ||
                 typeValue == (int)Constants.LectureType.ApplyAfterSearch)
                 lectureList = lecture.LectureList;
-            else if (typeValue == (int)Constants.LectureType.FavoriteSubjectDelete ||
-                typeValue == (int)Constants.LectureType.ApplyForFavoriteSubject)
-                lectureList = userInfoController.GetFavoriteSubjectList();
-            else if (typeValue == (int)Constants.LectureType.CourseDelete)
-                lectureList = userInfoController.GetAppliedCourseList();
+            else
+                lectureList = GetLectureList(typeValue);
+            //else if (typeValue == (int)Constants.LectureType.FavoriteSubjectDelete ||
+            //    typeValue == (int)Constants.LectureType.ApplyForFavoriteSubject)
+            //    lectureList = userInfoController.GetFavoriteSubjectList();
+            //else if (typeValue == (int)Constants.LectureType.CourseDelete)
+            //    lectureList = userInfoController.GetAppliedCourseList();
 
             foreach (LectureVo value in lectureList)
             {
@@ -105,7 +108,7 @@ namespace LectureTimeTable.Model
                 }
             }
 
-            // 검색한 id가 있다면 중복된 값이 있는지 확인하고 추가 or 삭제 기능 수행
+            // 검색한 id가 있다면 넣을 수 있는지 확인하고 추가 or 삭제 기능 수행
             if (resultLecture != null && userInfoController.IsCourseSetValid(typeValue, resultLecture))  
                 return true;
             return false;

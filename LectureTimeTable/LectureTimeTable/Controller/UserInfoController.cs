@@ -12,12 +12,15 @@ namespace LectureTimeTable.Model
     {
         private UserRepository user;
         private InputManager inputManager;
+        private ExceptionManager exceptionManager;
 
         public UserInfoController()
         {
             this.user = UserRepository.Instance;    // singleton 생성
             this.inputManager = new InputManager();
+            this.exceptionManager = new ExceptionManager();
         }
+
         public List<LectureVo> GetFavoriteSubjectList()
         {
             return user.FavoriteSubjectList;
@@ -62,11 +65,17 @@ namespace LectureTimeTable.Model
             switch (typeValue)
             {
                 case (int)Constants.LectureType.FavoriteSubjectApply:
-                    user.AddFavoriteSubject(course);
+                    if (exceptionManager.IsOverlapCheck(user.FavoriteSubjectList, course))
+                        user.AddFavoriteSubject(course);
+                    else
+                        Console.WriteLine("test1");
                     break;
                 case (int)Constants.LectureType.ApplyAfterSearch:
                 case (int)Constants.LectureType.ApplyForFavoriteSubject:
-                    user.AddAppliedCourse(course);
+                    if (exceptionManager.IsOverlapCheck(user.AppliedCourseList, course))
+                        user.AddAppliedCourse(course);
+                    else
+                        Console.WriteLine("test2");
                     break;
                 case (int)Constants.LectureType.FavoriteSubjectDelete:
                     user.RemoveFavoriteSubject(course);
@@ -75,6 +84,7 @@ namespace LectureTimeTable.Model
                     user.RemoveAppliedCourse(course);
                     break;
             }
+
             return true;
         }
 

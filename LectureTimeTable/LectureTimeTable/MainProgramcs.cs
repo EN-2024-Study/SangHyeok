@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using LectureTimeTable.Controller;
 using LectureTimeTable.Model;
 using LectureTimeTable.View;
@@ -16,16 +17,12 @@ namespace LectureTimeTable
             MenuController menu = new MenuController();
             menu.ControlLogInMenu();
 
+            //Console.SetWindowSize(130, 40);
+            //LectureTimeScreen lectureScreen = new LectureTimeScreen();
+            //lectureScreen.DrawScheduleScreen();
 
-
-            //Console.SetWindowSize(180, 40);
-            //LectureTimeScreen a = new LectureTimeScreen();
-            //LectureRepository lecture = LectureRepository.Instance;
-            //List<LectureVo> b = lecture.LectureList;
-            //a.DrawSheetScreen(b);
-
-
-
+            //LectureRepository instance = LectureRepository.Instance;
+            //List<LectureVo> lectureList = instance.LectureList;
         }
     }
 }

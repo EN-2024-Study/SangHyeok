@@ -76,11 +76,11 @@ namespace LectureTimeTable.View
             int[] y = new int[] {4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56 };
             int index = 0;
             int[] x = new int[] { 15, 37, 60, 80, 103 };
-            string[] times = Constants.TIMES;
+            string[] times = Constantss.TIMES;
             List<List<string>> dayList = ExceptionManager.GetDayList(lectureList);
 
             Console.SetCursorPosition(0, 0);
-            Console.Write(Constants.SCHEDULE);
+            Console.Write(Constantss.SCHEDULE);
 
             foreach (List<string> day in dayList)
             {

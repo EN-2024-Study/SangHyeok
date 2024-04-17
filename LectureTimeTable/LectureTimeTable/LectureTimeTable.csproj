@@ -52,7 +52,7 @@
     <Compile Include="Controller\UserInfoController.cs" />
     <Compile Include="Model\UserDto.cs" />
     <Compile Include="Model\UserRepository.cs" />
-    <Compile Include="Utility\Constants.cs" />
+    <Compile Include="Utility\Constantss.cs" />
     <Compile Include="Utility\ExceptionManager.cs" />
     <Compile Include="Utility\InputManager.cs" />
     <Compile Include="View\ExplaningScreen.cs" />

@@ -1,10 +1,9 @@
 ﻿using System;
 using LectureTimeTable.Utility;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LectureTimeTable.View;
+using Microsoft.Office.Interop.Excel;
+using System.IO;
 
 namespace LectureTimeTable.Model
 {
@@ -31,17 +30,69 @@ namespace LectureTimeTable.Model
         public int[] SearchValues
         { set { searchValues = value; } }
 
+        public void SaveExcel()
+        {
+            try
+            {
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string path = Path.Combine(desktopPath, "AppliedCourses.xlsx");
+
+                Application application = new Application();
+                Workbook workBook = application.Workbooks.Add();
+                Worksheet workSheet = workBook.Worksheets.get_Item(1) as Worksheet;
+
+                workSheet.Cells[1, 1] = "NO";
+                workSheet.Cells[1, 2] = "개설학과전공";
+                workSheet.Cells[1, 3] = "학수번호";
+                workSheet.Cells[1, 4] = "분반";
+                workSheet.Cells[1, 5] = "교과목명";
+                workSheet.Cells[1, 6] = "이수구분";
+                workSheet.Cells[1, 7] = "학년";
+                workSheet.Cells[1, 8] = "학점";
+                workSheet.Cells[1, 9] = "요일 및 강의시간";
+                workSheet.Cells[1, 10] = "강의실";
+                workSheet.Cells[1, 11] = "메인교수명";
+                workSheet.Cells[1, 12] = "강의언어";
+
+                List<LectureVo> lectureList = userInfoController.GetAppliedCourseList();
+                for(int i = 2; i <= lectureList.Count + 1; i++)
+                {
+                    workSheet.Cells[i, 1] = lectureList[i - 2].Id.ToString();
+                    workSheet.Cells[i, 2] = lectureList[i - 2].Major;
+                    workSheet.Cells[i, 3] = lectureList[i - 2].Number;
+                    workSheet.Cells[i, 4] = lectureList[i - 2].Group;
+                    workSheet.Cells[i, 5] = lectureList[i - 2].SubjectTitle;
+                    workSheet.Cells[i, 6] = lectureList[i - 2].CreditClassification;
+                    workSheet.Cells[i, 7] = lectureList[i - 2].Grade;
+                    workSheet.Cells[i, 8] = lectureList[i - 2].Score;
+                    workSheet.Cells[i, 9] = lectureList[i - 2].Day;
+                    workSheet.Cells[i, 10] = lectureList[i - 2].Room;
+                    workSheet.Cells[i, 11] = lectureList[i - 2].ProfessorName;
+                    workSheet.Cells[i, 12] = lectureList[i - 2].Language;
+                }
+
+                workSheet.Columns.AutoFit();
+                workBook.SaveAs(path, XlFileFormat.xlWorkbookDefault);
+                workBook.Close(true);
+                application.Quit();
+            }
+            catch (SystemException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+    
         public bool IsSearchedLectureValid(int digitValue)  // 교과목명 또는 교수명 입력받는 함수
         {
             switch (digitValue)
             {
-                case (int)Constants.DigitType.SubjectTitle:
+                case (int)Constantss.DigitType.SubjectTitle:
                     inputSubjectTitle = "";
-                    inputSubjectTitle = inputManager.LimitInputLength((int)Constants.DigitType.SubjectTitle, 10, false);
+                    inputSubjectTitle = inputManager.LimitInputLength((int)Constantss.DigitType.SubjectTitle, 10, false);
                     break;
-                case (int)Constants.DigitType.ProfessorName:
+                case (int)Constantss.DigitType.ProfessorName:
                     inputProfessorName = "";
-                    inputProfessorName = inputManager.LimitInputLength((int)Constants.DigitType.ProfessorName, 10, false);
+                    inputProfessorName = inputManager.LimitInputLength((int)Constantss.DigitType.ProfessorName, 10, false);
                     break;
             }
 
@@ -56,12 +107,24 @@ namespace LectureTimeTable.Model
             Console.SetWindowSize(130, 40);
             Console.Clear();
             ExplaningScreen.ExplaningEscPress();
+            ExplaningScreen.ExplaningEnterPress();
             screen.DrawScheduleScreen(lectureList);
 
-            ConsoleKeyInfo keyinfo;
-            do keyinfo = Console.ReadKey(true); 
-            while (keyinfo.Key != ConsoleKey.Escape);
-            Console.Clear();
+            while(true)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    SaveExcel();
+                    Console.Clear();
+                    return;
+                }
+                else if (keyInfo.Key == ConsoleKey.Escape)
+                {
+                    Console.Clear();
+                    return;
+                }
+            }
         }
 
         public void ManageLectureTimeSheet(int typeValue)   // 강의 시간표 차트 관리 함수
@@ -74,9 +137,9 @@ namespace LectureTimeTable.Model
                 Console.Clear();
                 screen.DrawLectureTimeSheetScreen(lectureList);
                 ExplaningScreen.ExplaningEscPress();
-                if (typeValue == (int)Constants.LectureType.FavoriteSubjectHistory ||
-                    typeValue == (int)Constants.LectureType.AppliedCourseHistory ||
-                    typeValue == (int)Constants.LectureType.CourseSearch)
+                if (typeValue == (int)Constantss.LectureType.FavoriteSubjectHistory ||
+                    typeValue == (int)Constantss.LectureType.AppliedCourseHistory ||
+                    typeValue == (int)Constantss.LectureType.CourseSearch)
                 {
                     ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                     if (keyInfo.Key == ConsoleKey.Escape)   // 뒤로가기 입력만 받기
@@ -88,7 +151,7 @@ namespace LectureTimeTable.Model
                 else
                 {
                     ExplaningScreen.ExplaningEnterPress();
-                    string subjectId = inputManager.LimitInputLength((int)Constants.DigitType.SubjectId, 4, false);
+                    string subjectId = inputManager.LimitInputLength((int)Constantss.DigitType.SubjectId, 4, false);
                     if (subjectId == null)
                     {
                         Console.Clear();
@@ -106,8 +169,8 @@ namespace LectureTimeTable.Model
         {   // 검색 또는 수정 기능 수행 후 제대로 됐는지 확인하는 함수
             List<LectureVo> lectureList = null;
             LectureVo resultLecture = null;
-            if (typeValue == (int)Constants.LectureType.FavoriteSubjectApply ||
-                typeValue == (int)Constants.LectureType.ApplyAfterSearch)
+            if (typeValue == (int)Constantss.LectureType.FavoriteSubjectApply ||
+                typeValue == (int)Constantss.LectureType.ApplyAfterSearch)
                 lectureList = lecture.LectureList;
             else
                 lectureList = GetLectureList(typeValue);
@@ -132,18 +195,18 @@ namespace LectureTimeTable.Model
             List<LectureVo> lectureList = null;
             switch(typeValue)
             {
-                case (int)Constants.LectureType.FavoriteSubjectApply:
-                case (int)Constants.LectureType.CourseSearch:
-                case (int)Constants.LectureType.ApplyAfterSearch:
+                case (int)Constantss.LectureType.FavoriteSubjectApply:
+                case (int)Constantss.LectureType.CourseSearch:
+                case (int)Constantss.LectureType.ApplyAfterSearch:
                     lectureList = ManageSearchedLectureList(typeValue);
                     break;
-                case (int)Constants.LectureType.FavoriteSubjectHistory:
-                case (int)Constants.LectureType.FavoriteSubjectDelete:
-                case (int)Constants.LectureType.ApplyForFavoriteSubject:
+                case (int)Constantss.LectureType.FavoriteSubjectHistory:
+                case (int)Constantss.LectureType.FavoriteSubjectDelete:
+                case (int)Constantss.LectureType.ApplyForFavoriteSubject:
                     lectureList = userInfoController.GetFavoriteSubjectList();
                     break;
-                case (int)Constants.LectureType.AppliedCourseHistory:
-                case (int)Constants.LectureType.CourseDelete:
+                case (int)Constantss.LectureType.AppliedCourseHistory:
+                case (int)Constantss.LectureType.CourseDelete:
                     lectureList = userInfoController.GetAppliedCourseList();
                     break;
             }
@@ -161,12 +224,12 @@ namespace LectureTimeTable.Model
                 int count = 0;
                 if (searchString[0] == "")
                     count++;
-                else if (lecture.Major.Contains(searchString[(int)Constants.SearchMenu.Major]))
+                else if (lecture.Major.Contains(searchString[(int)Constantss.SearchMenu.Major]))
                     count++;
 
                 if (searchString[1] == "")
                     count++;
-                else if (lecture.CreditClassification.Contains(searchString[(int)Constants.SearchMenu.CreditClassification]))
+                else if (lecture.CreditClassification.Contains(searchString[(int)Constantss.SearchMenu.CreditClassification]))
                     count++;
 
                 if (searchString[2] == "")
@@ -195,29 +258,29 @@ namespace LectureTimeTable.Model
             string[] resultString = new string[3] { "", "", "" };
             switch (searchValues[0])    // 학과 
             {
-                case (int)Constants.MajorMenu.Computer:
+                case (int)Constantss.MajorMenu.Computer:
                     resultString[0] = "컴퓨터공학과";
                     break;
-                case (int)Constants.MajorMenu.Software:
+                case (int)Constantss.MajorMenu.Software:
                     resultString[0] = "소프트웨어학과";
                     break;
-                case (int)Constants.MajorMenu.Inteligent:
+                case (int)Constantss.MajorMenu.Inteligent:
                     resultString[0] = "지능기전공학부";
                     break;
-                case (int)Constants.MajorMenu.space:
+                case (int)Constantss.MajorMenu.space:
                     resultString[0] = "기계항공우주공학부";
                     break;
             }
 
             switch (searchValues[1])    // 이수 구분
             {
-                case (int)Constants.CreditClassificationMenu.Culture:
+                case (int)Constantss.CreditClassificationMenu.Culture:
                     resultString[1] = "공통교양필수";
                     break;
-                case (int)Constants.CreditClassificationMenu.Essential:
+                case (int)Constantss.CreditClassificationMenu.Essential:
                     resultString[1] = "전공필수";
                     break;
-                case (int)Constants.CreditClassificationMenu.Selected:
+                case (int)Constantss.CreditClassificationMenu.Selected:
                     resultString[1] = "전공선택";
                     break;
             }

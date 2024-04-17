@@ -48,33 +48,33 @@ namespace LectureTimeTable.View
             int x = 0, y = 0;
             switch (screenValue)
             {
-                case (int)Constants.MenuType.LogIn:
+                case (int)Constantss.MenuType.LogIn:
                     x = 5;
                     y = 30;
                     break;
-                case (int)Constants.MenuType.Main:
-                case (int)Constants.MenuType.FavoriteSubject:
-                case (int)Constants.MenuType.CourseApply:
+                case (int)Constantss.MenuType.Main:
+                case (int)Constantss.MenuType.FavoriteSubject:
+                case (int)Constantss.MenuType.CourseApply:
                     x = 15;
                     y = 30;
                     break;
-                case (int)Constants.MenuType.SearchAndApply:
+                case (int)Constantss.MenuType.SearchAndApply:
                     x = 25;
                     y = 30;
                     break;
-                case (int)Constants.MenuType.Search:
+                case (int)Constantss.MenuType.Search:
                     x = 0;
                     y = 30;
                     break;
-                case (int)Constants.MenuType.Major:
+                case (int)Constantss.MenuType.Major:
                     x = 20;
                     y = 30;
                     break;
-                case (int)Constants.MenuType.CreditClassification:
+                case (int)Constantss.MenuType.CreditClassification:
                     x = 20;
                     y = 31;
                     break;
-                case (int)Constants.MenuType.Grade:
+                case (int)Constantss.MenuType.Grade:
                     x = 20;
                     y = 34;
                     break;
@@ -88,36 +88,36 @@ namespace LectureTimeTable.View
             string[] menuString = null;
             switch (screenValue)
             {
-                case (int)Constants.MenuType.LogIn:
+                case (int)Constantss.MenuType.LogIn:
                     menuString = new string[] { "    학번(8자리 숫자)             : ",
                         "비밀번호(4자리 숫자)             : " };
                     break;
-                case (int)Constants.MenuType.Main:
+                case (int)Constantss.MenuType.Main:
                     menuString = new string[] { "강의 시간표 조회 ", " 관심 과목 담기",
                         "  수강 신청 ", "수강 내역 조회" };
                     break;
-                case (int)Constants.MenuType.FavoriteSubject:
+                case (int)Constantss.MenuType.FavoriteSubject:
                     menuString = new string[] { "관심 과목 추가", "관심 과목 내역",
                     "관심 과목 시간표","관심 과목 삭제"};
                     break;
-                case (int)Constants.MenuType.CourseApply:
+                case (int)Constantss.MenuType.CourseApply:
                     menuString = new string[] { "수강 신청", "수강 신청 내역" ,
                     "수강 신청 시간표","수강 과목 삭제"};
                     break;
-                case (int)Constants.MenuType.SearchAndApply:
+                case (int)Constantss.MenuType.SearchAndApply:
                     menuString = new string[] { "검색 후 신청", "관심 과목 신청" };
                     break;
-                case (int)Constants.MenuType.Search:
+                case (int)Constantss.MenuType.Search:
                     menuString = new string[] { "개설 학과 전공 :", "   이수 구분   :",
                         "   교과목 명   :", "    교수명     :", "     학년      :", "           < 검색 >"};
                     break;
-                case (int)Constants.MenuType.Major:
+                case (int)Constantss.MenuType.Major:
                     menuString = new string[] { " 전체", "컴퓨터학과", "소프트웨어학과", "지능기전공학부", "기계항공우주공학부" };
                     break;
-                case (int)Constants.MenuType.CreditClassification:
+                case (int)Constantss.MenuType.CreditClassification:
                     menuString = new string[] { " 전체", "교양필수", "전공필수", "전공선택" };
                     break;
-                case (int)Constants.MenuType.Grade:
+                case (int)Constantss.MenuType.Grade:
                     menuString = new string[] { "1학년", "2학년", "3학년", "4학년" };
                     break;
             }

@@ -12,7 +12,7 @@ namespace LectureTimeTable.Utility
     {
         public bool IsOverlapCheck(List<LectureVo> lectureList, LectureVo addCourse)
         {
-            string[] times = Constants.TIMES;
+            string[] times = Constantss.TIMES;
             List<List<string>> dayList = GetDayList(lectureList);
             int[,] matrix = new int[27, 5];
             List<string> course = new List<string>();            

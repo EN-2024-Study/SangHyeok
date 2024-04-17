@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LectureTimeTable.Utility
 {
-    public class Constants
+    public class Constantss
     {
         public enum MenuType
         {

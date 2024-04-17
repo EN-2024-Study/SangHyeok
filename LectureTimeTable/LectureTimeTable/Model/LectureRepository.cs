@@ -18,7 +18,6 @@ namespace LectureTimeTable.Model
         {
             LectureVo lectureVo = null;
             this.lectureList = new List<LectureVo>();
-
             try
             {
                 Application application = new Application();

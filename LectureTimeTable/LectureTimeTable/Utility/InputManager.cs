@@ -124,23 +124,23 @@ namespace LectureTimeTable.Utility
             int x = 0, y = 0;
             switch (digitValue)
             {
-                case (int)Constants.DigitType.Id:
+                case (int)Constantss.DigitType.Id:
                     x = 40;
                     y = 30;
                     break;
-                case (int)Constants.DigitType.Password:
+                case (int)Constantss.DigitType.Password:
                     x = 40;
                     y = 31;
                     break;
-                case (int)Constants.DigitType.SubjectTitle:
+                case (int)Constantss.DigitType.SubjectTitle:
                     x = 18;
                     y = 32;
                     break;
-                case (int)Constants.DigitType.ProfessorName:
+                case (int)Constantss.DigitType.ProfessorName:
                     x = 18;
                     y = 33;
                     break;
-                case (int)Constants.DigitType.SubjectId:
+                case (int)Constantss.DigitType.SubjectId:
                     x = 4;
                     break;
             }

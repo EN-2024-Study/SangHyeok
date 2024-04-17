@@ -35,7 +35,7 @@ namespace LectureTimeTable.Model
         {
             while (true)
             {
-                string inputId = inputManager.LimitInputLength((int)Constants.DigitType.Id, 9, false);
+                string inputId = inputManager.LimitInputLength((int)Constantss.DigitType.Id, 9, false);
 
                 if (inputId == null)
                     return false;
@@ -48,7 +48,7 @@ namespace LectureTimeTable.Model
         {    
             while (true)
             {
-                string inputPassword = inputManager.LimitInputLength((int)Constants.DigitType.Password, 5, true);
+                string inputPassword = inputManager.LimitInputLength((int)Constantss.DigitType.Password, 5, true);
 
                 if (inputPassword == null)
                     return false;
@@ -62,7 +62,7 @@ namespace LectureTimeTable.Model
             if (!IsCheckDuplication(typeValue, course))
                 return false;
 
-            if (typeValue == (int)Constants.LectureType.FavoriteSubjectApply)
+            if (typeValue == (int)Constantss.LectureType.FavoriteSubjectApply)
             {
                 if (!exceptionManager.IsOverlapCheck(user.FavoriteSubjectList, course))
                     return false;
@@ -71,8 +71,8 @@ namespace LectureTimeTable.Model
                 else
                     user.AddFavoriteSubject(course);
             }
-            else if (typeValue == (int)Constants.LectureType.ApplyAfterSearch ||
-                typeValue == (int)Constants.LectureType.ApplyForFavoriteSubject)
+            else if (typeValue == (int)Constantss.LectureType.ApplyAfterSearch ||
+                typeValue == (int)Constantss.LectureType.ApplyForFavoriteSubject)
             {
                 if (!exceptionManager.IsOverlapCheck(user.AppliedCourseList, course))
                     return false;
@@ -81,9 +81,9 @@ namespace LectureTimeTable.Model
                 else
                     user.AddAppliedCourse(course);
             }
-            else if (typeValue == (int)Constants.LectureType.FavoriteSubjectDelete)
+            else if (typeValue == (int)Constantss.LectureType.FavoriteSubjectDelete)
                 user.RemoveFavoriteSubject(course);
-            else if (typeValue == (int)Constants.LectureType.CourseDelete)
+            else if (typeValue == (int)Constantss.LectureType.CourseDelete)
                 user.RemoveAppliedCourse(course);
             return true;
         }
@@ -94,19 +94,19 @@ namespace LectureTimeTable.Model
 
             switch (typeValue)
             {
-                case (int)Constants.LectureType.FavoriteSubjectApply:
-                case (int)Constants.LectureType.FavoriteSubjectDelete:
-                case (int)Constants.LectureType.ApplyForFavoriteSubject:
+                case (int)Constantss.LectureType.FavoriteSubjectApply:
+                case (int)Constantss.LectureType.FavoriteSubjectDelete:
+                case (int)Constantss.LectureType.ApplyForFavoriteSubject:
                     lectureList = user.FavoriteSubjectList;
                     break;
-                case (int)Constants.LectureType.ApplyAfterSearch:
-                case (int)Constants.LectureType.CourseDelete:
+                case (int)Constantss.LectureType.ApplyAfterSearch:
+                case (int)Constantss.LectureType.CourseDelete:
                     lectureList = user.AppliedCourseList;
                     break;
             }
 
-            if (typeValue == (int)Constants.LectureType.ApplyAfterSearch || 
-                typeValue == (int)Constants.LectureType.FavoriteSubjectApply)
+            if (typeValue == (int)Constantss.LectureType.ApplyAfterSearch || 
+                typeValue == (int)Constantss.LectureType.FavoriteSubjectApply)
             {
                 foreach (LectureVo lecture in lectureList)  // 추가할 과목이 이미 존재하면 false
                     if (addCourse.Id.Equals(lecture.Id))

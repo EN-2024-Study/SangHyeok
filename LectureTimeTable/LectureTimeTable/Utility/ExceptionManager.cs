@@ -12,32 +12,10 @@ namespace LectureTimeTable.Utility
     {
         public bool IsOverlapCheck(List<LectureVo> lectureList, LectureVo addCourse)
         {
-            string[] times = new string[] {"08:30", "09:00", "09:30", "10:00", "10:30" ,
-                "11:00", "11:30" , "12:00", "12:30" , "13:00", "13:30" ,
-                "14:00", "14:30" , "15:00", "15:30" , "16:00", "16:30" ,
-                "17:00", "17:30" , "18:00", "18:30" , "19:00", "19:30" ,
-                "20:00", "20:30" , "21:00", "21:30" };
-            List<List<string>> dayList = new List<List<string>>();
+            string[] times = Constants.TIMES;
+            List<List<string>> dayList = GetDayList(lectureList);
             int[,] matrix = new int[27, 5];
-            List<string> course = new List<string>();
-
-            foreach (LectureVo lecture in lectureList)
-            {
-                if (lecture.Day == null)
-                    continue;
-
-                string[] temp2 = lecture.Day.Split(new char[] { ' ', ',', '~' });
-                List<string> strings = new List<string>();  // split으로 나눈 값들을 list에 저장
-
-                for (int i = 0; i < temp2.Length; i++)
-                {
-                    if (temp2[i].Equals(""))
-                        continue;
-                    strings.Add(temp2[i]);
-                }
-
-                dayList.Add(strings);   // 저장한 list들을 dayList에 저장
-            }
+            List<string> course = new List<string>();            
 
             string[] temp = addCourse.Day.Split(new char[] { ' ', ',', '~' });
             for (int i = 0; i < temp.Length; i++)
@@ -204,22 +182,47 @@ namespace LectureTimeTable.Utility
             if (isDuplication)
                 return false;
             return true;
+        }
 
-            int SetCol(string day)
+        public static List<List<string>> GetDayList(List<LectureVo> lectureList)
+        {
+            List<List<string>> dayList = new List<List<string>>();
+
+            foreach (LectureVo lecture in lectureList)
             {
-                int result = -1;
-                if (day.Equals("월"))
-                    result = 0;
-                else if (day.Equals("화"))
-                    result = 1;
-                else if (day.Equals("수"))
-                    result = 2;
-                else if (day.Equals("목"))
-                    result = 3;
-                else if (day.Equals("금"))
-                    result = 4;
-                return result;
+                if (lecture.Day == null)
+                    continue;
+
+                List<string> strings = new List<string>();  // split으로 나눈 값들을 list에 저장
+                string[] temp = lecture.Day.Split(new char[] { ' ', ',', '~' });              
+
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    if (temp[i].Equals(""))
+                        continue;
+                    strings.Add(temp[i]);
+                }
+
+                dayList.Add(strings);   // 저장한 list들을 dayList에 저장
             }
+
+            return dayList;
+        }
+
+        public static int SetCol(string day)
+        {
+            int result = -1;
+            if (day.Equals("월"))
+                result = 0;
+            else if (day.Equals("화"))
+                result = 1;
+            else if (day.Equals("수"))
+                result = 2;
+            else if (day.Equals("목"))
+                result = 3;
+            else if (day.Equals("금"))
+                result = 4;
+            return result;
         }
     }
 }

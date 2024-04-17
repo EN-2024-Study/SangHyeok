@@ -67,15 +67,13 @@ namespace LectureTimeTable.Model
                 case (int)Constants.LectureType.FavoriteSubjectApply:
                     if (exceptionManager.IsOverlapCheck(user.FavoriteSubjectList, course))
                         user.AddFavoriteSubject(course);
-                    else
-                        Console.WriteLine("test1");
+                    else return false;
                     break;
                 case (int)Constants.LectureType.ApplyAfterSearch:
                 case (int)Constants.LectureType.ApplyForFavoriteSubject:
                     if (exceptionManager.IsOverlapCheck(user.AppliedCourseList, course))
                         user.AddAppliedCourse(course);
-                    else
-                        Console.WriteLine("test2");
+                    else return false;
                     break;
                 case (int)Constants.LectureType.FavoriteSubjectDelete:
                     user.RemoveFavoriteSubject(course);

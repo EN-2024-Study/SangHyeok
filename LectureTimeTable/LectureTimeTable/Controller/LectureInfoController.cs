@@ -56,32 +56,39 @@ namespace LectureTimeTable.Model
             Console.SetWindowSize(130, 40);
             Console.Clear();
 
-
+            screen.DrawScheduleScreen(lectureList);
+            Console.ReadLine();
         }
 
         public void ManageLectureTimeSheet(int typeValue)   // 강의 시간표 차트 관리 함수
         {
-            List<LectureVo> lectureList = GetLectureList(typeValue);
-            Console.SetWindowSize(180, 40);
-            Console.Clear();
-            screen.DrawLectureTimeSheetScreen(lectureList);
+            bool isSuccess = false;
+            while(!isSuccess)
+            {
+                List<LectureVo> lectureList = GetLectureList(typeValue);
+                Console.SetWindowSize(180, 40);
+                Console.Clear();
+                screen.DrawLectureTimeSheetScreen(lectureList);
+                // ConsoleKeyInfo의 할당은 무조건 사용자의 입력이 있어야 하므로 do while문 사용
+                if (typeValue == (int)Constants.LectureType.FavoriteSubjectHistory ||
+                    typeValue == (int)Constants.LectureType.AppliedCourseHistory ||
+                    typeValue == (int)Constants.LectureType.CourseSearch)
+                {
+                    ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                    if (keyInfo.Key == ConsoleKey.Escape)   // 뒤로가기 입력만 받기
+                        break;
+                }
+                else
+                {
+                    string subjectId = inputManager.LimitInputLength((int)Constants.DigitType.SubjectId, 4, false);
+                    if (subjectId == null)
+                        break;
+                    else
+                        isSuccess = IsSetSuccessful(typeValue, subjectId);
 
-            if (typeValue == (int)Constants.LectureType.FavoriteSubjectHistory ||
-                typeValue == (int)Constants.LectureType.AppliedCourseHistory ||
-                typeValue == (int)Constants.LectureType.CourseSearch)
-            {
-                ConsoleKeyInfo keyInfo;  // ConsoleKeyInfo의 할당은 무조건 사용자의 입력이 있어야 하므로 do while문 사용
-                do keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Escape);   // 뒤로가기 입력만 받기
+                }
+                Console.Clear();
             }
-            else
-            {
-                string subjectId = inputManager.LimitInputLength((int)Constants.DigitType.SubjectId, 4, false);
-                bool isCheck = IsSetSuccessful(typeValue, subjectId);
-                // 예외 추가해야 함
-            }   
-           
-            Console.Clear();
         }
 
         private bool IsSetSuccessful(int typeValue, string subjectId)

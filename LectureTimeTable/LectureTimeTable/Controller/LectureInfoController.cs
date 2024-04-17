@@ -24,7 +24,7 @@ namespace LectureTimeTable.Model
             this.inputProfessorName = "";
         }
 
-        public bool IsLectureValid(int digitValue)
+        public bool IsSearchedLectureValid(int digitValue)
         {
             switch (digitValue)
             {
@@ -43,7 +43,7 @@ namespace LectureTimeTable.Model
             return true;
         }
 
-        public List<LectureVo> ManageLectureList(int[] searchValues)
+        public void ManageLectureList(int[] searchValues)
         {
             string[] searchString = GetSearchStrings(searchValues);
             List<LectureVo> lectureList = lecture.LectureList;
@@ -81,14 +81,14 @@ namespace LectureTimeTable.Model
                     resultLectureList.Add(lecture);
             }
 
-            return resultLectureList;
+            ManageLectureTimeSheet(resultLectureList);
         }
 
         public void ManageLectureTimeSheet(List<LectureVo> lectureList)
         {
             Console.SetWindowSize(180, 40);
             Console.Clear();
-            lectureTimeScreen.DrawSheetScreen(lectureList);
+            lectureTimeScreen.DrawLectureTimeSheetScreen(lectureList);
             Console.ReadLine();
             Console.Clear();
         }

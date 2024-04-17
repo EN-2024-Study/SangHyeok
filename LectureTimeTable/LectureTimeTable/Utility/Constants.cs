@@ -77,5 +77,11 @@ namespace LectureTimeTable.Utility
             Essential,
             Selected
         }
+
+        public enum CourseMenu
+        {
+            Favorite,
+            Class
+        }
     }
 }

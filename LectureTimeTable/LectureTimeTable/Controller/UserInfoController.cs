@@ -12,13 +12,15 @@ namespace LectureTimeTable.Model
     {
         private UserRepository user;
         private InputManager inputManager;
-        private MenuScreen menuScreen;
+        private LectureTimeScreen screen;
+        private LectureInfoController lectureInfoController;
 
         public UserInfoController()
         {
-            this.user = UserRepository.Instance;
+            this.user = UserRepository.Instance;    // singleton 생성
             this.inputManager = new InputManager();
-            this.menuScreen = new MenuScreen();
+            this.screen = new LectureTimeScreen();
+            this.lectureInfoController = new LectureInfoController();
         }
 
         public bool IsUserLogInValid(int digitValue)
@@ -41,6 +43,22 @@ namespace LectureTimeTable.Model
                 else if (user.GetUserId().Equals(inputId) || user.GetUserPassword().Equals(inputPassword))
                     return true;
             }
+        }
+
+        public void ManageLectureList(int menuValue)
+        {
+            List<LectureVo> courseList = null;
+            switch(menuValue)
+            {
+                case (int)Constants.CourseMenu.Favorite:
+                    courseList = user.FavoriteSubjectList;
+                    break;
+                case (int)Constants.CourseMenu.Class:
+                    courseList = user.AppliedCourseList;
+                    break;
+            }
+            //screen.DrawLectureTimeSheetScreen(courseList);
+            lectureInfoController.ManageLectureTimeSheet(courseList);
         }
     }
 }

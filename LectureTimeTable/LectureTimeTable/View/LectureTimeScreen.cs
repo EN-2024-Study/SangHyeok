@@ -10,9 +10,9 @@ namespace LectureTimeTable.View
     public class LectureTimeScreen
     {
 
-        public void DrawSheetScreen(List<LectureVo> lectureList)
+        public void DrawLectureTimeSheetScreen(List<LectureVo> lectureList)
         {
-            int[] coordinateX = new int[] { 0, 4, 23, 31, 36, 69, 83, 85, 88, 119, 133, 160, 167};
+            int[] coordinateX = new int[] { 0, 4, 23, 31, 36, 69, 83, 87, 90, 121, 135, 162, 169};
             int y = 1;
             Console.SetCursorPosition(coordinateX[0], y);
             Console.Write("NO");
@@ -26,12 +26,12 @@ namespace LectureTimeTable.View
             Console.Write("교과목명");
             Console.SetCursorPosition(coordinateX[5], y);
             Console.Write("이수구분");
-            Console.SetCursorPosition(coordinateX[6], y);
+            Console.SetCursorPosition(coordinateX[6] - 1, y);
             Console.Write("학년");
-            Console.SetCursorPosition(coordinateX[7], y);
+            Console.SetCursorPosition(coordinateX[7] - 1, y);
             Console.Write("학점");
-            Console.SetCursorPosition(coordinateX[8], y);
-            Console.Write("요일및강의시간");
+            Console.SetCursorPosition(coordinateX[8] - 1, y);
+            Console.Write("요일 및 강의시간");
             Console.SetCursorPosition(coordinateX[9], y);
             Console.Write("강의실");
             Console.SetCursorPosition(coordinateX[10], y);

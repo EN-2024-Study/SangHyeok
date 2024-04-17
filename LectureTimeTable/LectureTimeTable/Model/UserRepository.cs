@@ -10,9 +10,14 @@ namespace LectureTimeTable.Model
     {
         private static UserRepository instance;
         private UserDto user;
+        private List<LectureVo> favoriteSubjectList;
+        private List<LectureVo> appliedCourseList;
+
         private UserRepository()
         {
-            user = new UserDto("21013314", "1234");
+            this.user = new UserDto("21013314", "1234");
+            this.favoriteSubjectList = new List<LectureVo>();
+            this.appliedCourseList = new List<LectureVo>();
         }
 
         public static UserRepository Instance
@@ -30,5 +35,17 @@ namespace LectureTimeTable.Model
 
         public string GetUserPassword()
         { return user.Password; }
+
+        public List<LectureVo> FavoriteSubjectList
+        {
+            get { return favoriteSubjectList; }
+            set { favoriteSubjectList = value; }
+        }
+
+        public List<LectureVo> AppliedCourseList
+        {
+            get { return appliedCourseList; }
+            set { appliedCourseList = value; }
+        }
     }
 }

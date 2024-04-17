@@ -16,7 +16,8 @@ namespace LectureTimeTable.Model
 
         private LectureRepository()
         {
-            lectureList = new List<LectureVo>();
+            LectureVo lectureVo = null;
+            this.lectureList = new List<LectureVo>();
 
             try
             {
@@ -32,7 +33,6 @@ namespace LectureTimeTable.Model
                 application.Workbooks.Close();
                 application.Quit();
 
-                LectureVo lectureVo = null;
                 for (int i = 1; i <= data.GetLength(0); i++)
                 {
                     lectureVo = new LectureVo((Double)data.GetValue(i, 1),

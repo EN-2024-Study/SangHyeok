@@ -73,7 +73,6 @@ namespace LectureTimeTable.Controller
                         ControllCourseApplyMenu();
                         break;
                     case (int)Constants.MainMenu.CourseApplyHistoryCheck:   // 수강 내역 조회
-                       
                         break;
                 }
             }
@@ -97,7 +96,7 @@ namespace LectureTimeTable.Controller
                         ControllSearchMenu();
                         break;
                     case (int)Constants.ApplyMenu.Statement:    //관심 과목 내역
-
+                        userInfoController.ManageLectureList((int)Constants.CourseMenu.Favorite);
                         break;
                     case (int)Constants.ApplyMenu.Schedule: // 관심 과목 시간표
 
@@ -126,7 +125,7 @@ namespace LectureTimeTable.Controller
                         ControllSearchAndApplyMenu();
                         break;
                     case (int)Constants.ApplyMenu.Statement:    // 수강 신청 내역
-
+                        userInfoController.ManageLectureList((int)Constants.CourseMenu.Class);
                         break;
                     case (int)Constants.ApplyMenu.Schedule: // 수강 신청 시간표
 
@@ -171,7 +170,6 @@ namespace LectureTimeTable.Controller
 
             while (isSelected)
             {
-                List<LectureVo> lectureList = null;
                 isSelected = IsMenuSelection((int)Constants.MenuType.Search, true);
                 if (!isSelected)
                     continue;
@@ -188,7 +186,7 @@ namespace LectureTimeTable.Controller
                         break;
                     case (int)Constants.SearchMenu.SubjectTitle: // 교과목 명
                     case (int)Constants.SearchMenu.ProfessorName:   // 교수 명
-                        if (lectureInfoController.IsLectureValid(menuValue))
+                        if (lectureInfoController.IsSearchedLectureValid(menuValue))
                             continue;
                         break;
                     case (int)Constants.SearchMenu.Grade:   // 학년
@@ -196,12 +194,9 @@ namespace LectureTimeTable.Controller
                         searchValues[2] = menuValue;
                         break;
                     case (int)Constants.SearchMenu.Enter:   // 강의 시간표 차트 띄우기
-                        lectureList = lectureInfoController.ManageLectureList(searchValues);
+                        lectureInfoController.ManageLectureList(searchValues);
                         break;
                 }
-
-                if (lectureList != null)
-                    lectureInfoController.ManageLectureTimeSheet(lectureList);
             }
         }
 

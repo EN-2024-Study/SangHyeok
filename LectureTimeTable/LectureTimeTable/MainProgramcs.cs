@@ -24,13 +24,7 @@ namespace LectureTimeTable
             //List<LectureVo> b = lecture.LectureList;
             //a.DrawSheetScreen(b);
 
-            //Console.SetWindowSize(170, 40);
-            //Array data = lecture.Data;
 
-            //for (int j = 1; j <= data.GetLength(1); j++)
-            //{
-            //    Console.WriteLine(data.GetValue(1, j).GetType());
-            //}
 
         }
     }

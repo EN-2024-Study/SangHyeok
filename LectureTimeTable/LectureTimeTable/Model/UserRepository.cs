@@ -41,9 +41,13 @@ namespace LectureTimeTable.Model
             get { return favoriteSubjectList; }
         }
 
-        public void SetFavoriteSubject(LectureVo lecture)
+        public void AddFavoriteSubject(LectureVo lecture)
         {
             favoriteSubjectList.Add(lecture);
+        }
+        public void RemoveFavoriteSubject(LectureVo lecture)
+        {
+            favoriteSubjectList.Remove(lecture);
         }
 
         public List<LectureVo> AppliedCourseList
@@ -51,9 +55,14 @@ namespace LectureTimeTable.Model
             get { return appliedCourseList; }
         }
 
-        public void SetAppliedCourse(LectureVo lecture)
+        public void AddAppliedCourse(LectureVo lecture)
         {
             appliedCourseList.Add(lecture);
+        }
+
+        public void RemoveAppliedCourse(LectureVo lecture)
+        {
+            appliedCourseList.Remove(lecture);
         }
     }
 }

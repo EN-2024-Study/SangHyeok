@@ -52,8 +52,7 @@ namespace LectureTimeTable.Model
 
         public void ManageLectureTimeSheet(int typeValue)
         {
-            string subjectId = "";
-            List<LectureVo> lectureList = ManageLectureList(typeValue);
+            List<LectureVo> lectureList = GetLectureList(typeValue);
             Console.SetWindowSize(180, 40);
             Console.Clear();
             screen.DrawLectureTimeSheetScreen(lectureList);
@@ -66,46 +65,57 @@ namespace LectureTimeTable.Model
                 do keyInfo = Console.ReadKey(true);
                 while (keyInfo.Key != ConsoleKey.Escape);   // 뒤로가기 입력만 받기
             }
-            else if (typeValue == (int)Constants.LectureTimeSheetType.FavoriteSubjectApply ||
-                typeValue == (int)Constants.LectureTimeSheetType.CourseApply)
+            else
             {
-                subjectId = inputManager.LimitInputLength((int)Constants.DigitType.SubjectId, 4, false);
-                bool isCheck = IsAdditionSuccessful(typeValue, subjectId);
-            }
+                string subjectId = inputManager.LimitInputLength((int)Constants.DigitType.SubjectId, 4, false);
+                bool isCheck = IsSetSuccessful(typeValue, subjectId);
+                // 예외 추가해야 함
+            }   // 여기부터
+           
             Console.Clear();
         }
 
-        private bool IsAdditionSuccessful(int typeValue, string subjectId)
-        {   
-            List<LectureVo> lectureList = lecture.LectureList;
+        private bool IsSetSuccessful(int typeValue, string subjectId)
+        {
+            List<LectureVo> lectureList = null;
             LectureVo resultLecture = null;
-            foreach(LectureVo value in lectureList)
+            if (typeValue == (int)Constants.LectureTimeSheetType.FavoriteSubjectApply ||
+                typeValue == (int)Constants.LectureTimeSheetType.ApplyAfterSearch)
+                lectureList = lecture.LectureList;
+            else if (typeValue == (int)Constants.LectureTimeSheetType.FavoriteSubjectDelete ||
+                typeValue == (int)Constants.LectureTimeSheetType.ApplyForFavoriteSubject)
+                lectureList = userInfoController.GetFavoriteSubjectList();
+            else if (typeValue == (int)Constants.LectureTimeSheetType.CourseDelete)
+                lectureList = userInfoController.GetAppliedCourseList();
+
+            foreach (LectureVo value in lectureList)
             {
-                if (value.Id == Double.Parse(subjectId)) // 검색한 id가 lectureList에 있는지 확인
+                if (subjectId.Equals(value.Id.ToString()))
                 {
                     resultLecture = value;
                     break;
                 }
             }
 
-            // 있다면 중복된 값이 있는지 확인
+            // 검색한 id가 있다면 중복된 값이 있는지 확인하고 추가 or 삭제 기능 수행
             if (resultLecture != null && userInfoController.IsCourseSetValid(typeValue, resultLecture))  
                 return true;
             return false;
         }
 
-        private List<LectureVo> ManageLectureList(int typeValue)
+        private List<LectureVo> GetLectureList(int typeValue)
         {
             List<LectureVo> lectureList = null;
             switch(typeValue)
             {
                 case (int)Constants.LectureTimeSheetType.FavoriteSubjectApply:
                 case (int)Constants.LectureTimeSheetType.CourseSearch:
-                case (int)Constants.LectureTimeSheetType.CourseApply:
+                case (int)Constants.LectureTimeSheetType.ApplyAfterSearch:
                     lectureList = ManageSearchedLectureList(typeValue);
                     break;
                 case (int)Constants.LectureTimeSheetType.FavoriteSubjectHistory:
                 case (int)Constants.LectureTimeSheetType.FavoriteSubjectDelete:
+                case (int)Constants.LectureTimeSheetType.ApplyForFavoriteSubject:
                     lectureList = userInfoController.GetFavoriteSubjectList();
                     break;
                 case (int)Constants.LectureTimeSheetType.AppliedCourseHistory:

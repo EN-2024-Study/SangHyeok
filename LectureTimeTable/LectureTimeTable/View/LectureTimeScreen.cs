@@ -9,7 +9,6 @@ namespace LectureTimeTable.View
 {
     public class LectureTimeScreen
     {
-
         public void DrawLectureTimeSheetScreen(List<LectureVo> lectureList)
         {
             int[] coordinateX = new int[] { 0, 4, 23, 31, 36, 69, 83, 87, 90, 121, 135, 162, 169};

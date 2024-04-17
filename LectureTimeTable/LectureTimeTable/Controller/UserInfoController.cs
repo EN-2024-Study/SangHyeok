@@ -52,42 +52,62 @@ namespace LectureTimeTable.Model
             return user.AppliedCourseList;
         }
 
-        public bool IsCourseSetValid(int typeValue, LectureVo addCourse)
+        public bool IsCourseSetValid(int typeValue, LectureVo course)
         {
-            List<LectureVo> lectureList = null;
-            bool isDuplication = false;
-            switch (typeValue)
-            {
-                case (int)Constants.LectureTimeSheetType.FavoriteSubjectApply:
-                    lectureList = user.FavoriteSubjectList;
-                    break;
-                case (int)Constants.LectureTimeSheetType.CourseApply:
-                    lectureList = user.AppliedCourseList;
-                    break;
-            }
-
-            foreach (LectureVo lecture in lectureList)
-            {
-                if (addCourse.Id.Equals(lecture.Id))
-                {
-                    isDuplication = true;
-                    break;
-                }
-            }
-
-            if (isDuplication)
+            if (!IsCheckDuplication(typeValue, course))
                 return false;
 
             switch (typeValue)
             {
                 case (int)Constants.LectureTimeSheetType.FavoriteSubjectApply:
-                    user.SetFavoriteSubject(addCourse);
+                    user.AddFavoriteSubject(course);
                     break;
-                case (int)Constants.LectureTimeSheetType.CourseApply:
-                    user.SetAppliedCourse(addCourse);
+                case (int)Constants.LectureTimeSheetType.ApplyAfterSearch:
+                case (int)Constants.LectureTimeSheetType.ApplyForFavoriteSubject:
+                    user.AddAppliedCourse(course);
+                    break;
+                case (int)Constants.LectureTimeSheetType.FavoriteSubjectDelete:
+                    user.RemoveFavoriteSubject(course);
+                    break;
+                case (int)Constants.LectureTimeSheetType.CourseDelete:
+                    user.RemoveAppliedCourse(course);
                     break;
             }
             return true;
+        }
+
+        private bool IsCheckDuplication(int typeValue, LectureVo addCourse)
+        {
+            List<LectureVo> lectureList = null;
+
+            switch (typeValue)
+            {
+                case (int)Constants.LectureTimeSheetType.FavoriteSubjectApply:
+                case (int)Constants.LectureTimeSheetType.FavoriteSubjectDelete:
+                case (int)Constants.LectureTimeSheetType.ApplyForFavoriteSubject:
+                    lectureList = user.FavoriteSubjectList;
+                    break;
+                case (int)Constants.LectureTimeSheetType.ApplyAfterSearch:
+                case (int)Constants.LectureTimeSheetType.CourseDelete:
+                    lectureList = user.AppliedCourseList;
+                    break;
+            }
+
+            if (typeValue == (int)Constants.LectureTimeSheetType.ApplyAfterSearch || 
+                typeValue == (int)Constants.LectureTimeSheetType.FavoriteSubjectApply)
+            {
+                foreach (LectureVo lecture in lectureList)  // 추가할 과목이 이미 존재하면 false
+                    if (addCourse.Id.Equals(lecture.Id))
+                        return false;
+                return true;
+            }
+            else
+            {
+                foreach (LectureVo lecture in lectureList)  // 삭제할 과목이 없다면 false
+                    if (addCourse.Id.Equals(lecture.Id))
+                        return true;
+                return false;
+            }
         }
     }
 }

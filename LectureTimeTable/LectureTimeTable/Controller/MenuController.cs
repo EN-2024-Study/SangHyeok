@@ -157,10 +157,10 @@ namespace LectureTimeTable.Controller
                 switch (menuValue)
                 {
                     case (int)Constants.SearchAndApplyMenu.Search:  // 검색 후 신청
-                        ControllSearchMenu((int)Constants.LectureTimeSheetType.CourseApply);
+                        ControllSearchMenu((int)Constants.LectureTimeSheetType.ApplyAfterSearch);
                         break;
                     case (int)Constants.SearchAndApplyMenu.FavoriteSubjects:    // 관심 과목 신청
-
+                        lectureInfoController.ManageLectureTimeSheet((int)Constants.LectureTimeSheetType.ApplyForFavoriteSubject);
                         break;
                 }
             }

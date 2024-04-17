@@ -82,11 +82,12 @@ namespace LectureTimeTable.Utility
         public enum LectureTimeSheetType
         {
             FavoriteSubjectHistory,
+            AppliedCourseHistory,
+            CourseSearch,
             FavoriteSubjectApply,
             FavoriteSubjectDelete,
-            AppliedCourseHistory,
-            CourseApply,
-            CourseSearch,
+            ApplyAfterSearch,
+            ApplyForFavoriteSubject,
             CourseDelete
         }
     }

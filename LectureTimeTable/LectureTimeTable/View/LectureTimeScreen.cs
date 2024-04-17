@@ -158,9 +158,9 @@ namespace LectureTimeTable.View
 
                     for (int i = row; i < lastRow; i++)
                     {
-                        Console.SetCursorPosition(x[col], y[row]);
+                        Console.SetCursorPosition(x[col], y[i]);
                         Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[col], y[row] + 1);
+                        Console.SetCursorPosition(x[col], y[i] + 1);
                         Console.Write(lectureList[index].Room);
                     }
                 }
@@ -178,18 +178,18 @@ namespace LectureTimeTable.View
                     }
                     for (int i = row; i < lastRow; i++)
                     {
-                        Console.SetCursorPosition(x[col], y[row]);
+                        Console.SetCursorPosition(x[col], y[i]);
                         Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[col], y[row] + 1);
+                        Console.SetCursorPosition(x[col], y[i] + 1);
                         Console.Write(lectureList[index].Room);
                     }
 
                     col = ExceptionManager.SetCol(day[1]);
                     for (int i = row; i < lastRow; i++)
                     {
-                        Console.SetCursorPosition(x[col], y[row]);
+                        Console.SetCursorPosition(x[col], y[i]);
                         Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[col], y[row] + 1);
+                        Console.SetCursorPosition(x[col], y[i] + 1);
                         Console.Write(lectureList[index].Room);
                     }
                 }
@@ -208,9 +208,9 @@ namespace LectureTimeTable.View
 
                     for (int i = row; i < lastRow; i++)
                     {
-                        Console.SetCursorPosition(x[col], y[row]);
+                        Console.SetCursorPosition(x[col], y[i]);
                         Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[col], y[row] + 1);
+                        Console.SetCursorPosition(x[col], y[i] + 1);
                         Console.Write(lectureList[index].Room);
                     }
 
@@ -231,9 +231,9 @@ namespace LectureTimeTable.View
 
                     for (int i = row; i < lastRow; i++)
                     {
-                        Console.SetCursorPosition(x[col], y[row]);
+                        Console.SetCursorPosition(x[col], y[i]);
                         Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[col], y[row] + 1);
+                        Console.SetCursorPosition(x[col], y[i] + 1);
                         Console.Write(lectureList[index].Room);
                     }
 

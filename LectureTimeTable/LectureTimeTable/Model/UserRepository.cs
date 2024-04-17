@@ -9,13 +9,13 @@ namespace LectureTimeTable.Model
     public class UserRepository // singleton
     {
         private static UserRepository instance;
-        private UserDto user;
+        private UserDto userDto;
         private List<LectureVo> favoriteSubjectList;
         private List<LectureVo> appliedCourseList;
 
         private UserRepository()
         {
-            this.user = new UserDto("21013314", "1234");
+            this.userDto = new UserDto("21013314", "1234");
             this.favoriteSubjectList = new List<LectureVo>();
             this.appliedCourseList = new List<LectureVo>();
         }
@@ -31,21 +31,29 @@ namespace LectureTimeTable.Model
         }
 
         public string GetUserId()
-        { return user.Id; }
+        { return userDto.Id; }
 
         public string GetUserPassword()
-        { return user.Password; }
+        { return userDto.Password; }
 
         public List<LectureVo> FavoriteSubjectList
         {
             get { return favoriteSubjectList; }
-            set { favoriteSubjectList = value; }
+        }
+
+        public void SetFavoriteSubject(LectureVo lecture)
+        {
+            favoriteSubjectList.Add(lecture);
         }
 
         public List<LectureVo> AppliedCourseList
         {
             get { return appliedCourseList; }
-            set { appliedCourseList = value; }
+        }
+
+        public void SetAppliedCourse(LectureVo lecture)
+        {
+            appliedCourseList.Add(lecture);
         }
     }
 }

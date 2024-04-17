@@ -52,10 +52,14 @@ namespace LectureTimeTable.Utility
                     continue;
                 }
 
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true); // 입력 받기
 
                 if (keyInfo.Key == ConsoleKey.Enter)
                 {
+                    //foreach (var value in inputString)
+                    //    Console.Write(value);
+                    //Console.ReadLine();
+
                     //menuScreen.EraseFail(failCoordinate);
                     break;
                 }
@@ -137,12 +141,15 @@ namespace LectureTimeTable.Utility
                     y = 31;
                     break;
                 case (int)Constants.DigitType.SubjectTitle:
-                    x = 17;
+                    x = 18;
                     y = 32;
                     break;
                 case (int)Constants.DigitType.ProfessorName:
-                    x = 17;
+                    x = 18;
                     y = 33;
+                    break;
+                case (int)Constants.DigitType.SubjectId:
+
                     break;
             }
             return new Tuple<int, int>(x, y);

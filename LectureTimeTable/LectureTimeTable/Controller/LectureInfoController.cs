@@ -10,19 +10,26 @@ namespace LectureTimeTable.Model
 {
     public class LectureInfoController
     {
-        private LectureRepository lecture;  
-        private LectureTimeScreen lectureTimeScreen;
+        private LectureRepository lecture;
+        private LectureTimeScreen screen;
         private InputManager inputManager;
+        private UserInfoController userInfoController;
         private string inputSubjectTitle, inputProfessorName;
+        private int[] searchValues;
 
         public LectureInfoController()
         {
             this.lecture = LectureRepository.Instance;  // singleton 생성
-            this.lectureTimeScreen = new LectureTimeScreen();
+            this.screen = new LectureTimeScreen();
             this.inputManager = new InputManager();
+            this.userInfoController = new UserInfoController();
             this.inputSubjectTitle = "";
             this.inputProfessorName = "";
+            this.searchValues = new int[] { -1, -1, -1 };
         }
+
+        public int[] SearchValues
+        { set { searchValues = value; } }
 
         public bool IsSearchedLectureValid(int digitValue)
         {
@@ -43,12 +50,83 @@ namespace LectureTimeTable.Model
             return true;
         }
 
-        public void ManageLectureList(int[] searchValues)
+        public void ManageLectureTimeSheet(int typeValue)
+        {
+            string subjectId = "";
+            List<LectureVo> lectureList = ManageLectureList(typeValue);
+            Console.SetWindowSize(180, 40);
+            Console.Clear();
+            screen.DrawLectureTimeSheetScreen(lectureList);
+
+            if (typeValue == (int)Constants.LectureTimeSheetType.FavoriteSubjectHistory ||
+                typeValue == (int)Constants.LectureTimeSheetType.AppliedCourseHistory ||
+                typeValue == (int)Constants.LectureTimeSheetType.CourseSearch)
+            {
+                ConsoleKeyInfo keyInfo;  // ConsoleKeyInfo의 할당은 무조건 사용자의 입력이 있어야 하므로 do while문 사용
+                do keyInfo = Console.ReadKey(true);
+                while (keyInfo.Key != ConsoleKey.Escape);   // 뒤로가기 입력만 받기
+            }
+            else if (typeValue == (int)Constants.LectureTimeSheetType.FavoriteSubjectApply ||
+                typeValue == (int)Constants.LectureTimeSheetType.CourseApply)
+            {
+                subjectId = inputManager.LimitInputLength((int)Constants.DigitType.SubjectId, 4, false);
+                bool isCheck = IsAdditionSuccessful(typeValue, subjectId);
+            }
+            Console.Clear();
+        }
+
+        private bool IsAdditionSuccessful(int typeValue, string subjectId)
+        {   
+            List<LectureVo> lectureList = lecture.LectureList;
+            LectureVo resultLecture = null;
+            foreach(LectureVo value in lectureList)
+            {
+                if (value.Id == Double.Parse(subjectId)) // 검색한 id가 lectureList에 있는지 확인
+                {
+                    resultLecture = value;
+                    break;
+                }
+            }
+
+            // 있다면 중복된 값이 있는지 확인
+            if (resultLecture != null && userInfoController.IsCourseSetValid(typeValue, resultLecture))  
+                return true;
+            return false;
+        }
+
+        private List<LectureVo> ManageLectureList(int typeValue)
+        {
+            List<LectureVo> lectureList = null;
+            switch(typeValue)
+            {
+                case (int)Constants.LectureTimeSheetType.FavoriteSubjectApply:
+                case (int)Constants.LectureTimeSheetType.CourseSearch:
+                case (int)Constants.LectureTimeSheetType.CourseApply:
+                    lectureList = ManageSearchedLectureList(typeValue);
+                    break;
+                case (int)Constants.LectureTimeSheetType.FavoriteSubjectHistory:
+                case (int)Constants.LectureTimeSheetType.FavoriteSubjectDelete:
+                    lectureList = userInfoController.GetFavoriteSubjectList();
+                    break;
+                case (int)Constants.LectureTimeSheetType.AppliedCourseHistory:
+                case (int)Constants.LectureTimeSheetType.CourseDelete:
+                    lectureList = userInfoController.GetAppliedCourseList();
+                    break;
+            }
+            return lectureList;
+        }
+
+        private List<LectureVo> ManageSearchedLectureList(int typeValue)
         {
             string[] searchString = GetSearchStrings(searchValues);
             List<LectureVo> lectureList = lecture.LectureList;
             List<LectureVo> resultLectureList = new List<LectureVo>();
-            
+            //foreach(var value in searchString)
+            //{
+            //    Console.WriteLine(value);
+            //}
+            //Console.WriteLine("test");
+            //Console.ReadLine();
             foreach (LectureVo lecture in lectureList)
             {
                 int count = 0;
@@ -80,23 +158,12 @@ namespace LectureTimeTable.Model
                 if (count == 5)
                     resultLectureList.Add(lecture);
             }
-
-            ManageLectureTimeSheet(resultLectureList);
-        }
-
-        public void ManageLectureTimeSheet(List<LectureVo> lectureList)
-        {
-            Console.SetWindowSize(180, 40);
-            Console.Clear();
-            lectureTimeScreen.DrawLectureTimeSheetScreen(lectureList);
-            Console.ReadLine();
-            Console.Clear();
+            return resultLectureList;
         }
 
         private string[] GetSearchStrings(int[] searchValues)
         {
-            // int [0] : Major, [1] : CreditClassification, [2] : grade
-            string[] resultString = new string[3] { "", "", ""};
+            string[] resultString = new string[3] { "", "", "" };
             switch (searchValues[0])    // 학과 
             {
                 case (int)Constants.MajorMenu.Computer:

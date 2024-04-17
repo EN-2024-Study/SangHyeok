@@ -27,6 +27,7 @@ namespace LectureTimeTable.Utility
             Password,
             SubjectTitle,
             ProfessorName,
+            SubjectId
         }
      
         public enum MainMenu
@@ -78,10 +79,15 @@ namespace LectureTimeTable.Utility
             Selected
         }
 
-        public enum CourseMenu
+        public enum LectureTimeSheetType
         {
-            Favorite,
-            Class
+            FavoriteSubjectHistory,
+            FavoriteSubjectApply,
+            FavoriteSubjectDelete,
+            AppliedCourseHistory,
+            CourseApply,
+            CourseSearch,
+            CourseDelete
         }
     }
 }

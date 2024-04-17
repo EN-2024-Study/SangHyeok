@@ -12,7 +12,7 @@ namespace LectureTimeTable.Model
     {
         private static LectureRepository instance;
         private List<LectureVo> lectureList;
-        //private Array data = null; // 행 : 183개, 열 : 12개
+        // 행 : 183개, 열 : 12개
 
         private LectureRepository()
         {
@@ -63,8 +63,5 @@ namespace LectureTimeTable.Model
 
         public List<LectureVo> LectureList
         { get { return lectureList; } }
-
-        //public Array Data
-        //{ get { return data; } }
     }
 }

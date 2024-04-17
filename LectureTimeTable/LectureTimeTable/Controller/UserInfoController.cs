@@ -12,15 +12,11 @@ namespace LectureTimeTable.Model
     {
         private UserRepository user;
         private InputManager inputManager;
-        private LectureTimeScreen screen;
-        private LectureInfoController lectureInfoController;
 
         public UserInfoController()
         {
             this.user = UserRepository.Instance;    // singleton 생성
             this.inputManager = new InputManager();
-            this.screen = new LectureTimeScreen();
-            this.lectureInfoController = new LectureInfoController();
         }
 
         public bool IsUserLogInValid(int digitValue)
@@ -45,20 +41,53 @@ namespace LectureTimeTable.Model
             }
         }
 
-        public void ManageLectureList(int menuValue)
+
+        public List<LectureVo> GetFavoriteSubjectList()
         {
-            List<LectureVo> courseList = null;
-            switch(menuValue)
+            return user.FavoriteSubjectList;
+        }
+
+        public List<LectureVo> GetAppliedCourseList()
+        {
+            return user.AppliedCourseList;
+        }
+
+        public bool IsCourseSetValid(int typeValue, LectureVo addCourse)
+        {
+            List<LectureVo> lectureList = null;
+            bool isDuplication = false;
+            switch (typeValue)
             {
-                case (int)Constants.CourseMenu.Favorite:
-                    courseList = user.FavoriteSubjectList;
+                case (int)Constants.LectureTimeSheetType.FavoriteSubjectApply:
+                    lectureList = user.FavoriteSubjectList;
                     break;
-                case (int)Constants.CourseMenu.Class:
-                    courseList = user.AppliedCourseList;
+                case (int)Constants.LectureTimeSheetType.CourseApply:
+                    lectureList = user.AppliedCourseList;
                     break;
             }
-            //screen.DrawLectureTimeSheetScreen(courseList);
-            lectureInfoController.ManageLectureTimeSheet(courseList);
+
+            foreach (LectureVo lecture in lectureList)
+            {
+                if (addCourse.Id.Equals(lecture.Id))
+                {
+                    isDuplication = true;
+                    break;
+                }
+            }
+
+            if (isDuplication)
+                return false;
+
+            switch (typeValue)
+            {
+                case (int)Constants.LectureTimeSheetType.FavoriteSubjectApply:
+                    user.SetFavoriteSubject(addCourse);
+                    break;
+                case (int)Constants.LectureTimeSheetType.CourseApply:
+                    user.SetAppliedCourse(addCourse);
+                    break;
+            }
+            return true;
         }
     }
 }

@@ -79,7 +79,7 @@ namespace LectureTimeTable.Utility
             Selected
         }
 
-        public enum LectureTimeSheetType
+        public enum LectureType
         {
             FavoriteSubjectHistory,
             AppliedCourseHistory,

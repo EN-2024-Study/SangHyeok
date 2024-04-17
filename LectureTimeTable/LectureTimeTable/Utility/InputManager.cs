@@ -20,7 +20,6 @@ namespace LectureTimeTable.Utility
         {
             Console.CursorVisible = true;
             Tuple<int, int> coordinate = GetCoordinate(digitValue);
-            //Tuple<int, int> failCoordinate = null;
             int x = coordinate.Item1;
             int y = coordinate.Item2;
             bool isError = false;
@@ -38,9 +37,10 @@ namespace LectureTimeTable.Utility
             {
                 if (index == stringLength)  // 입력 길이 초과
                 {
-                    //failCoordinate = new Tuple<int, int>(x + index + 2, y);
-                    //menuScreen.DrawInputFailure(failCoordinate);
-                    //isError = true;
+                    int totalByte = 0;
+                    for (int i = 0; i < index; i++)
+                        totalByte += bytes[i];
+
                     inputString = new char[stringLength];
                     bytes = new int[stringLength];
                     index = 0;
@@ -55,14 +55,7 @@ namespace LectureTimeTable.Utility
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true); // 입력 받기
 
                 if (keyInfo.Key == ConsoleKey.Enter)
-                {
-                    //foreach (var value in inputString)
-                    //    Console.Write(value);
-                    //Console.ReadLine();
-
-                    //menuScreen.EraseFail(failCoordinate);
                     break;
-                }
                 else if (keyInfo.Key == ConsoleKey.Backspace)
                 {
                     if (index == 0)
@@ -86,7 +79,6 @@ namespace LectureTimeTable.Utility
                     Console.SetCursorPosition(x, y);
                     for (int i = 0; i < stringLength * 2; i++)  // 입력란 지우기
                         Console.Write(" ");
-                    //menuScreen.EraseFail(failCoordinate);
                     return null;
                 }
                 else

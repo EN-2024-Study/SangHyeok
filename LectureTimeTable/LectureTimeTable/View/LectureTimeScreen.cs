@@ -68,5 +68,10 @@ namespace LectureTimeTable.View
                 y++;
             }
         }
+
+        public void DrawScheduleScreen()
+        {
+
+        }
     }
 }

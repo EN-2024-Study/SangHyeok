@@ -31,7 +31,7 @@ namespace LectureTimeTable.Model
         public int[] SearchValues
         { set { searchValues = value; } }
 
-        public bool IsSearchedLectureValid(int digitValue)
+        public bool IsSearchedLectureValid(int digitValue)  // 교과목명 또는 교수명 입력받는 함수
         {
             switch (digitValue)
             {
@@ -50,16 +50,24 @@ namespace LectureTimeTable.Model
             return true;
         }
 
-        public void ManageLectureTimeSheet(int typeValue)
+        public void ManageSchedule(int typeValue)
+        {
+            List<LectureVo> lectureList = GetLectureList(typeValue);
+            Console.Clear();
+
+
+        }
+
+        public void ManageLectureTimeSheet(int typeValue)   // 강의 시간표 차트 관리 함수
         {
             List<LectureVo> lectureList = GetLectureList(typeValue);
             Console.SetWindowSize(180, 40);
             Console.Clear();
             screen.DrawLectureTimeSheetScreen(lectureList);
 
-            if (typeValue == (int)Constants.LectureTimeSheetType.FavoriteSubjectHistory ||
-                typeValue == (int)Constants.LectureTimeSheetType.AppliedCourseHistory ||
-                typeValue == (int)Constants.LectureTimeSheetType.CourseSearch)
+            if (typeValue == (int)Constants.LectureType.FavoriteSubjectHistory ||
+                typeValue == (int)Constants.LectureType.AppliedCourseHistory ||
+                typeValue == (int)Constants.LectureType.CourseSearch)
             {
                 ConsoleKeyInfo keyInfo;  // ConsoleKeyInfo의 할당은 무조건 사용자의 입력이 있어야 하므로 do while문 사용
                 do keyInfo = Console.ReadKey(true);
@@ -70,22 +78,22 @@ namespace LectureTimeTable.Model
                 string subjectId = inputManager.LimitInputLength((int)Constants.DigitType.SubjectId, 4, false);
                 bool isCheck = IsSetSuccessful(typeValue, subjectId);
                 // 예외 추가해야 함
-            }   // 여기부터
+            }   
            
             Console.Clear();
         }
 
         private bool IsSetSuccessful(int typeValue, string subjectId)
-        {
+        {   // 검색 또는 수정 기능 수행 후 제대로 됐는지 확인하는 함수
             List<LectureVo> lectureList = null;
             LectureVo resultLecture = null;
-            if (typeValue == (int)Constants.LectureTimeSheetType.FavoriteSubjectApply ||
-                typeValue == (int)Constants.LectureTimeSheetType.ApplyAfterSearch)
+            if (typeValue == (int)Constants.LectureType.FavoriteSubjectApply ||
+                typeValue == (int)Constants.LectureType.ApplyAfterSearch)
                 lectureList = lecture.LectureList;
-            else if (typeValue == (int)Constants.LectureTimeSheetType.FavoriteSubjectDelete ||
-                typeValue == (int)Constants.LectureTimeSheetType.ApplyForFavoriteSubject)
+            else if (typeValue == (int)Constants.LectureType.FavoriteSubjectDelete ||
+                typeValue == (int)Constants.LectureType.ApplyForFavoriteSubject)
                 lectureList = userInfoController.GetFavoriteSubjectList();
-            else if (typeValue == (int)Constants.LectureTimeSheetType.CourseDelete)
+            else if (typeValue == (int)Constants.LectureType.CourseDelete)
                 lectureList = userInfoController.GetAppliedCourseList();
 
             foreach (LectureVo value in lectureList)
@@ -108,35 +116,30 @@ namespace LectureTimeTable.Model
             List<LectureVo> lectureList = null;
             switch(typeValue)
             {
-                case (int)Constants.LectureTimeSheetType.FavoriteSubjectApply:
-                case (int)Constants.LectureTimeSheetType.CourseSearch:
-                case (int)Constants.LectureTimeSheetType.ApplyAfterSearch:
+                case (int)Constants.LectureType.FavoriteSubjectApply:
+                case (int)Constants.LectureType.CourseSearch:
+                case (int)Constants.LectureType.ApplyAfterSearch:
                     lectureList = ManageSearchedLectureList(typeValue);
                     break;
-                case (int)Constants.LectureTimeSheetType.FavoriteSubjectHistory:
-                case (int)Constants.LectureTimeSheetType.FavoriteSubjectDelete:
-                case (int)Constants.LectureTimeSheetType.ApplyForFavoriteSubject:
+                case (int)Constants.LectureType.FavoriteSubjectHistory:
+                case (int)Constants.LectureType.FavoriteSubjectDelete:
+                case (int)Constants.LectureType.ApplyForFavoriteSubject:
                     lectureList = userInfoController.GetFavoriteSubjectList();
                     break;
-                case (int)Constants.LectureTimeSheetType.AppliedCourseHistory:
-                case (int)Constants.LectureTimeSheetType.CourseDelete:
+                case (int)Constants.LectureType.AppliedCourseHistory:
+                case (int)Constants.LectureType.CourseDelete:
                     lectureList = userInfoController.GetAppliedCourseList();
                     break;
             }
             return lectureList;
         }
 
-        private List<LectureVo> ManageSearchedLectureList(int typeValue)
+        private List<LectureVo> ManageSearchedLectureList(int typeValue)    // 입력에 맞는 정보 추출 함수
         {
             string[] searchString = GetSearchStrings(searchValues);
             List<LectureVo> lectureList = lecture.LectureList;
             List<LectureVo> resultLectureList = new List<LectureVo>();
-            //foreach(var value in searchString)
-            //{
-            //    Console.WriteLine(value);
-            //}
-            //Console.WriteLine("test");
-            //Console.ReadLine();
+          
             foreach (LectureVo lecture in lectureList)
             {
                 int count = 0;

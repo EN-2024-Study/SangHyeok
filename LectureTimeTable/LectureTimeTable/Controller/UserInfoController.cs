@@ -18,30 +18,6 @@ namespace LectureTimeTable.Model
             this.user = UserRepository.Instance;    // singleton 생성
             this.inputManager = new InputManager();
         }
-
-        public bool IsUserLogInValid(int digitValue)
-        {
-            while (true)
-            {
-                string  inputId = "", inputPassword = "";
-                switch (digitValue)
-                {
-                    case (int)Constants.DigitType.Id:
-                        inputId = inputManager.LimitInputLength((int)Constants.DigitType.Id, 9, false);
-                        break;
-                    case (int)Constants.DigitType.Password:
-                        inputPassword = inputManager.LimitInputLength((int)Constants.DigitType.Password, 5, true);
-                        break;
-                }
-
-                if (inputId == null || inputPassword == null)
-                    return false;
-                else if (user.GetUserId().Equals(inputId) || user.GetUserPassword().Equals(inputPassword))
-                    return true;
-            }
-        }
-
-
         public List<LectureVo> GetFavoriteSubjectList()
         {
             return user.FavoriteSubjectList;
@@ -52,24 +28,50 @@ namespace LectureTimeTable.Model
             return user.AppliedCourseList;
         }
 
-        public bool IsCourseSetValid(int typeValue, LectureVo course)
+        public bool IsUserIdValid()
         {
+            while (true)
+            {
+                string inputId = inputManager.LimitInputLength((int)Constants.DigitType.Id, 9, false);
+
+                if (inputId == null)
+                    return false;
+                else if (user.GetUserId().Equals(inputId))
+                    return true;
+            }
+        }
+
+        public bool IsUserPasswordValid()
+        {    
+            while (true)
+            {
+                string inputPassword = inputManager.LimitInputLength((int)Constants.DigitType.Password, 5, true);
+
+                if (inputPassword == null)
+                    return false;
+                else if (user.GetUserPassword().Equals(inputPassword))
+                    return true;
+            }
+        }
+
+        public bool IsCourseSetValid(int typeValue, LectureVo course)
+        {   // 입력 값 삽입과 가능한지 확인하는 함수
             if (!IsCheckDuplication(typeValue, course))
                 return false;
 
             switch (typeValue)
             {
-                case (int)Constants.LectureTimeSheetType.FavoriteSubjectApply:
+                case (int)Constants.LectureType.FavoriteSubjectApply:
                     user.AddFavoriteSubject(course);
                     break;
-                case (int)Constants.LectureTimeSheetType.ApplyAfterSearch:
-                case (int)Constants.LectureTimeSheetType.ApplyForFavoriteSubject:
+                case (int)Constants.LectureType.ApplyAfterSearch:
+                case (int)Constants.LectureType.ApplyForFavoriteSubject:
                     user.AddAppliedCourse(course);
                     break;
-                case (int)Constants.LectureTimeSheetType.FavoriteSubjectDelete:
+                case (int)Constants.LectureType.FavoriteSubjectDelete:
                     user.RemoveFavoriteSubject(course);
                     break;
-                case (int)Constants.LectureTimeSheetType.CourseDelete:
+                case (int)Constants.LectureType.CourseDelete:
                     user.RemoveAppliedCourse(course);
                     break;
             }
@@ -77,24 +79,24 @@ namespace LectureTimeTable.Model
         }
 
         private bool IsCheckDuplication(int typeValue, LectureVo addCourse)
-        {
+        {   
             List<LectureVo> lectureList = null;
 
             switch (typeValue)
             {
-                case (int)Constants.LectureTimeSheetType.FavoriteSubjectApply:
-                case (int)Constants.LectureTimeSheetType.FavoriteSubjectDelete:
-                case (int)Constants.LectureTimeSheetType.ApplyForFavoriteSubject:
+                case (int)Constants.LectureType.FavoriteSubjectApply:
+                case (int)Constants.LectureType.FavoriteSubjectDelete:
+                case (int)Constants.LectureType.ApplyForFavoriteSubject:
                     lectureList = user.FavoriteSubjectList;
                     break;
-                case (int)Constants.LectureTimeSheetType.ApplyAfterSearch:
-                case (int)Constants.LectureTimeSheetType.CourseDelete:
+                case (int)Constants.LectureType.ApplyAfterSearch:
+                case (int)Constants.LectureType.CourseDelete:
                     lectureList = user.AppliedCourseList;
                     break;
             }
 
-            if (typeValue == (int)Constants.LectureTimeSheetType.ApplyAfterSearch || 
-                typeValue == (int)Constants.LectureTimeSheetType.FavoriteSubjectApply)
+            if (typeValue == (int)Constants.LectureType.ApplyAfterSearch || 
+                typeValue == (int)Constants.LectureType.FavoriteSubjectApply)
             {
                 foreach (LectureVo lecture in lectureList)  // 추가할 과목이 이미 존재하면 false
                     if (addCourse.Id.Equals(lecture.Id))

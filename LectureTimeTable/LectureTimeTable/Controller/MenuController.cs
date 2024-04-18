@@ -29,11 +29,12 @@ namespace LectureTimeTable.Controller
             bool isSelected = true;
             bool isId = false, isPassword = false;
             Console.SetWindowSize(80, 40);
+            menuScreen.ClearBottomScreen();
 
             while (isSelected)
             {
-                menuScreen.ClearBottomScreen();
                 ExplaningScreen.ExplaningArrowPress();  // 설명란 띄우기
+                ExplaningScreen.ExplaningLogIn();
                 isSelected = IsMenuSelection((int)Constantss.MenuType.LogIn, true); 
                 if (!isSelected)
                     continue;
@@ -86,6 +87,7 @@ namespace LectureTimeTable.Controller
                         break;
                 }
             }
+            Console.Clear();
         }
 
         private void ControllFavoriteSubjectsMenu()
@@ -117,6 +119,7 @@ namespace LectureTimeTable.Controller
                         lectureInfoController.ManageLectureTimeSheet((int)Constantss.LectureType.FavoriteSubjectDelete);
                         break;
                 }
+                Console.Clear();
             }
         }
 
@@ -149,6 +152,7 @@ namespace LectureTimeTable.Controller
                         lectureInfoController.ManageLectureTimeSheet((int)Constantss.LectureType.CourseDelete);
                         break;
                 }
+                Console.Clear();
             }
         }
 
@@ -175,6 +179,7 @@ namespace LectureTimeTable.Controller
                         break;
                 }
             }
+            Console.Clear();
         }
 
         private void ControllSearchMenu(int typeValue)
@@ -220,6 +225,7 @@ namespace LectureTimeTable.Controller
                 }
                 lectureInfoController.SearchValues = searchValues;
             }
+            Console.Clear();
         }
 
         private bool IsMenuSelection(int screenValue, bool isMenuVisible)

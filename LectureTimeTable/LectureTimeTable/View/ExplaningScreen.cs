@@ -61,5 +61,13 @@ namespace LectureTimeTable.View
             Console.WriteLine("성공입니다.!");
             Console.Write("Enter를 누른 후 계속 진행하여 주세요.");
         }
+
+        public static void ExplaningLogIn()
+        {
+            Console.SetCursorPosition(5, 35);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("Esc : 종료");
+            Console.ResetColor();
+        }
     }
 }

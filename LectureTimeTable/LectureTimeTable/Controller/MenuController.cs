@@ -180,7 +180,9 @@ namespace LectureTimeTable.Controller
         {
             bool isSelected = true;
             searchValues = new int[] { -1, -1, -1 };
-
+            lectureInfoController.SearchValues = searchValues;
+            lectureInfoController.InputProfessorName = "";
+            lectureInfoController.InputSubjectTitle = "";
             menuScreen.ClearBottomScreen();
 
             while (isSelected)

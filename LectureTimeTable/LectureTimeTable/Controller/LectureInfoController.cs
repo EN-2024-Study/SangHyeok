@@ -30,6 +30,12 @@ namespace LectureTimeTable.Model
         public int[] SearchValues
         { set { searchValues = value; } }
 
+        public string InputSubjectTitle
+        { set { inputSubjectTitle = value; } }
+
+        public string InputProfessorName
+        { set { inputProfessorName = value; } }
+
         public bool IsSearchedLectureValid(int digitValue)  // 교과목명 또는 교수명 입력받는 함수
         {
             switch (digitValue)
@@ -54,26 +60,37 @@ namespace LectureTimeTable.Model
             List<LectureVo> lectureList = GetLectureList(typeValue);
             Console.SetWindowSize(130, 40);
             Console.Clear();
-            ExplaningScreen.ExplaningEscPress();
-            ExplaningScreen.ExplaningEnterPress();
             screen.DrawScheduleScreen(lectureList);
 
-            while(true)
+            if (typeValue == (int)Constantss.LectureType.FavoriteSubjectHistory)
             {
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                if (keyInfo.Key == ConsoleKey.Enter)
+                ExplaningScreen.ExplaningEscPress();
+                ConsoleKeyInfo keyInfo;
+                do keyInfo = Console.ReadKey(true);
+                 while (keyInfo.Key != ConsoleKey.Escape);
+            }
+            else
+            {
+                ExplaningScreen.ExplaningEscPress();
+                ExplaningScreen.ExplaningEnterPress();
+                while (true)
                 {
-                    SaveExcel();
-                    Console.Clear();
-                    Console.SetWindowSize(50, 20);
-                    ExplaningScreen.ExplaningSave();
-                    Console.ReadLine();
-                    return;
-                }
-                else if (keyInfo.Key == ConsoleKey.Escape)
-                {
-                    Console.Clear();
-                    return;
+                    ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                    if (keyInfo.Key == ConsoleKey.Enter)
+                    {
+                        SaveExcel();
+                        Console.Clear();
+                        Console.SetWindowSize(70, 20);
+                        ExplaningScreen.ExplaningSave();
+                        Console.ReadLine();
+                        Console.Clear();
+                        return;
+                    }
+                    else if (keyInfo.Key == ConsoleKey.Escape)
+                    {
+                        Console.Clear();
+                        return;
+                    }
                 }
             }
         }

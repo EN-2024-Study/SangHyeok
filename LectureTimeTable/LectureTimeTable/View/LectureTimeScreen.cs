@@ -10,7 +10,6 @@ namespace LectureTimeTable.View
 {
     public class LectureTimeScreen
     {
-
         public void DrawLectureTimeSheetScreen(List<LectureVo> lectureList)
         {
             int[] coordinateX = new int[] { 0, 4, 23, 31, 36, 69, 83, 87, 90, 121, 135, 162, 169};
@@ -75,7 +74,7 @@ namespace LectureTimeTable.View
         {
             int[] y = new int[] {4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56 };
             int index = 0;
-            int[] x = new int[] { 15, 37, 60, 80, 103 };
+            int[] x = new int[] { 15, 37, 60, 79, 103 };
             string[] times = Constantss.TIMES;
             List<List<string>> dayList = ExceptionManager.GetDayList(lectureList);
 

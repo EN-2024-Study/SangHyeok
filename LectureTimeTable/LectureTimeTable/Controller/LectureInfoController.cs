@@ -30,69 +30,17 @@ namespace LectureTimeTable.Model
         public int[] SearchValues
         { set { searchValues = value; } }
 
-        public void SaveExcel()
-        {
-            try
-            {
-                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                string path = Path.Combine(desktopPath, "AppliedCourses.xlsx");
-
-                Application application = new Application();
-                Workbook workBook = application.Workbooks.Add();
-                Worksheet workSheet = workBook.Worksheets.get_Item(1) as Worksheet;
-
-                workSheet.Cells[1, 1] = "NO";
-                workSheet.Cells[1, 2] = "개설학과전공";
-                workSheet.Cells[1, 3] = "학수번호";
-                workSheet.Cells[1, 4] = "분반";
-                workSheet.Cells[1, 5] = "교과목명";
-                workSheet.Cells[1, 6] = "이수구분";
-                workSheet.Cells[1, 7] = "학년";
-                workSheet.Cells[1, 8] = "학점";
-                workSheet.Cells[1, 9] = "요일 및 강의시간";
-                workSheet.Cells[1, 10] = "강의실";
-                workSheet.Cells[1, 11] = "메인교수명";
-                workSheet.Cells[1, 12] = "강의언어";
-
-                List<LectureVo> lectureList = userInfoController.GetAppliedCourseList();
-                for(int i = 2; i <= lectureList.Count + 1; i++)
-                {
-                    workSheet.Cells[i, 1] = lectureList[i - 2].Id.ToString();
-                    workSheet.Cells[i, 2] = lectureList[i - 2].Major;
-                    workSheet.Cells[i, 3] = lectureList[i - 2].Number;
-                    workSheet.Cells[i, 4] = lectureList[i - 2].Group;
-                    workSheet.Cells[i, 5] = lectureList[i - 2].SubjectTitle;
-                    workSheet.Cells[i, 6] = lectureList[i - 2].CreditClassification;
-                    workSheet.Cells[i, 7] = lectureList[i - 2].Grade;
-                    workSheet.Cells[i, 8] = lectureList[i - 2].Score;
-                    workSheet.Cells[i, 9] = lectureList[i - 2].Day;
-                    workSheet.Cells[i, 10] = lectureList[i - 2].Room;
-                    workSheet.Cells[i, 11] = lectureList[i - 2].ProfessorName;
-                    workSheet.Cells[i, 12] = lectureList[i - 2].Language;
-                }
-
-                workSheet.Columns.AutoFit();
-                workBook.SaveAs(path, XlFileFormat.xlWorkbookDefault);
-                workBook.Close(true);
-                application.Quit();
-            }
-            catch (SystemException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-    
         public bool IsSearchedLectureValid(int digitValue)  // 교과목명 또는 교수명 입력받는 함수
         {
             switch (digitValue)
             {
                 case (int)Constantss.DigitType.SubjectTitle:
                     inputSubjectTitle = "";
-                    inputSubjectTitle = inputManager.LimitInputLength((int)Constantss.DigitType.SubjectTitle, 10, false);
+                    inputSubjectTitle = inputManager.LimitInputLength((int)Constantss.DigitType.SubjectTitle, 21, false);
                     break;
                 case (int)Constantss.DigitType.ProfessorName:
                     inputProfessorName = "";
-                    inputProfessorName = inputManager.LimitInputLength((int)Constantss.DigitType.ProfessorName, 10, false);
+                    inputProfessorName = inputManager.LimitInputLength((int)Constantss.DigitType.ProfessorName, 26, false);
                     break;
             }
 
@@ -117,6 +65,9 @@ namespace LectureTimeTable.Model
                 {
                     SaveExcel();
                     Console.Clear();
+                    Console.SetWindowSize(50, 20);
+                    ExplaningScreen.ExplaningSave();
+                    Console.ReadLine();
                     return;
                 }
                 else if (keyInfo.Key == ConsoleKey.Escape)
@@ -151,22 +102,26 @@ namespace LectureTimeTable.Model
                 else
                 {
                     ExplaningScreen.ExplaningEnterPress();
+                    Console.SetCursorPosition(0, 0);
+                    Console.Write("NO: ");
                     string subjectId = inputManager.LimitInputLength((int)Constantss.DigitType.SubjectId, 4, false);
-                    if (subjectId == null)
-                    {
-                        Console.Clear();
-                        break;
-                    }
-                    else
-                        isSuccess = IsSetSuccessful(typeValue, subjectId);
+                    Console.Clear();
+                    Console.SetWindowSize(50, 20);
 
+                    if (subjectId == null)
+                        break;
+                    else if (!IsSetSuccessful(typeValue, subjectId))    // 실패 했을 때
+                        ExplaningScreen.ExplaningInvalidInput();
+                    else  // 성공 했을 때
+                        ExplaningScreen.ExplaningSuccessInput();
+                    Console.ReadLine();
                 }
                 Console.Clear();
             }
         }
 
         private bool IsSetSuccessful(int typeValue, string subjectId)
-        {   // 검색 또는 수정 기능 수행 후 제대로 됐는지 확인하는 함수
+        {   // 입력받는 id와 일치하는 과목이 있는지 확인하는 함수
             List<LectureVo> lectureList = null;
             LectureVo resultLecture = null;
             if (typeValue == (int)Constantss.LectureType.FavoriteSubjectApply ||
@@ -184,7 +139,7 @@ namespace LectureTimeTable.Model
                 }
             }
 
-            // 검색한 id가 있다면 넣을 수 있는지 확인하고 추가 or 삭제 기능 수행
+            // 검색한 id가 일치하다면 추가 or 삭제 기능 수행 가능한지 확인
             if (resultLecture != null && userInfoController.IsCourseSetValid(typeValue, resultLecture))  
                 return true;
             return false;
@@ -251,6 +206,58 @@ namespace LectureTimeTable.Model
                     resultLectureList.Add(lecture);
             }
             return resultLectureList;
+        }
+
+        private void SaveExcel()    // excel 저장 함수
+        {
+            try
+            {
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string path = Path.Combine(desktopPath, "AppliedCourses.xlsx");
+
+                Application application = new Application();
+                Workbook workBook = application.Workbooks.Add();
+                Worksheet workSheet = workBook.Worksheets.get_Item(1) as Worksheet;
+
+                workSheet.Cells[1, 1] = "NO";
+                workSheet.Cells[1, 2] = "개설학과전공";
+                workSheet.Cells[1, 3] = "학수번호";
+                workSheet.Cells[1, 4] = "분반";
+                workSheet.Cells[1, 5] = "교과목명";
+                workSheet.Cells[1, 6] = "이수구분";
+                workSheet.Cells[1, 7] = "학년";
+                workSheet.Cells[1, 8] = "학점";
+                workSheet.Cells[1, 9] = "요일 및 강의시간";
+                workSheet.Cells[1, 10] = "강의실";
+                workSheet.Cells[1, 11] = "메인교수명";
+                workSheet.Cells[1, 12] = "강의언어";
+
+                List<LectureVo> lectureList = userInfoController.GetAppliedCourseList();
+                for (int i = 2; i <= lectureList.Count + 1; i++)
+                {
+                    workSheet.Cells[i, 1] = lectureList[i - 2].Id.ToString();
+                    workSheet.Cells[i, 2] = lectureList[i - 2].Major;
+                    workSheet.Cells[i, 3] = lectureList[i - 2].Number;
+                    workSheet.Cells[i, 4] = lectureList[i - 2].Group;
+                    workSheet.Cells[i, 5] = lectureList[i - 2].SubjectTitle;
+                    workSheet.Cells[i, 6] = lectureList[i - 2].CreditClassification;
+                    workSheet.Cells[i, 7] = lectureList[i - 2].Grade;
+                    workSheet.Cells[i, 8] = lectureList[i - 2].Score;
+                    workSheet.Cells[i, 9] = lectureList[i - 2].Day;
+                    workSheet.Cells[i, 10] = lectureList[i - 2].Room;
+                    workSheet.Cells[i, 11] = lectureList[i - 2].ProfessorName;
+                    workSheet.Cells[i, 12] = lectureList[i - 2].Language;
+                }
+
+                workSheet.Columns.AutoFit();
+                workBook.SaveAs(path, XlFileFormat.xlWorkbookDefault);
+                workBook.Close(true);
+                application.Quit();
+            }
+            catch (SystemException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private string[] GetSearchStrings(int[] searchValues)

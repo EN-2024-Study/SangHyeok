@@ -35,14 +35,10 @@ namespace LectureTimeTable.Utility
 
             while (!isError)
             {
-                if (index == stringLength)  // 입력 길이 초과
+                if (index == stringLength)  // 입력 길이 초과했을 때
                 {
-                    int totalByte = 0;
-                    for (int i = 0; i < index; i++)
-                        totalByte += bytes[i];
-
-                    inputString = new char[stringLength];
-                    bytes = new int[stringLength];
+                    inputString = new char[stringLength];   // 초기화
+                    bytes = new int[stringLength];  
                     index = 0;
 
                     Console.SetCursorPosition(x, y);
@@ -65,7 +61,7 @@ namespace LectureTimeTable.Utility
                     for (int i = 0; i < index; i++)
                         totalByte += bytes[i];
 
-                    Console.SetCursorPosition(x + totalByte - bytes[index - 1], y);
+                    Console.SetCursorPosition(x + totalByte - bytes[index - 1], y); // 현재 길이에서 마지막 byte 빼주기
                     if (bytes[index - 1] == 2)
                         Console.Write("  ");
                     else
@@ -79,11 +75,11 @@ namespace LectureTimeTable.Utility
                     Console.SetCursorPosition(x, y);
                     for (int i = 0; i < stringLength * 2; i++)  // 입력란 지우기
                         Console.Write(" ");
-                    return null;
+                    return null;    // esc 입력 시 null 반환
                 }
                 else
                 {
-                    inputString[index] = keyInfo.KeyChar;
+                    inputString[index] = keyInfo.KeyChar;   // 입력값 저장
                     bytes[index++] = Encoding.Default.GetByteCount(keyInfo.KeyChar.ToString());
                     Console.Write(keyInfo.KeyChar);
                 }

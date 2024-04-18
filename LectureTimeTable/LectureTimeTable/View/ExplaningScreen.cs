@@ -28,8 +28,6 @@ namespace LectureTimeTable.View
 
         public static void ExplaningEnterPress()
         {
-            Console.SetCursorPosition(0, 0);
-            Console.Write("NO: ");
             Console.SetCursorPosition(15, 0);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("[Enter]");
@@ -42,6 +40,26 @@ namespace LectureTimeTable.View
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("[Esc]");
             Console.ResetColor();
+        }
+
+        public static void ExplaningSave()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("저장되었습니다. 계속 이용하시려면 Enter를 눌러주세요.");
+        }
+
+        public static void ExplaningInvalidInput()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("잘못된 입력입니다.");
+            Console.Write("Enter를 누른 후 다시 입력하여 주세요.");
+        }
+
+        public static void ExplaningSuccessInput()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("성공입니다.!");
+            Console.Write("Enter를 누른 후 계속 진행하여 주세요.");
         }
     }
 }

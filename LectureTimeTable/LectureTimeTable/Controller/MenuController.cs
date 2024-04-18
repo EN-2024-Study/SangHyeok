@@ -32,25 +32,24 @@ namespace LectureTimeTable.Controller
 
             while (isSelected)
             {
-                ExplaningScreen.ExplaningArrowPress();
-                isSelected = IsMenuSelection((int)Constantss.MenuType.LogIn, true);
+                ExplaningScreen.ExplaningArrowPress();  // 설명란 띄우기
+                isSelected = IsMenuSelection((int)Constantss.MenuType.LogIn, true); 
                 if (!isSelected)
                     continue;
 
                 switch(menuValue)
                 {
-                    case (int)Constantss.DigitType.Id:
+                    case (int)Constantss.DigitType.Id:  // id 입력
                         isId = userInfoController.IsUserIdValid();
                         break;
-                    case (int)Constantss.DigitType.Password:
+                    case (int)Constantss.DigitType.Password:    // password 입력
                         isPassword = userInfoController.IsUserPasswordValid();
                         break;
                 }
 
-                if (isId && isPassword)
+                if (isId && isPassword) // id와 password가 일치하다면
                 {
-                    ControllMainMenu();
-                    menuScreen.ClearBottomScreen();
+                    ControllMainMenu(); // 메인 메뉴로 이동
                     isId = false;
                     isPassword = false;
                 }
@@ -257,7 +256,7 @@ namespace LectureTimeTable.Controller
                         case ConsoleKey.RightArrow:
                             menuValue++;
                             break;
-                        case ConsoleKey.Enter:  // 수정하기
+                        case ConsoleKey.Enter: 
                             menuScreen.DrawMenu(screenValue, menuValue, true, isMenuVisible);
                             return true;
                     }

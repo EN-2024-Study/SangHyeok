@@ -31,7 +31,7 @@ namespace LectureTimeTable.Model
             return user.AppliedCourseList;
         }
 
-        public bool IsUserIdValid()
+        public bool IsUserIdValid() // 입력받는 id가 유효한 값인지 확인하는 함수
         {
             while (true)
             {
@@ -44,7 +44,7 @@ namespace LectureTimeTable.Model
             }
         }
 
-        public bool IsUserPasswordValid()
+        public bool IsUserPasswordValid()   // 입력받는 password가 유효한 값인지 확인하는 함수
         {    
             while (true)
             {
@@ -62,16 +62,16 @@ namespace LectureTimeTable.Model
             if (!IsCheckDuplication(typeValue, course))
                 return false;
 
-            if (typeValue == (int)Constantss.LectureType.FavoriteSubjectApply)
+            if (typeValue == (int)Constantss.LectureType.FavoriteSubjectApply)  // 관심과목 담기일 때
             {
-                if (!exceptionManager.IsOverlapCheck(user.FavoriteSubjectList, course))
+                if (!exceptionManager.IsOverlapCheck(user.FavoriteSubjectList, course))     // 겹치는 시간이 있다면 false 반환
                     return false;
-                else if (user.FavoriteSubjectScore + int.Parse(course.Score) > 24)
+                else if (user.FavoriteSubjectScore + int.Parse(course.Score) > 24)  // 추가하는 학점과 더해서 24학점이 넘으면 false 반환
                     return false;
                 else
-                    user.AddFavoriteSubject(course);
+                    user.AddFavoriteSubject(course);    // 정상 입력일 때
             }
-            else if (typeValue == (int)Constantss.LectureType.ApplyAfterSearch ||
+            else if (typeValue == (int)Constantss.LectureType.ApplyAfterSearch ||   // 검색 후 신청 또는 관심담기에서 신청일 때
                 typeValue == (int)Constantss.LectureType.ApplyForFavoriteSubject)
             {
                 if (!exceptionManager.IsOverlapCheck(user.AppliedCourseList, course))
@@ -81,9 +81,9 @@ namespace LectureTimeTable.Model
                 else
                     user.AddAppliedCourse(course);
             }
-            else if (typeValue == (int)Constantss.LectureType.FavoriteSubjectDelete)
+            else if (typeValue == (int)Constantss.LectureType.FavoriteSubjectDelete)    // 관심 과목 삭제일 때
                 user.RemoveFavoriteSubject(course);
-            else if (typeValue == (int)Constantss.LectureType.CourseDelete)
+            else if (typeValue == (int)Constantss.LectureType.CourseDelete) // 수강 과목 삭제일 때
                 user.RemoveAppliedCourse(course);
             return true;
         }

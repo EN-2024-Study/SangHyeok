@@ -32,6 +32,7 @@ namespace LectureTimeTable.Controller
 
             while (isSelected)
             {
+                menuScreen.ClearBottomScreen();
                 ExplaningScreen.ExplaningArrowPress();  // 설명란 띄우기
                 isSelected = IsMenuSelection((int)Constantss.MenuType.LogIn, true); 
                 if (!isSelected)

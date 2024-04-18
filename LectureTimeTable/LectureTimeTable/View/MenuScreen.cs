@@ -12,7 +12,7 @@ namespace LectureTimeTable.View
         public void DrawMenu(int screenValue, int selectValue, bool isEnter, bool isMenuVisible)
         {
             string[] menuString = SelectmenuString(screenValue);
-            Tuple<int, int> coordinate = SetCoordinate(screenValue);
+            Tuple<int, int> coordinate = GetCoordinate(screenValue);
 
             DrawLogo();
             for (int i = 0, x = 0; i < menuString.Length; i++, x+=20)
@@ -43,7 +43,7 @@ namespace LectureTimeTable.View
             }
         }
 
-        private Tuple<int, int> SetCoordinate(int screenValue)
+        private Tuple<int, int> GetCoordinate(int screenValue)
         {
             int x = 0, y = 0;
             switch (screenValue)

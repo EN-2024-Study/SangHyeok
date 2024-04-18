@@ -15,7 +15,6 @@ namespace LectureTimeTable.Controller
         private UserInfoController userInfoController;
         private LectureInfoController lectureInfoController;
         private int menuValue;
-        private int[] searchValues;
 
         public MenuController()
         {
@@ -185,7 +184,7 @@ namespace LectureTimeTable.Controller
         private void ControllSearchMenu(int typeValue)
         {
             bool isSelected = true;
-            searchValues = new int[] { -1, -1, -1 };
+            int[] searchValues = new int[] { -1, -1, -1 };
             lectureInfoController.SearchValues = searchValues;
             lectureInfoController.InputProfessorName = "";
             lectureInfoController.InputSubjectTitle = "";

@@ -103,7 +103,10 @@ namespace LectureTimeTable.View
                     for (int i = row; i < lastRow; i++)
                     {
                         Console.SetCursorPosition(x[col], y[i]);
-                        Console.Write(lectureList[index].SubjectTitle);
+                        if (lectureList[index].SubjectTitle.Contains("Capstone"))
+                            Console.Write(lectureList[index].SubjectTitle.Split(new char[] { '(' })[0]);
+                        else
+                            Console.Write(lectureList[index].SubjectTitle);
                         Console.SetCursorPosition(x[col], y[i] + 1);
                         Console.Write(lectureList[index].Room);
                     }

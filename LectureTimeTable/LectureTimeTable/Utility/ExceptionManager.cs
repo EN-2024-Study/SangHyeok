@@ -15,14 +15,19 @@ namespace LectureTimeTable.Utility
             string[] times = Constantss.TIMES;
             List<List<string>> dayList = GetDayList(lectureList);
             int[,] matrix = new int[27, 5];
-            List<string> course = new List<string>();            
+            List<string> course = new List<string>();
+            string[] temp = null;
 
-            string[] temp = addCourse.Day.Split(new char[] { ' ', ',', '~' });
-            for (int i = 0; i < temp.Length; i++)
+            if (addCourse.Day.Split(new char[] { ' ', ',', '~' }) != null)  // 시간이 없는 kmooc 제외
+                temp = addCourse.Day.Split(new char[] { ' ', ',', '~' });
+            if (temp != null)
             {
-                if (temp[i].Equals(""))
-                    continue;
-                course.Add(temp[i]);    // 검사할 addCourse를 split해서 저장
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    if (temp[i].Equals("")) 
+                        continue;
+                    course.Add(temp[i]);    // 검사할 addCourse를 split해서 저장
+                }
             }
 
             foreach (List<string> value in dayList) 
@@ -35,9 +40,9 @@ namespace LectureTimeTable.Utility
                 {
                     for (int i = 0; i < times.Length; i++)
                     {
-                        if (row == -1 && times[i].Equals(value[1]))
+                        if (row == -1 && times[i].Equals(value[1])) // 시작시간 index값 row에 저장
                             row = i;
-                        else if (times[i].Equals(value[2]))
+                        else if (times[i].Equals(value[2])) // 끝나는 시간 index값 lastRow에 저장
                         {
                             lastRow = i;
                             break;
@@ -61,7 +66,7 @@ namespace LectureTimeTable.Utility
                     for (int i = row; i < lastRow; i++)
                         matrix[i, col] = 1;
 
-                    col = SetCol(value[1]);
+                    col = SetCol(value[1]); // 다른 요일도 똑같이 수행
                     for (int i = row; i < lastRow; i++)
                         matrix[i, col] = 1;
                 }
@@ -81,7 +86,7 @@ namespace LectureTimeTable.Utility
                     for (int i = row; i < lastRow; i++)
                         matrix[i, col] = 1;
 
-                    col = SetCol(value[3]);
+                    col = SetCol(value[3]); // 요일마다 시간이 다르므로 2번 수행
                     row = -1;
                     lastRow = -1;
 
@@ -190,7 +195,7 @@ namespace LectureTimeTable.Utility
 
             foreach (LectureVo lecture in lectureList)
             {
-                if (lecture.Day == null)
+                if (lecture.Day == null)    // kmooc 제외
                     continue;
 
                 List<string> strings = new List<string>();  // split으로 나눈 값들을 list에 저장

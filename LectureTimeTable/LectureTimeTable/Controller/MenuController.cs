@@ -186,8 +186,7 @@ namespace LectureTimeTable.Controller
             bool isSelected = true;
             int[] searchValues = new int[] { -1, -1, -1 };
             lectureInfoController.SearchValues = searchValues;
-            lectureInfoController.InputProfessorName = "";
-            lectureInfoController.InputSubjectTitle = "";
+           
             menuScreen.ClearBottomScreen();
 
             while (isSelected)
@@ -219,6 +218,7 @@ namespace LectureTimeTable.Controller
                         break;
                     case (int)Constantss.SearchMenu.Enter:   // 강의 시간표 차트 띄우기
                         lectureInfoController.ManageLectureTimeSheet(typeValue);
+                        searchValues = new int[] { -1, -1, -1 };
                         Console.Clear();
                         break;
                 }

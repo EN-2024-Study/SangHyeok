@@ -135,6 +135,9 @@ namespace LectureTimeTable.Model
                 }
                 Console.Clear();
             }
+
+            InputProfessorName = "";
+            InputSubjectTitle = "";
         }
 
         private bool IsSetSuccessful(int typeValue, string subjectId)
@@ -187,7 +190,7 @@ namespace LectureTimeTable.Model
 
         private List<LectureVo> ManageSearchedLectureList(int typeValue)    // 입력에 맞는 정보 추출 함수
         {
-            string[] searchString = GetSearchStrings(searchValues);
+            string[] searchString = GetSearchStrings();
             List<LectureVo> lectureList = lecture.LectureList;
             List<LectureVo> resultLectureList = new List<LectureVo>();
           
@@ -277,7 +280,7 @@ namespace LectureTimeTable.Model
             }
         }
 
-        private string[] GetSearchStrings(int[] searchValues)
+        private string[] GetSearchStrings()
         {
             string[] resultString = new string[3] { "", "", "" };
             switch (searchValues[0])    // 학과 
@@ -311,16 +314,16 @@ namespace LectureTimeTable.Model
 
             switch (searchValues[2])    // 학년
             {
-                case 1:
+                case 0:
                     resultString[2] = "1";
                     break;
-                case 2:
+                case 1:
                     resultString[2] = "2";
                     break;
-                case 3:
+                case 2:
                     resultString[2] = "3";
                     break;
-                case 4:
+                case 3:
                     resultString[2] = "4";
                     break;
             }

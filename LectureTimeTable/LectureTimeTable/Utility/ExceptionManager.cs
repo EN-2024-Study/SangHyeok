@@ -10,177 +10,78 @@ namespace LectureTimeTable.Utility
 {
     public class ExceptionManager
     {
+        private LectureInfoController lectureInfoController;
+
+        public ExceptionManager()
+        {
+            this.lectureInfoController = new LectureInfoController();
+        }
+
         public bool IsOverlapCheck(List<LectureVo> lectureList, LectureVo addCourse)
         {
-            string[] times = Constantss.TIMES;
-            List<List<string>> dayList = GetDayList(lectureList);
-            int[,] matrix = new int[27, 5];
-            List<string> course = new List<string>();
-            string[] temp = null;
-
-            if (addCourse.Day.Split(new char[] { ' ', ',', '~' }) != null)  // 시간이 없는 kmooc 제외
-                temp = addCourse.Day.Split(new char[] { ' ', ',', '~' });
-            if (temp != null)
-            {
-                for (int i = 0; i < temp.Length; i++)
-                {
-                    if (temp[i].Equals("")) 
-                        continue;
-                    course.Add(temp[i]);    // 검사할 addCourse를 split해서 저장
-                }
-            }
-
-            foreach (List<string> value in dayList) 
-            {
-                int col = SetCol(value[0]);
-                int row = -1;
-                int lastRow = -1;
-
-                if (value.Count == 3)   // 요일이 하나일 때
-                {
-                    for (int i = 0; i < times.Length; i++)
-                    {
-                        if (row == -1 && times[i].Equals(value[1])) // 시작시간 index값 row에 저장
-                            row = i;
-                        else if (times[i].Equals(value[2])) // 끝나는 시간 index값 lastRow에 저장
-                        {
-                            lastRow = i;
-                            break;
-                        }
-                    }
-                    for (int i = row; i < lastRow; i++)
-                        matrix[i, col] = 1;
-                }
-                else if (value.Count == 4)  // 요일이 두개에 시간이 같을 때
-                {
-                    for (int i = 0; i < times.Length; i++)
-                    {
-                        if (row == -1 && times[i].Equals(value[2]))
-                            row = i;
-                        else if (times[i].Equals(value[3]))
-                        {
-                            lastRow = i;
-                            break;
-                        }
-                    }
-                    for (int i = row; i < lastRow; i++)
-                        matrix[i, col] = 1;
-
-                    col = SetCol(value[1]); // 다른 요일도 똑같이 수행
-                    for (int i = row; i < lastRow; i++)
-                        matrix[i, col] = 1;
-                }
-                else if (value.Count == 6)  // 요일이 두개에 시간이 다를 때
-                {
-                    for (int i = 0; i < times.Length; i++)
-                    {
-                        if (row == -1 && times[i].Equals(value[1]))
-                            row = i;
-                        else if (times[i].Equals(value[2]))
-                        {
-                            lastRow = i;
-                            break;
-                        }
-                    }
-
-                    for (int i = row; i < lastRow; i++)
-                        matrix[i, col] = 1;
-
-                    col = SetCol(value[3]); // 요일마다 시간이 다르므로 2번 수행
-                    row = -1;
-                    lastRow = -1;
-
-                    for (int i = 0; i < times.Length; i++)
-                    {
-                        if (row == -1 && times[i].Equals(value[4]))
-                            row = i;
-                        else if (times[i].Equals(value[5]))
-                        {
-                            lastRow = i;
-                            break;
-                        }
-                    }
-
-                    for (int i = row; i < lastRow; i++)
-                        matrix[i, col] = 1;
-                }
-            }
-
-            int col2 = SetCol(course[0]);
-            int row2 = -1;
-            int lastRow2 = -1;
             bool isDuplication = false;
-            if (course.Count == 3)
+            string[] times = Constantss.TIMES;
+            int[,] matrix = new int[27, 5];
+            List<string> addCourseDay = lectureInfoController.GetLectureDay(addCourse);
+
+            if (addCourseDay == null)   // 추가할 강의가 k-mooc일 때
+                return true;
+
+            foreach (LectureVo lecture in lectureList)
             {
-                for (int i = 0; i < times.Length; i++)
+                List<string> day = lectureInfoController.GetLectureDay(addCourse);
+                if (day == null)    // k-mooc 제외한 강좌들 요일 및 시간 저장
+                    continue;
+
+                int col = GetDayMatrixColumn(day[0]);
+                if (day.Count == 3 || day.Count == 6)   // 요일이 하나일 때
+                    matrix = SetMatrix(matrix, col, day[1], day[2]);
+                else if (day.Count == 4)  // 요일이 두개에 시간이 같을 때
                 {
-                    if (row2 == -1 && times[i].Equals(course[1]))
-                        row2 = i;
-                    else if (times[i].Equals(course[2]))
-                    {
-                        lastRow2 = i;
-                        break;
-                    }
+                    matrix = SetMatrix(matrix, col, day[2], day[3]);
+                    matrix = SetMatrix(matrix, GetDayMatrixColumn(day[1]), day[2], day[3]);
                 }
-                for (int i = row2; i < lastRow2; i++)
-                    if (matrix[i, col2] == 1)
+
+                if (day.Count == 6)  // 요일이 두개에 시간이 다를 때
+                {
+                    col = GetDayMatrixColumn(day[3]); // 요일마다 시간이 다르므로 2번 수행
+                    matrix = SetMatrix(matrix, col, day[4], day[5]);
+                }
+            }
+
+            int column = GetDayMatrixColumn(addCourseDay[0]);
+            if (addCourseDay.Count == 3 || addCourseDay.Count == 6)
+            {
+                int row = GetDayMatrixRow(addCourseDay[1]);
+                int lastRow = GetDayMatrixRow(addCourseDay[2]);
+
+                for (int i = row; i < lastRow; i++)
+                    if (matrix[i, column] == 1)
                         isDuplication = true;
             }
-            else if (course.Count == 4)
+            else if (addCourseDay.Count == 4)
             {
-                for (int i = 0; i < times.Length; i++)
-                {
-                    if (row2 == -1 && times[i].Equals(course[2]))
-                        row2 = i;
-                    else if (times[i].Equals(course[3]))
-                    {
-                        lastRow2 = i;
-                        break;
-                    }
-                }
-                for (int i = row2; i < lastRow2; i++)
-                    if (matrix[i, col2] == 1)
+                int row = GetDayMatrixRow(addCourseDay[2]);
+                int lastRow = GetDayMatrixRow(addCourseDay[3]);
+               
+                for (int i = row; i < lastRow; i++)
+                    if (matrix[i, column] == 1)
                         isDuplication = true;
 
-                col2 = SetCol(course[1]);
-                for (int i = row2; i < lastRow2; i++)
-                    if (matrix[i, col2] == 1)
+                column = GetDayMatrixColumn(addCourseDay[1]);
+                for (int i = row; i < lastRow; i++)
+                    if (matrix[i, column] == 1)
                         isDuplication = true;
             }
-            else if (course.Count == 6)
+
+            if (addCourseDay.Count == 6)
             {
-                for (int i = 0; i < times.Length; i++)
-                {
-                    if (row2 == -1 && times[i].Equals(course[1]))
-                        row2 = i;
-                    else if (times[i].Equals(course[2]))
-                    {
-                        lastRow2 = i;
-                        break;
-                    }
-                }
+                column = GetDayMatrixColumn(addCourseDay[3]);
+                int row = GetDayMatrixRow(addCourseDay[4]);
+                int lastRow = GetDayMatrixRow(addCourseDay[5]);
 
-                for (int i = row2; i < lastRow2; i++)
-                    if (matrix[i, col2] == 1)
-                        isDuplication = true;
-
-                col2 = SetCol(course[3]);
-                row2 = -1;
-                lastRow2 = -1;
-
-                for (int i = 0; i < times.Length; i++)
-                {
-                    if (row2 == -1 && times[i].Equals(course[4]))
-                        row2 = i;
-                    else if (times[i].Equals(course[5]))
-                    {
-                        lastRow2 = i;
-                        break;
-                    }
-                }
-
-                for (int i = row2; i < lastRow2; i++)
-                    if (matrix[i, col2] == 1)
+                for (int i = row; i < lastRow; i++)
+                    if (matrix[i, column] == 1)
                         isDuplication = true;
             }
 
@@ -189,32 +90,17 @@ namespace LectureTimeTable.Utility
             return true;
         }
 
-        public static List<List<string>> GetDayList(List<LectureVo> lectureList)
+        private static int[,] SetMatrix(int[,] matrix, int column, string startTime, string endTime)
         {
-            List<List<string>> dayList = new List<List<string>>();
+            int row = GetDayMatrixRow(startTime);   
+            int lastRow = GetDayMatrixRow(endTime);   
 
-            foreach (LectureVo lecture in lectureList)
-            {
-                if (lecture.Day == null)    // kmooc 제외
-                    continue;
-
-                List<string> strings = new List<string>();  // split으로 나눈 값들을 list에 저장
-                string[] temp = lecture.Day.Split(new char[] { ' ', ',', '~' });              
-
-                for (int i = 0; i < temp.Length; i++)
-                {
-                    if (temp[i].Equals(""))
-                        continue;
-                    strings.Add(temp[i]);
-                }
-
-                dayList.Add(strings);   // 저장한 list들을 dayList에 저장
-            }
-
-            return dayList;
+            for (int i = row; i < lastRow; i++)
+                matrix[i, column] = 1;
+            return matrix;
         }
 
-        public static int SetCol(string day)
+        private static int GetDayMatrixColumn(string day)
         {
             int result = -1;
             if (day.Equals("월"))
@@ -228,6 +114,16 @@ namespace LectureTimeTable.Utility
             else if (day.Equals("금"))
                 result = 4;
             return result;
+        }
+
+        private static int GetDayMatrixRow(string day)
+        {
+            string[] times = Constantss.TIMES;
+
+            for (int i = 0; i < times.Length; i++)
+                if (times[i].Equals(day))
+                    return i;
+            return -1;
         }
     }
 }

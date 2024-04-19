@@ -72,120 +72,77 @@ namespace LectureTimeTable.View
 
         public void DrawScheduleScreen(List<LectureVo> lectureList)
         {
-            int[] y = new int[] {4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56 };
+            Tuple<int[], int[]> coordinate = Constantss.ScheduleScreenCoordinate;
+            int[] x = coordinate.Item1;
+            int[] y = coordinate.Item2;
             int index = 0;
-            int[] x = new int[] { 15, 37, 60, 79, 103 };
             string[] times = Constantss.TIMES;
-            List<List<string>> dayList = ExceptionManager.GetDayList(lectureList);
 
             Console.SetCursorPosition(0, 0);
             Console.Write(Constantss.SCHEDULE);
 
-            foreach (List<string> day in dayList)
+            foreach (LectureVo lecture in lectureList)
             {
-                int col = ExceptionManager.SetCol(day[0]);
-                int row = -1;
-                int lastRow = -1;
+                List<string> day = LectureDayManager.GetLectureDay(lecture);
+                if (day == null)    // k-mooc 제외한 강좌들 요일 및 시간 저장
+                    continue;
 
-                if (day.Count == 3)   // 요일이 하나일 때
+                int column = LectureDayManager.GetDayMatrixColumn(day[0]);
+                if (day.Count == 3 || day.Count == 6)   // 요일이 하나일 때
                 {
-                    for (int i = 0; i < times.Length; i++)
-                    {
-                        if (row == -1 && times[i].Equals(day[1]))
-                            row = i;
-                        else if (times[i].Equals(day[2]))
-                        {
-                            lastRow = i;
-                            break;
-                        }
-                    }
+                    int row = LectureDayManager.GetDayMatrixRow(day[1]);
+                    int lastRow = LectureDayManager.GetDayMatrixRow(day[2]);
 
                     for (int i = row; i < lastRow; i++)
                     {
-                        Console.SetCursorPosition(x[col], y[i]);
+                        Console.SetCursorPosition(x[column], y[i]);
                         if (lectureList[index].SubjectTitle.Contains("Capstone"))
                             Console.Write(lectureList[index].SubjectTitle.Split(new char[] { '(' })[0]);
                         else
                             Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[col], y[i] + 1);
+                        Console.SetCursorPosition(x[column], y[i] + 1);
                         Console.Write(lectureList[index].Room);
                     }
                 }
                 else if (day.Count == 4)  // 요일이 두개에 시간이 같을 때
                 {
-                    for (int i = 0; i < times.Length; i++)
-                    {
-                        if (row == -1 && times[i].Equals(day[2]))
-                            row = i;
-                        else if (times[i].Equals(day[3]))
-                        {
-                            lastRow = i;
-                            break;
-                        }
-                    }
+                    int row = LectureDayManager.GetDayMatrixRow(day[2]);
+                    int lastRow = LectureDayManager.GetDayMatrixRow(day[3]);
+
                     for (int i = row; i < lastRow; i++)
                     {
-                        Console.SetCursorPosition(x[col], y[i]);
+                        Console.SetCursorPosition(x[column], y[i]);
                         Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[col], y[i] + 1);
+                        Console.SetCursorPosition(x[column], y[i] + 1);
                         Console.Write(lectureList[index].Room);
                     }
 
-                    col = ExceptionManager.SetCol(day[1]);
+                    column = LectureDayManager.GetDayMatrixColumn(day[1]);
                     for (int i = row; i < lastRow; i++)
                     {
-                        Console.SetCursorPosition(x[col], y[i]);
+                        Console.SetCursorPosition(x[column], y[i]);
                         Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[col], y[i] + 1);
+                        Console.SetCursorPosition(x[column], y[i] + 1);
                         Console.Write(lectureList[index].Room);
                     }
                 }
-                else if (day.Count == 6)  // 요일이 두개에 시간이 다를 때
+
+                if (day.Count == 6)  // 요일이 두개에 시간이 다를 때
                 {
-                    for (int i = 0; i < times.Length; i++)
-                    {
-                        if (row == -1 && times[i].Equals(day[1]))
-                            row = i;
-                        else if (times[i].Equals(day[2]))
-                        {
-                            lastRow = i;
-                            break;
-                        }
-                    }
+                    column = LectureDayManager.GetDayMatrixColumn(day[3]);
+                    int row = LectureDayManager.GetDayMatrixRow(day[4]);
+                    int lastRow = LectureDayManager.GetDayMatrixRow(day[5]);
 
                     for (int i = row; i < lastRow; i++)
                     {
-                        Console.SetCursorPosition(x[col], y[i]);
+                        Console.SetCursorPosition(x[column], y[i]);
                         Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[col], y[i] + 1);
+                        Console.SetCursorPosition(x[column], y[i] + 1);
                         Console.Write(lectureList[index].Room);
                     }
-
-                    col = ExceptionManager.SetCol(day[3]);
-                    row = -1;
-                    lastRow = -1;
-
-                    for (int i = 0; i < times.Length; i++)
-                    {
-                        if (row == -1 && times[i].Equals(day[4]))
-                            row = i;
-                        else if (times[i].Equals(day[5]))
-                        {
-                            lastRow = i;
-                            break;
-                        }
-                    }
-
-                    for (int i = row; i < lastRow; i++)
-                    {
-                        Console.SetCursorPosition(x[col], y[i]);
-                        Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[col], y[i] + 1);
-                        Console.Write(lectureList[index].Room);
-                    }
-
-                    index++;
                 }
+
+                index++;
             }
         }
     }

@@ -55,6 +55,7 @@
     <Compile Include="Utility\Constantss.cs" />
     <Compile Include="Utility\ExceptionManager.cs" />
     <Compile Include="Utility\InputManager.cs" />
+    <Compile Include="Utility\LectureDayManager.cs" />
     <Compile Include="View\ExplaningScreen.cs" />
     <Compile Include="View\LectureTimeScreen.cs" />
     <Compile Include="View\MenuScreen.cs" />

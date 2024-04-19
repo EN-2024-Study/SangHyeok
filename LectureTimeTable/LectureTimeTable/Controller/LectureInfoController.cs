@@ -36,26 +36,6 @@ namespace LectureTimeTable.Model
         public string InputProfessorName
         { set { inputProfessorName = value; } }
 
-
-        public List<string> GetLectureDay(LectureVo lecture)
-        {
-            List<string> day = new List<string>();
-            string[] temp = null;
-
-            if (lecture.Day.Split(new char[] { ' ', ',', '~' }) == null)  // 시간이 없는 kmooc 제외
-                return null;
-
-            temp = lecture.Day.Split(new char[] { ' ', ',', '~' });
-            for (int i = 0; i < temp.Length; i++)
-            {
-                if (temp[i].Equals(""))
-                    continue;
-                day.Add(temp[i]);    // 검사할 addCourse를 split해서 저장
-            }
-
-            return day;
-        }
-
         public bool IsSearchedLectureValid(int digitValue)  // 교과목명 또는 교수명 입력받는 함수
         {
             switch (digitValue)

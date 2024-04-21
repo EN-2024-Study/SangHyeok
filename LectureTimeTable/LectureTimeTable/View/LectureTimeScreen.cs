@@ -71,7 +71,7 @@ namespace LectureTimeTable.View
         }
 
         public void DrawScheduleScreen(List<LectureVo> lectureList)
-        {
+        {   // index 터짐
             Tuple<int[], int[]> coordinate = Constantss.ScheduleScreenCoordinate;
             int[] x = coordinate.Item1;
             int[] y = coordinate.Item2;

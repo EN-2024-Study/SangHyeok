@@ -229,7 +229,7 @@ namespace LectureTimeTable.Model
         }
 
         private void SaveExcel()    // excel 저장 함수
-        {
+        {   
             try
             {
                 string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -239,36 +239,101 @@ namespace LectureTimeTable.Model
                 Workbook workBook = application.Workbooks.Add();
                 Worksheet workSheet = workBook.Worksheets.get_Item(1) as Worksheet;
 
-                workSheet.Cells[1, 1] = "NO";
-                workSheet.Cells[1, 2] = "개설학과전공";
-                workSheet.Cells[1, 3] = "학수번호";
-                workSheet.Cells[1, 4] = "분반";
-                workSheet.Cells[1, 5] = "교과목명";
-                workSheet.Cells[1, 6] = "이수구분";
-                workSheet.Cells[1, 7] = "학년";
-                workSheet.Cells[1, 8] = "학점";
-                workSheet.Cells[1, 9] = "요일 및 강의시간";
-                workSheet.Cells[1, 10] = "강의실";
-                workSheet.Cells[1, 11] = "메인교수명";
-                workSheet.Cells[1, 12] = "강의언어";
+                workSheet.Cells[1, 6] = "수강";
+                workSheet.Cells[1, 7] = "신청";
+                workSheet.Cells[1, 8] = "내역";
+                workSheet.Cells[1, 17] = "시간표";
+                workSheet.Cells[2, 15] = "월";
+                workSheet.Cells[2, 16] = "화";
+                workSheet.Cells[2, 17] = "수";
+                workSheet.Cells[2, 18] = "목";
+                workSheet.Cells[2, 19] = "금";
+                workSheet.Cells[2, 1] = "NO";
+                workSheet.Cells[2, 2] = "개설학과전공";
+                workSheet.Cells[2, 3] = "학수번호";
+                workSheet.Cells[2, 4] = "분반";
+                workSheet.Cells[2, 5] = "교과목명";
+                workSheet.Cells[2, 6] = "이수구분";
+                workSheet.Cells[2, 7] = "학년";
+                workSheet.Cells[2, 8] = "학점";
+                workSheet.Cells[2, 9] = "요일 및 강의시간";
+                workSheet.Cells[2, 10] = "강의실";
+                workSheet.Cells[2, 11] = "메인교수명";
+                workSheet.Cells[2, 12] = "강의언어";
+
+                workSheet.Cells[3, 14] = "09:00~09:30";
+                workSheet.Cells[5, 14] = "09:30~10:00";
+                workSheet.Cells[7, 14] = "10:00~10:30";
+                workSheet.Cells[9, 14] = "10:30~11:00";
+                workSheet.Cells[11, 14] = "11:00~11:30";
+                workSheet.Cells[13, 14] = "11:30~12:00";
+                workSheet.Cells[15, 14] = "12:00~12:30";
+                workSheet.Cells[17, 14] = "12:30~13:00";
+                workSheet.Cells[19, 14] = "13:00~13:30";
+                workSheet.Cells[21, 14] = "13:30~14:00";
+                workSheet.Cells[23, 14] = "14:00~14:30";
+                workSheet.Cells[25, 14] = "14:30~15:00";
+                workSheet.Cells[27, 14] = "15:00~15:30";
+                workSheet.Cells[29, 14] = "15:30~16:00";
+                workSheet.Cells[31, 14] = "16:00~16:30";
+                workSheet.Cells[33, 14] = "16:30~17:00";
+                workSheet.Cells[35, 14] = "17:00~17:30";
+                workSheet.Cells[37, 14] = "17:30~18:00";
+                workSheet.Cells[39, 14] = "18:00~18:30";
+                workSheet.Cells[41, 14] = "18:30~19:00";
+                workSheet.Cells[43, 14] = "19:00~19:30";
+                workSheet.Cells[45, 14] = "19:30~20:00";
+                workSheet.Cells[47, 14] = "20:00~20:30";
+                workSheet.Cells[49, 14] = "20:30~21:00";
 
                 List<LectureVo> lectureList = userInfoController.GetAppliedCourseList();
-                for (int i = 2; i <= lectureList.Count + 1; i++)
+                for (int i = 3; i < lectureList.Count + 3; i++)
                 {
-                    workSheet.Cells[i, 1] = lectureList[i - 2].Id.ToString();
-                    workSheet.Cells[i, 2] = lectureList[i - 2].Major;
-                    workSheet.Cells[i, 3] = lectureList[i - 2].Number;
-                    workSheet.Cells[i, 4] = lectureList[i - 2].Group;
-                    workSheet.Cells[i, 5] = lectureList[i - 2].SubjectTitle;
-                    workSheet.Cells[i, 6] = lectureList[i - 2].CreditClassification;
-                    workSheet.Cells[i, 7] = lectureList[i - 2].Grade;
-                    workSheet.Cells[i, 8] = lectureList[i - 2].Score;
-                    workSheet.Cells[i, 9] = lectureList[i - 2].Day;
-                    workSheet.Cells[i, 10] = lectureList[i - 2].Room;
-                    workSheet.Cells[i, 11] = lectureList[i - 2].ProfessorName;
-                    workSheet.Cells[i, 12] = lectureList[i - 2].Language;
-                }
+                    workSheet.Cells[i, 1] = lectureList[i - 3].Id.ToString();   // 수강 신청 내역
+                    workSheet.Cells[i, 2] = lectureList[i - 3].Major;
+                    workSheet.Cells[i, 3] = lectureList[i - 3].Number;
+                    workSheet.Cells[i, 4] = lectureList[i - 3].Group;
+                    workSheet.Cells[i, 5] = lectureList[i - 3].SubjectTitle;
+                    workSheet.Cells[i, 6] = lectureList[i - 3].CreditClassification;
+                    workSheet.Cells[i, 7] = lectureList[i - 3].Grade;
+                    workSheet.Cells[i, 8] = lectureList[i - 3].Score;
+                    workSheet.Cells[i, 9] = lectureList[i - 3].Day;
+                    workSheet.Cells[i, 10] = lectureList[i - 3].Room;
+                    workSheet.Cells[i, 11] = lectureList[i - 3].ProfessorName;
+                    workSheet.Cells[i, 12] = lectureList[i - 3].Language;
 
+                    List<string> day = LectureDayManager.GetLectureDay(lectureList[i - 3]); // 수강 신청 시간표
+                    if (day == null)    // k-mooc 강좌
+                    {
+
+                        continue;
+                    }
+                    
+                    int column = LectureDayManager.GetDayMatrixColumn(day[0]);
+                    if (day.Count == 3 || day.Count == 6)   // 요일이 하나일 때
+                    {
+                        int row = LectureDayManager.GetDayMatrixRow(day[1]);
+                        int lastRow = LectureDayManager.GetDayMatrixRow(day[2]);
+                        Set(row, lastRow, column, workSheet, lectureList, i - 3);
+                    }
+                    else if (day.Count == 4)  // 요일이 두개에 시간이 같을 때
+                    {
+                        int row = LectureDayManager.GetDayMatrixRow(day[2]);
+                        int lastRow = LectureDayManager.GetDayMatrixRow(day[3]);
+                        Set(row, lastRow, column, workSheet, lectureList, i - 3);
+
+                        column = LectureDayManager.GetDayMatrixColumn(day[1]);
+                        Set(row, lastRow, column, workSheet, lectureList, i - 3);
+                    }
+
+                    if (day.Count == 6)  // 요일이 두개에 시간이 다를 때
+                    {
+                        column = LectureDayManager.GetDayMatrixColumn(day[3]);
+                        int row = LectureDayManager.GetDayMatrixRow(day[4]);
+                        int lastRow = LectureDayManager.GetDayMatrixRow(day[5]);
+                        Set(row, lastRow, column, workSheet, lectureList, i - 3);
+                    }
+                }
                 workSheet.Columns.AutoFit();
                 workBook.SaveAs(path, XlFileFormat.xlWorkbookDefault);
                 workBook.Close(true);
@@ -278,6 +343,25 @@ namespace LectureTimeTable.Model
             {
                 Console.WriteLine(e.Message);
             }
+
+            void Set(int row, int lastRow, int column, Worksheet workSheet, List<LectureVo> lectureList, int index)
+            {
+                //Console.Clear();
+                //Console.WriteLine(row);
+                //Console.WriteLine(lastRow);
+                //Console.WriteLine(column);
+                //Console.WriteLine(lectureList[index].SubjectTitle);
+                //Console.ReadLine();
+                for (int j = row, i = 2; j < lastRow; j++, i += 1)
+                {
+                    if (lectureList[index].SubjectTitle.Contains("Capstone"))
+                        workSheet.Cells[j + i, column + 15] = "Capstone디자인";
+                    else
+                        workSheet.Cells[j + i, column + 15] = lectureList[index].SubjectTitle;
+                    workSheet.Cells[j + i + 1, column + 15] = lectureList[index].Room;
+                }
+            }
+
         }
 
         private string[] GetSearchStrings()

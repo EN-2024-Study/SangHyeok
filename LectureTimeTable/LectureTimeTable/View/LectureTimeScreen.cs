@@ -97,39 +97,16 @@ namespace LectureTimeTable.View
                 {
                     int row = LectureDayManager.GetDayMatrixRow(day[1]);
                     int lastRow = LectureDayManager.GetDayMatrixRow(day[2]);
-
-                    for (int i = row; i < lastRow; i++)
-                    {
-                        Console.SetCursorPosition(x[column], y[i]);
-                        if (lectureList[index].SubjectTitle.Contains("Capstone"))
-                            Console.Write(lectureList[index].SubjectTitle.Split(new char[] { '(' })[0]);
-                        else
-                            Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[column], y[i] + 1);
-                        Console.Write(lectureList[index].Room);
-                    }
+                    Set(row, lastRow, column);
                 }
                 else if (day.Count == 4)  // 요일이 두개에 시간이 같을 때
                 {
                     int row = LectureDayManager.GetDayMatrixRow(day[2]);
                     int lastRow = LectureDayManager.GetDayMatrixRow(day[3]);
-
-                    for (int i = row; i < lastRow; i++)
-                    {
-                        Console.SetCursorPosition(x[column], y[i]);
-                        Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[column], y[i] + 1);
-                        Console.Write(lectureList[index].Room);
-                    }
+                    Set(row, lastRow, column);
 
                     column = LectureDayManager.GetDayMatrixColumn(day[1]);
-                    for (int i = row; i < lastRow; i++)
-                    {
-                        Console.SetCursorPosition(x[column], y[i]);
-                        Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[column], y[i] + 1);
-                        Console.Write(lectureList[index].Room);
-                    }
+                    Set(row, lastRow, column);
                 }
 
                 if (day.Count == 6)  // 요일이 두개에 시간이 다를 때
@@ -137,17 +114,24 @@ namespace LectureTimeTable.View
                     column = LectureDayManager.GetDayMatrixColumn(day[3]);
                     int row = LectureDayManager.GetDayMatrixRow(day[4]);
                     int lastRow = LectureDayManager.GetDayMatrixRow(day[5]);
-
-                    for (int i = row; i < lastRow; i++)
-                    {
-                        Console.SetCursorPosition(x[column], y[i]);
-                        Console.Write(lectureList[index].SubjectTitle);
-                        Console.SetCursorPosition(x[column], y[i] + 1);
-                        Console.Write(lectureList[index].Room);
-                    }
+                    Set(row, lastRow, column);
                 }
 
                 index++;
+            }
+
+            void Set(int row, int lastRow, int col)
+            {
+                for (int i = row; i < lastRow; i++)
+                {
+                    Console.SetCursorPosition(x[col], y[i]);
+                    if (lectureList[index].SubjectTitle.Contains("Capstone"))
+                        Console.Write(lectureList[index].SubjectTitle.Split(new char[] { '(' })[0]);
+                    else
+                        Console.Write(lectureList[index].SubjectTitle);
+                    Console.SetCursorPosition(x[col], y[i] + 1);
+                    Console.Write(lectureList[index].Room);
+                }
             }
         }
     }

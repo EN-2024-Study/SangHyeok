@@ -71,7 +71,7 @@ namespace LectureTimeTable.View
         }
 
         public void DrawScheduleScreen(List<LectureVo> lectureList)
-        {   // index 터짐
+        {   
             Tuple<int[], int[]> coordinate = Constantss.ScheduleScreenCoordinate;
             int[] x = coordinate.Item1;
             int[] y = coordinate.Item2;
@@ -84,8 +84,13 @@ namespace LectureTimeTable.View
             foreach (LectureVo lecture in lectureList)
             {
                 List<string> day = LectureDayManager.GetLectureDay(lecture);
-                if (day == null)    // k-mooc 제외한 강좌들 요일 및 시간 저장
+                if (day == null)    // k-mooc 강좌
+                {
+                    Console.SetCursorPosition(15, 55);
+                    Console.WriteLine(lecture.SubjectTitle);
+                    Console.Write("================================================================================================================================");
                     continue;
+                }
 
                 int column = LectureDayManager.GetDayMatrixColumn(day[0]);
                 if (day.Count == 3 || day.Count == 6)   // 요일이 하나일 때

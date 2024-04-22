@@ -10,6 +10,8 @@ namespace Library.Model
     {
         private string id, password, age, phoneNumber, address;
 
+        public UserDto() { }
+
         public UserDto(string id, string password)
         {
             this.id = id;
@@ -22,12 +24,31 @@ namespace Library.Model
         public string Id
         {
             get { return id; }
+            set { id = value; }
         }
 
         public string Password
         {
             get { return password; }
             set { password = value; }
+        }
+
+        public string Age
+        {
+            get { return age; }
+            set { age = value; }
+        }
+
+        public string PhoneNumber
+        {
+            get { return phoneNumber; }
+            set { phoneNumber = value; }
+        }
+
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
         }
     }
 }

@@ -12,13 +12,13 @@ namespace Library.Controller
     {
         private MenuScreen menuScreen;
         private MenuSelector menuSelector;
-        private AccountController userController;
+        private AccountController accountController;
 
         public MenuController()
         {
             this.menuScreen = new MenuScreen();
             this.menuSelector = new MenuSelector();
-            this.userController = new AccountController();
+            this.accountController = new AccountController();
         }
 
         public void ControllModeMenu()
@@ -26,10 +26,10 @@ namespace Library.Controller
             bool isSelected = true;
             menuSelector.menuValue = 0;
 
-            Console.SetWindowSize(30, 5);
-            Console.Clear();
             while (isSelected)
             {
+                Console.SetWindowSize(40, 20);
+                Console.Clear();
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.Mode);
                 if (!isSelected)
                     continue;
@@ -51,9 +51,10 @@ namespace Library.Controller
             bool isSelected = true;
             menuSelector.menuValue = 0;
 
-            Console.Clear();
             while (isSelected)
             {
+                Console.SetWindowSize(40, 20);
+                Console.Clear();
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.LogInSignUp);
                 if (!isSelected)
                     continue;
@@ -64,7 +65,7 @@ namespace Library.Controller
                         ControllLogInMenu((int)Constants.ModeMenu.UserMode);
                         break;
                     case (int)Constants.LogInSignUpMenu.SignUp:
-
+                        ControllSignUpMenu();
                         break;
                 }
             }
@@ -75,9 +76,9 @@ namespace Library.Controller
             bool isSelected = true;
             bool isId = false, isPassword = false;
             menuSelector.menuValue = 0;
-
-            Console.SetWindowSize(40, 5);
+            Console.SetWindowSize(50, 20);
             Console.Clear();
+
             while (isSelected)
             {
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.LogIn);
@@ -87,22 +88,128 @@ namespace Library.Controller
                 switch(menuSelector.menuValue)
                 {
                     case (int)Constants.InputType.Id:
-                        isId = userController.IsAccountValid((int)Constants.LogInMenu.Id, modeType);
+                        isId = accountController.IsLogInValid((int)Constants.LogInMenu.Id, modeType);
                         break;
                     case (int)Constants.InputType.Password:
-                        isPassword = userController.IsAccountValid((int)Constants.LogInMenu.Password, modeType);
+                        isPassword = accountController.IsLogInValid((int)Constants.LogInMenu.Password, modeType);
                         break;
                 }
 
                 if (isId && isPassword) // id와 password가 일치하다면
                 {
-                    //ControllMainMenu(); // 메인 메뉴로 이동
                     isId = false;
                     isPassword = false;
+                    ControllModeMenu(modeType);
+                    Console.SetWindowSize(50, 20);
+                    Console.Clear();
                 }
             }
         }
 
+        private void ControllSignUpMenu()
+        {
+            bool isSelected = true;
+            bool[] isInput = new bool[] { false, false, false, false, false };
+            menuSelector.menuValue = 0;
+            Console.SetWindowSize(50, 20);
+            Console.Clear();
+
+            while (isSelected)
+            {
+                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.AccountModify);
+                if (!isSelected)
+                    continue;
+
+                if (menuSelector.menuValue < 5)
+                    isInput[menuSelector.menuValue] = accountController.IsSignUpValid(menuSelector.menuValue);
+                else   // 확인 버튼을 눌렀을 때
+                {
+                    foreach (bool value in isInput)
+                    {
+                        if (!value) // 모든 정보 기입을 하지 않았다면 
+                            continue;
+                    }
+                        
+                    accountController.SetSignUpAccount();   // 회원가입
+                    break;
+                }
+            }
+        }
+
+        private void ControllModeMenu(int modeType)
+        {
+            bool isSelected = true;
+            menuSelector.menuValue = 0;
+
+            while (isSelected)
+            {
+                Console.SetWindowSize(50, 30);
+                Console.Clear();
+
+                if (modeType == (int)Constants.ModeMenu.UserMode)
+                {
+                    isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.UserMode);
+                    if (!isSelected)
+                        continue;
+
+                    switch (menuSelector.menuValue)
+                    {
+                        case (int)Constants.UserMode.BookSearch:
+
+                            break;
+                        case (int)Constants.UserMode.BookRental:
+
+                            break;
+                        case (int)Constants.UserMode.BookRentalHistory:
+
+                            break;
+                        case (int)Constants.UserMode.BookReturn:
+
+                            break;
+                        case (int)Constants.UserMode.BookReturnHistory:
+
+                            break;
+                        case (int)Constants.UserMode.AccountInfo:
+
+                            break;
+                        case (int)Constants.UserMode.AccountDelete:
+
+                            break;
+                    }
+                }
+                else if (modeType == (int)Constants.ModeMenu.ManagerMode)
+                {
+                    isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.ManagerMode);
+                    if (!isSelected)
+                        continue;
+
+                    switch (menuSelector.menuValue)
+                    {
+                        case (int)Constants.ManagerMode.BookSearch:
+
+                            break;
+                        case (int)Constants.ManagerMode.BookAdd:
+
+                            break;
+                        case (int)Constants.ManagerMode.BookDelete:
+
+                            break;
+                        case (int)Constants.ManagerMode.BookModify:
+
+                            break;
+                        case (int)Constants.ManagerMode.AccountModify:
+
+                            break;
+                        case (int)Constants.ManagerMode.AccountDelete:
+
+                            break;
+                        case (int)Constants.ManagerMode.RentalHistory:
+
+                            break;
+                    }
+                }
+            }
+        }
 
     }
 }

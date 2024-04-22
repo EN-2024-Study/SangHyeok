@@ -15,7 +15,7 @@ namespace Library.Model
 
         private UserRepository()
         {
-            this.userDtoList = new List<UserDto> { new UserDto("1234567", "1234")};
+            this.userDtoList = new List<UserDto> { new UserDto("12345678", "1234")};
             this.userIndex = -1;
         }
 
@@ -40,9 +40,14 @@ namespace Library.Model
             set { userIndex = value; }
         }
 
-        public void SetUserPassword(int index, string password)
+        public void AddUser(UserDto user)
         {
-            userDtoList[index].Password = password; 
+            userDtoList.Add(user);
         }
+
+        //public void SetUserPassword(int index, string password)
+        //{
+        //    userDtoList[index].Password = password; 
+        //}
     }
 }

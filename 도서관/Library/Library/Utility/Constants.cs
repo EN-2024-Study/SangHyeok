@@ -14,9 +14,10 @@ namespace Library.Utility
             LogInSignUp,
             LogIn,
             UserMode,
+            ManagerMode,
             BookSearch,
             YesNo,
-            ManagerMode
+            AccountModify
         }
 
         public enum ModeMenu
@@ -37,10 +38,44 @@ namespace Library.Utility
             Password
         }
 
+        public enum AccountModifyMenu
+        {
+            Id,
+            Password,
+            Age,
+            PhoneNumber,
+            Address,
+        }
+
+        public enum UserMode
+        {
+            BookSearch,
+            BookRental,
+            BookRentalHistory,
+            BookReturn,
+            BookReturnHistory,
+            AccountInfo,
+            AccountDelete
+        }
+
+        public enum ManagerMode
+        {
+            BookSearch,
+            BookAdd,
+            BookDelete,
+            BookModify,
+            AccountModify,
+            AccountDelete,
+            RentalHistory
+        }
+
         public enum InputType
         {
             Id,
-            Password
+            Password,
+            Age,
+            PhoneNumber,
+            Address
         }
     }
 }

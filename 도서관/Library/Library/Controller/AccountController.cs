@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Library.Utility.Constants;
 
 namespace Library.Controller
 {
@@ -13,15 +14,17 @@ namespace Library.Controller
         private InputManager inputManager;
         private UserRepository user;
         private ManagerRepository manager;
+        private UserDto signUpAccount;
 
         public AccountController()
         {
             this.inputManager = new InputManager();
             this.user = UserRepository.Instance;    // singleton 생성
             this.manager = ManagerRepository.Instance;  // singleton 생성
+            this.signUpAccount = new UserDto();
         }
 
-        public bool IsAccountValid(int logInMenu, int modeType) // LogIn 입력 값이 유효한지 확인하는 함수
+        public bool IsLogInValid(int logInMenu, int modeType) // LogIn 입력 값이 유효한지 확인하는 함수
         {
             string inputstring = null;
     
@@ -58,5 +61,43 @@ namespace Library.Controller
             return false;
         }
 
+
+        public bool IsSignUpValid(int inputType)
+        {
+            string inputString = null;
+
+            switch (inputType)
+            {
+                case (int)Constants.InputType.Id:
+                    inputString = inputManager.LimitInputLength((int)Constants.InputType.Id, 9, false);
+                    signUpAccount.Id = inputString;
+                    break;
+                case (int)Constants.InputType.Password:
+                    inputString = inputManager.LimitInputLength((int)Constants.InputType.Password, 5, true);
+                    signUpAccount.Password = inputString;
+                    break;
+                case (int)Constants.InputType.Age:
+                    inputString = inputManager.LimitInputLength((int)Constants.InputType.Age, 4, false);
+                    signUpAccount.Age = inputString;
+                    break;
+                case (int)Constants.InputType.PhoneNumber:
+                    inputString = inputManager.LimitInputLength((int)Constants.InputType.PhoneNumber, 13, false);
+                    signUpAccount.PhoneNumber = inputString;
+                    break;
+                case (int)Constants.InputType.Address:
+                    inputString = inputManager.LimitInputLength((int)Constants.InputType.Address, 20, false);
+                    signUpAccount.Address = inputString;
+                    break;
+            }
+
+            if (inputString == null)
+                return false;
+            return true;
+        }
+
+        public void SetSignUpAccount()
+        {
+            user.AddUser(signUpAccount);
+        }
     }
 }

@@ -65,10 +65,13 @@ namespace Library.Utility
                     length = 2;
                     break;
                 case (int)Constants.MenuType.BookSearch:
-                    length = 3;
+                    length = 4;
                     break;
-                case (int)Constants.MenuType.ManagerMode:
+                case (int)Constants.MenuType.AccountModify:
+                    length = 6;
+                    break;
                 case (int)Constants.MenuType.UserMode:
+                case (int)Constants.MenuType.ManagerMode:
                     length = 7;
                     break;
             }

@@ -109,18 +109,24 @@ namespace Library.Utility
 
         private Tuple<int, int> GetCoordinate(int digitValue)
         {
-            int x = 0, y = 0;
+            int x = 23, y = 0;
             switch (digitValue)
             {
                 case (int)Constants.InputType.Id:
-                    x = 23;
                     y = 0;
                     break;
                 case (int)Constants.InputType.Password:
-                    x = 23;
                     y = 1;
                     break;
-                
+                case (int)Constants.InputType.Age:
+                    y = 2;
+                    break;
+                case (int)Constants.InputType.PhoneNumber:
+                    y = 3;
+                    break;
+                case (int)Constants.InputType.Address:
+                    y = 4;
+                    break;
             }
             return new Tuple<int, int>(x, y);
         }

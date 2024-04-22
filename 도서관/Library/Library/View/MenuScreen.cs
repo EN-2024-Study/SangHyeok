@@ -38,15 +38,15 @@ namespace Library.View
                     menuString = new string[] { "로그인", "회원가입" };
                     break;
                 case (int)Constants.MenuType.LogIn:
-                    menuString = new string[] { "학번(8자리 숫자)     : ",
-                        "비밀번호(4자리 숫자) : " };
+                    menuString = new string[] { "학번(8자리 숫자)     :",
+                        "비밀번호(4자리 숫자) :" };
                     break;
                 case (int)Constants.MenuType.UserMode:
                     menuString = new string[] { "도서 찾기", "도서 대여",
                     "도서 대여 내역", "도서 반납", "도서 반납 내역", "정보 수정", "계정 삭제"};
                     break;
                 case (int)Constants.MenuType.BookSearch:
-                    menuString = new string[] { "제목 찾기  :", "작가명 찾기 :", "출판사 찾기 :" };
+                    menuString = new string[] { "제목 찾기  :", "작가명 찾기 :", "출판사 찾기 :", "<확인>"};
                     break;
                 case (int)Constants.MenuType.YesNo:
                     menuString = new string[] {"예", "아니요"};
@@ -54,6 +54,10 @@ namespace Library.View
                 case (int)Constants.MenuType.ManagerMode:
                     menuString = new string[] { "도서 찾기", "도서 추가",
                     "도서 삭제", "도서 수정", "유저 정보 수정", "유저 삭제", "대여 내역"};
+                    break;
+                case (int)Constants.MenuType.AccountModify: 
+                    menuString = new string[] { "학번(8자리 숫자)     :", "비밀번호(4자리 숫자) :",
+                    "유저 나이            :", "유저 휴대폰 번호     :", "유저 주소            :", "<확인>"};
                     break;
             }
             return menuString;

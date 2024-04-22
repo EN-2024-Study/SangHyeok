@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{803145FD-484E-4A4B-9827-525BE0A375A2}</ProjectGuid>
+    <ProjectGuid>{EB1EE56E-3994-49CD-AE40-9695351F3FAE}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Library</RootNamespace>
     <AssemblyName>Library</AssemblyName>
@@ -35,35 +35,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Controller\Menu\InputMenu\BookAddMenu.cs" />
-    <Compile Include="Controller\Menu\InputMenu\BookModifyMenu.cs" />
-    <Compile Include="Controller\Menu\InputMenu\BookSearchMenu.cs" />
-    <Compile Include="Controller\Menu\InputMenu\LogInMenu.cs" />
-    <Compile Include="Controller\Menu\InputMenu\ManagerMenu.cs" />
-    <Compile Include="Controller\Menu\InputMenu\MemberModifyDeleteMenu.cs" />
-    <Compile Include="Controller\Menu\InputMenu\SignUpMenu.cs" />
-    <Compile Include="Controller\Menu\UserModifyDeleteMenu.cs" />
-    <Compile Include="Controller\Menu\InputMenu\UserMenu.cs" />
-    <Compile Include="Controller\Menu\LogInSignUpMenu.cs" />
-    <Compile Include="Controller\Menu\MenuController.cs" />
-    <Compile Include="Controller\Menu\ModeMenu.cs" />
-    <Compile Include="Controller\Menu\InputMenu\UserModifyMenu.cs" />
-    <Compile Include="Controller\Task\InputController.cs" />
-    <Compile Include="Controller\Menu\YesNoMenu.cs" />
-    <Compile Include="Model\AccountDto.cs" />
-    <Compile Include="Model\AccountRepository.cs" />
-    <Compile Include="Model\BookDto.cs" />
-    <Compile Include="MainProgram.cs" />
-    <Compile Include="Model\BookRepository.cs" />
-    <Compile Include="Controller\Task\InformationController.cs" />
-    <Compile Include="Model\ManagerRepository.cs" />
-    <Compile Include="Model\UserRepository.cs" />
-    <Compile Include="Utility\Constants.cs" />
-    <Compile Include="View\InformationScreen.cs" />
-    <Compile Include="View\ExplainingScreen.cs" />
-    <Compile Include="View\MenuScreen.cs" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

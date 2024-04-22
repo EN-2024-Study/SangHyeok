@@ -1,8 +1,0 @@
-C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\bin\Debug\Library.exe.config
-C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\bin\Debug\Library.exe
-C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\bin\Debug\Library.pdb
-C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\obj\Debug\Library.csproj.AssemblyReference.cache
-C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\obj\Debug\Library.csproj.SuggestedBindingRedirects.cache
-C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\obj\Debug\Library.csproj.CoreCompileInputs.cache
-C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\obj\Debug\Library.exe
-C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\obj\Debug\Library.pdb

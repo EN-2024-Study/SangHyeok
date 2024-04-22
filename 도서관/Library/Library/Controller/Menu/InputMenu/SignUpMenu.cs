@@ -1,0 +1,86 @@
+﻿using Library.Controller.Task;
+using Library.Utility;
+using System;
+
+namespace Library.Controller.Menu
+{
+    public class SignUpMenu : MenuController
+    {
+        private InputController inputController;
+        private InformationController informationController;
+
+        public SignUpMenu() : base()
+        {
+            this.inputController = new InputController();
+            this.informationController = new InformationController();
+            base.menuString = base.DecideMenuType((int)Constants.MenuType.SignUp);
+        }
+
+        public override bool Run()
+        {
+            base.menuScreen.EraseMenu();
+            base.menuValue = 0;
+            bool isSignUp = false;
+            string[] inputString = new string[7] { "", "", "", "", "", "", "" };
+
+            while (!isSignUp)
+            {
+                bool isMenuSelect = true;
+                while (isMenuSelect)
+                {
+                    menuScreen.PrintMenu(menuString, menuValue, false);
+                    isMenuSelect = SelectMenu();
+                    if (menuValue > 7)
+                        menuValue = 7;
+                }
+
+                menuScreen.PrintMenu(menuString, menuValue, true);  // 선택한 메뉴를 파란색으로 다시 띄우기
+
+                switch (menuValue)
+                {
+                    case (int)Constants.SignUpMenu.GoBack:
+                        return true;
+                    case (int)Constants.SignUpMenu.Id:
+                        inputString[0] = inputController.LimitInputLength(new Tuple<int, int>(35, 15), 15, false);
+                        break;
+                    case (int)Constants.SignUpMenu.Password:
+                        inputString[1] = inputController.LimitInputLength(new Tuple<int, int>(35, 17), 15, true);
+                        break;
+                    case (int)Constants.SignUpMenu.PasswordCheck:
+                        inputString[2] = inputController.LimitInputLength(new Tuple<int, int>(35, 19), 15, true);
+                        break;
+                    case (int)Constants.SignUpMenu.Name:
+                        inputString[3] = inputController.LimitInputLength(new Tuple<int, int>(35, 21), 15, false);
+                        break;
+                    case (int)Constants.SignUpMenu.Age:
+                        inputString[4] = inputController.LimitInputLength(new Tuple<int, int>(35, 23), 15, false);
+                        break;
+                    case (int)Constants.SignUpMenu.PhoneNumber:
+                        inputString[5] = inputController.LimitInputLength(new Tuple<int, int>(35, 25), 15, false);
+                        break;
+                    case (int)Constants.SignUpMenu.Address:
+                        inputString[6] = inputController.LimitInputLength(new Tuple<int, int>(35, 27), 15, false);
+                        break;
+                    case (int)Constants.SignUpMenu.Check:
+                        isSignUp = true;
+                        break;
+                }
+
+                if (isSignUp)
+                    break;
+
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                if (inputString[i] != "")
+                    inputString[i] = informationController.TrimString(inputString[i]);
+            }
+
+            ExplainingScreen.PrintComplete("회원가입 성공!");
+            Console.ReadLine();
+            informationController.SaveUserData(inputString);
+            return true;
+        }
+    }
+}

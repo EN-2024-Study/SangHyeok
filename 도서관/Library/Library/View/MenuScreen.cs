@@ -1,55 +1,62 @@
 ﻿using System;
-using System.Collections.Generic;
 using Library.Utility;
-using Library.Model;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Library.View
 {
     public class MenuScreen
     {
-        public void PrintMenu(string[] menuString, int menuValue, bool isSelect)
+        public void DrawMenu(int screenValue, int selectedMenu, bool isEnter)
         {
-            Tuple<int, int> coordinate;
-            if (menuString.Length > 7 && menuString[0].Equals("책 제목 :")) // 도서 추가 화면
-                coordinate = new Tuple<int, int>(10, 7);
-            else if (menuString[0].Equals("책 제목 :"))    // 도서 수정 화면
-                coordinate = new Tuple<int, int>(10, 7);    
-            else if (menuString[0].Equals("도서 조회") || 
-                menuString[0].Equals("ID           :"))
-                coordinate = new Tuple<int, int>(20, 15);
-            else if (menuString[0].Equals("제목으로 찾기       :"))
-                coordinate = new Tuple<int, int>(0, 0);
-            else if (menuString[0].Equals("USER PW (8 ~ 15글자 영어, 숫자 포함)  :"))    // UserModifyMenu
-                coordinate = new Tuple<int, int>(1, 15);
-            else
-                coordinate = new Tuple<int, int>(20, 25);
-            ExplainingScreen.ExplainDirectionKey();
-            ExplainingScreen.ExplainSelectKey();
+            string[] menuStrings = SetStrings(screenValue);
 
-            for (int i = 0; i < menuString.Length; i++)
+            for (int i = 0; i < menuStrings.Length; i++)
             {
-                Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i * 2);
-                if (isSelect && menuValue == i)
+                if (isEnter && i == selectedMenu)    // 엔터 입력과 선택한 메뉴값
                     Console.ForegroundColor = ConsoleColor.Blue;
-                else if (menuValue == i)
+                else if (i == selectedMenu)  // 선택한 메뉴값
                     Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write(menuString[i]);
+
+                Console.SetCursorPosition(0, i);
+                Console.Write(menuStrings[i]);
                 Console.ResetColor();
             }
         }
 
-        public void EraseMenu()
+        private string[] SetStrings(int screenValue)
         {
-            Tuple<int, int> coordinate = new Tuple<int, int>(15, 20);
-
-            for (int i = coordinate.Item1; i < 100; i++)
+            string[] menuString = null;
+            switch (screenValue)
             {
-                for (int j = coordinate.Item2; j < 35; j++)
-                {
-                    Console.SetCursorPosition(i, j);
-                    Console.Write(" ");
-                }
+                case (int)Constants.MenuType.Mode:
+                    menuString = new string[] { "유저 모드", "관리자 모드" };
+                    break;
+                case (int)Constants.MenuType.LogInSignUp:
+                    menuString = new string[] { "로그인", "회원가입" };
+                    break;
+                case (int)Constants.MenuType.LogIn:
+                    menuString = new string[] { "학번(8자리 숫자)     : ",
+                        "비밀번호(4자리 숫자) : " };
+                    break;
+                case (int)Constants.MenuType.UserMode:
+                    menuString = new string[] { "도서 찾기", "도서 대여",
+                    "도서 대여 내역", "도서 반납", "도서 반납 내역", "정보 수정", "계정 삭제"};
+                    break;
+                case (int)Constants.MenuType.BookSearch:
+                    menuString = new string[] { "제목 찾기  :", "작가명 찾기 :", "출판사 찾기 :" };
+                    break;
+                case (int)Constants.MenuType.YesNo:
+                    menuString = new string[] {"예", "아니요"};
+                    break;
+                case (int)Constants.MenuType.ManagerMode:
+                    menuString = new string[] { "도서 찾기", "도서 추가",
+                    "도서 삭제", "도서 수정", "유저 정보 수정", "유저 삭제", "대여 내역"};
+                    break;
             }
+            return menuString;
         }
     }
 }

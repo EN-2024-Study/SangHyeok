@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Library.Model
 {
-    public class ManagerRepository   // singleton
+    public class ManagerRepository  // singleton
     {
         private static ManagerRepository instance;
-        private AccountDto manager;
+        private ManagerVo manager;
 
         private ManagerRepository()
         {
-            manager = new AccountDto("sanghyeok", "1234",
-                     "서상혁", "25", "010-3077-5666",
-                     "서울시 군자동");
+            this.manager = new ManagerVo("21013314", "1234");
         }
 
         public static ManagerRepository Instance
@@ -25,7 +26,9 @@ namespace Library.Model
             }
         }
 
-        public AccountDto Manager
-        { get { return manager; } }
+        public ManagerVo GetManager()
+        {
+            return manager;
+        }
     }
 }

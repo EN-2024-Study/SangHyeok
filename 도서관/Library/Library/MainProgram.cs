@@ -1,19 +1,18 @@
-﻿using Library.Controller;
-using Library.Utility;
-using System;
+﻿using System;
+using Library.Controller;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Library
 {
     public class MainProgram
     {
-
         public static void Main(string[] args)
         {
-            Console.SetWindowSize(100, 35);
-            Console.CursorVisible = false;
-
-            ModeMenu controller = new ModeMenu();
-            controller.Run();
+            MenuController menu = new MenuController();
+            menu.ControllModeMenu();
         }
     }
 }

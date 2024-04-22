@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,48 +9,68 @@ namespace Library.Utility
 {
     public class MenuSelector
     {
-        public static int menuValue;
+        public int menuValue;
+        private MenuScreen menuScreen;
 
-        public static int SelectMenu(int screenType)
+        public MenuSelector()
         {
-            int menuMaxValue = GetMenuMaxValue(screenType);
-
-            Console.CursorVisible = false;
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-           
-            switch (keyInfo.Key)
-            {
-                case ConsoleKey.UpArrow:
-                    menuValue--;
-                    break;
-                case ConsoleKey.DownArrow:
-                    menuValue++;
-                    break;
-                case ConsoleKey.Enter:
-                    return 1;
-                case ConsoleKey.Escape:
-                    return -1;
-            }
-
-            if (menuValue < 0)
-                menuValue = 0;
-            else if (menuValue > menuMaxValue - 1)
-                menuValue = menuMaxValue - 1;
-            return 0;
+            this.menuScreen = new MenuScreen();
+            this.menuValue = 0;
         }
 
-        private static int GetMenuMaxValue(int screenType)
+        public bool IsMenuSelection(int screenValue)
+        {
+            bool isMenuSelect = true;
+            int menuCount = GetMenuCount(screenValue);
+
+            Console.CursorVisible = false;
+            while (isMenuSelect)
+            {
+                menuScreen.DrawMenu(screenValue, menuValue, false);
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        menuValue--;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        menuValue++;
+                        break;
+                    case ConsoleKey.Enter:
+                        menuScreen.DrawMenu(screenValue, menuValue, true);
+                        return true;
+                    case ConsoleKey.Escape:
+                        menuScreen.DrawMenu(screenValue, -1, false);
+                        return false;
+                }
+
+                if (menuValue < 0)
+                    menuValue = 0;
+                else if (menuValue > menuCount - 1)
+                    menuValue = menuCount - 1;
+            }
+            return false;
+        }
+
+        private int GetMenuCount(int screenValue)
         {
             int length = 0;
-            switch (screenType)
+            switch (screenValue)
             {
-                case (int)Constants.ScreenType.Mode:
-                case (int)Constants.ScreenType.LogInSignUp:
-                case (int)Constants.ScreenType.LogIn:
-                case (int)Constants.ScreenType.YesNo:
+                case (int)Constants.MenuType.Mode:
+                case (int)Constants.MenuType.LogInSignUp:
+                case (int)Constants.MenuType.LogIn:
+                case (int)Constants.MenuType.YesNo:
                     length = 2;
                     break;
-                
+                case (int)Constants.MenuType.BookSearch:
+                    length = 3;
+                    break;
+                case (int)Constants.MenuType.ManagerMode:
+                case (int)Constants.MenuType.UserMode:
+                    length = 7;
+                    break;
             }
             return length;
         }

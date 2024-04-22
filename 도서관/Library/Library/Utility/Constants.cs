@@ -16,7 +16,6 @@ namespace Library.Utility
             UserMode,
             ManagerMode,
             BookSearch,
-            YesNo,
             AccountModify
         }
 
@@ -35,16 +34,18 @@ namespace Library.Utility
         public enum LogInMenu
         {
             Id,
-            Password
+            Password,
+            Check
         }
 
-        public enum AccountModifyMenu
+        public enum SignUpMenu
         {
             Id,
             Password,
             Age,
             PhoneNumber,
             Address,
+            Check
         }
 
         public enum UserMode
@@ -69,13 +70,25 @@ namespace Library.Utility
             RentalHistory
         }
 
+        public enum BookSearchMenu
+        {
+            Title,
+            Writer,
+            Publisher,
+            Check
+        }
+
         public enum InputType
         {
             Id,
             Password,
             Age,
             PhoneNumber,
-            Address
+            Address,
+            Title,
+            Writer,
+            Publisher,
+            BookId
         }
     }
 }

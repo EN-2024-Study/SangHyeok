@@ -36,9 +36,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\BookController.cs" />
     <Compile Include="Controller\MenuController.cs" />
     <Compile Include="Controller\AccountController.cs" />
     <Compile Include="MainProgram.cs" />
+    <Compile Include="Model\BookDto.cs" />
+    <Compile Include="Model\BookRepository.cs" />
     <Compile Include="Model\ManagerRepository.cs" />
     <Compile Include="Model\ManagerVo.cs" />
     <Compile Include="Model\UserDto.cs" />
@@ -46,6 +49,7 @@
     <Compile Include="Utility\Constants.cs" />
     <Compile Include="Utility\InputManager.cs" />
     <Compile Include="Utility\MenuSelector.cs" />
+    <Compile Include="View\BookScreen.cs" />
     <Compile Include="View\MenuScreen.cs" />
   </ItemGroup>
   <ItemGroup />

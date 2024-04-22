@@ -15,7 +15,8 @@ namespace Library.Model
 
         private UserRepository()
         {
-            this.userDtoList = new List<UserDto> { new UserDto("12345678", "1234")};
+            this.userDtoList = new List<UserDto> 
+            { new UserDto("12345678", "1234", "25", "010-3077-5666", "광진구")};
             this.userIndex = -1;
         }
 
@@ -45,9 +46,14 @@ namespace Library.Model
             userDtoList.Add(user);
         }
 
-        //public void SetUserPassword(int index, string password)
-        //{
-        //    userDtoList[index].Password = password; 
-        //}
+        public List<BookDto> GetRentalBookList()
+        {
+            return userDtoList[userIndex].GetRentalBookList();
+        }
+
+        public void SetRentalBookList(BookDto book)
+        {
+            userDtoList[userIndex].SetRentalBook(book);
+        }
     }
 }

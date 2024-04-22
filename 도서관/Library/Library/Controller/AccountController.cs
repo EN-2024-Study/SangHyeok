@@ -14,90 +14,106 @@ namespace Library.Controller
         private InputManager inputManager;
         private UserRepository user;
         private ManagerRepository manager;
-        private UserDto signUpAccount;
+        private string signUpId, signUpPassword, signUpAge, signUpPhoneNumber, signUpAddress;
+        private string logInId, logInPassword;
 
         public AccountController()
         {
             this.inputManager = new InputManager();
             this.user = UserRepository.Instance;    // singleton 생성
             this.manager = ManagerRepository.Instance;  // singleton 생성
-            this.signUpAccount = new UserDto();
+            this.signUpId = null;
+            this.signUpPassword = null;
+            this.signUpAge = null;
+            this.signUpPhoneNumber = null;
+            this.signUpAddress = null;
+            this.logInId = null;
+            this.logInPassword = null;
         }
 
-        public bool IsLogInValid(int logInMenu, int modeType) // LogIn 입력 값이 유효한지 확인하는 함수
+        public void InputLogIn(int inputType)
         {
-            string inputstring = null;
-    
-            switch (logInMenu)
+            switch(inputType)
             {
                 case (int)Constants.LogInMenu.Id:
-                    inputstring = inputManager.LimitInputLength((int)Constants.InputType.Id, 9, false);
+                    logInId = inputManager.LimitInputLength((int)Constants.InputType.Id, 9, false);
                     break;
                 case (int)Constants.LogInMenu.Password:
-                    inputstring = inputManager.LimitInputLength((int)Constants.InputType.Password, 5, true);
+                    logInPassword = inputManager.LimitInputLength((int)Constants.InputType.Password, 5, true);
                     break;
             }
+        }
 
+        public bool IsLogInValid(int modeType)
+        {
             if (modeType == (int)Constants.ModeMenu.UserMode)
             {
                 List<UserDto> userList = user.GetUserList();
                 for (int i = 0; i < userList.Count; i++)
                 {
-                    if ((logInMenu == (int)Constants.LogInMenu.Id && userList[i].Id.Equals(inputstring)) ||
-                        (logInMenu == (int)Constants.LogInMenu.Password && userList[i].Password.Equals(inputstring)))
+                    if (logInId != null && logInPassword != null && 
+                        userList[i].Id.Equals(logInId) && userList[i].Password.Equals(logInPassword))
                     {
                         user.UserIndex = i;
+                        logInId = null;
+                        logInPassword = null;
                         return true;
                     }
                 }
             }
             else if (modeType == (int)Constants.ModeMenu.ManagerMode)
             {
-                if ((logInMenu == (int)Constants.LogInMenu.Id && manager.GetManager().Id.Equals(inputstring)) ||
-                    (logInMenu == (int)Constants.LogInMenu.Password && manager.GetManager().Password.Equals(inputstring)))
+                if (logInId != null && logInPassword != null &&
+                    logInId.Equals(manager.GetManager().Id) && logInPassword.Equals(manager.GetManager().Password))
                     return true;
             }
 
             return false;
         }
 
-
-        public bool IsSignUpValid(int inputType)
+        public void InputSignUp(int inputType)
         {
-            string inputString = null;
-
             switch (inputType)
             {
-                case (int)Constants.InputType.Id:
-                    inputString = inputManager.LimitInputLength((int)Constants.InputType.Id, 9, false);
-                    signUpAccount.Id = inputString;
+                case (int)Constants.SignUpMenu.Id:
+                    signUpId = inputManager.LimitInputLength((int)Constants.InputType.Id, 9, false);
                     break;
-                case (int)Constants.InputType.Password:
-                    inputString = inputManager.LimitInputLength((int)Constants.InputType.Password, 5, true);
-                    signUpAccount.Password = inputString;
+                case (int)Constants.SignUpMenu.Password:
+                    signUpPassword = inputManager.LimitInputLength((int)Constants.InputType.Password, 5, true);
                     break;
-                case (int)Constants.InputType.Age:
-                    inputString = inputManager.LimitInputLength((int)Constants.InputType.Age, 4, false);
-                    signUpAccount.Age = inputString;
+                case (int)Constants.SignUpMenu.Age:
+                    signUpAge = inputManager.LimitInputLength((int)Constants.InputType.Age, 4, false);
                     break;
-                case (int)Constants.InputType.PhoneNumber:
-                    inputString = inputManager.LimitInputLength((int)Constants.InputType.PhoneNumber, 13, false);
-                    signUpAccount.PhoneNumber = inputString;
+                case (int)Constants.SignUpMenu.PhoneNumber:
+                    signUpPhoneNumber = inputManager.LimitInputLength((int)Constants.InputType.PhoneNumber, 13, false);
                     break;
-                case (int)Constants.InputType.Address:
-                    inputString = inputManager.LimitInputLength((int)Constants.InputType.Address, 20, false);
-                    signUpAccount.Address = inputString;
+                case (int)Constants.SignUpMenu.Address:
+                    signUpAddress = inputManager.LimitInputLength((int)Constants.InputType.Address, 20, false);
                     break;
             }
+        }
 
-            if (inputString == null)
+        public bool IsSignUpValid()
+        {
+            List<UserDto> userList = user.GetUserList();
+            if (signUpId == null || signUpPassword == null || signUpAge == null ||
+                signUpPhoneNumber == null || signUpAddress == null)
                 return false;
+
+            foreach(UserDto value in userList)
+                if (value.Id.Equals(signUpId))
+                    return false;
             return true;
         }
 
-        public void SetSignUpAccount()
+        public void SetSignUpAccount() 
         {
-            user.AddUser(signUpAccount);
+            user.AddUser(new UserDto(signUpId, signUpPassword, signUpAge, signUpPhoneNumber, signUpAddress));
+            signUpId = null;
+            signUpPassword = null;
+            signUpAge = null;
+            signUpPhoneNumber = null;
+            signUpAddress = null;
         }
     }
 }

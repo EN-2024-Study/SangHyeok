@@ -39,7 +39,7 @@ namespace Library.View
                     break;
                 case (int)Constants.MenuType.LogIn:
                     menuString = new string[] { "학번(8자리 숫자)     :",
-                        "비밀번호(4자리 숫자) :" };
+                        "비밀번호(4자리 숫자) :", "<확인>"};
                     break;
                 case (int)Constants.MenuType.UserMode:
                     menuString = new string[] { "도서 찾기", "도서 대여",
@@ -47,9 +47,6 @@ namespace Library.View
                     break;
                 case (int)Constants.MenuType.BookSearch:
                     menuString = new string[] { "제목 찾기  :", "작가명 찾기 :", "출판사 찾기 :", "<확인>"};
-                    break;
-                case (int)Constants.MenuType.YesNo:
-                    menuString = new string[] {"예", "아니요"};
                     break;
                 case (int)Constants.MenuType.ManagerMode:
                     menuString = new string[] { "도서 찾기", "도서 추가",

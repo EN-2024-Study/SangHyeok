@@ -9,16 +9,18 @@ namespace Library.Model
     public class UserDto
     {
         private string id, password, age, phoneNumber, address;
+        private List<BookDto> rentalBook;
 
         public UserDto() { }
 
-        public UserDto(string id, string password)
+        public UserDto(string id, string password, string age, string phoneNumber, string address)
         {
             this.id = id;
             this.password = password;
-            this.age = null;
-            this.phoneNumber = null;
-            this.address = null;
+            this.age = age;
+            this.phoneNumber = phoneNumber;
+            this.address = address;
+            this.rentalBook = new List<BookDto>();
         }
 
         public string Id
@@ -49,6 +51,16 @@ namespace Library.Model
         {
             get { return address; }
             set { address = value; }
+        }
+
+        public List<BookDto> GetRentalBookList()
+        {
+            return rentalBook;
+        }
+
+        public void SetRentalBook(BookDto book)
+        {
+            rentalBook.Add(book);
         }
     }
 }

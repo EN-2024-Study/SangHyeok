@@ -53,6 +53,13 @@ namespace Library.Utility
             return false;
         }
 
+        public void InputEsc()
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            while (keyInfo.Key != ConsoleKey.Escape)
+                keyInfo = Console.ReadKey(true);
+        }
+
         private int GetMenuCount(int screenValue)
         {
             int length = 0;
@@ -60,9 +67,10 @@ namespace Library.Utility
             {
                 case (int)Constants.MenuType.Mode:
                 case (int)Constants.MenuType.LogInSignUp:
-                case (int)Constants.MenuType.LogIn:
-                case (int)Constants.MenuType.YesNo:
                     length = 2;
+                    break;
+                case (int)Constants.MenuType.LogIn:
+                    length = 3;
                     break;
                 case (int)Constants.MenuType.BookSearch:
                     length = 4;

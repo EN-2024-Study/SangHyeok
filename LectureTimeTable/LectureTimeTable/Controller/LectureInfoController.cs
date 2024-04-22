@@ -305,7 +305,7 @@ namespace LectureTimeTable.Model
                     List<string> day = LectureDayManager.GetLectureDay(lectureList[i - 3]); // 수강 신청 시간표
                     if (day == null)    // k-mooc 강좌
                     {
-
+                        workSheet.Cells[51, 14] = lectureList[i - 3].SubjectTitle;
                         continue;
                     }
                     
@@ -346,12 +346,6 @@ namespace LectureTimeTable.Model
 
             void Set(int row, int lastRow, int column, Worksheet workSheet, List<LectureVo> lectureList, int index)
             {
-                //Console.Clear();
-                //Console.WriteLine(row);
-                //Console.WriteLine(lastRow);
-                //Console.WriteLine(column);
-                //Console.WriteLine(lectureList[index].SubjectTitle);
-                //Console.ReadLine();
                 for (int j = row, i = 2; j < lastRow; j++, i += 1)
                 {
                     if (lectureList[index].SubjectTitle.Contains("Capstone"))
@@ -361,7 +355,6 @@ namespace LectureTimeTable.Model
                     workSheet.Cells[j + i + 1, column + 15] = lectureList[index].Room;
                 }
             }
-
         }
 
         private string[] GetSearchStrings()

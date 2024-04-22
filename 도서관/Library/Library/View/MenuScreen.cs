@@ -46,7 +46,7 @@ namespace Library.View
                     "도서 대여 내역", "도서 반납", "도서 반납 내역", "정보 수정", "계정 삭제"};
                     break;
                 case (int)Constants.MenuType.BookSearch:
-                    menuString = new string[] { "제목 찾기  :", "작가명 찾기 :", "출판사 찾기 :", "<확인>"};
+                    menuString = new string[] { "제목 찾기   :", "작가명 찾기 :", "출판사 찾기 :", "<확인>"};
                     break;
                 case (int)Constants.MenuType.ManagerMode:
                     menuString = new string[] { "도서 찾기", "도서 추가",

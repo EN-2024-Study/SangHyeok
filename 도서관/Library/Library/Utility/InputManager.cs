@@ -127,6 +127,22 @@ namespace Library.Utility
                 case (int)Constants.InputType.Address:
                     y = 4;
                     break;
+                case (int)Constants.InputType.Title:
+                    x = 14;
+                    y = 0;
+                    break;
+                case (int)Constants.InputType.Writer:
+                    x = 14;
+                    y = 1;
+                    break;
+                case (int)Constants.InputType.Publisher:
+                    x = 14;
+                    y = 2;
+                    break;
+                case (int)Constants.InputType.BookId:
+                    x = 14;
+                    y = 0;
+                    break;
             }
             return new Tuple<int, int>(x, y);
         }

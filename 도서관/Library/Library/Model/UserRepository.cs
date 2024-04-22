@@ -51,9 +51,9 @@ namespace Library.Model
             return userDtoList[userIndex].GetRentalBookList();
         }
 
-        public void SetRentalBookList(BookDto book)
+        public void AddRentalBook(BookDto book)
         {
-            userDtoList[userIndex].SetRentalBook(book);
+            userDtoList[userIndex].AddRentalBook(book);
         }
     }
 }

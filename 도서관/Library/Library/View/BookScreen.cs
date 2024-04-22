@@ -44,7 +44,6 @@ namespace Library.View
         {
             Console.SetCursorPosition(0, 0);
             Console.Write("책 아이디 입력 :");
-
         }
     }
 }

@@ -141,31 +141,38 @@ namespace Library.Controller
                     if (!isSelected)
                         continue;
 
-                    switch (menuSelector.menuValue)
+                    if (menuSelector.menuValue == (int)Constants.UserMode.BookSearch)
                     {
-                        case (int)Constants.UserMode.BookSearch:
-                            ControllBookSearchMenu();
-                            menuSelector.InputEsc();
-                            break;
-                        case (int)Constants.UserMode.BookRental:
-                            ControllBookSearchMenu();   // esc 입력 시 뒤로가기 기능 처리해야 됨
-                            bookController.RentalBook();
-                            break;
-                        case (int)Constants.UserMode.BookRentalHistory:
+                        bookController.SearchBook();
+                        menuSelector.WaitForEscKey();
+                    }
+                    else if (menuSelector.menuValue == (int)Constants.UserMode.BookRental)
+                    {
+                        if (bookController.IsInputBookIdValid())
+                        {
+                            if (bookController.IsBookRentalValid())
+                                menuSelector.WaitForEscKey();
+                        }
+                    }
+                    else if (menuSelector.menuValue == (int)Constants.UserMode.BookRentalHistory)
+                    {
 
-                            break;
-                        case (int)Constants.UserMode.BookReturn:
+                    }
+                    else if (menuSelector.menuValue == (int)Constants.UserMode.BookReturn)
+                    {
 
-                            break;
-                        case (int)Constants.UserMode.BookReturnHistory:
+                    }
+                    else if (menuSelector.menuValue == (int)Constants.UserMode.BookReturnHistory)
+                    {
 
-                            break;
-                        case (int)Constants.UserMode.AccountInfo:
+                    }
+                    else if (menuSelector.menuValue == (int)Constants.UserMode.AccountInfo)
+                    {
 
-                            break;
-                        case (int)Constants.UserMode.AccountDelete:
+                    }
+                    else if (menuSelector.menuValue == (int)Constants.UserMode.AccountDelete)
+                    {
 
-                            break;
                     }
                 }
                 else if (modeType == (int)Constants.ModeMenu.ManagerMode)
@@ -177,8 +184,8 @@ namespace Library.Controller
                     switch (menuSelector.menuValue)
                     {
                         case (int)Constants.ManagerMode.BookSearch:
-                            ControllBookSearchMenu();
-                            menuSelector.InputEsc();
+                            bookController.SearchBook();
+                            menuSelector.WaitForEscKey();
                             break;
                         case (int)Constants.ManagerMode.BookAdd:
 
@@ -202,29 +209,5 @@ namespace Library.Controller
                 }
             }
         }
-
-        private void ControllBookSearchMenu()
-        {
-            bool isSelected = true;
-            menuSelector.menuValue = 0;
-            Console.SetWindowSize(70, 40);
-            Console.Clear();
-
-            bookController.ShowSearchedBooks();
-
-            isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.BookSearch);
-            if (!isSelected)
-                return;
-
-            if (menuSelector.menuValue == (int)Constants.BookSearchMenu.Check)
-            {
-                Console.Clear();
-                bookController.ShowSearchedBooks();
-            }
-            else
-                bookController.InputSearchBook(menuSelector.menuValue);
-
-        }
-
     }
 }

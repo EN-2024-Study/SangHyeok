@@ -58,7 +58,7 @@ namespace Library.Model
             return rentalBook;
         }
 
-        public void SetRentalBook(BookDto book)
+        public void AddRentalBook(BookDto book)
         {
             rentalBook.Add(book);
         }

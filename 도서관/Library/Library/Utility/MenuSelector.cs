@@ -53,7 +53,7 @@ namespace Library.Utility
             return false;
         }
 
-        public void InputEsc()
+        public void WaitForEscKey()
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
             while (keyInfo.Key != ConsoleKey.Escape)

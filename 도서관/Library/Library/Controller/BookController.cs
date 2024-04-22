@@ -12,20 +12,47 @@ namespace Library.Controller
     public class BookController
     {
         private BookRepository book;
+        private MenuSelector menuSelector;
         private InputManager inputManager;
         private BookScreen bookScreen;
         private UserRepository user;
         private string[] inputSearchedStrings;
+        private string bookId;
         public BookController()
         {
             this.book = BookRepository.Instance; // singleton 생성
+            this.menuSelector = new MenuSelector();
             this.inputManager = new InputManager();
             this.bookScreen = new BookScreen();
             this.user = UserRepository.Instance;
             this.inputSearchedStrings = new string[] { "", "", "" };
+            this.bookId = null;
         }
 
-        public void InputSearchBook(int inputType)
+        public void SearchBook()
+        {
+            bool isSelected = true;
+            menuSelector.menuValue = 0;
+
+            ShowSearchedBooks();
+            while(isSelected)
+            {
+                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.BookSearch);
+                if (!isSelected)
+                    return;
+
+                if (menuSelector.menuValue == (int)Constants.BookSearchMenu.Check)
+                {
+                    Console.Clear();
+                    ShowSearchedBooks();
+                    break;
+                }
+                else
+                    InputSearchBook(menuSelector.menuValue);
+            }
+        }
+
+        private void InputSearchBook(int inputType)
         {
             switch(inputType)
             {
@@ -41,11 +68,13 @@ namespace Library.Controller
             }
         }
 
-        public void ShowSearchedBooks()
+        private void ShowSearchedBooks()
         {
             List<BookDto> bookList = book.GetBookList();
             List<BookDto> searchedBookList = bookList;
 
+            Console.SetWindowSize(70, 40);
+            Console.Clear();
             for (int i = 0; i < 3; i++)
             {
                 if (inputSearchedStrings[i] == null || inputSearchedStrings[i] == "")
@@ -78,18 +107,28 @@ namespace Library.Controller
             inputSearchedStrings = new string[] { "", "", "" };
         }
 
-        public void RentalBook()
+        public bool IsInputBookIdValid()
         {
+            Console.Clear();
+            ShowSearchedBooks();
             bookScreen.DrawBookId();
-            List<BookDto> bookList = book.GetBookList();
-            string bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
-
+            bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
             if (bookId == null)
-                return;
+                return false;
+            return true;
+        }
+
+        public bool IsBookRentalValid()
+        {
+            List<BookDto> bookList = book.GetBookList();
+            if (bookId == null)
+                return false;
             else if (bookList[int.Parse(bookId)].Count > 0)
             {
-                user.SetRentalBookList(bookList[int.Parse(bookId)]);
+                user.AddRentalBook(bookList[int.Parse(bookId)]);
+                return true;
             }
+            return false;
         }
     }
 }

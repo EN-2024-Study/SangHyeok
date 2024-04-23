@@ -140,7 +140,7 @@ namespace Library.Utility
                     y = 2;
                     break;
                 case (int)Constants.InputType.BookId:
-                    x = 14;
+                    x = 16;
                     y = 0;
                     break;
             }

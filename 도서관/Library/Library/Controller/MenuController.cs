@@ -113,10 +113,10 @@ namespace Library.Controller
 
                 if (menuSelector.menuValue == (int)Constants.SignUpMenu.Check)
                 {
-                    if (accountController.IsSignUpValid())  // 아이디가 중복이 아니라면
+                    if (accountController.IsSignUpValid())
                     {
-                        accountController.SetSignUpAccount();   // 회원가입
-                        return;
+                        ExplainingScreen.ExplainSuccessScreen();
+                        ExplainingScreen.ExplainEcsKey();
                     }
                     Console.Clear();
                 }
@@ -151,16 +151,25 @@ namespace Library.Controller
                         if (bookController.IsInputBookIdValid())
                         {
                             if (bookController.IsBookRentalValid())
+                            {
+                                ExplainingScreen.ExplainSuccessScreen();
+                                ExplainingScreen.ExplainEcsKey();
                                 menuSelector.WaitForEscKey();
+                            }
                         }
                     }
                     else if (menuSelector.menuValue == (int)Constants.UserMode.BookRentalHistory)
                     {
-
+                        bookController.ShowRentalBooks();
+                        ExplainingScreen.ExplainEcsKey();
+                        menuSelector.WaitForEscKey();
                     }
                     else if (menuSelector.menuValue == (int)Constants.UserMode.BookReturn)
                     {
+                        if (bookController.IsInputBookIdValid())
+                        {
 
+                        }
                     }
                     else if (menuSelector.menuValue == (int)Constants.UserMode.BookReturnHistory)
                     {

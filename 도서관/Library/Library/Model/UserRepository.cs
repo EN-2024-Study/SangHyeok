@@ -48,12 +48,12 @@ namespace Library.Model
 
         public List<BookDto> GetRentalBookList()
         {
-            return userDtoList[userIndex].GetRentalBookList();
+            return userDtoList[userIndex].GetRentalBookDIct().Values.ToList<BookDto>();
         }
 
-        public void AddRentalBook(BookDto book)
+        public void AddRentalBook(Tuple<int, BookDto> rentalBook)
         {
-            userDtoList[userIndex].AddRentalBook(book);
+            userDtoList[userIndex].AddRentalBook(rentalBook);
         }
     }
 }

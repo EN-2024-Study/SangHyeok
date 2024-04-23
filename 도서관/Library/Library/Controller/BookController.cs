@@ -35,7 +35,7 @@ namespace Library.Controller
             menuSelector.menuValue = 0;
 
             ShowSearchedBooks();
-            while(isSelected)
+            while (isSelected)
             {
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.BookSearch);
                 if (!isSelected)
@@ -52,9 +52,49 @@ namespace Library.Controller
             }
         }
 
+        public bool IsInputBookIdValid()
+        {
+            Console.Clear();
+            ShowSearchedBooks();
+            bookScreen.DrawBookId();
+            bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
+            if (bookId == null)
+                return false;
+            return true;
+        }
+
+        public bool IsBookRentalValid()
+        {
+            List<BookDto> bookList = book.GetBookList();
+            if (bookId == null)
+                return false;
+            else if (bookList[int.Parse(bookId) - 1].Count > 0)
+            {
+                user.AddRentalBook(bookList[int.Parse(bookId) - 1]);
+                bookId = null;
+                return true;
+            }
+            return false;
+        }
+
+        //public bool IsBookReturnValid()   // bookList를 dict으로 변경 해야 함
+        //{
+        //    List<BookDto> bookList = user.GetRentalBookList();
+        //    if (bookList.Count < int.Parse(bookId))
+        //        return false;
+
+        //    if (bookList[int.Parse(bookId) - 1])
+        //}
+
+        public void ShowRentalBooks()
+        {
+            Console.Clear();
+            bookScreen.DrawBooks(user.GetRentalBookList());
+        }
+
         private void InputSearchBook(int inputType)
         {
-            switch(inputType)
+            switch (inputType)
             {
                 case (int)Constants.BookSearchMenu.Title:
                     inputSearchedStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.Title, 15, false);
@@ -105,30 +145,6 @@ namespace Library.Controller
 
             bookScreen.DrawBooks(searchedBookList);
             inputSearchedStrings = new string[] { "", "", "" };
-        }
-
-        public bool IsInputBookIdValid()
-        {
-            Console.Clear();
-            ShowSearchedBooks();
-            bookScreen.DrawBookId();
-            bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
-            if (bookId == null)
-                return false;
-            return true;
-        }
-
-        public bool IsBookRentalValid()
-        {
-            List<BookDto> bookList = book.GetBookList();
-            if (bookId == null)
-                return false;
-            else if (bookList[int.Parse(bookId)].Count > 0)
-            {
-                user.AddRentalBook(bookList[int.Parse(bookId)]);
-                return true;
-            }
-            return false;
         }
     }
 }

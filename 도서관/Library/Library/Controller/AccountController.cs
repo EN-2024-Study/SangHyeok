@@ -65,7 +65,11 @@ namespace Library.Controller
             {
                 if (logInId != null && logInPassword != null &&
                     logInId.Equals(manager.GetManager().Id) && logInPassword.Equals(manager.GetManager().Password))
+                {
+                    logInId = null;
+                    logInPassword = null;
                     return true;
+                }
             }
 
             return false;
@@ -103,17 +107,14 @@ namespace Library.Controller
             foreach(UserDto value in userList)
                 if (value.Id.Equals(signUpId))
                     return false;
-            return true;
-        }
 
-        public void SetSignUpAccount() 
-        {
             user.AddUser(new UserDto(signUpId, signUpPassword, signUpAge, signUpPhoneNumber, signUpAddress));
             signUpId = null;
             signUpPassword = null;
             signUpAge = null;
             signUpPhoneNumber = null;
             signUpAddress = null;
+            return true;
         }
     }
 }

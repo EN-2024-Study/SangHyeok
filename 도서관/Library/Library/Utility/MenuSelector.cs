@@ -76,6 +76,9 @@ namespace Library.Utility
                     length = 4;
                     break;
                 case (int)Constants.MenuType.AccountModify:
+                    length = 5;
+                    break;
+                case (int)Constants.MenuType.SignUp:
                     length = 6;
                     break;
                 case (int)Constants.MenuType.UserMode:

@@ -40,7 +40,8 @@ namespace Library.Controller
                         ControllLogInSignUpMenu();
                         break;
                     case (int)Constants.ModeMenu.ManagerMode:
-                        ControllLogInMenu((int)Constants.ModeMenu.ManagerMode);
+                        if (accountController.IsLogIn((int)Constants.ModeMenu.ManagerMode))
+                            ControllManagerModeMenu();
                         break;
                 }
             }
@@ -62,74 +63,14 @@ namespace Library.Controller
                 switch (menuSelector.menuValue)
                 {
                     case (int)Constants.LogInSignUpMenu.LogIn:
-                        ControllLogInMenu((int)Constants.ModeMenu.UserMode);
+                        if (accountController.IsLogIn((int)Constants.ModeMenu.UserMode))
+                            ControllUserModeMenu();
                         break;
                     case (int)Constants.LogInSignUpMenu.SignUp:
-                        ControllSignUpMenu();
+                        if (accountController.IsSignUp())
+                            return;
                         break;
                 }
-            }
-        }
-
-        private void ControllLogInMenu(int modeType)
-        {
-            bool isSelected = true;
-            menuSelector.menuValue = 0;
-            Console.SetWindowSize(50, 20);
-            Console.Clear();
-
-            while (isSelected)
-            {
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.LogIn);
-                if (!isSelected)
-                    continue;
-
-                if (menuSelector.menuValue == (int)Constants.LogInMenu.Check)
-                {
-                    if (accountController.IsLogInValid(modeType))
-                    {
-                        switch (modeType)
-                        {
-                            case (int)Constants.ModeMenu.UserMode:
-                                ControllUserModeMenu();
-                                break;
-                            case (int)Constants.ModeMenu.ManagerMode:
-                                ControllManagerModeMenu();
-                                break;
-                        }
-                        Console.SetWindowSize(50, 20);
-                    }
-                    Console.Clear();
-                }
-                else
-                    accountController.InputLogIn(menuSelector.menuValue);
-            }
-        }
-
-        private void ControllSignUpMenu()
-        {
-            bool isSelected = true;
-            menuSelector.menuValue = 0;
-            Console.SetWindowSize(50, 20);
-            Console.Clear();
-
-            while (isSelected)
-            {
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.AccountModify);
-                if (!isSelected)
-                    continue;
-
-                if (menuSelector.menuValue == (int)Constants.SignUpMenu.Check)
-                {
-                    if (accountController.IsSignUpValid())
-                    {
-                        ExplainingScreen.ExplainSuccessScreen();
-                        ExplainingScreen.ExplainEcsKey();
-                    }
-                    Console.Clear();
-                }
-                else
-                    accountController.InputSignUp(menuSelector.menuValue);
             }
         }
 
@@ -193,10 +134,8 @@ namespace Library.Controller
                     ExplainingScreen.ExplainEcsKey();
                     menuSelector.WaitForEscKey();
                 }
-                else if (menuSelector.menuValue == (int)Constants.UserMode.AccountInfo)
-                {
-
-                }
+                else if (menuSelector.menuValue == (int)Constants.UserMode.AccountModify)
+                    accountController.IsModifyInformation();
                 else if (menuSelector.menuValue == (int)Constants.UserMode.AccountDelete)
                 {
 

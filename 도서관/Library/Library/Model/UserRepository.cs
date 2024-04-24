@@ -46,6 +46,26 @@ namespace Library.Model
             userDtoList.Add(user);
         }
 
+        public void UpdatePassword(string password)
+        {
+            userDtoList[userIndex].Password = password;
+        }
+
+        public void UpdateAge(string age)
+        {
+            userDtoList[userIndex].Age = age;
+        }
+
+        public void UpdatePhoneNumber(string phoneNumber)
+        {
+            userDtoList[userIndex].PhoneNumber = phoneNumber;
+        }
+
+        public void UpdateAddress(string address)
+        {
+            userDtoList[userIndex].Address = address;
+        }
+
         public Dictionary<int, BookDto> GetRentalBookDict()
         {
             return userDtoList[userIndex].GetRentalBookDIct();

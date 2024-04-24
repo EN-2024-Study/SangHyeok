@@ -16,6 +16,7 @@ namespace Library.Utility
             UserMode,
             ManagerMode,
             BookSearch,
+            SignUp,
             AccountModify
         }
 
@@ -48,6 +49,15 @@ namespace Library.Utility
             Check
         }
 
+        public enum AccountModifyMenu
+        {
+            Password,
+            Age,
+            PhoneNumber,
+            Address,
+            Check
+        }
+
         public enum UserMode
         {
             BookSearch,
@@ -55,7 +65,7 @@ namespace Library.Utility
             BookRentalHistory,
             BookReturn,
             BookReturnHistory,
-            AccountInfo,
+            AccountModify,
             AccountDelete
         }
 
@@ -96,7 +106,11 @@ namespace Library.Utility
             Title,
             Writer,
             Publisher,
-            BookId
+            BookId,
+            ModifyPassword,
+            ModifyAge,
+            ModifyPhoneNumber,
+            ModifyAddress
         }
     }
 }

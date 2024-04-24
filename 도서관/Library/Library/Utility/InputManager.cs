@@ -113,15 +113,19 @@ namespace Library.Utility
             switch (digitValue)
             {
                 case (int)Constants.InputType.Id:
+                case (int)Constants.InputType.ModifyPassword:
                     y = 0;
                     break;
                 case (int)Constants.InputType.Password:
+                case (int)Constants.InputType.ModifyAge:
                     y = 1;
                     break;
                 case (int)Constants.InputType.Age:
+                case (int)Constants.InputType.ModifyPhoneNumber:
                     y = 2;
                     break;
                 case (int)Constants.InputType.PhoneNumber:
+                case (int)Constants.InputType.ModifyAddress:
                     y = 3;
                     break;
                 case (int)Constants.InputType.Address:

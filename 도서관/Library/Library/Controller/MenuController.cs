@@ -138,7 +138,20 @@ namespace Library.Controller
                     accountController.IsModifyInformation();
                 else if (menuSelector.menuValue == (int)Constants.UserMode.AccountDelete)
                 {
-
+                    if (accountController.IsUserRemoveValid())
+                    {
+                        ExplainingScreen.ExplainFailScreen();
+                        ExplainingScreen.ExplainEcsKey();
+                        menuSelector.WaitForEscKey();
+                    }
+                    else
+                    {
+                        accountController.RemoveUser();
+                        ExplainingScreen.ExplainSuccessScreen();
+                        ExplainingScreen.ExplainEcsKey();
+                        menuSelector.WaitForEscKey();
+                        ControllModeMenu();
+                    }
                 }
             }
         }

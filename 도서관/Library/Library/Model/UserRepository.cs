@@ -46,6 +46,11 @@ namespace Library.Model
             userDtoList.Add(user);
         }
 
+        public void RemoveUser()
+        {
+            userDtoList.Remove(userDtoList[userIndex]);
+        }
+
         public void UpdatePassword(string password)
         {
             userDtoList[userIndex].Password = password;

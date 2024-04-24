@@ -21,5 +21,13 @@ namespace Library.View
             Console.SetCursorPosition(0, 1);
             Console.WriteLine("뒤로가기는 ESC를 눌러주세요.");
         }
+
+        public static void ExplainFailScreen()
+        {
+            Console.Clear();
+            Console.SetWindowSize(30, 10);
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("실패하였습니다!");
+        }
     }
 }

@@ -117,6 +117,19 @@ namespace Library.Controller
             }
         }
 
+        public bool IsUserRemoveValid()
+        {
+            if (user.GetRentalBookDict() == null)
+                return true;
+            return false;
+        }
+
+        public void RemoveUser()
+        {
+            user.RemoveUser();
+            user.UserIndex = -1;
+        }
+
         private void InputModifyInformation(int inputType)
         {
             switch(inputType)

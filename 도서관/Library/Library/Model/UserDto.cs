@@ -54,9 +54,7 @@ namespace Library.Model
         }
 
         public Dictionary<int, BookDto> GetRentalBookDIct()
-        {
-            return rentalBookDict;
-        }
+        { return rentalBookDict; }
 
         public void AddRentalBook(Tuple<int, BookDto> rentalBook)
         {

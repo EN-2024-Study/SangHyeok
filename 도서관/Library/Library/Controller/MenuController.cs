@@ -152,6 +152,7 @@ namespace Library.Controller
                         {
                             if (bookController.IsBookRentalValid())
                             {
+                                bookController.RentalBook();
                                 ExplainingScreen.ExplainSuccessScreen();
                                 ExplainingScreen.ExplainEcsKey();
                                 menuSelector.WaitForEscKey();

@@ -39,12 +39,17 @@ namespace Library.Model
             }
         }
 
-        public List<BookDto> GetBookList()
-        {
-            return bookDict.Values.ToList<BookDto>();
-        }
-        public Dictionary<int, BookDto> BookDict
-        { get { return bookDict; } }
+        public Dictionary<int, BookDto> GetBookDict()
+        { return bookDict; }
 
+        public void ReduceBookCount(int key)
+        {
+            bookDict[key].Count -= 1;
+        }
+
+        public void IncreaseBookCount(int key)
+        {
+            bookDict[key].Count += 1;
+        }
     }
 }

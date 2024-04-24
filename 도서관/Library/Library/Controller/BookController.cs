@@ -16,7 +16,7 @@ namespace Library.Controller
         private InputManager inputManager;
         private BookScreen bookScreen;
         private UserRepository user;
-        private string[] inputSearchedStrings;
+        private string[] searchedBookStrings;
         private string bookId;
         public BookController()
         {
@@ -25,7 +25,7 @@ namespace Library.Controller
             this.inputManager = new InputManager();
             this.bookScreen = new BookScreen();
             this.user = UserRepository.Instance;
-            this.inputSearchedStrings = new string[] { "", "", "" };
+            this.searchedBookStrings = new string[] { "", "", "" };
             this.bookId = null;
         }
 
@@ -65,31 +65,25 @@ namespace Library.Controller
 
         public bool IsBookRentalValid()
         {
-            List<BookDto> bookList = book.GetBookList();
+            Dictionary<int, BookDto> bookDict = book.GetBookDict();
+
             if (bookId == null)
                 return false;
-            else if (bookList[int.Parse(bookId) - 1].Count > 0)
-            {
-                user.AddRentalBook(bookList[int.Parse(bookId) - 1]);
-                bookId = null;
+            else if (bookDict[int.Parse(bookId)].Count > 0)
                 return true;
-            }
             return false;
         }
 
-        //public bool IsBookReturnValid()   // bookList를 dict으로 변경 해야 함
-        //{
-        //    List<BookDto> bookList = user.GetRentalBookList();
-        //    if (bookList.Count < int.Parse(bookId))
-        //        return false;
-
-        //    if (bookList[int.Parse(bookId) - 1])
-        //}
+        public void RentalBook()
+        {
+            book.ReduceBookCount(int.Parse(bookId));
+            user.AddRentalBook(int.Parse(bookId), book.GetBookDict()[int.Parse(bookId)]);
+        }
 
         public void ShowRentalBooks()
         {
             Console.Clear();
-            bookScreen.DrawBooks(user.GetRentalBookList());
+            bookScreen.DrawBooks(user.GetRentalBookDict().Values.ToList<BookDto>());
         }
 
         private void InputSearchBook(int inputType)
@@ -97,27 +91,27 @@ namespace Library.Controller
             switch (inputType)
             {
                 case (int)Constants.BookSearchMenu.Title:
-                    inputSearchedStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.Title, 15, false);
+                    searchedBookStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.Title, 15, false);
                     break;
                 case (int)Constants.BookSearchMenu.Writer:
-                    inputSearchedStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.Writer, 15, false);
+                    searchedBookStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.Writer, 15, false);
                     break;
                 case (int)Constants.BookSearchMenu.Publisher:
-                    inputSearchedStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.Publisher, 15, false);
+                    searchedBookStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.Publisher, 15, false);
                     break;
             }
         }
 
         private void ShowSearchedBooks()
         {
-            List<BookDto> bookList = book.GetBookList();
+            List<BookDto> bookList = book.GetBookDict().Values.ToList<BookDto>();
             List<BookDto> searchedBookList = bookList;
 
             Console.SetWindowSize(70, 40);
             Console.Clear();
             for (int i = 0; i < 3; i++)
             {
-                if (inputSearchedStrings[i] == null || inputSearchedStrings[i] == "")
+                if (searchedBookStrings[i] == null || searchedBookStrings[i] == "")
                     continue;
 
                 List<BookDto> temp = new List<BookDto>();
@@ -126,15 +120,15 @@ namespace Library.Controller
                     switch (i)
                     {
                         case (int)Constants.BookSearchMenu.Title:
-                            if (book.Title.Contains(inputSearchedStrings[i]))
+                            if (book.Title.Contains(searchedBookStrings[i]))
                                 temp.Add(book);
                             break;
                         case (int)Constants.BookSearchMenu.Writer:
-                            if (book.Writer.Contains(inputSearchedStrings[i]))
+                            if (book.Writer.Contains(searchedBookStrings[i]))
                                 temp.Add(book);
                             break;
                         case (int)Constants.BookSearchMenu.Publisher:
-                            if (book.Publisher.Contains(inputSearchedStrings[i]))
+                            if (book.Publisher.Contains(searchedBookStrings[i]))
                                 temp.Add(book);
                             break;
                     }
@@ -144,7 +138,7 @@ namespace Library.Controller
             }
 
             bookScreen.DrawBooks(searchedBookList);
-            inputSearchedStrings = new string[] { "", "", "" };
+            searchedBookStrings = new string[] { "", "", "" };
         }
     }
 }

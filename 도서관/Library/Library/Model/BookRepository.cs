@@ -62,5 +62,35 @@ namespace Library.Model
         {
             bookDict.Remove(key);
         }
+
+        public void ModifyBookTitle(int key, string title)
+        {
+            bookDict[key].Title = title;
+        }
+
+        public void ModifyBookWriter(int key, string writer)
+        {
+            bookDict[key].Writer = writer;
+        }
+
+        public void ModifyBookPublisher(int key, string publisher)
+        {
+            bookDict[key].Publisher = publisher;
+        }
+
+        public void ModifyBookCount(int key, int count)
+        {
+            bookDict[key].Count = count;
+        }
+
+        public void ModifyBookPrice(int key, string price)
+        {
+            bookDict[key].Price = price;
+        }
+
+        public void ModifyBookReleaseDate(int key, string releaseData)
+        {
+            bookDict[key].ReleaseDate = releaseData;
+        }
     }
 }

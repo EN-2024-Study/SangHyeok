@@ -97,8 +97,8 @@ namespace Library.Controller
                 {
                     bookController.ShowBooks((int)Constants.BookShowType.All);
                     bookController.InputBookId();
-                    
-                    if (bookController.IsBookRentalValid())
+
+                    if (bookController.IsBookIdValid((int)Constants.BookIdType.Rental))
                         bookController.RentalBook();
                 }
                 else if (menuSelector.menuValue == (int)Constants.UserMode.BookRentalHistory)
@@ -111,8 +111,8 @@ namespace Library.Controller
                 {
                     bookController.ShowBooks((int)Constants.BookShowType.Rental);
                     bookController.InputBookId();
-                    
-                    if (bookController.IsBookReturnValid())
+
+                    if (bookController.IsBookIdValid((int)Constants.BookIdType.Return))
                         bookController.ReturnBook();
                 }
                 else if (menuSelector.menuValue == (int)Constants.UserMode.BookReturnHistory)
@@ -169,12 +169,16 @@ namespace Library.Controller
                     bookController.ShowBooks((int)Constants.BookShowType.All);
                     bookController.InputBookId();
 
-                    if (bookController.IsBookDeleteValid())
+                    if (bookController.IsBookIdValid((int)Constants.BookIdType.Delete))
                         bookController.DeleteBook();
                 }
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.BookModify)
                 {
+                    bookController.ShowBooks((int)Constants.BookShowType.All);
+                    bookController.InputBookId();
 
+                    if (bookController.IsBookIdValid((int)Constants.BookIdType.Modify))
+                        bookController.ModifyBook();
                 }
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.AccountModify)
                 {

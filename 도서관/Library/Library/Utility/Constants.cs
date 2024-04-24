@@ -18,7 +18,8 @@ namespace Library.Utility
             BookSearch,
             SignUp,
             AccountModify,
-            BookAdd
+            BookAdd,
+            BookModify
         }
 
         public enum ModeMenu
@@ -81,6 +82,15 @@ namespace Library.Utility
             RentalHistory
         }
 
+        public enum BookIdType
+        {
+            Rental,
+            Return,
+            Add,
+            Modify,
+            Delete
+        }
+
         public enum BookSearchMenu
         {
             Title,
@@ -97,7 +107,7 @@ namespace Library.Utility
             Return
         }
 
-        public enum BookInfo
+        public enum BookAddInfo
         {
             Title,
             Writer,
@@ -107,6 +117,17 @@ namespace Library.Utility
             ReleaseDate,
             ISBN,
             Info,
+            Check
+        }
+
+        public enum BookModifyInfo
+        {
+            Title,
+            Writer,
+            Publisher,
+            Count,
+            Price,
+            ReleaseDate,
             Check
         }
 
@@ -132,7 +153,13 @@ namespace Library.Utility
             AddedPrice,
             AddedReleaseDate,
             AddedISBN,
-            AddedInfo
+            AddedInfo,
+            ModifiedTitle,
+            ModifiedWriter,
+            ModifiedPublisher,
+            ModifiedCount,
+            ModifiedPrice,
+            ModifiedReleaseData
         }
     }
 }

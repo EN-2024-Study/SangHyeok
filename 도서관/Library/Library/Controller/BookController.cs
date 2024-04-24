@@ -69,9 +69,9 @@ namespace Library.Controller
                 if (!isSelected)
                     return;
 
-                if (menuSelector.menuValue == (int)Constants.BookInfo.Check)
+                if (menuSelector.menuValue == (int)Constants.BookAddInfo.Check)
                 {
-                    if (IsBookAddValid())
+                    if (IsBookIdValid((int)Constants.BookIdType.Add))
                     {
                         ExplainingScreen.ExplainSuccessScreen();
                         book.AddBook(new BookDto(bookInfoStrings[0], bookInfoStrings[1],
@@ -86,54 +86,88 @@ namespace Library.Controller
                     break;
                 }
                 else
-                    InputAddBook(menuSelector.menuValue);
+                    InputBookInfo(menuSelector.menuValue);
             }
         }
 
-        public void InputBookId()
+        public void ModifyBook()
         {
-            bookScreen.DrawBookId();
-            bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
-        }
+            bool isSelected = true;
+            menuSelector.menuValue = 0;
 
-        public bool IsBookRentalValid()
-        {
-            Dictionary<int, BookDto> bookDict = book.GetBookDict();
-            if (bookId == null)
-                return false;
-            else if (bookDict[int.Parse(bookId)].Count > 0)
-                return true;
-            return false;
-        }
-
-        public bool IsBookReturnValid()
-        {
-            Dictionary<int, BookDto> bookDict = user.GetRentalBookDict();
-            if (bookId == null)
-                return false;
-            else if (bookDict.ContainsKey(int.Parse(bookId)))
-                return true;
-            return false;
-        }
-
-        public bool IsBookDeleteValid()
-        {
-            Dictionary<int, BookDto> bookDict = book.GetBookDict();
-            if (bookId == null)
-                return false;
-            else if (bookDict.ContainsKey(int.Parse(bookId)))
-                return true;
-            return false;
-        }
-
-        private bool IsBookAddValid()
-        {
-            foreach(string str in bookInfoStrings)
+            Console.Clear();
+            while (isSelected)
             {
-                if (str == null)
-                    return false;
+                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.BookModify);
+                if (!isSelected)
+                    return;
+
+                if (menuSelector.menuValue == (int)Constants.BookModifyInfo.Check)
+                {
+                    if (IsBookIdValid((int)Constants.BookIdType.Modify))
+                    {
+                        Modify();
+                        bookId = null;
+                        ExplainingScreen.ExplainSuccessScreen();
+                        ExplainingScreen.ExplainEcsKey();
+                        menuSelector.WaitForEscKey();
+                        break;
+                    }
+                }
+                else
+                    InputBookInfo(menuSelector.menuValue);
             }
-            return true;
+
+            void Modify()
+            {
+                if (bookInfoStrings[0] != null)
+                    book.ModifyBookTitle(int.Parse(bookId), bookInfoStrings[0]);
+                else if (bookInfoStrings[1] != null)
+                    book.ModifyBookWriter(int.Parse(bookId), bookInfoStrings[1]);
+                else if (bookInfoStrings[2] != null)
+                    book.ModifyBookPublisher(int.Parse(bookId), bookInfoStrings[2]);
+                else if (bookInfoStrings[3] != null)
+                    book.ModifyBookCount(int.Parse(bookId), int.Parse(bookInfoStrings[3]));
+                else if (bookInfoStrings[4] != null)
+                    book.ModifyBookPrice(int.Parse(bookId), bookInfoStrings[4]);
+                else if (bookInfoStrings[5] != null)
+                    book.ModifyBookReleaseDate(int.Parse(bookId), bookInfoStrings[5]);
+            }
+        }
+
+        public bool IsBookIdValid(int idType)
+        {
+            if (bookId == null)
+                return false;
+            else if (idType == (int)Constants.BookIdType.Rental)
+            {
+                Dictionary<int, BookDto> bookDict = book.GetBookDict();
+                if (bookDict[int.Parse(bookId)].Count > 0)
+                    return true;
+                return false;
+            }
+            else if (idType == (int)Constants.BookIdType.Return)
+            {
+                Dictionary<int, BookDto> bookDict = user.GetRentalBookDict();
+                if (bookDict.ContainsKey(int.Parse(bookId)))
+                    return true;
+                return false;
+            }
+            else if (idType == (int)Constants.BookIdType.Add)
+            {
+                foreach (string str in bookInfoStrings)
+                    if (str == null)
+                        return false;
+                return true;
+            }
+            else if (idType == (int)Constants.BookIdType.Modify || idType == (int)Constants.BookIdType.Delete)
+            {
+                Dictionary<int, BookDto> bookDict = book.GetBookDict();
+                if (bookDict.ContainsKey(int.Parse(bookId)))
+                    return true;
+                return false;
+            }
+            return false;
         }
 
         public void RentalBook()
@@ -189,32 +223,38 @@ namespace Library.Controller
             }
         }
 
-        private void InputAddBook(int inputType)
+        public void InputBookId()
+        {
+            bookScreen.DrawBookId();
+            bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
+        }
+
+        private void InputBookInfo(int inputType)
         {
             switch (inputType)
             {
-                case (int)Constants.BookInfo.Title:
+                case (int)Constants.BookAddInfo.Title:
                     bookInfoStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.AddedTitle, 15, false);
                     break;
-                case (int)Constants.BookInfo.Writer:
+                case (int)Constants.BookAddInfo.Writer:
                     bookInfoStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.AddedWriter, 15, false);
                     break;
-                case (int)Constants.BookInfo.Publisher:
+                case (int)Constants.BookAddInfo.Publisher:
                     bookInfoStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.AddedPublisher, 15, false);
                     break;
-                case (int)Constants.BookInfo.Count:
+                case (int)Constants.BookAddInfo.Count:
                     bookInfoStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.AddedCount, 15, false);
                     break;
-                case (int)Constants.BookInfo.Price:
+                case (int)Constants.BookAddInfo.Price:
                     bookInfoStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.AddedPrice, 15, false);
                     break;
-                case (int)Constants.BookInfo.ReleaseDate:
+                case (int)Constants.BookAddInfo.ReleaseDate:
                     bookInfoStrings[5] = inputManager.LimitInputLength((int)Constants.InputType.AddedReleaseDate, 15, false);
                     break;
-                case (int)Constants.BookInfo.ISBN:
+                case (int)Constants.BookAddInfo.ISBN:
                     bookInfoStrings[6] = inputManager.LimitInputLength((int)Constants.InputType.AddedISBN, 15, false);
                     break;
-                case (int)Constants.BookInfo.Info:
+                case (int)Constants.BookAddInfo.Info:
                     bookInfoStrings[7] = inputManager.LimitInputLength((int)Constants.InputType.AddedInfo, 15, false);
                     break;
             }

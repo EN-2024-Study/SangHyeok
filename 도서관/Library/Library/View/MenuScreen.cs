@@ -65,6 +65,10 @@ namespace Library.View
                     "수량    :", "가격    :", "출시일  :", "ISBN    :", 
                         "책 정보 :", "<확인>"};
                     break;
+                case (int)Constants.MenuType.BookModify:
+                    menuString = new string[] { "책 제목 :", "작가    :", "출판사  : ",
+                    "수량    :", "가격    :", "출시일  :", "<확인>"};
+                    break;
             }
             return menuString;
         }

@@ -88,6 +88,9 @@ namespace Library.Utility
                 case (int)Constants.MenuType.BookAdd:
                     length = 9;
                     break;
+                case (int)Constants.MenuType.BookModify:
+                    length = 7;
+                    break;
             }
             return length;
         }

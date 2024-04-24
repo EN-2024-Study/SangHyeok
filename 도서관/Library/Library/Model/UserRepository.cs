@@ -55,5 +55,15 @@ namespace Library.Model
         {
             userDtoList[userIndex].AddRentalBook(new Tuple<int, BookDto>(key, book));
         }
+
+        public void SubtractRentalBook(int key)
+        {
+            userDtoList[userIndex].SubtractRentalBook(key);
+        }
+
+        public List<BookDto> GetReturnBookList()
+        {
+            return userDtoList[userIndex].GetReturnBookList();
+        }
     }
 }

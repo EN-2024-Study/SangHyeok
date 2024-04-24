@@ -34,7 +34,6 @@ namespace Library.Controller
             bool isSelected = true;
             menuSelector.menuValue = 0;
 
-            ShowSearchedBooks();
             while (isSelected)
             {
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.BookSearch);
@@ -44,7 +43,7 @@ namespace Library.Controller
                 if (menuSelector.menuValue == (int)Constants.BookSearchMenu.Check)
                 {
                     Console.Clear();
-                    ShowSearchedBooks();
+                    ShowBooks((int)Constants.Book.Searched);
                     break;
                 }
                 else
@@ -54,8 +53,6 @@ namespace Library.Controller
 
         public bool IsInputBookIdValid()
         {
-            Console.Clear();
-            ShowSearchedBooks();
             bookScreen.DrawBookId();
             bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
             if (bookId == null)
@@ -74,16 +71,46 @@ namespace Library.Controller
             return false;
         }
 
+        public bool IsBookReturnValid()
+        {
+            Dictionary<int, BookDto> bookDict = user.GetRentalBookDict();
+            if (bookDict.ContainsKey(int.Parse(bookId)))
+                return true;
+            return false;
+        }
+
         public void RentalBook()
         {
             book.ReduceBookCount(int.Parse(bookId));
             user.AddRentalBook(int.Parse(bookId), book.GetBookDict()[int.Parse(bookId)]);
+            bookId = null;
         }
 
-        public void ShowRentalBooks()
+        public void ReturnBook()
+        {
+            book.IncreaseBookCount(int.Parse(bookId));
+            user.SubtractRentalBook(int.Parse(bookId));
+        }
+
+        public void ShowBooks(int typeValue)
         {
             Console.Clear();
-            bookScreen.DrawBooks(user.GetRentalBookDict().Values.ToList<BookDto>());
+
+            switch(typeValue)
+            {
+                case (int)Constants.Book.All:
+                    bookScreen.DrawBooks(book.GetBookDict().Values.ToList<BookDto>());
+                    break;
+                case (int)Constants.Book.Searched:
+                    bookScreen.DrawBooks(ExploreSearchedBooks());
+                    break;
+                case (int)Constants.Book.Rental:
+                    bookScreen.DrawBooks(user.GetRentalBookDict().Values.ToList<BookDto>());
+                    break;
+                case (int)Constants.Book.Return:
+                    bookScreen.DrawBooks(user.GetReturnBookList());
+                    break;
+            }
         }
 
         private void InputSearchBook(int inputType)
@@ -102,10 +129,9 @@ namespace Library.Controller
             }
         }
 
-        private void ShowSearchedBooks()
+        private List<BookDto> ExploreSearchedBooks()
         {
-            List<BookDto> bookList = book.GetBookDict().Values.ToList<BookDto>();
-            List<BookDto> searchedBookList = bookList;
+            List<BookDto> searchedBookList = book.GetBookDict().Values.ToList<BookDto>();
 
             Console.SetWindowSize(70, 40);
             Console.Clear();
@@ -137,8 +163,8 @@ namespace Library.Controller
                 searchedBookList = temp;
             }
 
-            bookScreen.DrawBooks(searchedBookList);
             searchedBookStrings = new string[] { "", "", "" };
+            return searchedBookList;
         }
     }
 }

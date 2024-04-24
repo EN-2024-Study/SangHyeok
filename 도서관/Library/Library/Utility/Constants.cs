@@ -78,6 +78,14 @@ namespace Library.Utility
             Check
         }
 
+        public enum Book
+        {
+            All,
+            Searched,
+            Rental,
+            Return
+        }
+
         public enum InputType
         {
             Id,

@@ -10,6 +10,7 @@ namespace Library.Model
     {
         private string id, password, age, phoneNumber, address;
         private Dictionary<int, BookDto> rentalBookDict;
+        private List<BookDto> returnBookList;
 
         public UserDto() { }
 
@@ -21,6 +22,7 @@ namespace Library.Model
             this.phoneNumber = phoneNumber;
             this.address = address;
             this.rentalBookDict = new Dictionary<int, BookDto>();
+            this.returnBookList = new List<BookDto>();
         }
 
         public string Id
@@ -59,6 +61,17 @@ namespace Library.Model
         public void AddRentalBook(Tuple<int, BookDto> rentalBook)
         {
             rentalBookDict.Add(rentalBook.Item1, rentalBook.Item2);
+        }
+
+        public void SubtractRentalBook(int key)
+        {
+            returnBookList.Add(rentalBookDict[key]);
+            rentalBookDict.Remove(key);
+        }
+
+        public List<BookDto> GetReturnBookList()
+        {
+            return returnBookList;
         }
     }
 }

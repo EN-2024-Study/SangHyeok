@@ -147,6 +147,38 @@ namespace Library.Utility
                     x = 16;
                     y = 0;
                     break;
+                case (int)Constants.InputType.AddedTitle:
+                    x = 10;
+                    y = 0;
+                    break;
+                case (int)Constants.InputType.AddedWriter:
+                    x = 10;
+                    y = 1;
+                    break;
+                case (int)Constants.InputType.AddedPublisher:
+                    x = 10;
+                    y = 2;
+                    break;
+                case (int)Constants.InputType.AddedCount:
+                    x = 10;
+                    y = 3;
+                    break;
+                case (int)Constants.InputType.AddedPrice:
+                    x = 10;
+                    y = 4;
+                    break;
+                case (int)Constants.InputType.AddedReleaseDate:
+                    x = 10;
+                    y = 5;
+                    break;
+                case (int)Constants.InputType.AddedISBN:
+                    x = 10;
+                    y = 6;
+                    break;
+                case (int)Constants.InputType.AddedInfo:
+                    x = 10;
+                    y = 7;
+                    break;
             }
             return new Tuple<int, int>(x, y);
         }

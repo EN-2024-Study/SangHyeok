@@ -60,6 +60,11 @@ namespace Library.View
                     menuString = new string[] { "비밀번호(4자리 숫자) :",
                     "유저 나이            :", "유저 휴대폰 번호     :", "유저 주소            :", "<확인>"};
                     break;
+                case (int)Constants.MenuType.BookAdd:
+                    menuString = new string[] { "책 제목 :", "작가    :", "출판사  : ",
+                    "수량    :", "가격    :", "출시일  :", "ISBN    :", 
+                        "책 정보 :", "<확인>"};
+                    break;
             }
             return menuString;
         }

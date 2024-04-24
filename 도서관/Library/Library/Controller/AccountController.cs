@@ -89,7 +89,7 @@ namespace Library.Controller
             return false;
         }
 
-        public void IsModifyInformation()
+        public void ModifyInformation()
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
@@ -119,7 +119,7 @@ namespace Library.Controller
 
         public bool IsUserRemoveValid()
         {
-            if (user.GetRentalBookDict() == null)
+            if (user.GetRentalBookDict().Count == 0)               
                 return true;
             return false;
         }

@@ -11,6 +11,7 @@ namespace Library.Model
         private static BookRepository instance;
         private Dictionary<int, BookDto> bookDict;
         private int keyValue;
+
         private BookRepository()
         {
             bookDict = new Dictionary<int, BookDto>()
@@ -50,6 +51,16 @@ namespace Library.Model
         public void IncreaseBookCount(int key)
         {
             bookDict[key].Count += 1;
+        }
+
+        public void AddBook(BookDto book)
+        {
+            bookDict.Add(keyValue++, book);
+        }
+
+        public void DeleteBook(int key)
+        {
+            bookDict.Remove(key);
         }
     }
 }

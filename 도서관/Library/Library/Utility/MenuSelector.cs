@@ -85,6 +85,9 @@ namespace Library.Utility
                 case (int)Constants.MenuType.ManagerMode:
                     length = 7;
                     break;
+                case (int)Constants.MenuType.BookAdd:
+                    length = 9;
+                    break;
             }
             return length;
         }

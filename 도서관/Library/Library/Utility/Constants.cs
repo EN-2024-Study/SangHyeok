@@ -17,7 +17,8 @@ namespace Library.Utility
             ManagerMode,
             BookSearch,
             SignUp,
-            AccountModify
+            AccountModify,
+            BookAdd
         }
 
         public enum ModeMenu
@@ -88,12 +89,25 @@ namespace Library.Utility
             Check
         }
 
-        public enum Book
+        public enum BookShowType
         {
             All,
             Searched,
             Rental,
             Return
+        }
+
+        public enum BookInfo
+        {
+            Title,
+            Writer,
+            Publisher,
+            Count,
+            Price,
+            ReleaseDate,
+            ISBN,
+            Info,
+            Check
         }
 
         public enum InputType
@@ -110,7 +124,15 @@ namespace Library.Utility
             ModifyPassword,
             ModifyAge,
             ModifyPhoneNumber,
-            ModifyAddress
+            ModifyAddress,
+            AddedTitle,
+            AddedWriter,
+            AddedPublisher,
+            AddedCount,
+            AddedPrice,
+            AddedReleaseDate,
+            AddedISBN,
+            AddedInfo
         }
     }
 }

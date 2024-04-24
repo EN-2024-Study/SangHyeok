@@ -89,17 +89,19 @@ namespace Library.Controller
                     continue;
 
                 if (menuSelector.menuValue == (int)Constants.UserMode.BookSearch)
-                {
-                    bookController.ShowBooks((int)Constants.BookShowType.All);
                     bookController.SearchBook();
-                }
                 else if (menuSelector.menuValue == (int)Constants.UserMode.BookRental)
                 {
                     bookController.ShowBooks((int)Constants.BookShowType.All);
                     bookController.InputBookId();
 
                     if (bookController.IsBookIdValid((int)Constants.BookIdType.Rental))
+                    {
                         bookController.RentalBook();
+                        ExplainingScreen.ExplainSuccessScreen();
+                        ExplainingScreen.ExplainEcsKey();
+                        menuSelector.WaitForEscKey();
+                    }
                 }
                 else if (menuSelector.menuValue == (int)Constants.UserMode.BookRentalHistory)
                 {
@@ -113,7 +115,12 @@ namespace Library.Controller
                     bookController.InputBookId();
 
                     if (bookController.IsBookIdValid((int)Constants.BookIdType.Return))
+                    {
                         bookController.ReturnBook();
+                        ExplainingScreen.ExplainSuccessScreen();
+                        ExplainingScreen.ExplainEcsKey();
+                        menuSelector.WaitForEscKey();
+                    }
                 }
                 else if (menuSelector.menuValue == (int)Constants.UserMode.BookReturnHistory)
                 {
@@ -129,16 +136,12 @@ namespace Library.Controller
                     {
                         accountController.RemoveUser();
                         ExplainingScreen.ExplainSuccessScreen();
-                        ExplainingScreen.ExplainEcsKey();
-                        menuSelector.WaitForEscKey();
                         ControllModeMenu();
                     }
                     else
-                    {
                         ExplainingScreen.ExplainFailScreen();
-                        ExplainingScreen.ExplainEcsKey();
-                        menuSelector.WaitForEscKey();
-                    }
+                    ExplainingScreen.ExplainEcsKey();
+                    menuSelector.WaitForEscKey();
                 }
             }
         }
@@ -158,10 +161,7 @@ namespace Library.Controller
                     continue;
 
                 if (menuSelector.menuValue == (int)Constants.ManagerMode.BookSearch)
-                {
-                    bookController.ShowBooks((int)Constants.BookShowType.All);
                     bookController.SearchBook();
-                }
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.BookAdd)
                     bookController.AddBook();
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.BookDelete)
@@ -170,7 +170,12 @@ namespace Library.Controller
                     bookController.InputBookId();
 
                     if (bookController.IsBookIdValid((int)Constants.BookIdType.Delete))
+                    {
                         bookController.DeleteBook();
+                        ExplainingScreen.ExplainSuccessScreen();
+                        ExplainingScreen.ExplainEcsKey();
+                        menuSelector.WaitForEscKey();
+                    }
                 }
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.BookModify)
                 {

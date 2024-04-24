@@ -52,10 +52,7 @@ namespace Library.Controller
                 {
                     Console.Clear();
                     if (IsLogInValid(modeType))
-                    {
-                        Console.SetWindowSize(50, 20);
                         return true;
-                    }
                 }
                 else
                     InputLogIn(menuSelector.menuValue);
@@ -107,7 +104,6 @@ namespace Library.Controller
 
                 if (menuSelector.menuValue == (int)Constants.AccountModifyMenu.Check)
                 {
-                    Console.Clear();
                     ModifyInfoValid();
                     ExplainingScreen.ExplainSuccessScreen();
                     ExplainingScreen.ExplainEcsKey();

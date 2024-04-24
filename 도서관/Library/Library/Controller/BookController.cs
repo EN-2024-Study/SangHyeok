@@ -71,13 +71,13 @@ namespace Library.Controller
 
                 if (menuSelector.menuValue == (int)Constants.BookAddInfo.Check)
                 {
-                    if (IsBookIdValid((int)Constants.BookIdType.Add))
+                    if (IsBookAddValid())
                     {
-                        ExplainingScreen.ExplainSuccessScreen();
                         book.AddBook(new BookDto(book.KeyValue.ToString(), bookInfoStrings[0], bookInfoStrings[1],
                             bookInfoStrings[2], int.Parse(bookInfoStrings[3]), bookInfoStrings[4], bookInfoStrings[5],
                             bookInfoStrings[6], bookInfoStrings[7]));
                         book.KeyValue += 1;
+                        ExplainingScreen.ExplainSuccessScreen();
                     }
                     else
                         ExplainingScreen.ExplainFailScreen();
@@ -136,13 +136,20 @@ namespace Library.Controller
             }
         }
 
+        public bool IsBookAddValid()
+        {
+            foreach (string str in bookInfoStrings)
+                if (str == null)
+                    return false;
+            return true;
+        }
+
         public bool IsBookIdValid(int idType)
         {
-            if (idType == (int)Constants.BookIdType.Rental)
+            if (bookId == null)
+                return false;
+            else if (idType == (int)Constants.BookIdType.Rental)
             {
-                if (bookId == null)
-                    return false;
-
                 Dictionary<int, BookDto> bookDict = book.GetBookDict();
                 if (bookDict[int.Parse(bookId)].Count > 0)
                     return true;
@@ -150,26 +157,13 @@ namespace Library.Controller
             }
             else if (idType == (int)Constants.BookIdType.Return)
             {
-                if (bookId == null)
-                    return false;
-
                 Dictionary<int, BookDto> bookDict = user.GetRentalBookDict();
                 if (bookDict.ContainsKey(int.Parse(bookId)))
                     return true;
                 return false;
             }
-            else if (idType == (int)Constants.BookIdType.Add)
-            {
-                foreach (string str in bookInfoStrings)
-                    if (str == null)
-                        return false;
-                return true;
-            }
             else if (idType == (int)Constants.BookIdType.Modify || idType == (int)Constants.BookIdType.Delete)
             {
-                if (bookId == null)
-                    return false;
-
                 Dictionary<int, BookDto> bookDict = book.GetBookDict();
                 if (bookDict.ContainsKey(int.Parse(bookId)))
                     return true;
@@ -184,9 +178,6 @@ namespace Library.Controller
             user.AddRentalBook(int.Parse(bookId), book.GetBookDict()[int.Parse(bookId)]);
 
             bookId = null;
-            ExplainingScreen.ExplainSuccessScreen();
-            ExplainingScreen.ExplainEcsKey();
-            menuSelector.WaitForEscKey();
         }
 
         public void ReturnBook()
@@ -195,25 +186,17 @@ namespace Library.Controller
             user.SubtractRentalBook(int.Parse(bookId));
 
             bookId = null;
-            ExplainingScreen.ExplainSuccessScreen();
-            ExplainingScreen.ExplainEcsKey();
-            menuSelector.WaitForEscKey();
         }
 
         public void DeleteBook()
         {
             book.DeleteBook(int.Parse(bookId));
-
             bookId = null;
-            ExplainingScreen.ExplainSuccessScreen();
-            ExplainingScreen.ExplainEcsKey();
-            menuSelector.WaitForEscKey();
         }
 
         public void ShowBooks(int typeValue)
         {
             Console.Clear();
-            
             switch (typeValue)
             {
                 case (int)Constants.BookShowType.All:

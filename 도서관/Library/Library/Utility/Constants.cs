@@ -86,7 +86,6 @@ namespace Library.Utility
         {
             Rental,
             Return,
-            Add,
             Modify,
             Delete
         }

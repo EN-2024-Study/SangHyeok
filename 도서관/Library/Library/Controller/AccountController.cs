@@ -129,6 +129,7 @@ namespace Library.Controller
         {
             user.RemoveUser();
             user.UserIndex = -1;
+            id = null;
         }
 
         public void InputUserId()

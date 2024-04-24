@@ -190,7 +190,16 @@ namespace Library.Controller
                 }
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.AccountDelete)
                 {
+                    accountController.ShowUsers();
+                    accountController.InputUserId();
 
+                    if (accountController.IsUserIdValid() && accountController.IsUserRemoveValid())
+                    {
+                        accountController.RemoveUser();
+                        ExplainingScreen.ExplainSuccessScreen();
+                        ExplainingScreen.ExplainEcsKey();
+                        menuSelector.WaitForEscKey();
+                    }
                 }
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.RentalHistory)
                 {

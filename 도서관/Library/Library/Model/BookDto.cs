@@ -8,7 +8,7 @@ namespace Library.Model
 {
     public class BookDto
     {
-
+        private string id;
         private string title;
         private string writer;
         private string publisher;
@@ -20,10 +20,11 @@ namespace Library.Model
 
         public BookDto() { }
 
-        public BookDto(string title, string writer,
+        public BookDto(string id, string title, string writer,
             string publisher, int count, string price,
             string releaseDate, string iSBN, string info)
         {
+            this.id = id;
             this.title = title;
             this.writer = writer;
             this.publisher = publisher;
@@ -32,6 +33,12 @@ namespace Library.Model
             this.releaseDate = releaseDate;
             this.iSBN = iSBN;
             this.info = info;
+        }
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
         }
 
         public string Title

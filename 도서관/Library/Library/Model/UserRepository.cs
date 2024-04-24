@@ -16,7 +16,10 @@ namespace Library.Model
         private UserRepository()
         {
             this.userDtoList = new List<UserDto> 
-            { new UserDto("12345678", "1234", "25", "010-3077-5666", "광진구")};
+            {
+                new UserDto("12345678", "1234", "25", "010-3077-5666", "광진구"),
+                new UserDto("11111111", "1234", "24", "010-1234-5678", "중랑구")
+            };
             this.userIndex = -1;
         }
 

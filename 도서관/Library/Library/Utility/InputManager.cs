@@ -144,7 +144,8 @@ namespace Library.Utility
                     y = 2;
                     break;
                 case (int)Constants.InputType.BookId:
-                    x = 16;
+                case (int)Constants.InputType.UserId:
+                    x = 18;
                     y = 0;
                     break;
                 case (int)Constants.InputType.AddedTitle:

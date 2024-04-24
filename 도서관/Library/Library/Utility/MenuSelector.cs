@@ -10,11 +10,11 @@ namespace Library.Utility
     public class MenuSelector
     {
         public int menuValue;
-        private MenuScreen menuScreen;
+        private Screen screen;
 
         public MenuSelector()
         {
-            this.menuScreen = new MenuScreen();
+            this.screen = new Screen();
             this.menuValue = 0;
         }
 
@@ -26,7 +26,7 @@ namespace Library.Utility
             Console.CursorVisible = false;
             while (isMenuSelect)
             {
-                menuScreen.DrawMenu(screenValue, menuValue, false);
+                screen.DrawMenu(screenValue, menuValue, false);
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
                 switch (keyInfo.Key)
@@ -38,10 +38,10 @@ namespace Library.Utility
                         menuValue++;
                         break;
                     case ConsoleKey.Enter:
-                        menuScreen.DrawMenu(screenValue, menuValue, true);
+                        screen.DrawMenu(screenValue, menuValue, true);
                         return true;
                     case ConsoleKey.Escape:
-                        menuScreen.DrawMenu(screenValue, -1, false);
+                        screen.DrawMenu(screenValue, -1, false);
                         return false;
                 }
 

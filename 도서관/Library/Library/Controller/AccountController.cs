@@ -16,9 +16,10 @@ namespace Library.Controller
         private InputManager inputManager;
         private UserRepository user;
         private ManagerRepository manager;
+        private Screen screen;
         private string[] signUpStrings;
         private string[] modifyStrings;
-        private string logInId, logInPassword;
+        private string logInId, logInPassword, id;
 
         public AccountController()
         {
@@ -26,10 +27,12 @@ namespace Library.Controller
             this.inputManager = new InputManager();
             this.user = UserRepository.Instance;    // singleton 생성
             this.manager = ManagerRepository.Instance;  // singleton 생성
+            this.screen = new Screen();
             this.signUpStrings = new string[] { null, null, null, null, null };
             this.modifyStrings = new string[] { null, null, null, null };
             this.logInId = null;
             this.logInPassword = null;
+            this.id = null;
         }
 
         public bool IsLogIn(int modeType)
@@ -105,15 +108,13 @@ namespace Library.Controller
                 if (menuSelector.menuValue == (int)Constants.AccountModifyMenu.Check)
                 {
                     Console.Clear();
-                    if (IsModifyInfoValid())
-                    {
-                        ExplainingScreen.ExplainSuccessScreen();
-                        ExplainingScreen.ExplainEcsKey();
-                        return;
-                    }
+                    ModifyInfoValid();
+                    ExplainingScreen.ExplainSuccessScreen();
+                    ExplainingScreen.ExplainEcsKey();
+                    return;
                 }
                 else
-                    InputModifyInformation(menuSelector.menuValue);
+                    InputInformationToModify(menuSelector.menuValue);
             }
         }
 
@@ -130,7 +131,13 @@ namespace Library.Controller
             user.UserIndex = -1;
         }
 
-        private void InputModifyInformation(int inputType)
+        public void InputUserId()
+        {
+            screen.DrawId("유저");
+            id = inputManager.LimitInputLength((int)Constants.InputType.UserId, 9, false);
+        }
+
+        private void InputInformationToModify(int inputType)
         {
             switch(inputType)
             {
@@ -184,29 +191,19 @@ namespace Library.Controller
             }
         }
 
-        private bool IsModifyInfoValid()
+        private void ModifyInfoValid()
         {
+            if (modifyStrings[0] != null)
+                user.UpdatePassword(modifyStrings[0]);
+           
             if (modifyStrings[1] != null)
-            {
-                user.UpdatePassword(modifyStrings[1]);
-                return true;
-            }
+                user.UpdateAge(modifyStrings[1]);
+            
             if (modifyStrings[2] != null)
-            {
-                user.UpdateAge(modifyStrings[2]);
-                return true;
-            }
+                user.UpdatePhoneNumber(modifyStrings[2]);
+           
             if (modifyStrings[3] != null)
-            {
-                user.UpdatePhoneNumber(modifyStrings[3]);
-                return true;
-            }
-            if (modifyStrings[4] != null)
-            {
-                user.UpdateAddress(modifyStrings[4]);
-                return true;
-            }
-            return false;
+                user.UpdateAddress(modifyStrings[3]);
         }
 
         private bool IsLogInValid(int modeType)
@@ -257,6 +254,29 @@ namespace Library.Controller
                 signUpStrings[3], signUpStrings[4]));
             signUpStrings = new string[] { null, null, null, null, null };
             return true;
+        }
+
+        public bool IsUserIdValid()
+        {
+            if (id == null)
+                return false;
+
+            List<UserDto> userList = user.GetUserList();
+            for(int i = 0; i < userList.Count; i++)
+            {
+                if (id.Equals(userList[i].Id))
+                {
+                    user.UserIndex = i;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void ShowUsers()
+        {
+            Console.Clear();
+            screen.DrawUsers(user.GetUserList());
         }
     }
 }

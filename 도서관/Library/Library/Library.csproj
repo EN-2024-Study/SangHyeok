@@ -49,9 +49,8 @@
     <Compile Include="Utility\Constants.cs" />
     <Compile Include="Utility\InputManager.cs" />
     <Compile Include="Utility\MenuSelector.cs" />
-    <Compile Include="View\BookScreen.cs" />
+    <Compile Include="View\Screen.cs" />
     <Compile Include="View\ExplainingScreen.cs" />
-    <Compile Include="View\MenuScreen.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

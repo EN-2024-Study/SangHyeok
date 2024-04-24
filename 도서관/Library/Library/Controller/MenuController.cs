@@ -182,7 +182,11 @@ namespace Library.Controller
                 }
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.AccountModify)
                 {
+                    accountController.ShowUsers();
+                    accountController.InputUserId();
 
+                    if (accountController.IsUserIdValid())
+                        accountController.ModifyInformation();
                 }
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.AccountDelete)
                 {

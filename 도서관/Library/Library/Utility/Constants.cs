@@ -159,7 +159,8 @@ namespace Library.Utility
             ModifiedPublisher,
             ModifiedCount,
             ModifiedPrice,
-            ModifiedReleaseData
+            ModifiedReleaseData,
+            UserId
         }
     }
 }

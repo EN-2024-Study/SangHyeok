@@ -14,7 +14,7 @@ namespace Library.Controller
         private BookRepository book;
         private MenuSelector menuSelector;
         private InputManager inputManager;
-        private BookScreen bookScreen;
+        private Screen screen;
         private UserRepository user;
         private string[] searchedBookStrings;
         private string[] bookInfoStrings;
@@ -25,7 +25,7 @@ namespace Library.Controller
             this.book = BookRepository.Instance; // singleton 생성
             this.menuSelector = new MenuSelector();
             this.inputManager = new InputManager();
-            this.bookScreen = new BookScreen();
+            this.screen = new Screen();
             this.user = UserRepository.Instance;
             this.searchedBookStrings = new string[] { null, null, null };
             this.bookInfoStrings = new string[] { null, null, null, null, null, null, null, null };
@@ -74,9 +74,10 @@ namespace Library.Controller
                     if (IsBookIdValid((int)Constants.BookIdType.Add))
                     {
                         ExplainingScreen.ExplainSuccessScreen();
-                        book.AddBook(new BookDto(bookInfoStrings[0], bookInfoStrings[1],
+                        book.AddBook(new BookDto(book.KeyValue.ToString(), bookInfoStrings[0], bookInfoStrings[1],
                             bookInfoStrings[2], int.Parse(bookInfoStrings[3]), bookInfoStrings[4], bookInfoStrings[5],
                             bookInfoStrings[6], bookInfoStrings[7]));
+                        book.KeyValue += 1;
                     }
                     else
                         ExplainingScreen.ExplainFailScreen();
@@ -122,25 +123,26 @@ namespace Library.Controller
             {
                 if (bookInfoStrings[0] != null)
                     book.ModifyBookTitle(int.Parse(bookId), bookInfoStrings[0]);
-                else if (bookInfoStrings[1] != null)
+                if (bookInfoStrings[1] != null)
                     book.ModifyBookWriter(int.Parse(bookId), bookInfoStrings[1]);
-                else if (bookInfoStrings[2] != null)
+                if (bookInfoStrings[2] != null)
                     book.ModifyBookPublisher(int.Parse(bookId), bookInfoStrings[2]);
-                else if (bookInfoStrings[3] != null)
+                if (bookInfoStrings[3] != null)
                     book.ModifyBookCount(int.Parse(bookId), int.Parse(bookInfoStrings[3]));
-                else if (bookInfoStrings[4] != null)
+                if (bookInfoStrings[4] != null)
                     book.ModifyBookPrice(int.Parse(bookId), bookInfoStrings[4]);
-                else if (bookInfoStrings[5] != null)
+                if (bookInfoStrings[5] != null)
                     book.ModifyBookReleaseDate(int.Parse(bookId), bookInfoStrings[5]);
             }
         }
 
         public bool IsBookIdValid(int idType)
         {
-            if (bookId == null)
-                return false;
-            else if (idType == (int)Constants.BookIdType.Rental)
+            if (idType == (int)Constants.BookIdType.Rental)
             {
+                if (bookId == null)
+                    return false;
+
                 Dictionary<int, BookDto> bookDict = book.GetBookDict();
                 if (bookDict[int.Parse(bookId)].Count > 0)
                     return true;
@@ -148,6 +150,9 @@ namespace Library.Controller
             }
             else if (idType == (int)Constants.BookIdType.Return)
             {
+                if (bookId == null)
+                    return false;
+
                 Dictionary<int, BookDto> bookDict = user.GetRentalBookDict();
                 if (bookDict.ContainsKey(int.Parse(bookId)))
                     return true;
@@ -162,6 +167,9 @@ namespace Library.Controller
             }
             else if (idType == (int)Constants.BookIdType.Modify || idType == (int)Constants.BookIdType.Delete)
             {
+                if (bookId == null)
+                    return false;
+
                 Dictionary<int, BookDto> bookDict = book.GetBookDict();
                 if (bookDict.ContainsKey(int.Parse(bookId)))
                     return true;
@@ -209,23 +217,23 @@ namespace Library.Controller
             switch (typeValue)
             {
                 case (int)Constants.BookShowType.All:
-                    bookScreen.DrawBooks(book.GetBookDict().Values.ToList<BookDto>());
+                    screen.DrawBooks(book.GetBookDict().Values.ToList<BookDto>());
                     break;
                 case (int)Constants.BookShowType.Searched:
-                    bookScreen.DrawBooks(ExploreSearchedBooks());
+                    screen.DrawBooks(ExploreSearchedBooks());
                     break;
                 case (int)Constants.BookShowType.Rental:
-                    bookScreen.DrawBooks(user.GetRentalBookDict().Values.ToList<BookDto>());
+                    screen.DrawBooks(user.GetRentalBookDict().Values.ToList<BookDto>());
                     break;
                 case (int)Constants.BookShowType.Return:
-                    bookScreen.DrawBooks(user.GetReturnBookList());
+                    screen.DrawBooks(user.GetReturnBookList());
                     break;
             }
         }
 
         public void InputBookId()
         {
-            bookScreen.DrawBookId();
+            screen.DrawId("책  ");
             bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
         }
 

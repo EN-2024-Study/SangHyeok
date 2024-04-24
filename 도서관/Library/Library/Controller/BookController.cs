@@ -12,10 +12,10 @@ namespace Library.Controller
     public class BookController
     {
         private BookRepository book;
+        private UserRepository user;
         private MenuSelector menuSelector;
         private InputManager inputManager;
         private Screen screen;
-        private UserRepository user;
         private string[] searchedBookStrings;
         private string[] bookInfoStrings;
         private string bookId;
@@ -23,10 +23,10 @@ namespace Library.Controller
         public BookController()
         {
             this.book = BookRepository.Instance; // singleton 생성
+            this.user = UserRepository.Instance;
             this.menuSelector = new MenuSelector();
             this.inputManager = new InputManager();
             this.screen = new Screen();
-            this.user = UserRepository.Instance;
             this.searchedBookStrings = new string[] { null, null, null };
             this.bookInfoStrings = new string[] { null, null, null, null, null, null, null, null };
             this.bookId = null;
@@ -122,17 +122,17 @@ namespace Library.Controller
             void Modify()
             {
                 if (bookInfoStrings[0] != null)
-                    book.ModifyBookTitle(int.Parse(bookId), bookInfoStrings[0]);
+                    book.ModifyBookTitle(int.Parse(bookId) - 1, bookInfoStrings[0]);
                 if (bookInfoStrings[1] != null)
-                    book.ModifyBookWriter(int.Parse(bookId), bookInfoStrings[1]);
+                    book.ModifyBookWriter(int.Parse(bookId) - 1, bookInfoStrings[1]);
                 if (bookInfoStrings[2] != null)
-                    book.ModifyBookPublisher(int.Parse(bookId), bookInfoStrings[2]);
+                    book.ModifyBookPublisher(int.Parse(bookId) - 1, bookInfoStrings[2]);
                 if (bookInfoStrings[3] != null)
-                    book.ModifyBookCount(int.Parse(bookId), int.Parse(bookInfoStrings[3]));
+                    book.ModifyBookCount(int.Parse(bookId) - 1, int.Parse(bookInfoStrings[3]));
                 if (bookInfoStrings[4] != null)
-                    book.ModifyBookPrice(int.Parse(bookId), bookInfoStrings[4]);
+                    book.ModifyBookPrice(int.Parse(bookId) - 1, bookInfoStrings[4]);
                 if (bookInfoStrings[5] != null)
-                    book.ModifyBookReleaseDate(int.Parse(bookId), bookInfoStrings[5]);
+                    book.ModifyBookReleaseDate(int.Parse(bookId) - 1, bookInfoStrings[5]);
             }
         }
 
@@ -151,22 +151,22 @@ namespace Library.Controller
             else if (idType == (int)Constants.BookIdType.Rental)
             {
                 List<BookDto> bookDict = book.GetBookList();
-                if (bookDict[int.Parse(bookId)].Count > 0)
+                if (bookDict[int.Parse(bookId) - 1].Count > 0)
                     return true;
                 return false;
             }
             else if (idType == (int)Constants.BookIdType.Return)
             {
                 List<RentalBookDto> bookList = user.GetRentalBookList();
-
-                if (bookList[int.Parse(bookId)] != null)
-                    return true;
+                foreach (RentalBookDto book in bookList)
+                    if (book.Id.Equals(bookId))
+                        return true;
                 return false;
             }
             else if (idType == (int)Constants.BookIdType.Modify || idType == (int)Constants.BookIdType.Delete)
             {
                 List<BookDto> bookList = book.GetBookList();
-                if (bookList[int.Parse(bookId)] != null)
+                if (bookList[int.Parse(bookId) - 1] != null)
                     return true;
                 return false;
             }
@@ -176,22 +176,24 @@ namespace Library.Controller
         public void RentalBook()
         {
             book.ReduceBookCount(int.Parse(bookId));
-            user.AddRentalBook(new RentalBookDto(book.GetBookList()[int.Parse(bookId)], DateTime.Now));
-
+            user.AddRentalBook(new RentalBookDto(book.GetBookList()[int.Parse(bookId) - 1], DateTime.Now));
             bookId = null;
         }
 
         public void ReturnBook()
         {
-            book.IncreaseBookCount(int.Parse(bookId));
-            user.SubtractRentalBook(int.Parse(bookId));
-            user.AddReturnBook(book.GetBookList()[int.Parse(bookId)]);
+            List<RentalBookDto> rentalBookList = user.GetRentalBookList();
+            for(int i = 0; i < rentalBookList.Count; i++)
+                if (rentalBookList[i].Id.Equals(bookId))
+                    user.SubtractRentalBook(rentalBookList[i]);
+            book.IncreaseBookCount(int.Parse(bookId) - 1);
+            user.AddReturnBook(book.GetBookList()[int.Parse(bookId) - 1]);
             bookId = null;
         }
 
         public void DeleteBook()
         {
-            book.DeleteBook(int.Parse(bookId));
+            book.DeleteBook(int.Parse(bookId) - 1);
             bookId = null;
         }
 

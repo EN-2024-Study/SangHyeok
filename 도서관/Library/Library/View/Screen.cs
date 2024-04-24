@@ -110,7 +110,7 @@ namespace Library.View
                 Console.Write("책 정보     :" + bookList[i].Info);
                 Console.SetCursorPosition(0, y + i + 10);
                 Console.Write("빌린 시간   :" + bookList[i].RentalTime.ToString("yyyy-MM-dd hh:mm:ss"));
-                Console.SetCursorPosition(0, y + i + 10);
+                Console.SetCursorPosition(0, y + i + 11);
                 Console.Write("반납 시간   :" + bookList[i].RentalTime.AddDays(7).ToString("yyyy-MM-dd hh:mm:ss"));
                 y += 11;
             }

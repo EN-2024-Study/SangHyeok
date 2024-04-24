@@ -45,58 +45,36 @@ namespace Library.Model
         }
 
         public void AddUser(UserDto user)
-        {
-            userDtoList.Add(user);
-        }
+        { userDtoList.Add(user); }
 
         public void RemoveUser()
-        {
-            userDtoList.Remove(userDtoList[userIndex]);
-        }
+        { userDtoList.Remove(userDtoList[userIndex]); }
 
         public void UpdatePassword(string password)
-        {
-            userDtoList[userIndex].Password = password;
-        }
+        { userDtoList[userIndex].Password = password; }
 
         public void UpdateAge(string age)
-        {
-            userDtoList[userIndex].Age = age;
-        }
+        { userDtoList[userIndex].Age = age; }
 
         public void UpdatePhoneNumber(string phoneNumber)
-        {
-            userDtoList[userIndex].PhoneNumber = phoneNumber;
-        }
+        { userDtoList[userIndex].PhoneNumber = phoneNumber; }
 
         public void UpdateAddress(string address)
-        {
-            userDtoList[userIndex].Address = address;
-        }
+        { userDtoList[userIndex].Address = address; }
 
         public List<RentalBookDto> GetRentalBookList()
-        {
-            return userDtoList[userIndex].GetRentalBookList();
-        }
+        { return userDtoList[userIndex].GetRentalBookList(); }
 
         public void AddRentalBook(RentalBookDto rentalBook)
-        {
-            userDtoList[userIndex].AddRentalBook(rentalBook);
-        }
+        { userDtoList[userIndex].AddRentalBook(rentalBook); }
 
-        public void SubtractRentalBook(int key)
-        {
-            userDtoList[userIndex].SubtractRentalBook(key);
-        }
+        public void SubtractRentalBook(RentalBookDto book)
+        { userDtoList[userIndex].SubtractRentalBook(book); }
 
         public void AddReturnBook(BookDto bookDto)
-        {
-            userDtoList[userIndex].AddReturnBook(bookDto);
-        }
+        { userDtoList[userIndex].AddReturnBook(bookDto); }
 
         public List<BookDto> GetReturnBookList()
-        {
-            return userDtoList[userIndex].GetReturnBookList();
-        }
+        { return userDtoList[userIndex].GetReturnBookList(); }
     }
 }

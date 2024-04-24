@@ -57,23 +57,15 @@ namespace Library.Model
         { return rentalBookList; }
 
         public void AddRentalBook(RentalBookDto rentalBook)   
-        {
-            rentalBookList.Add(rentalBook);
-        }
+        { rentalBookList.Add(rentalBook); }
 
         public void AddReturnBook(BookDto book)
-        {
-            returnBookList.Add(book);
-        }
+        { returnBookList.Add(book); }
 
-        public void SubtractRentalBook(int key)
-        {
-            rentalBookList.RemoveAt(key);
-        }
+        public void SubtractRentalBook(RentalBookDto book)
+        { rentalBookList.Remove(book); }
 
         public List<BookDto> GetReturnBookList()
-        {
-            return returnBookList;
-        }
+        { return returnBookList; }
     }
 }

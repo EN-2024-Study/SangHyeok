@@ -213,20 +213,20 @@ namespace Library.Controller
         public void ShowBooks(int typeValue)
         {
             Console.Clear();
-
+            
             switch (typeValue)
             {
                 case (int)Constants.BookShowType.All:
-                    screen.DrawBooks(book.GetBookDict().Values.ToList<BookDto>());
+                    screen.DrawBooks(10, book.GetBookDict().Values.ToList<BookDto>());
                     break;
                 case (int)Constants.BookShowType.Searched:
-                    screen.DrawBooks(ExploreSearchedBooks());
+                    screen.DrawBooks(10, ExploreSearchedBooks());
                     break;
                 case (int)Constants.BookShowType.Rental:
-                    screen.DrawBooks(user.GetRentalBookDict().Values.ToList<BookDto>());
+                    screen.DrawBooks(10, user.GetRentalBookDict().Values.ToList<BookDto>());
                     break;
                 case (int)Constants.BookShowType.Return:
-                    screen.DrawBooks(user.GetReturnBookList());
+                    screen.DrawBooks(10, user.GetReturnBookList());
                     break;
             }
         }
@@ -235,6 +235,12 @@ namespace Library.Controller
         {
             screen.DrawId("책  ");
             bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
+        }
+
+        public void ShowUserRentalHistory()
+        {
+            Console.Clear();
+            screen.DrawUserRentalHistory(user.GetUserList());
         }
 
         private void InputBookInfo(int inputType)

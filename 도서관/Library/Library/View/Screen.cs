@@ -27,13 +27,37 @@ namespace Library.View
             }
         }
 
-        public void DrawBooks(List<BookDto> bookList)
+        public void DrawUsers(List<UserDto> userList)
         {
             int y = 10;
-            for(int i = 0; i < bookList.Count; i++)
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            for (int i = 0; i < userList.Count; i++)
             {
                 Console.SetCursorPosition(0, y + i);
-                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("=====================================");
+                Console.SetCursorPosition(0, y + i + 1);
+                Console.Write("유저 아이디      :" + userList[i].Id);
+                Console.SetCursorPosition(0, y + i + 2);
+                Console.Write("유저 이름        :" + userList[i].Password);
+                Console.SetCursorPosition(0, y + i + 3);
+                Console.Write("유저 나이        :" + userList[i].Age);
+                Console.SetCursorPosition(0, y + i + 4);
+                Console.Write("유저 휴대폰 번호 :" + userList[i].PhoneNumber);
+                Console.SetCursorPosition(0, y + i + 5);
+                Console.Write("유저 주소        :" + userList[i].Address);
+                y += 6;
+            }
+            Console.ResetColor();
+        }
+
+        public void DrawBooks(int coordinateY, List<BookDto> bookList)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            int y = coordinateY;
+            for (int i = 0; i < bookList.Count; i++)
+            {
+                Console.SetCursorPosition(0, y + i);
                 Console.Write("=====================================");
                 Console.SetCursorPosition(0, y + i + 1);
                 Console.Write("책 아이디 :" + bookList[i].Id);
@@ -53,32 +77,29 @@ namespace Library.View
                 Console.Write("ISBN      :" + bookList[i].ISBN);
                 Console.SetCursorPosition(0, y + i + 9);
                 Console.Write("책 정보   :" + bookList[i].Info);
-                y += 10;
+                y += 9;
             }
             Console.ResetColor();
         }
 
-        public void DrawUsers(List<UserDto> userList)
+        public void DrawUserRentalHistory(List<UserDto> userList)
         {
             int y = 10;
             for (int i = 0; i < userList.Count; i++)
             {
                 Console.SetCursorPosition(0, y + i);
-                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("=====================================");
                 Console.SetCursorPosition(0, y + i + 1);
                 Console.Write("유저 아이디      :" + userList[i].Id);
-                Console.SetCursorPosition(0, y + i + 2);
-                Console.Write("유저 이름        :" + userList[i].Password);
-                Console.SetCursorPosition(0, y + i + 3);
-                Console.Write("유저 나이        :" + userList[i].Age);
-                Console.SetCursorPosition(0, y + i + 4);
-                Console.Write("유저 휴대폰 번호 :" + userList[i].PhoneNumber);
-                Console.SetCursorPosition(0, y + i + 5);
-                Console.Write("유저 주소        :" + userList[i].Address);
-                y += 6;
+                DrawBooks(y + i + 2, userList[i].GetRentalBookDIct().Values.ToList<BookDto>());
+                y += userList[i].GetRentalBookDIct().Values.ToList<BookDto>().Count * 11;
             }
-            Console.ResetColor();
+        }
+
+        public void DrawId(string str)
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.Write(str + " 아이디 입력 :");
         }
 
         private string[] SetStrings(int screenValue)
@@ -127,13 +148,5 @@ namespace Library.View
             }
             return menuString;
         }
-
-        public void DrawId(string str)
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.Write(str + " 아이디 입력 :");
-        }
-
-
     }
 }

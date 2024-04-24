@@ -203,7 +203,9 @@ namespace Library.Controller
                 }
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.RentalHistory)
                 {
-
+                    bookController.ShowUserRentalHistory();
+                    ExplainingScreen.ExplainEcsKey();
+                    menuSelector.WaitForEscKey();
                 }
             }
         }

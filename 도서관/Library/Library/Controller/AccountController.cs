@@ -116,7 +116,7 @@ namespace Library.Controller
 
         public bool IsUserRemoveValid()
         {
-            if (user.GetRentalBookDict().Count == 0)               
+            if (user.GetRentalBookList().Count == 0)               
                 return true;
             return false;
         }
@@ -130,7 +130,7 @@ namespace Library.Controller
 
         public void InputUserId()
         {
-            screen.DrawId("유저");
+            ExplainingScreen.ExplainId("유저");
             id = inputManager.LimitInputLength((int)Constants.InputType.UserId, 9, false);
         }
 

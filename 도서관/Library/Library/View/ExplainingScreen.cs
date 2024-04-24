@@ -29,5 +29,11 @@ namespace Library.View
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("실패하였습니다!");
         }
+
+        public static void ExplainId(string str)
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.Write(str + " 아이디 입력 :");
+        }
     }
 }

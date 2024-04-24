@@ -150,22 +150,23 @@ namespace Library.Controller
                 return false;
             else if (idType == (int)Constants.BookIdType.Rental)
             {
-                Dictionary<int, BookDto> bookDict = book.GetBookDict();
+                List<BookDto> bookDict = book.GetBookList();
                 if (bookDict[int.Parse(bookId)].Count > 0)
                     return true;
                 return false;
             }
             else if (idType == (int)Constants.BookIdType.Return)
             {
-                Dictionary<int, BookDto> bookDict = user.GetRentalBookDict();
-                if (bookDict.ContainsKey(int.Parse(bookId)))
+                List<RentalBookDto> bookList = user.GetRentalBookList();
+
+                if (bookList[int.Parse(bookId)] != null)
                     return true;
                 return false;
             }
             else if (idType == (int)Constants.BookIdType.Modify || idType == (int)Constants.BookIdType.Delete)
             {
-                Dictionary<int, BookDto> bookDict = book.GetBookDict();
-                if (bookDict.ContainsKey(int.Parse(bookId)))
+                List<BookDto> bookList = book.GetBookList();
+                if (bookList[int.Parse(bookId)] != null)
                     return true;
                 return false;
             }
@@ -175,7 +176,7 @@ namespace Library.Controller
         public void RentalBook()
         {
             book.ReduceBookCount(int.Parse(bookId));
-            user.AddRentalBook(int.Parse(bookId), book.GetBookDict()[int.Parse(bookId)]);
+            user.AddRentalBook(new RentalBookDto(book.GetBookList()[int.Parse(bookId)], DateTime.Now));
 
             bookId = null;
         }
@@ -184,7 +185,7 @@ namespace Library.Controller
         {
             book.IncreaseBookCount(int.Parse(bookId));
             user.SubtractRentalBook(int.Parse(bookId));
-
+            user.AddReturnBook(book.GetBookList()[int.Parse(bookId)]);
             bookId = null;
         }
 
@@ -200,23 +201,23 @@ namespace Library.Controller
             switch (typeValue)
             {
                 case (int)Constants.BookShowType.All:
-                    screen.DrawBooks(10, book.GetBookDict().Values.ToList<BookDto>());
+                    screen.DrawBooks(book.GetBookList());
                     break;
                 case (int)Constants.BookShowType.Searched:
-                    screen.DrawBooks(10, ExploreSearchedBooks());
+                    screen.DrawBooks(ExploreSearchedBooks());
                     break;
                 case (int)Constants.BookShowType.Rental:
-                    screen.DrawBooks(10, user.GetRentalBookDict().Values.ToList<BookDto>());
+                    screen.DrawRentalBooks(10, user.GetRentalBookList());
                     break;
                 case (int)Constants.BookShowType.Return:
-                    screen.DrawBooks(10, user.GetReturnBookList());
+                    screen.DrawBooks(user.GetReturnBookList());
                     break;
             }
         }
 
         public void InputBookId()
         {
-            screen.DrawId("책  ");
+            ExplainingScreen.ExplainId("책  ");
             bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
         }
 
@@ -275,7 +276,7 @@ namespace Library.Controller
 
         private List<BookDto> ExploreSearchedBooks()
         {
-            List<BookDto> searchedBookList = book.GetBookDict().Values.ToList<BookDto>();
+            List<BookDto> searchedBookList = book.GetBookList();
 
             Console.SetWindowSize(70, 40);
             Console.Clear();

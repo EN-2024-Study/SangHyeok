@@ -9,23 +9,22 @@ namespace Library.Model
     public class BookRepository     // singleton
     {
         private static BookRepository instance;
-        private Dictionary<int, BookDto> bookDict;
+        private List<BookDto> bookList;
         private int keyValue;
 
         private BookRepository()
         {
-            bookDict = new Dictionary<int, BookDto>()
+            bookList = new List<BookDto>()
             {
-                { 1, new BookDto ("1", "패밀리 레스토랑 가자.", "야마",
+                new BookDto ("1", "패밀리 레스토랑 가자.", "야마",
                         "문학동네", 4, "12900", "2024.04.01",
-                        "123a 123", "소설") },
-                { 2, new BookDto ("2", "일류의 조건", "다카시", "필름",
+                        "123a 123", "소설"),
+                new BookDto ("2", "일류의 조건", "다카시", "필름",
                         3, "18000", "2024.03.01",
-                        "321a 321", "자기계발")},
-                { 3,
-                    new BookDto ("3", "불변의 법칙", "하우절",
-                            "서삼독", 0, "22500",
-                            "2000.09.08", "567a 567", "자기계발") }
+                        "321a 321", "자기계발"),
+                new BookDto ("3", "불변의 법칙", "하우절",
+                        "서삼독", 0, "22500",
+                        "2000.09.08", "567a 567", "자기계발")
             };
             keyValue = 4;
         }
@@ -40,8 +39,8 @@ namespace Library.Model
             }
         }
 
-        public Dictionary<int, BookDto> GetBookDict()
-        { return bookDict; }
+        public List<BookDto> GetBookList()
+        { return bookList; }
 
         public int KeyValue
         {
@@ -51,52 +50,52 @@ namespace Library.Model
 
         public void ReduceBookCount(int key)
         {
-            bookDict[key].Count -= 1;
+            bookList[key].Count -= 1;
         }
 
         public void IncreaseBookCount(int key)
         {
-            bookDict[key].Count += 1;
+            bookList[key].Count += 1;
         }
 
         public void AddBook(BookDto book)
         {
-            bookDict.Add(keyValue, book);
+            bookList.Add(book);
         }
 
         public void DeleteBook(int key)
         {
-            bookDict.Remove(key);
+            bookList.RemoveAt(key);
         }
 
         public void ModifyBookTitle(int key, string title)
         {
-            bookDict[key].Title = title;
+            bookList[key].Title = title;
         }
 
         public void ModifyBookWriter(int key, string writer)
         {
-            bookDict[key].Writer = writer;
+            bookList[key].Writer = writer;
         }
 
         public void ModifyBookPublisher(int key, string publisher)
         {
-            bookDict[key].Publisher = publisher;
+            bookList[key].Publisher = publisher;
         }
 
         public void ModifyBookCount(int key, int count)
         {
-            bookDict[key].Count = count;
+            bookList[key].Count = count;
         }
 
         public void ModifyBookPrice(int key, string price)
         {
-            bookDict[key].Price = price;
+            bookList[key].Price = price;
         }
 
         public void ModifyBookReleaseDate(int key, string releaseData)
         {
-            bookDict[key].ReleaseDate = releaseData;
+            bookList[key].ReleaseDate = releaseData;
         }
     }
 }

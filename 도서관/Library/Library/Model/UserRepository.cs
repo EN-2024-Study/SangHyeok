@@ -74,19 +74,24 @@ namespace Library.Model
             userDtoList[userIndex].Address = address;
         }
 
-        public Dictionary<int, BookDto> GetRentalBookDict()
+        public List<RentalBookDto> GetRentalBookList()
         {
-            return userDtoList[userIndex].GetRentalBookDIct();
+            return userDtoList[userIndex].GetRentalBookList();
         }
 
-        public void AddRentalBook(int key, BookDto book)
+        public void AddRentalBook(RentalBookDto rentalBook)
         {
-            userDtoList[userIndex].AddRentalBook(new Tuple<int, BookDto>(key, book));
+            userDtoList[userIndex].AddRentalBook(rentalBook);
         }
 
         public void SubtractRentalBook(int key)
         {
             userDtoList[userIndex].SubtractRentalBook(key);
+        }
+
+        public void AddReturnBook(BookDto bookDto)
+        {
+            userDtoList[userIndex].AddReturnBook(bookDto);
         }
 
         public List<BookDto> GetReturnBookList()

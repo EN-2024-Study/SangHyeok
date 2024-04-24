@@ -44,6 +44,7 @@
     <Compile Include="Model\BookRepository.cs" />
     <Compile Include="Model\ManagerRepository.cs" />
     <Compile Include="Model\ManagerVo.cs" />
+    <Compile Include="Model\RentalBookDto.cs" />
     <Compile Include="Model\UserDto.cs" />
     <Compile Include="Model\UserRepository.cs" />
     <Compile Include="Utility\Constants.cs" />

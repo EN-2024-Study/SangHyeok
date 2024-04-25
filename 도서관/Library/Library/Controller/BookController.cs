@@ -106,7 +106,8 @@ namespace Library.Controller
                 if (!isSelected)
                     return;
 
-                if (menuSelector.menuValue == (int)Constants.BookModifyInfo.Check)
+                if (menuSelector.menuValue == (int)Constants.BookModifyInfo.Check &&
+                    IsBookAddValid())
                 {
                     if (IsBookIdValid((int)Constants.BookIdType.Modify))
                     {
@@ -148,11 +149,22 @@ namespace Library.Controller
             }
         }
 
+        private bool IsModifyValid()
+        {
+            if (!RegularExpressionManager.IsWriterValid(bookInfoStrings[1]) ||
+               !RegularExpressionManager.IsPublisherValid(bookInfoStrings[2]) ||
+               !RegularExpressionManager.IsISBNValid(bookInfoStrings[6]))
+                return false;
+            return true;
+        }
+
         private bool IsBookAddValid()
         {
             foreach (string str in bookInfoStrings)
                 if (str == null)
                     return false;
+            if (!IsModifyValid())
+                return false;
             return true;
         }
 
@@ -282,25 +294,25 @@ namespace Library.Controller
                     bookInfoStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.Title, 15, false);
                     break;
                 case (int)Constants.BookAddInfo.Writer:
-                    bookInfoStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.Writer, 15, false);
+                    bookInfoStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.Writer, 10, false);
                     break;
                 case (int)Constants.BookAddInfo.Publisher:
-                    bookInfoStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.Publisher, 15, false);
+                    bookInfoStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.Publisher, 10, false);
                     break;
                 case (int)Constants.BookAddInfo.Count:
-                    bookInfoStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.Count, 15, false);
+                    bookInfoStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.Count, 4, false);
                     break;
                 case (int)Constants.BookAddInfo.Price:
-                    bookInfoStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.Price, 15, false);
+                    bookInfoStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.Price, 7, false);
                     break;
                 case (int)Constants.BookAddInfo.ReleaseDate:
-                    bookInfoStrings[5] = inputManager.LimitInputLength((int)Constants.InputType.ReleaseDate, 15, false);
+                    bookInfoStrings[5] = inputManager.LimitInputLength((int)Constants.InputType.ReleaseDate, 11, false);
                     break;
                 case (int)Constants.BookAddInfo.ISBN:
-                    bookInfoStrings[6] = inputManager.LimitInputLength((int)Constants.InputType.ISBN, 15, false);
+                    bookInfoStrings[6] = inputManager.LimitInputLength((int)Constants.InputType.ISBN, 25, false);
                     break;
                 case (int)Constants.BookAddInfo.Info:
-                    bookInfoStrings[7] = inputManager.LimitInputLength((int)Constants.InputType.Info, 15, false);
+                    bookInfoStrings[7] = inputManager.LimitInputLength((int)Constants.InputType.Info, 10, false);
                     break;
             }
         }
@@ -313,10 +325,10 @@ namespace Library.Controller
                     searchedBookStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.SearchedTitle, 15, false);
                     break;
                 case (int)Constants.BookSearchMenu.Writer:
-                    searchedBookStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.SearchedWriter, 15, false);
+                    searchedBookStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.SearchedWriter, 10, false);
                     break;
                 case (int)Constants.BookSearchMenu.Publisher:
-                    searchedBookStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.SearchedPublisher, 15, false);
+                    searchedBookStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.SearchedPublisher, 10, false);
                     break;
             }
         }

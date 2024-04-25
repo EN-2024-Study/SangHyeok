@@ -43,25 +43,25 @@ namespace Library.View
         public static void ExplainSearchBookInfo()
         {
             Console.SetCursorPosition(0, 0);
-            Console.Write("책 제목 - 영어, 한글, 숫자 1개 이상");
+            Console.Write("책 제목 - 1 글자 이상 15 글자 이하의 문자 또는 숫자");
             Console.SetCursorPosition(0, 1);
-            Console.Write("작가    - 영어, 한글 1글자 이상");
+            Console.Write("작가    - 1 글자 이상 10 글자 이하의 문자");
             Console.SetCursorPosition(0, 2);
-            Console.Write("출판사  - 영어, 한글, 숫자 1개 이상");
+            Console.Write("출판사  - 1 글자 이상 10 글자 이하의 문자 또는 숫자");
         }
 
         public static void ExplainInputBookInfo()
         {
             Console.SetCursorPosition(0, 3);
-            Console.Write("수량    - 1 ~ 999 사이의 자연수");
+            Console.Write("수량    - 0 부터 999 사이의 자연수");
             Console.SetCursorPosition(0, 4);
-            Console.Write("가격    - 1 ~ 999999 사이의 자연수");
+            Console.Write("가격    - 0 부터 999999 사이의 자연수");
             Console.SetCursorPosition(0, 5);
             Console.Write("출시일  - 20xx-xx-xx");
             Console.SetCursorPosition(0, 6);
-            Console.Write("ISBN    - 정수 9개 + 영어 1개 + 공백 + 정수 13개");
+            Console.Write("ISBN    - 정수 6 개 + 영어 1 개 + 공백 + 정수 13 개");
             Console.SetCursorPosition(0, 7);
-            Console.Write("정보    - 최소 1개의 문자");
+            Console.Write("정보    - 1 글자 이상 10 글자 이하의 문자 또는 숫자");
             Console.SetCursorPosition(0, 8);
             Console.Write("===========================================");
         }

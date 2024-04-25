@@ -208,16 +208,16 @@ namespace Library.Controller
 
         private void ModifyInfo()
         {
-            if (modifyStrings[0] != null || modifyStrings[0] != "")
+            if (modifyStrings[0] != null && modifyStrings[0] != "")
                 user.UpdatePassword(modifyStrings[0]);
 
-            if (modifyStrings[1] != null || modifyStrings[1] != "")
+            if (modifyStrings[1] != null && modifyStrings[1] != "")
                 user.UpdateAge(modifyStrings[1]);
 
-            if (modifyStrings[2] != null || modifyStrings[2] != "")
+            if (modifyStrings[2] != null && modifyStrings[2] != "")
                 user.UpdatePhoneNumber(modifyStrings[2]);
 
-            if (modifyStrings[3] != null || modifyStrings[3] != "")
+            if (modifyStrings[3] != null &&  modifyStrings[3] != "")
                 user.UpdateAddress(modifyStrings[3]);
         }
 

@@ -253,16 +253,17 @@ namespace Library.Controller
             }
         }
 
+        public void ShowUserRentalHistory()
+        {
+            Console.Clear();
+            Console.SetWindowSize(70, 30);
+            screen.DrawUserRentalHistory(user.GetUserList());
+        }
+
         public void InputBookId()
         {
             ExplainingScreen.ExplainId("책  ");
             bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
-        }
-
-        public void ShowUserRentalHistory()
-        {
-            Console.Clear();
-            screen.DrawUserRentalHistory(user.GetUserList());
         }
 
         private void InputBookInfo(int inputType)

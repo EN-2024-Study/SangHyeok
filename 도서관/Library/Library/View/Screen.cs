@@ -34,17 +34,17 @@ namespace Library.View
 
             for (int i = 0; i < userList.Count; i++)
             {
-                Console.SetCursorPosition(0, y + i);
+                Console.SetCursorPosition(0, y);
                 Console.Write("=====================================");
-                Console.SetCursorPosition(0, y + i + 1);
+                Console.SetCursorPosition(0, y + 1);
                 Console.Write("유저 아이디      :" + userList[i].Id);
-                Console.SetCursorPosition(0, y + i + 2);
+                Console.SetCursorPosition(0, y + 2);
                 Console.Write("유저 이름        :" + userList[i].Password);
-                Console.SetCursorPosition(0, y + i + 3);
+                Console.SetCursorPosition(0, y + 3);
                 Console.Write("유저 나이        :" + userList[i].Age);
-                Console.SetCursorPosition(0, y + i + 4);
+                Console.SetCursorPosition(0, y + 4);
                 Console.Write("유저 휴대폰 번호 :" + userList[i].PhoneNumber);
-                Console.SetCursorPosition(0, y + i + 5);
+                Console.SetCursorPosition(0, y + 5);
                 Console.Write("유저 주소        :" + userList[i].Address);
                 y += 6;
             }
@@ -57,62 +57,65 @@ namespace Library.View
             int y = 10;
             for (int i = 0; i < bookList.Count; i++)
             {
-                Console.SetCursorPosition(0, y + i);
+                Console.SetCursorPosition(0, y);
                 Console.Write("=====================================");
-                Console.SetCursorPosition(0, y + i + 1);
+                Console.SetCursorPosition(0, y + 1);
                 Console.Write("책 아이디 :" + bookList[i].Id);
-                Console.SetCursorPosition(0, y + i + 2);
+                Console.SetCursorPosition(0, y + 2);
                 Console.Write("책 제목   :" + bookList[i].Title);
-                Console.SetCursorPosition(0, y + i + 3);
+                Console.SetCursorPosition(0, y + 3);
                 Console.Write("작가      :" + bookList[i].Writer);
-                Console.SetCursorPosition(0, y + i + 4);
+                Console.SetCursorPosition(0, y + 4);
                 Console.Write("출판사    :" + bookList[i].Publisher);
-                Console.SetCursorPosition(0, y + i + 5);
+                Console.SetCursorPosition(0, y + 5);
                 Console.Write("수량      :" + bookList[i].Count);
-                Console.SetCursorPosition(0, y + i + 6);
+                Console.SetCursorPosition(0, y + 6);
                 Console.Write("가격      :" + bookList[i].Price);
-                Console.SetCursorPosition(0, y + i + 7);
+                Console.SetCursorPosition(0, y + 7);
                 Console.Write("출시일    :" + bookList[i].ReleaseDate);
-                Console.SetCursorPosition(0, y + i + 8);
+                Console.SetCursorPosition(0, y + 8);
                 Console.Write("ISBN      :" + bookList[i].ISBN);
-                Console.SetCursorPosition(0, y + i + 9);
+                Console.SetCursorPosition(0, y + 9);
                 Console.Write("책 정보   :" + bookList[i].Info);
-                y += 9;
+                y += 10;
             }
             Console.ResetColor();
         }
 
         public void DrawRentalBooks(int coordinateY, List<RentalBookDto> bookList)
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
             int y = coordinateY;
             for (int i = 0; i < bookList.Count; i++)
             {
-                Console.SetCursorPosition(0, y + i);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.SetCursorPosition(0, y);
                 Console.Write("=====================================");
-                Console.SetCursorPosition(0, y + i + 1);
+                Console.SetCursorPosition(0, y + 1);
                 Console.Write("책 아이디   :" + bookList[i].Id);
-                Console.SetCursorPosition(0, y + i + 2);
+                Console.SetCursorPosition(0, y + 2);
                 Console.Write("책 제목     :" + bookList[i].Title);
-                Console.SetCursorPosition(0, y + i + 3);
+                Console.SetCursorPosition(0, y + 3);
                 Console.Write("작가        :" + bookList[i].Writer);
-                Console.SetCursorPosition(0, y + i + 4);
+                Console.SetCursorPosition(0, y + 4);
                 Console.Write("출판사      :" + bookList[i].Publisher);
-                Console.SetCursorPosition(0, y + i + 5);
+                Console.SetCursorPosition(0, y + 5);
                 Console.Write("수량        :" + bookList[i].Count);
-                Console.SetCursorPosition(0, y + i + 6);
+                Console.SetCursorPosition(0, y + 6);
                 Console.Write("가격        :" + bookList[i].Price);
-                Console.SetCursorPosition(0, y + i + 7);
+                Console.SetCursorPosition(0, y + 7);
                 Console.Write("출시일      :" + bookList[i].ReleaseDate);
-                Console.SetCursorPosition(0, y + i + 8);
+                Console.SetCursorPosition(0, y + 8);
                 Console.Write("ISBN        :" + bookList[i].ISBN);
-                Console.SetCursorPosition(0, y + i + 9);
+                Console.SetCursorPosition(0, y + 9);
                 Console.Write("책 정보     :" + bookList[i].Info);
-                Console.SetCursorPosition(0, y + i + 10);
+                Console.SetCursorPosition(0, y + 10);
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("빌린 시간   :" + bookList[i].RentalTime.ToString("yyyy-MM-dd hh:mm:ss"));
-                Console.SetCursorPosition(0, y + i + 11);
+                Console.SetCursorPosition(0, y + 11);
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("반납 시간   :" + bookList[i].RentalTime.AddDays(7).ToString("yyyy-MM-dd hh:mm:ss"));
-                y += 11;
+                Console.ResetColor();
+                y += 12;
             }
             Console.ResetColor();
         }
@@ -122,12 +125,12 @@ namespace Library.View
             int y = 10;
             for (int i = 0; i < userList.Count; i++)
             {
-                Console.SetCursorPosition(0, y + i);
+                Console.SetCursorPosition(0, y);
                 Console.Write("=====================================");
-                Console.SetCursorPosition(0, y + i + 1);
+                Console.SetCursorPosition(0, y + 1);
                 Console.Write("유저 아이디      :" + userList[i].Id);
-                DrawRentalBooks(y + i + 2, userList[i].GetRentalBookList());
-                y += userList[i].GetRentalBookList().Count * 11;
+                DrawRentalBooks(y + 2, userList[i].GetRentalBookList());
+                y += userList[i].GetRentalBookList().Count * 12 + 2;
             }
         }
 

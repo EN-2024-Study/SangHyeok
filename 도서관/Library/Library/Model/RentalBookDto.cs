@@ -11,6 +11,7 @@ namespace Library.Model
     {
         private BookDto bookDto;
         private DateTime rentalTime;
+
         public RentalBookDto(BookDto bookDto, DateTime rentalTime)
         {
             this.bookDto = bookDto;

@@ -107,6 +107,7 @@ namespace Library.Controller
                     ModifyInfoValid();
                     ExplainingScreen.ExplainSuccessScreen();
                     ExplainingScreen.ExplainEcsKey();
+                    menuSelector.WaitForEscKey();
                     return;
                 }
                 else

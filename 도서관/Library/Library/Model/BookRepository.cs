@@ -49,53 +49,33 @@ namespace Library.Model
         }
 
         public void ReduceBookCount(int key)
-        {
-            bookList[key].Count -= 1;
-        }
+        { bookList[key].Count -= 1; }
 
         public void IncreaseBookCount(int key)
-        {
-            bookList[key].Count += 1;
-        }
+        { bookList[key].Count += 1; }
 
         public void AddBook(BookDto book)
-        {
-            bookList.Add(book);
-        }
+        { bookList.Add(book); }
 
         public void DeleteBook(int key)
-        {
-            bookList.RemoveAt(key);
-        }
+        { bookList.RemoveAt(key); }
 
         public void ModifyBookTitle(int key, string title)
-        {
-            bookList[key].Title = title;
-        }
+        { bookList[key].Title = title; }
 
         public void ModifyBookWriter(int key, string writer)
-        {
-            bookList[key].Writer = writer;
-        }
+        { bookList[key].Writer = writer; }
 
         public void ModifyBookPublisher(int key, string publisher)
-        {
-            bookList[key].Publisher = publisher;
-        }
+        { bookList[key].Publisher = publisher; }
 
         public void ModifyBookCount(int key, int count)
-        {
-            bookList[key].Count = count;
-        }
+        { bookList[key].Count = count; }
 
         public void ModifyBookPrice(int key, string price)
-        {
-            bookList[key].Price = price;
-        }
+        { bookList[key].Price = price; }
 
         public void ModifyBookReleaseDate(int key, string releaseData)
-        {
-            bookList[key].ReleaseDate = releaseData;
-        }
+        { bookList[key].ReleaseDate = releaseData; }
     }
 }

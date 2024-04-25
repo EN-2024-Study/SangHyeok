@@ -31,7 +31,7 @@ namespace Library.View
 
         public void DrawUsers(List<UserDto> userList)
         {
-            int y = 10;
+            int y = 17;
             Console.ForegroundColor = ConsoleColor.Green;
 
             foreach(UserDto user in userList)
@@ -56,7 +56,7 @@ namespace Library.View
         public void DrawBooks(List<BookDto> bookList)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            int y = 10;
+            int y = 17;
             foreach(BookDto book in bookList)
             {
                 Console.SetCursorPosition(0, y);
@@ -124,7 +124,7 @@ namespace Library.View
 
         public void DrawUserRentalHistory(List<UserDto> userList)  
         {
-            int y = 10;
+            int y = 17;
             for (int i = 0; i < userList.Count; i++)
             {
                 Console.SetCursorPosition(0, y);
@@ -143,11 +143,7 @@ namespace Library.View
             switch (screenType)
             {
                 case (int)Constants.MenuType.Mode:
-                    coordinate = new Tuple<int, int>(Console.WindowWidth / 2 - 10, 20);
-                    break;
                 case (int)Constants.MenuType.LogInSignUp:
-                    coordinate = new Tuple<int, int>(Console.WindowWidth / 2 - 10, 20);
-                    break;
                 case (int)Constants.MenuType.LogIn:
                     coordinate = new Tuple<int, int>(10, 20);
                     break;

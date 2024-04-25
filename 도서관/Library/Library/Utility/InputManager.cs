@@ -109,16 +109,14 @@ namespace Library.Utility
 
         private Tuple<int, int> GetCoordinate(int digitType)
         {
-            int x = 23, y = 0;
+            int x = 0, y = 0;
             switch (digitType)
             {
                 case (int)Constants.InputType.LogInId:
-                case (int)Constants.InputType.ModifyPassword:
                     x = 33;
                     y = 20;
                     break;
                 case (int)Constants.InputType.LogInPassword:
-                case (int)Constants.InputType.ModifyAge:
                     x = 33;
                     y = 21;
                     break;
@@ -127,36 +125,34 @@ namespace Library.Utility
                     y = 13;
                     break;
                 case (int)Constants.InputType.SignUpPassword:
+                case (int)Constants.InputType.ModifyPassword:
                     x = 23;
                     y = 14;
                     break;
                 case (int)Constants.InputType.SignUpAge:
+                case (int)Constants.InputType.ModifyAge:
                     x = 23;
                     y = 15;
                     break;
                 case (int)Constants.InputType.SignUpPhoneNumber:
+                case (int)Constants.InputType.ModifyPhoneNumber:
                     x = 23;
                     y = 16;
                     break;
                 case (int)Constants.InputType.SignUpAddress:
+                case (int)Constants.InputType.ModifyAddress:
                     x = 23;
                     y = 17;
                     break;
-                case (int)Constants.InputType.ModifyPhoneNumber:
-                    y = 2;
-                    break;
-                case (int)Constants.InputType.ModifyAddress:
-                    y = 3;
-                    break;
-                case (int)Constants.InputType.Title:
+                case (int)Constants.InputType.SearchedTitle:
                     x = 14;
                     y = 0;
                     break;
-                case (int)Constants.InputType.Writer:
+                case (int)Constants.InputType.SearchedWriter:
                     x = 14;
                     y = 1;
                     break;
-                case (int)Constants.InputType.Publisher:
+                case (int)Constants.InputType.SearchedPublisher:
                     x = 14;
                     y = 2;
                     break;
@@ -165,35 +161,35 @@ namespace Library.Utility
                     x = 18;
                     y = 0;
                     break;
-                case (int)Constants.InputType.AddedTitle:
+                case (int)Constants.InputType.Title:
                     x = 10;
                     y = 0;
                     break;
-                case (int)Constants.InputType.AddedWriter:
+                case (int)Constants.InputType.Writer:
                     x = 10;
                     y = 1;
                     break;
-                case (int)Constants.InputType.AddedPublisher:
+                case (int)Constants.InputType.Publisher:
                     x = 10;
                     y = 2;
                     break;
-                case (int)Constants.InputType.AddedCount:
+                case (int)Constants.InputType.Count:
                     x = 10;
                     y = 3;
                     break;
-                case (int)Constants.InputType.AddedPrice:
+                case (int)Constants.InputType.Price:
                     x = 10;
                     y = 4;
                     break;
-                case (int)Constants.InputType.AddedReleaseDate:
+                case (int)Constants.InputType.ReleaseDate:
                     x = 10;
                     y = 5;
                     break;
-                case (int)Constants.InputType.AddedISBN:
+                case (int)Constants.InputType.ISBN:
                     x = 10;
                     y = 6;
                     break;
-                case (int)Constants.InputType.AddedInfo:
+                case (int)Constants.InputType.Info:
                     x = 10;
                     y = 7;
                     break;

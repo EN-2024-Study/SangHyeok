@@ -39,11 +39,11 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
-            Console.SetWindowSize(70, 25);
             Console.Clear();
 
             while (isSelected)
             {
+                Console.SetWindowSize(70, 25);
                 ExplainingScreen.DrawStartLogo();
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.LogIn);
                 if (!isSelected)
@@ -51,9 +51,18 @@ namespace Library.Controller
 
                 if (menuSelector.menuValue == (int)Constants.LogInMenu.Check)
                 {
-                    Console.Clear();
                     if (IsLogInValid(modeType))
+                    {
+                        ExplainingScreen.ExplainSuccessScreen();
+                        menuSelector.WaitForEscKey();
                         return true;
+                    }
+                    else
+                    {
+                        ExplainingScreen.ExplainFailScreen();
+                        menuSelector.WaitForEscKey();
+                        Console.Clear();
+                    }
                 }
                 else
                     InputLogIn(menuSelector.menuValue);
@@ -81,8 +90,14 @@ namespace Library.Controller
                     if (IsSignUpValid())
                     {
                         ExplainingScreen.ExplainSuccessScreen();
-                        ExplainingScreen.ExplainEcsKey();
+                        menuSelector.WaitForEscKey();
                         return true;
+                    }
+                    else
+                    {
+                        ExplainingScreen.ExplainFailScreen();
+                        menuSelector.WaitForEscKey();
+                        Console.Clear();
                     }
                 }
                 else
@@ -107,9 +122,8 @@ namespace Library.Controller
 
                 if (menuSelector.menuValue == (int)Constants.AccountModifyMenu.Check)
                 {
-                    ModifyInfoValid();
+                    ModifyInfo();
                     ExplainingScreen.ExplainSuccessScreen();
-                    ExplainingScreen.ExplainEcsKey();
                     menuSelector.WaitForEscKey();
                     return;
                 }
@@ -192,18 +206,18 @@ namespace Library.Controller
             }
         }
 
-        private void ModifyInfoValid()
+        private void ModifyInfo()
         {
-            if (modifyStrings[0] != null)
+            if (modifyStrings[0] != null || modifyStrings[0] != "")
                 user.UpdatePassword(modifyStrings[0]);
-           
-            if (modifyStrings[1] != null)
+
+            if (modifyStrings[1] != null || modifyStrings[1] != "")
                 user.UpdateAge(modifyStrings[1]);
-            
-            if (modifyStrings[2] != null)
+
+            if (modifyStrings[2] != null || modifyStrings[2] != "")
                 user.UpdatePhoneNumber(modifyStrings[2]);
-           
-            if (modifyStrings[3] != null)
+
+            if (modifyStrings[3] != null || modifyStrings[3] != "")
                 user.UpdateAddress(modifyStrings[3]);
         }
 

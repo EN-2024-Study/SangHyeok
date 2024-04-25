@@ -31,7 +31,8 @@ namespace Library.Controller
                 Console.SetWindowSize(70, 25);
                 Console.Clear();
                 ExplainingScreen.DrawStartLogo();
-
+                ExplainingScreen.ExplainArrowKeys();
+                ExplainingScreen.ExplainQuitKey();
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.Mode);
                 if (!isSelected)
                     continue;
@@ -104,14 +105,13 @@ namespace Library.Controller
                     {
                         bookController.RentalBook();
                         ExplainingScreen.ExplainSuccessScreen();
-                        ExplainingScreen.ExplainEcsKey();
                         menuSelector.WaitForEscKey();
                     }
                 }
                 else if (menuSelector.menuValue == (int)Constants.UserMode.BookRentalHistory)
                 {
                     bookController.ShowBooks((int)Constants.BookShowType.Rental);
-                    ExplainingScreen.ExplainEcsKey();
+                    ExplainingScreen.ExplainEcsKey(0);
                     menuSelector.WaitForEscKey();
                 }
                 else if (menuSelector.menuValue == (int)Constants.UserMode.BookReturn)
@@ -123,14 +123,13 @@ namespace Library.Controller
                     {
                         bookController.ReturnBook();
                         ExplainingScreen.ExplainSuccessScreen();
-                        ExplainingScreen.ExplainEcsKey();
                         menuSelector.WaitForEscKey();
                     }
                 }
                 else if (menuSelector.menuValue == (int)Constants.UserMode.BookReturnHistory)
                 {
                     bookController.ShowBooks((int)Constants.BookShowType.Return);
-                    ExplainingScreen.ExplainEcsKey();
+                    ExplainingScreen.ExplainEcsKey(0);
                     menuSelector.WaitForEscKey();
                 }
                 else if (menuSelector.menuValue == (int)Constants.UserMode.AccountModify)
@@ -141,12 +140,13 @@ namespace Library.Controller
                     {
                         accountController.RemoveUser();
                         ExplainingScreen.ExplainSuccessScreen();
+                        menuSelector.WaitForEscKey();
                         ControllModeMenu();
                     }
                     else
-                        ExplainingScreen.ExplainFailScreen();
-                    ExplainingScreen.ExplainEcsKey();
-                    menuSelector.WaitForEscKey();
+                    {
+
+                    }
                 }
             }
         }
@@ -179,7 +179,6 @@ namespace Library.Controller
                     {
                         bookController.DeleteBook();
                         ExplainingScreen.ExplainSuccessScreen();
-                        ExplainingScreen.ExplainEcsKey();
                         menuSelector.WaitForEscKey();
                     }
                 }
@@ -208,14 +207,13 @@ namespace Library.Controller
                     {
                         accountController.RemoveUser();
                         ExplainingScreen.ExplainSuccessScreen();
-                        ExplainingScreen.ExplainEcsKey();
                         menuSelector.WaitForEscKey();
                     }
                 }
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.RentalHistory)
                 {
                     bookController.ShowUserRentalHistory();
-                    ExplainingScreen.ExplainEcsKey();
+                    ExplainingScreen.ExplainEcsKey(0);
                     menuSelector.WaitForEscKey();
                 }
             }

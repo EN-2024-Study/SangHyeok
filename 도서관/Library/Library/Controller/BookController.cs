@@ -46,9 +46,8 @@ namespace Library.Controller
 
                 if (menuSelector.menuValue == (int)Constants.BookSearchMenu.Check)
                 {
-                    Console.Clear();
                     ShowBooks((int)Constants.BookShowType.Searched);
-                    ExplainingScreen.ExplainEcsKey();
+                    ExplainingScreen.ExplainEcsKey(0);
                     menuSelector.WaitForEscKey();
                     break;
                 }
@@ -81,8 +80,6 @@ namespace Library.Controller
                     }
                     else
                         ExplainingScreen.ExplainFailScreen();
-
-                    ExplainingScreen.ExplainEcsKey();
                     menuSelector.WaitForEscKey();
                     break;
                 }
@@ -110,10 +107,11 @@ namespace Library.Controller
                         Modify();
                         bookId = null;
                         ExplainingScreen.ExplainSuccessScreen();
-                        ExplainingScreen.ExplainEcsKey();
-                        menuSelector.WaitForEscKey();
-                        break;
                     }
+                    else
+                        ExplainingScreen.ExplainFailScreen();
+                    menuSelector.WaitForEscKey();
+                    break;
                 }
                 else
                     InputBookInfo(menuSelector.menuValue);
@@ -122,21 +120,21 @@ namespace Library.Controller
             void Modify()
             {
                 List<BookDto> bookList = book.GetBookList();
-                for(int i = 0; i < bookList.Count; i++)
+                for (int i = 0; i < bookList.Count; i++)
                 {
                     if (bookList[i].Id.Equals(bookId))
                     {
-                        if (bookInfoStrings[0] != null)
-                            book.ModifyBookTitle(i, bookInfoStrings[0]);
-                        if (bookInfoStrings[1] != null)
+                        if (bookInfoStrings[0] != null && bookInfoStrings[0] != "")
+                            book.ModifyBookTitle(i, bookInfoStrings[0]);  
+                        if (bookInfoStrings[1] != null && bookInfoStrings[1] != "")
                             book.ModifyBookWriter(i, bookInfoStrings[1]);
-                        if (bookInfoStrings[2] != null)
+                        if (bookInfoStrings[2] != null && bookInfoStrings[2] != "")
                             book.ModifyBookPublisher(i, bookInfoStrings[2]);
-                        if (bookInfoStrings[3] != null)
+                        if (bookInfoStrings[3] != null && bookInfoStrings[3] != "")
                             book.ModifyBookCount(i, int.Parse(bookInfoStrings[3]));
-                        if (bookInfoStrings[4] != null)
+                        if (bookInfoStrings[4] != null && bookInfoStrings[4] != "")
                             book.ModifyBookPrice(i, bookInfoStrings[4]);
-                        if (bookInfoStrings[5] != null)
+                        if (bookInfoStrings[5] != null && bookInfoStrings[5] != "")
                             book.ModifyBookReleaseDate(i, bookInfoStrings[5]);
                         break;
                     }
@@ -236,8 +234,8 @@ namespace Library.Controller
 
         public void ShowBooks(int typeValue)
         {
-            Console.SetWindowSize(50, 25);
             Console.Clear();
+            Console.SetWindowSize(70, 30);
             switch (typeValue)
             {
                 case (int)Constants.BookShowType.All:
@@ -272,28 +270,28 @@ namespace Library.Controller
             switch (inputType)
             {
                 case (int)Constants.BookAddInfo.Title:
-                    bookInfoStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.AddedTitle, 15, false);
+                    bookInfoStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.Title, 15, false);
                     break;
                 case (int)Constants.BookAddInfo.Writer:
-                    bookInfoStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.AddedWriter, 15, false);
+                    bookInfoStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.Writer, 15, false);
                     break;
                 case (int)Constants.BookAddInfo.Publisher:
-                    bookInfoStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.AddedPublisher, 15, false);
+                    bookInfoStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.Publisher, 15, false);
                     break;
                 case (int)Constants.BookAddInfo.Count:
-                    bookInfoStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.AddedCount, 15, false);
+                    bookInfoStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.Count, 15, false);
                     break;
                 case (int)Constants.BookAddInfo.Price:
-                    bookInfoStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.AddedPrice, 15, false);
+                    bookInfoStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.Price, 15, false);
                     break;
                 case (int)Constants.BookAddInfo.ReleaseDate:
-                    bookInfoStrings[5] = inputManager.LimitInputLength((int)Constants.InputType.AddedReleaseDate, 15, false);
+                    bookInfoStrings[5] = inputManager.LimitInputLength((int)Constants.InputType.ReleaseDate, 15, false);
                     break;
                 case (int)Constants.BookAddInfo.ISBN:
-                    bookInfoStrings[6] = inputManager.LimitInputLength((int)Constants.InputType.AddedISBN, 15, false);
+                    bookInfoStrings[6] = inputManager.LimitInputLength((int)Constants.InputType.ISBN, 15, false);
                     break;
                 case (int)Constants.BookAddInfo.Info:
-                    bookInfoStrings[7] = inputManager.LimitInputLength((int)Constants.InputType.AddedInfo, 15, false);
+                    bookInfoStrings[7] = inputManager.LimitInputLength((int)Constants.InputType.Info, 15, false);
                     break;
             }
         }
@@ -303,13 +301,13 @@ namespace Library.Controller
             switch (inputType)
             {
                 case (int)Constants.BookSearchMenu.Title:
-                    searchedBookStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.Title, 15, false);
+                    searchedBookStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.SearchedTitle, 15, false);
                     break;
                 case (int)Constants.BookSearchMenu.Writer:
-                    searchedBookStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.Writer, 15, false);
+                    searchedBookStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.SearchedWriter, 15, false);
                     break;
                 case (int)Constants.BookSearchMenu.Publisher:
-                    searchedBookStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.Publisher, 15, false);
+                    searchedBookStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.SearchedPublisher, 15, false);
                     break;
             }
         }

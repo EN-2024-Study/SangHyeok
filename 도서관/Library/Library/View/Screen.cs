@@ -156,9 +156,11 @@ namespace Library.View
                     coordinate = new Tuple<int, int>(Console.WindowWidth / 2 - 10, 10);
                     break;
                 case (int)Constants.MenuType.BookSearch:
+                    coordinate = new Tuple<int, int>(0, 4);
+                    break;
                 case (int)Constants.MenuType.BookAdd:
                 case (int)Constants.MenuType.BookModify:
-                    coordinate = new Tuple<int, int>(0, 0);
+                    coordinate = new Tuple<int, int>(0, 11);
                     break;
             }
             return coordinate;

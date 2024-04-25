@@ -10,7 +10,7 @@ namespace Library.View
     {
         public static void ExplainId(string str)
         {
-            Console.SetCursorPosition(0, 0);
+            Console.SetCursorPosition(20, 13);
             Console.Write(str + " 아이디 입력 :");
         }
 
@@ -26,6 +26,32 @@ namespace Library.View
         {
             Console.SetCursorPosition(40, 21);
             Console.WriteLine("<종료는 ESC를 눌러주세요.>");
+        }
+
+        public static void ExplainSearchBookInfo()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.Write("책 제목 - 영어, 한글, 숫자 1개 이상");
+            Console.SetCursorPosition(0, 1);
+            Console.Write("작가    - 영어, 한글 1글자 이상");
+            Console.SetCursorPosition(0, 2);
+            Console.Write("출판사  - 영어, 한글, 숫자 1개 이상");
+        }
+
+        public static void ExplainInputBookInfo()
+        {
+            Console.SetCursorPosition(0, 4);
+            Console.Write("수량    - 1 ~ 999 사이의 자연수");
+            Console.SetCursorPosition(0, 5);
+            Console.Write("가격    - 1 ~ 999999 사이의 자연수");
+            Console.SetCursorPosition(0, 6);
+            Console.Write("출시일  - 20xx-xx-xx");
+            Console.SetCursorPosition(0, 7);
+            Console.Write("ISBN    - 정수 9개 + 영어 1개 + 공백 + 정수 13개");
+            Console.SetCursorPosition(0, 8);
+            Console.Write("정보    - 최소 1개의 문자");
+            Console.SetCursorPosition(0, 9);
+            Console.Write("===========================================");
         }
 
         public static void ExplainSuccessScreen()
@@ -87,6 +113,43 @@ namespace Library.View
 ");
             Console.ResetColor();
             ExplainEcsKey(9);
+        }
+
+        public static void DrawSearchLogo()
+        {
+            Console.SetCursorPosition(0, 8);
+            Console.Write(@"
+  #####   #######    ##     ######     ####   ##   ##                                               
+ ##   ##   ##   #   ####     ##  ##   ##  ##  ##   ##                               
+ #         ## #    ##  ##    ##  ##  ##       ##   ##  
+  #####    ####    ##  ##    #####   ##       #######
+      ##   ## #    ######    ## ##   ##       ##   ##  
+ ##   ##   ##   #  ##  ##    ##  ##   ##  ##  ##   ##  
+  #####   #######  ##  ##   #### ##    ####   ##   ## 
+");
+        }
+
+        public static void DrawIdLogo()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.Write(@"
+  ####                                 ##
+   ##                                  ##
+   ##     #####    ######   ##  ##    #####
+   ##     ##  ##    ##  ##  ##  ##     ##
+   ##     ##  ##    ##  ##  ##  ##     ##
+   ##     ##  ##    #####   ##  ##     ## ##
+  ####    ##  ##    ##       ######     ###
+                   ####
+
+  ####    #####
+   ##      ## ##
+   ##      ##  ##
+   ##      ##  ##
+   ##      ##  ##
+   ##      ## ##
+  ####    #####
+");
         }
 
         public static void DrawStartLogo()

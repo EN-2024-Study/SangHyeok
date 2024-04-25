@@ -99,6 +99,7 @@ namespace Library.Controller
                 else if (menuSelector.menuValue == (int)Constants.UserMode.BookRental)
                 {
                     bookController.ShowBooks((int)Constants.BookShowType.All);
+                    ExplainingScreen.DrawIdLogo();
                     bookController.InputBookId();
 
                     if (bookController.IsBookIdValid((int)Constants.BookIdType.Rental))
@@ -119,6 +120,7 @@ namespace Library.Controller
                 else if (menuSelector.menuValue == (int)Constants.UserMode.BookReturn)
                 {
                     bookController.ShowBooks((int)Constants.BookShowType.Rental);
+                    ExplainingScreen.DrawIdLogo();
                     bookController.InputBookId();
 
                     if (bookController.IsBookIdValid((int)Constants.BookIdType.Return))
@@ -178,6 +180,7 @@ namespace Library.Controller
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.BookDelete)
                 {
                     bookController.ShowBooks((int)Constants.BookShowType.All);
+                    ExplainingScreen.DrawIdLogo();
                     bookController.InputBookId();
 
                     if (bookController.IsBookIdValid((int)Constants.BookIdType.Delete))
@@ -192,6 +195,7 @@ namespace Library.Controller
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.BookModify)
                 {
                     bookController.ShowBooks((int)Constants.BookShowType.All);
+                    ExplainingScreen.DrawIdLogo();
                     bookController.InputBookId();
 
                     if (bookController.IsBookIdValid((int)Constants.BookIdType.Modify))
@@ -205,6 +209,7 @@ namespace Library.Controller
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.AccountModify)
                 {
                     accountController.ShowUsers();
+                    ExplainingScreen.DrawIdLogo();
                     accountController.InputUserId();
 
                     if (accountController.IsUserIdValid())
@@ -218,6 +223,7 @@ namespace Library.Controller
                 else if (menuSelector.menuValue == (int)Constants.ManagerMode.AccountDelete)
                 {
                     accountController.ShowUsers();
+                    ExplainingScreen.DrawIdLogo();
                     accountController.InputUserId();
 
                     if (accountController.IsUserIdValid() && accountController.IsUserRemoveValid())

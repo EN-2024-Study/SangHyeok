@@ -54,8 +54,8 @@ namespace Library.Utility
                 }
                 else 
                 {
-                    ConsoleKey[] inputKey = Constants.INPUTKEY;
-                    foreach(ConsoleKey key in inputKey)
+                    ConsoleKey[] list = Constants.INPUTKEY;
+                    foreach(ConsoleKey key in list)
                     {
                         if (key == keyInfo.Key)
                         {
@@ -161,52 +161,52 @@ namespace Library.Utility
                     break;
                 case (int)Constants.InputType.SearchedTitle:
                     x = 14;
-                    y = 0;
+                    y = 4;
                     break;
                 case (int)Constants.InputType.SearchedWriter:
                     x = 14;
-                    y = 1;
+                    y = 5;
                     break;
                 case (int)Constants.InputType.SearchedPublisher:
                     x = 14;
-                    y = 2;
+                    y = 6;
                     break;
                 case (int)Constants.InputType.BookId:
                 case (int)Constants.InputType.UserId:
-                    x = 18;
-                    y = 0;
+                    x = 38;
+                    y = 13;
                     break;
                 case (int)Constants.InputType.Title:
                     x = 10;
-                    y = 0;
+                    y = 11;
                     break;
                 case (int)Constants.InputType.Writer:
                     x = 10;
-                    y = 1;
+                    y = 12;
                     break;
                 case (int)Constants.InputType.Publisher:
                     x = 10;
-                    y = 2;
+                    y = 13;
                     break;
                 case (int)Constants.InputType.Count:
                     x = 10;
-                    y = 3;
+                    y = 14;
                     break;
                 case (int)Constants.InputType.Price:
                     x = 10;
-                    y = 4;
+                    y = 15;
                     break;
                 case (int)Constants.InputType.ReleaseDate:
                     x = 10;
-                    y = 5;
+                    y = 16;
                     break;
                 case (int)Constants.InputType.ISBN:
                     x = 10;
-                    y = 6;
+                    y = 17;
                     break;
                 case (int)Constants.InputType.Info:
                     x = 10;
-                    y = 7;
+                    y = 18;
                     break;
             }
             return new Tuple<int, int>(x, y);

@@ -38,6 +38,8 @@ namespace Library.Controller
             menuSelector.menuValue = 0;
 
             ShowBooks((int)Constants.BookShowType.All);
+            ExplainingScreen.ExplainSearchBookInfo();
+            ExplainingScreen.DrawSearchLogo();
             while (isSelected)
             {
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.BookSearch);
@@ -62,6 +64,8 @@ namespace Library.Controller
             menuSelector.menuValue = 0;
 
             Console.Clear();
+            ExplainingScreen.ExplainSearchBookInfo();
+            ExplainingScreen.ExplainInputBookInfo();
             while (isSelected)
             {
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.BookAdd);
@@ -94,6 +98,8 @@ namespace Library.Controller
             menuSelector.menuValue = 0;
 
             Console.Clear();
+            ExplainingScreen.ExplainSearchBookInfo();
+            ExplainingScreen.ExplainInputBookInfo();
             while (isSelected)
             {
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.BookModify);

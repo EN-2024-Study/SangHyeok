@@ -43,10 +43,12 @@ namespace Library.Utility
 
         public static bool IsAddressValid(string address)
         {
-            Regex regex = new Regex(@"^[가-힣]{3}$");
+            Regex regex = new Regex(@"^[가-힣]{2}[구]{1}$");
             if (regex.IsMatch(address))
                 return true;
             return false;
         }
+
+        
     }
 }

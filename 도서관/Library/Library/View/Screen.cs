@@ -3,6 +3,7 @@ using Library.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,9 +11,10 @@ namespace Library.View
 {
     public class Screen
     {
-        public void DrawMenu(int screenValue, int selectedMenu, bool isEnter)
+        public void DrawMenu(int screenType, int selectedMenu, bool isEnter)
         {
-            string[] menuStrings = SetStrings(screenValue);
+            string[] menuStrings = SetStrings(screenType);
+            Tuple<int, int> coordinate = GetCoordinate(screenType);
 
             for (int i = 0; i < menuStrings.Length; i++)
             {
@@ -21,7 +23,7 @@ namespace Library.View
                 else if (i == selectedMenu)  // 선택한 메뉴값
                     Console.ForegroundColor = ConsoleColor.Green;
 
-                Console.SetCursorPosition(0, i);
+                Console.SetCursorPosition(coordinate.Item1, coordinate.Item2 + i);
                 Console.Write(menuStrings[i]);
                 Console.ResetColor();
             }
@@ -32,20 +34,20 @@ namespace Library.View
             int y = 10;
             Console.ForegroundColor = ConsoleColor.Green;
 
-            for (int i = 0; i < userList.Count; i++)
+            foreach(UserDto user in userList)
             {
                 Console.SetCursorPosition(0, y);
                 Console.Write("=====================================");
                 Console.SetCursorPosition(0, y + 1);
-                Console.Write("유저 아이디      :" + userList[i].Id);
+                Console.Write("유저 아이디      :" + user.Id);
                 Console.SetCursorPosition(0, y + 2);
-                Console.Write("유저 이름        :" + userList[i].Password);
+                Console.Write("유저 이름        :" + user.Password);
                 Console.SetCursorPosition(0, y + 3);
-                Console.Write("유저 나이        :" + userList[i].Age);
+                Console.Write("유저 나이        :" + user.Age);
                 Console.SetCursorPosition(0, y + 4);
-                Console.Write("유저 휴대폰 번호 :" + userList[i].PhoneNumber);
+                Console.Write("유저 휴대폰 번호 :" + user.PhoneNumber);
                 Console.SetCursorPosition(0, y + 5);
-                Console.Write("유저 주소        :" + userList[i].Address);
+                Console.Write("유저 주소        :" + user.Address);
                 y += 6;
             }
             Console.ResetColor();
@@ -55,28 +57,28 @@ namespace Library.View
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             int y = 10;
-            for (int i = 0; i < bookList.Count; i++)
+            foreach(BookDto book in bookList)
             {
                 Console.SetCursorPosition(0, y);
                 Console.Write("=====================================");
                 Console.SetCursorPosition(0, y + 1);
-                Console.Write("책 아이디 :" + bookList[i].Id);
+                Console.Write("책 아이디 :" + book.Id);
                 Console.SetCursorPosition(0, y + 2);
-                Console.Write("책 제목   :" + bookList[i].Title);
+                Console.Write("책 제목   :" + book.Title);
                 Console.SetCursorPosition(0, y + 3);
-                Console.Write("작가      :" + bookList[i].Writer);
+                Console.Write("작가      :" + book.Writer);
                 Console.SetCursorPosition(0, y + 4);
-                Console.Write("출판사    :" + bookList[i].Publisher);
+                Console.Write("출판사    :" + book.Publisher);
                 Console.SetCursorPosition(0, y + 5);
-                Console.Write("수량      :" + bookList[i].Count);
+                Console.Write("수량      :" + book.Count);
                 Console.SetCursorPosition(0, y + 6);
-                Console.Write("가격      :" + bookList[i].Price);
+                Console.Write("가격      :" + book.Price);
                 Console.SetCursorPosition(0, y + 7);
-                Console.Write("출시일    :" + bookList[i].ReleaseDate);
+                Console.Write("출시일    :" + book.ReleaseDate);
                 Console.SetCursorPosition(0, y + 8);
-                Console.Write("ISBN      :" + bookList[i].ISBN);
+                Console.Write("ISBN      :" + book.ISBN);
                 Console.SetCursorPosition(0, y + 9);
-                Console.Write("책 정보   :" + bookList[i].Info);
+                Console.Write("책 정보   :" + book.Info);
                 y += 10;
             }
             Console.ResetColor();
@@ -85,35 +87,35 @@ namespace Library.View
         public void DrawRentalBooks(int coordinateY, List<RentalBookDto> bookList)
         {
             int y = coordinateY;
-            for (int i = 0; i < bookList.Count; i++)
+            foreach(RentalBookDto book in bookList)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.SetCursorPosition(0, y);
                 Console.Write("=====================================");
                 Console.SetCursorPosition(0, y + 1);
-                Console.Write("책 아이디   :" + bookList[i].Id);
+                Console.Write("책 아이디   :" + book.Id);
                 Console.SetCursorPosition(0, y + 2);
-                Console.Write("책 제목     :" + bookList[i].Title);
+                Console.Write("책 제목     :" + book.Title);
                 Console.SetCursorPosition(0, y + 3);
-                Console.Write("작가        :" + bookList[i].Writer);
+                Console.Write("작가        :" + book.Writer);
                 Console.SetCursorPosition(0, y + 4);
-                Console.Write("출판사      :" + bookList[i].Publisher);
+                Console.Write("출판사      :" + book.Publisher);
                 Console.SetCursorPosition(0, y + 5);
-                Console.Write("수량        :" + bookList[i].Count);
+                Console.Write("수량        :" + book.Count);
                 Console.SetCursorPosition(0, y + 6);
-                Console.Write("가격        :" + bookList[i].Price);
+                Console.Write("가격        :" + book.Price);
                 Console.SetCursorPosition(0, y + 7);
-                Console.Write("출시일      :" + bookList[i].ReleaseDate);
+                Console.Write("출시일      :" + book.ReleaseDate);
                 Console.SetCursorPosition(0, y + 8);
-                Console.Write("ISBN        :" + bookList[i].ISBN);
+                Console.Write("ISBN        :" + book.ISBN);
                 Console.SetCursorPosition(0, y + 9);
-                Console.Write("책 정보     :" + bookList[i].Info);
+                Console.Write("책 정보     :" + book.Info);
                 Console.SetCursorPosition(0, y + 10);
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("빌린 시간   :" + bookList[i].RentalTime.ToString("yyyy-MM-dd hh:mm:ss"));
+                Console.Write("빌린 시간   :" + book.RentalTime.ToString("yyyy-MM-dd hh:mm:ss"));
                 Console.SetCursorPosition(0, y + 11);
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("반납 시간   :" + bookList[i].RentalTime.AddDays(7).ToString("yyyy-MM-dd hh:mm:ss"));
+                Console.Write("반납 시간   :" + book.RentalTime.AddDays(7).ToString("yyyy-MM-dd hh:mm:ss"));
                 Console.ResetColor();
                 y += 12;
             }
@@ -134,10 +136,42 @@ namespace Library.View
             }
         }
 
-        private string[] SetStrings(int screenValue)
+        private Tuple<int, int> GetCoordinate(int screenType)
+        {
+            Tuple<int, int> coordinate = null;
+
+            switch (screenType)
+            {
+                case (int)Constants.MenuType.Mode:
+                    coordinate = new Tuple<int, int>(Console.WindowWidth / 2 - 10, 20);
+                    break;
+                case (int)Constants.MenuType.LogInSignUp:
+                    coordinate = new Tuple<int, int>(Console.WindowWidth / 2 - 10, 20);
+                    break;
+                case (int)Constants.MenuType.LogIn:
+                    coordinate = new Tuple<int, int>(10, 20);
+                    break;
+                case (int)Constants.MenuType.SignUp:
+                case (int)Constants.MenuType.AccountModify:
+                    coordinate = new Tuple<int, int>(0, 13);
+                    break;
+                case (int)Constants.MenuType.UserMode:
+                case (int)Constants.MenuType.ManagerMode:
+                    coordinate = new Tuple<int, int>(Console.WindowWidth / 2 - 10, 10);
+                    break;
+                case (int)Constants.MenuType.BookSearch:
+                case (int)Constants.MenuType.BookAdd:
+                case (int)Constants.MenuType.BookModify:
+                    coordinate = new Tuple<int, int>(0, 0);
+                    break;
+            }
+            return coordinate;
+        }
+
+        private string[] SetStrings(int screenType)
         {
             string[] menuString = null;
-            switch (screenValue)
+            switch (screenType)
             {
                 case (int)Constants.MenuType.Mode:
                     menuString = new string[] { "유저 모드", "관리자 모드" };

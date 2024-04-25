@@ -39,11 +39,12 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
-            Console.SetWindowSize(50, 20);
+            Console.SetWindowSize(70, 25);
             Console.Clear();
 
             while (isSelected)
             {
+                ExplainingScreen.DrawStartLogo();
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.LogIn);
                 if (!isSelected)
                     continue;
@@ -64,11 +65,12 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
-            Console.SetWindowSize(50, 20);
+            Console.SetWindowSize(70, 25);
             Console.Clear();
 
             while (isSelected)
             {
+                ExplainingScreen.DrawSIgnUpLogo();
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.SignUp);
                 if (!isSelected)
                     continue;
@@ -93,11 +95,12 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
-            Console.SetWindowSize(50, 30);
+            Console.SetWindowSize(70, 25);
             Console.Clear();
 
             while (isSelected)
             {
+                ExplainingScreen.DrawModifyLogo();
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.AccountModify);
                 if (!isSelected)
                     continue;
@@ -159,10 +162,10 @@ namespace Library.Controller
             switch(inputType)
             {
                 case (int)Constants.LogInMenu.Id:
-                    logInId = inputManager.LimitInputLength((int)Constants.InputType.Id, 9, false);
+                    logInId = inputManager.LimitInputLength((int)Constants.InputType.LogInId, 9, false);
                     break;
                 case (int)Constants.LogInMenu.Password:
-                    logInPassword = inputManager.LimitInputLength((int)Constants.InputType.Password, 5, true);
+                    logInPassword = inputManager.LimitInputLength((int)Constants.InputType.LogInPassword, 5, true);
                     break;
             }
         }
@@ -172,19 +175,19 @@ namespace Library.Controller
             switch (inputType)
             {
                 case (int)Constants.SignUpMenu.Id:
-                    signUpStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.Id, 9, false);
+                    signUpStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.SignUpId, 9, false);
                     break;
                 case (int)Constants.SignUpMenu.Password:
-                    signUpStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.Password, 5, true);
+                    signUpStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.SignUpPassword, 5, true);
                     break;
                 case (int)Constants.SignUpMenu.Age:
-                    signUpStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.Age, 4, false);
+                    signUpStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.SignUpAge, 4, false);
                     break;
                 case (int)Constants.SignUpMenu.PhoneNumber:
-                    signUpStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.PhoneNumber, 13, false);
+                    signUpStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.SignUpPhoneNumber, 13, false);
                     break;
                 case (int)Constants.SignUpMenu.Address:
-                    signUpStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.Address, 20, false);
+                    signUpStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.SignUpAddress, 20, false);
                     break;
             }
         }
@@ -273,6 +276,7 @@ namespace Library.Controller
 
         public void ShowUsers()
         {
+            Console.SetWindowSize(50, 25);
             Console.Clear();
             screen.DrawUsers(user.GetUserList());
         }

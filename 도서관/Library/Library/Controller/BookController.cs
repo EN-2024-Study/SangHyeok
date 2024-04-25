@@ -236,6 +236,7 @@ namespace Library.Controller
 
         public void ShowBooks(int typeValue)
         {
+            Console.SetWindowSize(50, 25);
             Console.Clear();
             switch (typeValue)
             {
@@ -317,8 +318,6 @@ namespace Library.Controller
         {
             List<BookDto> searchedBookList = book.GetBookList();
 
-            Console.SetWindowSize(70, 40);
-            Console.Clear();
             for (int i = 0; i < 3; i++)
             {
                 if (searchedBookStrings[i] == null || searchedBookStrings[i] == "")

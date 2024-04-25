@@ -28,8 +28,10 @@ namespace Library.Controller
 
             while (isSelected)
             {
-                Console.SetWindowSize(40, 20);
+                Console.SetWindowSize(70, 25);
                 Console.Clear();
+                ExplainingScreen.DrawStartLogo();
+
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.Mode);
                 if (!isSelected)
                     continue;
@@ -54,8 +56,10 @@ namespace Library.Controller
 
             while (isSelected)
             {
-                Console.SetWindowSize(40, 20);
+                Console.SetWindowSize(70, 25);
                 Console.Clear();
+                ExplainingScreen.DrawStartLogo();
+
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.LogInSignUp);
                 if (!isSelected)
                     continue;
@@ -81,8 +85,9 @@ namespace Library.Controller
 
             while (isSelected)
             {
-                Console.SetWindowSize(50, 30);
+                Console.SetWindowSize(70, 20);
                 Console.Clear();
+                ExplainingScreen.DrawLibraryLogo();
 
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.UserMode);
                 if (!isSelected)
@@ -153,8 +158,9 @@ namespace Library.Controller
 
             while (isSelected)
             {
-                Console.SetWindowSize(50, 30);
+                Console.SetWindowSize(70, 20);
                 Console.Clear();
+                ExplainingScreen.DrawLibraryLogo();
 
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.ManagerMode);
                 if (!isSelected)

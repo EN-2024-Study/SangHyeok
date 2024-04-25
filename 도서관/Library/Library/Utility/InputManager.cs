@@ -8,10 +8,10 @@ namespace Library.Utility
 {
     public class InputManager
     {
-        public string LimitInputLength(int digitValue, int stringLength, bool isPassword)
+        public string LimitInputLength(int digitType, int stringLength, bool isPassword)
         {
             Console.CursorVisible = true;
-            Tuple<int, int> coordinate = GetCoordinate(digitValue);
+            Tuple<int, int> coordinate = GetCoordinate(digitType);
             int x = coordinate.Item1;
             int y = coordinate.Item2;
             bool isError = false;
@@ -107,29 +107,46 @@ namespace Library.Utility
             return resultString;
         }
 
-        private Tuple<int, int> GetCoordinate(int digitValue)
+        private Tuple<int, int> GetCoordinate(int digitType)
         {
             int x = 23, y = 0;
-            switch (digitValue)
+            switch (digitType)
             {
-                case (int)Constants.InputType.Id:
+                case (int)Constants.InputType.LogInId:
                 case (int)Constants.InputType.ModifyPassword:
-                    y = 0;
+                    x = 33;
+                    y = 20;
                     break;
-                case (int)Constants.InputType.Password:
+                case (int)Constants.InputType.LogInPassword:
                 case (int)Constants.InputType.ModifyAge:
-                    y = 1;
+                    x = 33;
+                    y = 21;
                     break;
-                case (int)Constants.InputType.Age:
+                case (int)Constants.InputType.SignUpId:
+                    x = 23;
+                    y = 13;
+                    break;
+                case (int)Constants.InputType.SignUpPassword:
+                    x = 23;
+                    y = 14;
+                    break;
+                case (int)Constants.InputType.SignUpAge:
+                    x = 23;
+                    y = 15;
+                    break;
+                case (int)Constants.InputType.SignUpPhoneNumber:
+                    x = 23;
+                    y = 16;
+                    break;
+                case (int)Constants.InputType.SignUpAddress:
+                    x = 23;
+                    y = 17;
+                    break;
                 case (int)Constants.InputType.ModifyPhoneNumber:
                     y = 2;
                     break;
-                case (int)Constants.InputType.PhoneNumber:
                 case (int)Constants.InputType.ModifyAddress:
                     y = 3;
-                    break;
-                case (int)Constants.InputType.Address:
-                    y = 4;
                     break;
                 case (int)Constants.InputType.Title:
                     x = 14;

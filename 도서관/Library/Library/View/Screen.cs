@@ -190,13 +190,13 @@ namespace Library.View
                     menuString = new string[] { "도서 찾기", "도서 추가",
                     "도서 삭제", "도서 수정", "유저 정보 수정", "유저 삭제", "대여 내역"};
                     break;
-                case (int)Constants.MenuType.SignUp:
-                    menuString = new string[] { "학번(8자리 숫자)     :", "비밀번호(4자리 숫자) :",
-                    "유저 나이            :", "유저 휴대폰 번호     :", "유저 주소            :", "<확인>"};
+                case (int)Constants.MenuType.SignUp:    
+                    menuString = new string[] { "학번(8자리 숫자)                :", "비밀번호(4자리 숫자)            :",
+                    "유저 나이(8 ~ 99세)             :", "유저 휴대폰 번호(010-xxxx-xxxx) :", "유저 주소(3자리 한글)           :", "<확인>"};
                     break;
                 case (int)Constants.MenuType.AccountModify:
-                    menuString = new string[] { "비밀번호(4자리 숫자) :",
-                    "유저 나이            :", "유저 휴대폰 번호     :", "유저 주소            :", "<확인>"};
+                    menuString = new string[] { "비밀번호(4자리 숫자)            :", "유저 나이(8 ~ 99세)             :", 
+                        "유저 휴대폰 번호(010-xxxx-xxxx) :", "유저 주소(3자리 한글)           :", "<확인>"};
                     break;
                 case (int)Constants.MenuType.BookAdd:
                     menuString = new string[] { "책 제목 :", "작가    :", "출판사  : ",

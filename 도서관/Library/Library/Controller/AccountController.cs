@@ -89,6 +89,9 @@ namespace Library.Controller
                     Console.Clear();
                     if (IsSignUpValid())
                     {
+                        user.AddUser(new UserDto(signUpStrings[0], signUpStrings[1], signUpStrings[2],
+                            signUpStrings[3], signUpStrings[4]));
+                        signUpStrings = new string[] { null, null, null, null, null };
                         ExplainingScreen.ExplainSuccessScreen();
                         menuSelector.WaitForEscKey();
                         return true;
@@ -122,21 +125,39 @@ namespace Library.Controller
 
                 if (menuSelector.menuValue == (int)Constants.AccountModifyMenu.Check)
                 {
-                    ModifyInfo();
-                    ExplainingScreen.ExplainSuccessScreen();
-                    menuSelector.WaitForEscKey();
-                    return;
+                    if (IsModifyValid())
+                    {
+                        Modify();
+                        ExplainingScreen.ExplainSuccessScreen();
+                        menuSelector.WaitForEscKey();
+                        return;
+                    }
+                    else
+                    {
+                        ExplainingScreen.ExplainFailScreen();
+                        menuSelector.WaitForEscKey();
+                    }
                 }
                 else
                     InputInformationToModify(menuSelector.menuValue);
             }
-        }
 
-        public bool IsUserRemoveValid()
-        {
-            if (user.GetRentalBookList().Count == 0)               
-                return true;
-            return false;
+            void Modify()
+            {
+                if (modifyStrings[0] != null && modifyStrings[0] != "")
+                    user.UpdatePassword(modifyStrings[0]);
+
+                if (modifyStrings[1] != null && modifyStrings[1] != "")
+                    user.UpdateAge(modifyStrings[1]);
+
+                if (modifyStrings[2] != null && modifyStrings[2] != "")
+                    user.UpdatePhoneNumber(modifyStrings[2]);
+
+                if (modifyStrings[3] != null && modifyStrings[3] != "")
+                    user.UpdateAddress(modifyStrings[3]);
+
+                modifyStrings = new string[] { null, null, null, null };
+            }
         }
 
         public void RemoveUser()
@@ -154,7 +175,7 @@ namespace Library.Controller
 
         private void InputInformationToModify(int inputType)
         {
-            switch(inputType)
+            switch (inputType)
             {
                 case (int)Constants.AccountModifyMenu.Password:
                     modifyStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.ModifyPassword, 5, true);
@@ -173,7 +194,7 @@ namespace Library.Controller
 
         private void InputLogIn(int inputType)
         {
-            switch(inputType)
+            switch (inputType)
             {
                 case (int)Constants.LogInMenu.Id:
                     logInId = inputManager.LimitInputLength((int)Constants.InputType.LogInId, 9, false);
@@ -206,30 +227,37 @@ namespace Library.Controller
             }
         }
 
-        private void ModifyInfo()
+        public bool IsUserIdValid()
         {
-            if (modifyStrings[0] != null && modifyStrings[0] != "")
-                user.UpdatePassword(modifyStrings[0]);
+            if (id == null)
+                return false;
 
-            if (modifyStrings[1] != null && modifyStrings[1] != "")
-                user.UpdateAge(modifyStrings[1]);
-
-            if (modifyStrings[2] != null && modifyStrings[2] != "")
-                user.UpdatePhoneNumber(modifyStrings[2]);
-
-            if (modifyStrings[3] != null &&  modifyStrings[3] != "")
-                user.UpdateAddress(modifyStrings[3]);
+            List<UserDto> userList = user.GetUserList();
+            for (int i = 0; i < userList.Count; i++)
+            {
+                if (id.Equals(userList[i].Id))
+                {
+                    user.UserIndex = i;
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool IsLogInValid(int modeType)
         {
+            if (logInId == null || logInPassword == null)
+                return false;
+            else if (!RegularExpressionManager.IsAccountIdValid(logInId) ||
+                !RegularExpressionManager.IsAccountPasswordValid(logInPassword))
+                return false;
+
             if (modeType == (int)Constants.ModeMenu.UserMode)
             {
                 List<UserDto> userList = user.GetUserList();
                 for (int i = 0; i < userList.Count; i++)
                 {
-                    if (logInId != null && logInPassword != null && 
-                        userList[i].Id.Equals(logInId) && userList[i].Password.Equals(logInPassword))
+                    if (userList[i].Id.Equals(logInId) && userList[i].Password.Equals(logInPassword))
                     {
                         user.UserIndex = i;
                         logInId = null;
@@ -240,8 +268,7 @@ namespace Library.Controller
             }
             else if (modeType == (int)Constants.ModeMenu.ManagerMode)
             {
-                if (logInId != null && logInPassword != null &&
-                    logInId.Equals(manager.GetManager().Id) && logInPassword.Equals(manager.GetManager().Password))
+                if (logInId.Equals(manager.GetManager().Id) && logInPassword.Equals(manager.GetManager().Password))
                 {
                     logInId = null;
                     logInPassword = null;
@@ -255,36 +282,55 @@ namespace Library.Controller
         private bool IsSignUpValid()
         {
             List<UserDto> userList = user.GetUserList();
-            foreach(string str in signUpStrings)
+            foreach (string str in signUpStrings)
             {
                 if (str == null)
                     return false;
             }
 
-            foreach(UserDto value in userList)
+            foreach (UserDto value in userList)
                 if (value.Id.Equals(signUpStrings[0]))
                     return false;
 
-            user.AddUser(new UserDto(signUpStrings[0], signUpStrings[1], signUpStrings[2],
-                signUpStrings[3], signUpStrings[4]));
-            signUpStrings = new string[] { null, null, null, null, null };
+            if (!RegularExpressionManager.IsAccountIdValid(signUpStrings[0]) ||
+               !RegularExpressionManager.IsAccountPasswordValid(signUpStrings[1]) ||
+               !RegularExpressionManager.IsAgeValid(signUpStrings[2]) ||
+               !RegularExpressionManager.IsPhoneNumberValid(signUpStrings[3]) ||
+               !RegularExpressionManager.IsAddressValid(signUpStrings[4]))
+                return false;
+
             return true;
         }
 
-        public bool IsUserIdValid()
+        public bool IsModifyValid()
         {
-            if (id == null)
-                return false;
-
-            List<UserDto> userList = user.GetUserList();
-            for(int i = 0; i < userList.Count; i++)
+            if (modifyStrings[0] != null)
             {
-                if (id.Equals(userList[i].Id))
-                {
-                    user.UserIndex = i;
-                    return true;
-                }
+                if (!RegularExpressionManager.IsAccountPasswordValid(modifyStrings[0]))
+                    return false;
             }
+            if (modifyStrings[1] != null)
+            {
+                if (!RegularExpressionManager.IsAgeValid(modifyStrings[1]))
+                    return false;
+            }
+            if (modifyStrings[2] != null)
+            {
+                if (!RegularExpressionManager.IsPhoneNumberValid(modifyStrings[2]))
+                    return false;
+            }
+            if (modifyStrings[3] != null)
+            {
+                if (!RegularExpressionManager.IsAddressValid(modifyStrings[3]))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool IsUserRemoveValid()
+        {
+            if (user.GetRentalBookList().Count == 0)
+                return true;
             return false;
         }
 

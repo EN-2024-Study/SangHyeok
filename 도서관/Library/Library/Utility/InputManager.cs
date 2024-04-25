@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,11 +21,7 @@ namespace Library.Utility
             int[] bytes = new int[stringLength];
             int index = 0;
 
-            Console.SetCursorPosition(x, y);
-            for (int i = 0; i < stringLength * 2; i++)  // 입력란 지우기
-                Console.Write(" ");
-            Console.SetCursorPosition(x, y);
-
+            EraseField(x, y, stringLength);
             while (!isError)
             {
                 if (index == stringLength)  // 입력 길이 초과했을 때
@@ -33,10 +30,7 @@ namespace Library.Utility
                     bytes = new int[stringLength];
                     index = 0;
 
-                    Console.SetCursorPosition(x, y);
-                    for (int i = 0; i < stringLength * 2; i++)  // 입력란 지우기
-                        Console.Write(" ");
-                    Console.SetCursorPosition(x, y);
+                    EraseField(x, y, stringLength);
                     continue;
                 }
 
@@ -48,18 +42,7 @@ namespace Library.Utility
                 {
                     if (index == 0)
                         continue;
-
-                    int totalByte = 0;
-                    for (int i = 0; i < index; i++)
-                        totalByte += bytes[i];
-
-                    Console.SetCursorPosition(x + totalByte - bytes[index - 1], y); // 현재 길이에서 마지막 byte 빼주기
-                    if (bytes[index - 1] == 2)
-                        Console.Write("  ");
-                    else
-                        Console.Write(" ");
-                    Console.SetCursorPosition(x + totalByte - bytes[index - 1], y);
-
+                    ProcessBackspace(bytes, x, y, index);
                     inputString[--index] = '\0';
                 }
                 else if (keyInfo.Key == ConsoleKey.Escape)
@@ -69,24 +52,22 @@ namespace Library.Utility
                         Console.Write(" ");
                     return null;    // esc 입력 시 null 반환
                 }
-                else
+                else 
                 {
-                    inputString[index] = keyInfo.KeyChar;   // 입력값 저장
-                    bytes[index++] = Encoding.Default.GetByteCount(keyInfo.KeyChar.ToString());
-                    Console.Write(keyInfo.KeyChar);
-                }
+                    ConsoleKey[] inputKey = Constants.INPUTKEY;
+                    foreach(ConsoleKey key in inputKey)
+                    {
+                        if (key == keyInfo.Key)
+                        {
+                            inputString[index] = keyInfo.KeyChar;   // 입력값 저장
+                            bytes[index++] = Encoding.Default.GetByteCount(keyInfo.KeyChar.ToString());
+                            Console.Write(keyInfo.KeyChar);
 
-                if (isPassword) // * 비밀번호 입력일 때 표시 처리
-                {
-                    if (index == 0)
-                        continue;
-
-                    int totalByte = 0;
-                    for (int i = 0; i < index; i++)
-                        totalByte += bytes[i];
-
-                    Console.SetCursorPosition(x + totalByte - bytes[index - 1], y);
-                    Console.Write("*");
+                            if (isPassword) // * 비밀번호 입력일 때 표시 처리
+                                ProcessPassword(bytes, x, y, index);
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -103,8 +84,42 @@ namespace Library.Utility
                     break;
                 resultString += inputString[i];
             }
-
             return resultString;
+        }
+
+        private void ProcessBackspace(int[] bytes, int x, int y, int index)
+        {
+            int totalByte = 0;
+            for (int i = 0; i < index; i++)
+                totalByte += bytes[i];
+
+            Console.SetCursorPosition(x + totalByte - bytes[index - 1], y); // 현재 길이에서 마지막 byte 빼주기
+            if (bytes[index - 1] == 2)
+                Console.Write("  ");
+            else
+                Console.Write(" ");
+            Console.SetCursorPosition(x + totalByte - bytes[index - 1], y);
+        }
+
+        private void ProcessPassword(int[] bytes, int x, int y, int index)
+        {
+            if (index == 0)
+                return;
+
+            int totalByte = 0;
+            for (int i = 0; i < index; i++)
+                totalByte += bytes[i];
+
+            Console.SetCursorPosition(x + totalByte - bytes[index - 1], y);
+            Console.Write("*");
+        }
+
+        private void EraseField(int x, int y, int stringLength)
+        {
+            Console.SetCursorPosition(x, y);
+            for (int i = 0; i < stringLength * 2; i++)  // 입력란 지우기
+                Console.Write(" ");
+            Console.SetCursorPosition(x, y);
         }
 
         private Tuple<int, int> GetCoordinate(int digitType)
@@ -121,27 +136,27 @@ namespace Library.Utility
                     y = 21;
                     break;
                 case (int)Constants.InputType.SignUpId:
-                    x = 23;
+                    x = 33;
                     y = 13;
                     break;
                 case (int)Constants.InputType.SignUpPassword:
                 case (int)Constants.InputType.ModifyPassword:
-                    x = 23;
+                    x = 33;
                     y = 14;
                     break;
                 case (int)Constants.InputType.SignUpAge:
                 case (int)Constants.InputType.ModifyAge:
-                    x = 23;
+                    x = 33;
                     y = 15;
                     break;
                 case (int)Constants.InputType.SignUpPhoneNumber:
                 case (int)Constants.InputType.ModifyPhoneNumber:
-                    x = 23;
+                    x = 33;
                     y = 16;
                     break;
                 case (int)Constants.InputType.SignUpAddress:
                 case (int)Constants.InputType.ModifyAddress:
-                    x = 23;
+                    x = 33;
                     y = 17;
                     break;
                 case (int)Constants.InputType.SearchedTitle:

@@ -131,7 +131,7 @@ namespace Library.Controller
                     if (bookList[i].Id.Equals(bookId))
                     {
                         if (bookInfoStrings[0] != null && bookInfoStrings[0] != "")
-                            book.ModifyBookTitle(i, bookInfoStrings[0]);  
+                            book.ModifyBookTitle(i, bookInfoStrings[0]);
                         if (bookInfoStrings[1] != null && bookInfoStrings[1] != "")
                             book.ModifyBookWriter(i, bookInfoStrings[1]);
                         if (bookInfoStrings[2] != null && bookInfoStrings[2] != "")
@@ -187,7 +187,7 @@ namespace Library.Controller
         public void RentalBook()
         {
             List<BookDto> bookList = book.GetBookList();
-            for(int i = 0; i < bookList.Count; i++)
+            for (int i = 0; i < bookList.Count; i++)
             {
                 if (bookList[i].Id.Equals(bookId))
                 {
@@ -203,7 +203,7 @@ namespace Library.Controller
         {
             List<RentalBookDto> rentalBookList = user.GetRentalBookList();
             List<BookDto> bookList = book.GetBookList();
-            for(int i = 0; i < rentalBookList.Count; i++)
+            for (int i = 0; i < rentalBookList.Count; i++)
             {
                 if (rentalBookList[i].Id.Equals(bookId))
                 {
@@ -211,8 +211,8 @@ namespace Library.Controller
                     break;
                 }
             }
-           
-            for(int i = 0; i < bookList.Count; i++)
+
+            for (int i = 0; i < bookList.Count; i++)
             {
                 if (bookList[i].Id.Equals(bookId))
                 {
@@ -251,7 +251,7 @@ namespace Library.Controller
                     screen.DrawBooks(ExploreSearchedBooks());
                     break;
                 case (int)Constants.BookShowType.Rental:
-                    screen.DrawRentalBooks(10, user.GetRentalBookList());
+                    screen.DrawRentalBooks(17, user.GetRentalBookList());
                     break;
                 case (int)Constants.BookShowType.Return:
                     screen.DrawBooks(user.GetReturnBookList());
@@ -270,6 +270,7 @@ namespace Library.Controller
         {
             ExplainingScreen.ExplainInputId("책  ");
             ExplainingScreen.ExplainInputBookId();
+            ExplainingScreen.DrawIdLogo();
             bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
         }
 
@@ -354,6 +355,11 @@ namespace Library.Controller
 
             searchedBookStrings = new string[] { null, null, null };
             return searchedBookList;
+        }
+
+        public string BookId
+        {
+            get { return bookId; }
         }
     }
 }

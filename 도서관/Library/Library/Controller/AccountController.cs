@@ -136,6 +136,7 @@ namespace Library.Controller
                     {
                         ExplainingScreen.ExplainFailScreen();
                         menuSelector.WaitForEscKey();
+                        Console.Clear();
                     }
                 }
                 else
@@ -171,6 +172,7 @@ namespace Library.Controller
         {
             ExplainingScreen.ExplainInputId("유저");
             ExplainingScreen.ExplainInputAccountId();
+            ExplainingScreen.DrawIdLogo();
             id = inputManager.LimitInputLength((int)Constants.InputType.UserId, 9, false);
         }
 
@@ -341,5 +343,8 @@ namespace Library.Controller
             Console.Clear();
             screen.DrawUsers(user.GetUserList());
         }
+
+        public string Id
+        { get { return id; } }
     }
 }

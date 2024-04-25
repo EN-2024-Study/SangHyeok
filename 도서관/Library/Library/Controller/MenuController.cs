@@ -172,10 +172,10 @@ namespace Library.Controller
         private void ControllRentalBookMenu()
         {
             bookController.ShowBooks((int)Constants.BookShowType.All);
-            ExplainingScreen.DrawIdLogo();
             bookController.InputBookId();
-
-            if (bookController.IsBookIdValid((int)Constants.BookIdType.Rental))
+            if (bookController.BookId == null)
+                return;
+            else if (bookController.IsBookIdValid((int)Constants.BookIdType.Rental))
             {
                 bookController.RentalBook();
                 ExplainingScreen.ExplainSuccessScreen();
@@ -188,10 +188,10 @@ namespace Library.Controller
         private void ControllReturnBookMenu()
         {
             bookController.ShowBooks((int)Constants.BookShowType.Rental);
-            ExplainingScreen.DrawIdLogo();
             bookController.InputBookId();
-
-            if (bookController.IsBookIdValid((int)Constants.BookIdType.Return))
+            if (bookController.BookId == null)
+                return;
+            else if (bookController.IsBookIdValid((int)Constants.BookIdType.Return))
             {
                 bookController.ReturnBook();
                 ExplainingScreen.ExplainSuccessScreen();
@@ -220,10 +220,10 @@ namespace Library.Controller
         private void ControllAccountModifyMenu()
         {
             accountController.ShowUsers();
-            ExplainingScreen.DrawIdLogo();
             accountController.InputUserId();
-
-            if (accountController.IsUserIdValid())
+            if (accountController.Id == null)
+                return;
+            else if (accountController.IsUserIdValid())
                 accountController.ModifyInformation();
             else
             {
@@ -235,10 +235,10 @@ namespace Library.Controller
         private void ControllAccountDeleteMenu()
         {
             accountController.ShowUsers();
-            ExplainingScreen.DrawIdLogo();
             accountController.InputUserId();
-
-            if (accountController.IsUserIdValid() && accountController.IsUserRemoveValid())
+            if (accountController.Id == null)
+                return;
+            else if (accountController.IsUserIdValid() && accountController.IsUserRemoveValid())
             {
                 accountController.RemoveUser();
                 ExplainingScreen.ExplainSuccessScreen();
@@ -251,10 +251,10 @@ namespace Library.Controller
         private void ControllBookDeleteMenu()
         {
             bookController.ShowBooks((int)Constants.BookShowType.All);
-            ExplainingScreen.DrawIdLogo();
             bookController.InputBookId();
-
-            if (bookController.IsBookIdValid((int)Constants.BookIdType.Delete))
+            if (bookController.BookId == null)
+                return;
+            else if (bookController.IsBookIdValid((int)Constants.BookIdType.Delete))
             {
                 bookController.DeleteBook();
                 ExplainingScreen.ExplainSuccessScreen();
@@ -267,10 +267,10 @@ namespace Library.Controller
         private void ControllBookModifyMenu()
         {
             bookController.ShowBooks((int)Constants.BookShowType.All);
-            ExplainingScreen.DrawIdLogo();
             bookController.InputBookId();
-
-            if (bookController.IsBookIdValid((int)Constants.BookIdType.Modify))
+            if (bookController.BookId == null)
+                return;
+            else if (bookController.IsBookIdValid((int)Constants.BookIdType.Modify))
                 bookController.ModifyBook();
             else
             {

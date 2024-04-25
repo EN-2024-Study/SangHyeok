@@ -194,7 +194,7 @@ namespace Library.View
                     break;
                 case (int)Constants.MenuType.SignUp:    
                     menuString = new string[] { "학번(8자리 숫자)                :", "비밀번호(4자리 숫자)            :",
-                    "유저 나이(8 ~ 99세)             :", "유저 휴대폰 번호(010-xxxx-xxxx) :", "유저 주소(3자리 한글)           :", "<확인>"};
+                    "유저 나이(0 ~ 99세)             :", "유저 휴대폰 번호(010-xxxx-xxxx) :", "유저 주소(3자리 한글)           :", "<확인>"};
                     break;
                 case (int)Constants.MenuType.AccountModify:
                     menuString = new string[] { "비밀번호(4자리 숫자)            :", "유저 나이(8 ~ 99세)             :", 

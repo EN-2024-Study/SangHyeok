@@ -268,7 +268,8 @@ namespace Library.Controller
 
         public void InputBookId()
         {
-            ExplainingScreen.ExplainId("책  ");
+            ExplainingScreen.ExplainInputId("책  ");
+            ExplainingScreen.ExplainInputBookId();
             bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, 3, false);
         }
 

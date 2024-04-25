@@ -52,22 +52,14 @@ namespace Library.Utility
                         Console.Write(" ");
                     return null;    // esc 입력 시 null 반환
                 }
-                else 
+                else if (char.IsLetterOrDigit(keyInfo.KeyChar) || keyInfo.KeyChar == '-')
                 {
-                    ConsoleKey[] list = Constants.INPUTKEY;
-                    foreach(ConsoleKey key in list)
-                    {
-                        if (key == keyInfo.Key)
-                        {
-                            inputString[index] = keyInfo.KeyChar;   // 입력값 저장
-                            bytes[index++] = Encoding.Default.GetByteCount(keyInfo.KeyChar.ToString());
-                            Console.Write(keyInfo.KeyChar);
+                    inputString[index] = keyInfo.KeyChar;   // 입력값 저장
+                    bytes[index++] = Encoding.Default.GetByteCount(keyInfo.KeyChar.ToString());
+                    Console.Write(keyInfo.KeyChar);
 
-                            if (isPassword) // * 비밀번호 입력일 때 표시 처리
-                                ProcessPassword(bytes, x, y, index);
-                            break;
-                        }
-                    }
+                    if (isPassword) // * 비밀번호 입력일 때 표시 처리
+                        ProcessPassword(bytes, x, y, index);
                 }
             }
 
@@ -136,26 +128,26 @@ namespace Library.Utility
                     y = 21;
                     break;
                 case (int)Constants.InputType.SignUpId:
+                case (int)Constants.InputType.ModifyPassword:
                     x = 33;
                     y = 13;
                     break;
                 case (int)Constants.InputType.SignUpPassword:
-                case (int)Constants.InputType.ModifyPassword:
+                case (int)Constants.InputType.ModifyAge:
                     x = 33;
                     y = 14;
                     break;
                 case (int)Constants.InputType.SignUpAge:
-                case (int)Constants.InputType.ModifyAge:
+                case (int)Constants.InputType.ModifyPhoneNumber:
                     x = 33;
                     y = 15;
                     break;
                 case (int)Constants.InputType.SignUpPhoneNumber:
-                case (int)Constants.InputType.ModifyPhoneNumber:
+                case (int)Constants.InputType.ModifyAddress:
                     x = 33;
                     y = 16;
                     break;
                 case (int)Constants.InputType.SignUpAddress:
-                case (int)Constants.InputType.ModifyAddress:
                     x = 33;
                     y = 17;
                     break;

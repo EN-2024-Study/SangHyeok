@@ -94,66 +94,33 @@ namespace Library.Controller
                 if (!isSelected)
                     continue;
 
-                if (menuSelector.menuValue == (int)Constants.UserMode.BookSearch)
-                    bookController.SearchBook();
-                else if (menuSelector.menuValue == (int)Constants.UserMode.BookRental)
+                switch(menuSelector.menuValue)
                 {
-                    bookController.ShowBooks((int)Constants.BookShowType.All);
-                    ExplainingScreen.DrawIdLogo();
-                    bookController.InputBookId();
-
-                    if (bookController.IsBookIdValid((int)Constants.BookIdType.Rental))
-                    {
-                        bookController.RentalBook();
-                        ExplainingScreen.ExplainSuccessScreen();
-                    }
-                    else
-                        ExplainingScreen.ExplainFailScreen();
-                    menuSelector.WaitForEscKey();
-                }
-                else if (menuSelector.menuValue == (int)Constants.UserMode.BookRentalHistory)
-                {
-                    bookController.ShowBooks((int)Constants.BookShowType.Rental);
-                    ExplainingScreen.ExplainEcsKey(0);
-                    menuSelector.WaitForEscKey();
-                }
-                else if (menuSelector.menuValue == (int)Constants.UserMode.BookReturn)
-                {
-                    bookController.ShowBooks((int)Constants.BookShowType.Rental);
-                    ExplainingScreen.DrawIdLogo();
-                    bookController.InputBookId();
-
-                    if (bookController.IsBookIdValid((int)Constants.BookIdType.Return))
-                    {
-                        bookController.ReturnBook();
-                        ExplainingScreen.ExplainSuccessScreen();
-                    }
-                    else
-                        ExplainingScreen.ExplainFailScreen();
-                    menuSelector.WaitForEscKey();
-                }
-                else if (menuSelector.menuValue == (int)Constants.UserMode.BookReturnHistory)
-                {
-                    bookController.ShowBooks((int)Constants.BookShowType.Return);
-                    ExplainingScreen.ExplainEcsKey(0);
-                    menuSelector.WaitForEscKey();
-                }
-                else if (menuSelector.menuValue == (int)Constants.UserMode.AccountModify)
-                    accountController.ModifyInformation();
-                else if (menuSelector.menuValue == (int)Constants.UserMode.AccountDelete)
-                {
-                    if (accountController.IsUserRemoveValid())
-                    {
-                        accountController.RemoveUser();
-                        ExplainingScreen.ExplainSuccessScreen();
+                    case (int)Constants.UserMode.BookSearch:
+                        bookController.SearchBook();
+                        break;
+                    case (int)Constants.UserMode.BookRental:
+                        ControllRentalBookMenu();
+                        break;
+                    case (int)Constants.UserMode.BookRentalHistory:
+                        bookController.ShowBooks((int)Constants.BookShowType.Rental);
+                        ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
-                        ControllModeMenu();
-                    }
-                    else
-                    {
-                        ExplainingScreen.ExplainFailScreen();
+                        break;
+                    case (int)Constants.UserMode.BookReturn:
+                        ControllReturnBookMenu();
+                        break;
+                    case (int)Constants.UserMode.BookReturnHistory:
+                        bookController.ShowBooks((int)Constants.BookShowType.Return);
+                        ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
-                    }
+                        break;
+                    case (int)Constants.UserMode.AccountModify:
+                        accountController.ModifyInformation();
+                        break;
+                    case (int)Constants.UserMode.AccountDelete:
+                        ControllUserDeleteMenu();
+                        break;
                 }
             }
         }
@@ -173,74 +140,142 @@ namespace Library.Controller
                 if (!isSelected)
                     continue;
 
-                if (menuSelector.menuValue == (int)Constants.ManagerMode.BookSearch)
-                    bookController.SearchBook();
-                else if (menuSelector.menuValue == (int)Constants.ManagerMode.BookAdd)
-                    bookController.AddBook();
-                else if (menuSelector.menuValue == (int)Constants.ManagerMode.BookDelete)
+                switch(menuSelector.menuValue)
                 {
-                    bookController.ShowBooks((int)Constants.BookShowType.All);
-                    ExplainingScreen.DrawIdLogo();
-                    bookController.InputBookId();
-
-                    if (bookController.IsBookIdValid((int)Constants.BookIdType.Delete))
-                    {
-                        bookController.DeleteBook();
-                        ExplainingScreen.ExplainSuccessScreen();
-                    }
-                    else
-                        ExplainingScreen.ExplainFailScreen();
-                    menuSelector.WaitForEscKey();
-                }
-                else if (menuSelector.menuValue == (int)Constants.ManagerMode.BookModify)
-                {
-                    bookController.ShowBooks((int)Constants.BookShowType.All);
-                    ExplainingScreen.DrawIdLogo();
-                    bookController.InputBookId();
-
-                    if (bookController.IsBookIdValid((int)Constants.BookIdType.Modify))
-                        bookController.ModifyBook();
-                    else
-                    {
-                        ExplainingScreen.ExplainFailScreen();
+                    case (int)Constants.ManagerMode.BookSearch:
+                        bookController.SearchBook();
+                        break;
+                    case (int)Constants.ManagerMode.BookAdd:
+                        bookController.AddBook();
+                        break;
+                    case (int)Constants.ManagerMode.BookDelete:
+                        ControllBookDeleteMenu();
+                        break;
+                    case (int)Constants.ManagerMode.BookModify:
+                        ControllBookModifyMenu();
+                        break;
+                    case (int)Constants.ManagerMode.AccountModify:
+                        ControllAccountModifyMenu();
+                        break;
+                    case (int)Constants.ManagerMode.AccountDelete:
+                        ControllAccountDeleteMenu();
+                        break;
+                    case (int)Constants.ManagerMode.RentalHistory:
+                        bookController.ShowUserRentalHistory();
+                        ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
-                    }
+                        break;
                 }
-                else if (menuSelector.menuValue == (int)Constants.ManagerMode.AccountModify)
-                {
-                    accountController.ShowUsers();
-                    ExplainingScreen.DrawIdLogo();
-                    accountController.InputUserId();
+            }
+        }
 
-                    if (accountController.IsUserIdValid())
-                        accountController.ModifyInformation();
-                    else
-                    {
-                        ExplainingScreen.ExplainFailScreen();
-                        menuSelector.WaitForEscKey();
-                    }
-                }
-                else if (menuSelector.menuValue == (int)Constants.ManagerMode.AccountDelete)
-                {
-                    accountController.ShowUsers();
-                    ExplainingScreen.DrawIdLogo();
-                    accountController.InputUserId();
+        private void ControllRentalBookMenu()
+        {
+            bookController.ShowBooks((int)Constants.BookShowType.All);
+            ExplainingScreen.DrawIdLogo();
+            bookController.InputBookId();
 
-                    if (accountController.IsUserIdValid() && accountController.IsUserRemoveValid())
-                    {
-                        accountController.RemoveUser();
-                        ExplainingScreen.ExplainSuccessScreen();
-                    }
-                    else
-                        ExplainingScreen.ExplainFailScreen();
-                    menuSelector.WaitForEscKey();
-                }
-                else if (menuSelector.menuValue == (int)Constants.ManagerMode.RentalHistory)
-                {
-                    bookController.ShowUserRentalHistory();
-                    ExplainingScreen.ExplainEcsKey(0);
-                    menuSelector.WaitForEscKey();
-                }
+            if (bookController.IsBookIdValid((int)Constants.BookIdType.Rental))
+            {
+                bookController.RentalBook();
+                ExplainingScreen.ExplainSuccessScreen();
+            }
+            else
+                ExplainingScreen.ExplainFailScreen();
+            menuSelector.WaitForEscKey();
+        }
+
+        private void ControllReturnBookMenu()
+        {
+            bookController.ShowBooks((int)Constants.BookShowType.Rental);
+            ExplainingScreen.DrawIdLogo();
+            bookController.InputBookId();
+
+            if (bookController.IsBookIdValid((int)Constants.BookIdType.Return))
+            {
+                bookController.ReturnBook();
+                ExplainingScreen.ExplainSuccessScreen();
+            }
+            else
+                ExplainingScreen.ExplainFailScreen();
+            menuSelector.WaitForEscKey();
+        }
+
+        private void ControllUserDeleteMenu()
+        {
+            if (accountController.IsUserRemoveValid())
+            {
+                accountController.RemoveUser();
+                ExplainingScreen.ExplainSuccessScreen();
+                menuSelector.WaitForEscKey();
+                ControllModeMenu();
+            }
+            else
+            {
+                ExplainingScreen.ExplainFailScreen();
+                menuSelector.WaitForEscKey();
+            }
+        }
+
+        private void ControllAccountModifyMenu()
+        {
+            accountController.ShowUsers();
+            ExplainingScreen.DrawIdLogo();
+            accountController.InputUserId();
+
+            if (accountController.IsUserIdValid())
+                accountController.ModifyInformation();
+            else
+            {
+                ExplainingScreen.ExplainFailScreen();
+                menuSelector.WaitForEscKey();
+            }
+        }
+
+        private void ControllAccountDeleteMenu()
+        {
+            accountController.ShowUsers();
+            ExplainingScreen.DrawIdLogo();
+            accountController.InputUserId();
+
+            if (accountController.IsUserIdValid() && accountController.IsUserRemoveValid())
+            {
+                accountController.RemoveUser();
+                ExplainingScreen.ExplainSuccessScreen();
+            }
+            else
+                ExplainingScreen.ExplainFailScreen();
+            menuSelector.WaitForEscKey();
+        }
+
+        private void ControllBookDeleteMenu()
+        {
+            bookController.ShowBooks((int)Constants.BookShowType.All);
+            ExplainingScreen.DrawIdLogo();
+            bookController.InputBookId();
+
+            if (bookController.IsBookIdValid((int)Constants.BookIdType.Delete))
+            {
+                bookController.DeleteBook();
+                ExplainingScreen.ExplainSuccessScreen();
+            }
+            else
+                ExplainingScreen.ExplainFailScreen();
+            menuSelector.WaitForEscKey();
+        }
+
+        private void ControllBookModifyMenu()
+        {
+            bookController.ShowBooks((int)Constants.BookShowType.All);
+            ExplainingScreen.DrawIdLogo();
+            bookController.InputBookId();
+
+            if (bookController.IsBookIdValid((int)Constants.BookIdType.Modify))
+                bookController.ModifyBook();
+            else
+            {
+                ExplainingScreen.ExplainFailScreen();
+                menuSelector.WaitForEscKey();
             }
         }
     }

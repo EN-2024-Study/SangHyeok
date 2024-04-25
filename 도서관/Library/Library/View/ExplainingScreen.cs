@@ -8,10 +8,22 @@ namespace Library.View
 {
     public class ExplainingScreen
     {
-        public static void ExplainId(string str)
+        public static void ExplainInputId(string str)
         {
             Console.SetCursorPosition(20, 13);
             Console.Write(str + " 아이디 입력 :");
+        }
+
+        public static void ExplainInputBookId()
+        {
+            Console.SetCursorPosition(20, 11);
+            Console.Write("1 부터 99 까지의 정수 입력");
+        }
+
+        public static void ExplainInputAccountId()
+        {
+            Console.SetCursorPosition(20, 11);
+            Console.Write("8 자리 정수 입력");
         }
 
         public static void ExplainArrowKeys()
@@ -40,17 +52,17 @@ namespace Library.View
 
         public static void ExplainInputBookInfo()
         {
-            Console.SetCursorPosition(0, 4);
+            Console.SetCursorPosition(0, 3);
             Console.Write("수량    - 1 ~ 999 사이의 자연수");
-            Console.SetCursorPosition(0, 5);
+            Console.SetCursorPosition(0, 4);
             Console.Write("가격    - 1 ~ 999999 사이의 자연수");
-            Console.SetCursorPosition(0, 6);
+            Console.SetCursorPosition(0, 5);
             Console.Write("출시일  - 20xx-xx-xx");
-            Console.SetCursorPosition(0, 7);
+            Console.SetCursorPosition(0, 6);
             Console.Write("ISBN    - 정수 9개 + 영어 1개 + 공백 + 정수 13개");
-            Console.SetCursorPosition(0, 8);
+            Console.SetCursorPosition(0, 7);
             Console.Write("정보    - 최소 1개의 문자");
-            Console.SetCursorPosition(0, 9);
+            Console.SetCursorPosition(0, 8);
             Console.Write("===========================================");
         }
 

@@ -169,7 +169,8 @@ namespace Library.Controller
 
         public void InputUserId()
         {
-            ExplainingScreen.ExplainId("유저");
+            ExplainingScreen.ExplainInputId("유저");
+            ExplainingScreen.ExplainInputAccountId();
             id = inputManager.LimitInputLength((int)Constants.InputType.UserId, 9, false);
         }
 
@@ -184,10 +185,10 @@ namespace Library.Controller
                     modifyStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.ModifyAge, 4, false);
                     break;
                 case (int)Constants.AccountModifyMenu.PhoneNumber:
-                    modifyStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.ModifyPhoneNumber, 13, false);
+                    modifyStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.ModifyPhoneNumber, 15, false);
                     break;
                 case (int)Constants.AccountModifyMenu.Address:
-                    modifyStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.ModifyAddress, 20, false);
+                    modifyStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.ModifyAddress, 4, false);
                     break;
             }
         }

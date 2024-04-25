@@ -157,15 +157,5 @@ namespace Library.Utility
             BookId,
             UserId
         }
-
-        public static readonly ConsoleKey[] INPUTKEY = new ConsoleKey[] 
-        { ConsoleKey.Q, ConsoleKey.W, ConsoleKey.E, ConsoleKey.R, ConsoleKey.T,
-        ConsoleKey.Y, ConsoleKey.U, ConsoleKey.I, ConsoleKey.O, ConsoleKey.P,
-        ConsoleKey.A, ConsoleKey.S, ConsoleKey.D, ConsoleKey.F, ConsoleKey.G,
-        ConsoleKey.H, ConsoleKey.J, ConsoleKey.K, ConsoleKey.L, ConsoleKey.Z,
-        ConsoleKey.X, ConsoleKey.C, ConsoleKey.V, ConsoleKey.B, ConsoleKey.N, 
-        ConsoleKey.M, ConsoleKey.D0, ConsoleKey.D1, ConsoleKey.D2, ConsoleKey.D3,
-        ConsoleKey.D4, ConsoleKey.D5, ConsoleKey.D6, ConsoleKey.D7, ConsoleKey.D8,
-        ConsoleKey.D9};
     }
 }

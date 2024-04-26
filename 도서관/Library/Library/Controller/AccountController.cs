@@ -222,7 +222,7 @@ namespace Library.Controller
                     signUpStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.SignUpAge, 4, false);
                     break;
                 case (int)Constants.SignUpMenu.PhoneNumber:
-                    signUpStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.SignUpPhoneNumber, 13, false);
+                    signUpStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.SignUpPhoneNumber, 14, false);
                     break;
                 case (int)Constants.SignUpMenu.Address:
                     signUpStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.SignUpAddress, 20, false);

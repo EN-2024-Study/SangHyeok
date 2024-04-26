@@ -28,7 +28,7 @@ namespace Library.Utility
 
         public static bool IsAgeValid(string age)
         {
-            Regex regex = new Regex(@"^[0-9]{2}$");
+            Regex regex = new Regex(@"^[0-9]{1,2}$");
             if (regex.IsMatch(age))
                 return true;
             return false;
@@ -52,9 +52,9 @@ namespace Library.Utility
 
         public static bool IsWriterValid(string writer)
         {
-            Regex regex1 = new Regex(@"^[가-힣]{10}$");
-            Regex regex2 = new Regex(@"^[a-z]{10}$");
-            Regex regex3 = new Regex(@"^[A-Z]{10}$");
+            Regex regex1 = new Regex(@"^[가-힣]{1,10}$");
+            Regex regex2 = new Regex(@"^[a-z]{1,10}$");
+            Regex regex3 = new Regex(@"^[A-Z]{1,10}$");
 
             if (regex1.IsMatch(writer) || regex2.IsMatch(writer) ||
                 regex3.IsMatch(writer))
@@ -62,10 +62,10 @@ namespace Library.Utility
             return false;
         }
 
-        public static bool IsPublisherValid(string publisher)
+        public static bool IsReleaseDateValid(string releaseDate)
         {
-            Regex regex = new Regex(@"^20[0-9]{2}-[0-9]{2}-[0-9]{2}$");
-            if (regex.IsMatch(publisher))
+            Regex regex = new Regex(@"^20[0-9]{2}-[0-9]{1,2}-[0-9]{1,2}$");
+            if (regex.IsMatch(releaseDate))
                 return true;
             return false;
         }

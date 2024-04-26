@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Library.Utility;
 
 namespace Library
 {
@@ -13,6 +14,8 @@ namespace Library
         {
             MenuController menu = new MenuController();
             menu.ControllModeMenu();
+            //DbConnector instance = DbConnector.Instance;
+            //instance.test();
         }
     }
 }

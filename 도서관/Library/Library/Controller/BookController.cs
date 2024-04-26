@@ -80,7 +80,6 @@ namespace Library.Controller
                             bookInfoStrings[2], int.Parse(bookInfoStrings[3]), bookInfoStrings[4], bookInfoStrings[5],
                             bookInfoStrings[6], bookInfoStrings[7]));
                         book.KeyValue += 1;
-                        ExplainingScreen.ExplainSuccessScreen();
                     }
                     else
                         ExplainingScreen.ExplainFailScreen();
@@ -151,16 +150,21 @@ namespace Library.Controller
 
         private bool IsModifyValid()
         {
-            if (!RegularExpressionManager.IsWriterValid(bookInfoStrings[1]) ||
-               !RegularExpressionManager.IsPublisherValid(bookInfoStrings[2]) ||
-               !RegularExpressionManager.IsISBNValid(bookInfoStrings[6]))
+            if (bookInfoStrings[1] != null && !RegularExpressionManager.IsWriterValid(bookInfoStrings[1]))
+                return false;
+            if (bookInfoStrings[5] != null && !RegularExpressionManager.IsReleaseDateValid(bookInfoStrings[5]))
+                return false;
+            if (bookInfoStrings[6] != null && !RegularExpressionManager.IsISBNValid(bookInfoStrings[6]))
                 return false;
             if (bookInfoStrings[3] != null)
             {
-                if (('a' <= bookInfoStrings[3][0] && bookInfoStrings[3][0] <= 'z') ||
-                    'A' <= bookInfoStrings[3][0] && bookInfoStrings[3][0] <= 'Z' ||
-                    bookInfoStrings[3][0] == '-')
-                    return false;
+                foreach(char value in bookInfoStrings[3])   
+                {
+                    if (('a' <= value && value <= 'z') ||   // 숫자가 아닐 때
+                    ('A' <= value && value <= 'Z') ||
+                    value == '-' || value == ' ')
+                        return false;
+                }
             }
 
             return true;
@@ -171,6 +175,7 @@ namespace Library.Controller
             foreach (string str in bookInfoStrings)
                 if (str == null)
                     return false;
+
             if (!IsModifyValid())
                 return false;
             return true;

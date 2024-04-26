@@ -1,5 +1,10 @@
-﻿using System;
+﻿using Library.Utility;
+using Library.View;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +17,12 @@ namespace Library.Model
         private List<BookDto> bookList;
         private int keyValue;
 
+        private DbConnector db;
+
         private BookRepository()
         {
+            db = DbConnector.Instance;
+
             bookList = new List<BookDto>()
             {
                 new BookDto ("1", "패밀리 레스토랑 가자.", "야마",
@@ -39,6 +48,27 @@ namespace Library.Model
             }
         }
 
+        public void AddBook(BookDto book)
+        {
+            string insertQuery = string.Format("INSERT INTO book VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}')",
+                  book.Id, book.Title, book.Writer, book.Publisher, book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info);
+            try
+            {
+                using (MySqlConnection mySql = new MySqlConnection(db.ConnectionAddress))
+                {
+                    mySql.Open();
+
+                    MySqlCommand command = new MySqlCommand(insertQuery, mySql);
+                    if (command.ExecuteNonQuery() == 1)
+                        ExplainingScreen.ExplainSuccessScreen();
+                }
+            }
+            catch (Exception exe)
+            {
+                Console.WriteLine(exe.Message);
+            }
+        }
+
         public List<BookDto> GetBookList()
         { return bookList; }
 
@@ -53,9 +83,6 @@ namespace Library.Model
 
         public void IncreaseBookCount(int key)
         { bookList[key].Count += 1; }
-
-        public void AddBook(BookDto book)
-        { bookList.Add(book); }
 
         public void DeleteBook(int key)
         { bookList.RemoveAt(key); }

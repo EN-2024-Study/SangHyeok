@@ -52,7 +52,7 @@ namespace Library.Utility
                         Console.Write(" ");
                     return null;    // esc 입력 시 null 반환
                 }
-                else if (char.IsLetterOrDigit(keyInfo.KeyChar) || keyInfo.KeyChar == '-')
+                else if (char.IsLetterOrDigit(keyInfo.KeyChar) || keyInfo.KeyChar == '-' || keyInfo.KeyChar == ' ')
                 {
                     inputString[index] = keyInfo.KeyChar;   // 입력값 저장
                     bytes[index++] = Encoding.Default.GetByteCount(keyInfo.KeyChar.ToString());

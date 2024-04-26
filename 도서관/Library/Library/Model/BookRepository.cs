@@ -2,63 +2,138 @@
 using Library.View;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Library.Model
 {
-    public class BookRepository     // singleton
+    public class BookRepository    
     {
-        private static BookRepository instance;
-        private List<BookDto> bookList;
-        private int keyValue;
-
         private DbConnector db;
 
-        private BookRepository()
+        public BookRepository()
         {
-            db = DbConnector.Instance;
-
-            bookList = new List<BookDto>()
-            {
-                new BookDto ("1", "패밀리 레스토랑 가자.", "야마",
-                        "문학동네", 4, "12900", "2024.04.01",
-                        "123456a 1234567890123", "소설"),
-                new BookDto ("2", "일류의 조건", "다카시", "필름",
-                        3, "18000", "2024.03.01",
-                        "654321a 3210987654321", "자기계발"),
-                new BookDto ("3", "불변의 법칙", "하우절",
-                        "서삼독", 0, "22500",
-                        "2000.09.08", "567567a 5675675675675", "자기계발")
-            };
-            keyValue = 4;
+            this.db = DbConnector.Instance;
         }
 
-        public static BookRepository Instance
+        public List<BookDto> GetBookList()
         {
-            get
-            {
-                if (instance == null)
-                    instance = new BookRepository();
-                return instance;
-            }
-        }
+            string selectQuery = string.Format("SELECT * FROM book");
+            string[] bookInfo = new string[9];
+            List<BookDto> bookList = new List<BookDto>();
 
-        public void AddBook(BookDto book)
-        {
-            string insertQuery = string.Format("INSERT INTO book VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}')",
-                  book.Id, book.Title, book.Writer, book.Publisher, book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info);
             try
             {
                 using (MySqlConnection mySql = new MySqlConnection(db.ConnectionAddress))
                 {
                     mySql.Open();
 
-                    MySqlCommand command = new MySqlCommand(insertQuery, mySql);
+                    MySqlCommand command = new MySqlCommand(selectQuery, mySql);
+                    MySqlDataReader table = command.ExecuteReader();
+
+                    while (table.Read())
+                    {
+                        bookInfo[0] = table["id"].ToString();
+                        bookInfo[1] = table["title"].ToString();
+                        bookInfo[2] = table["writer"].ToString();
+                        bookInfo[3] = table["publisher"].ToString();
+                        bookInfo[4] = table["count"].ToString();
+                        bookInfo[5] = table["price"].ToString();
+                        bookInfo[6] = table["releaseDate"].ToString();
+                        bookInfo[7] = table["iSBN"].ToString();
+                        bookInfo[8] = table["info"].ToString();
+                        bookList.Add(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
+                            bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
+                            bookInfo[7], bookInfo[8]));
+                    }
+                }
+            }
+            catch (Exception exe)
+            {
+                Console.WriteLine(exe.Message);
+            }
+
+            return bookList;
+        }
+
+        public void AddBook(BookDto book)
+        {
+            string insertQuery = string.Format("INSERT INTO book VALUES( null, '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')",
+                  book.Title, book.Writer, book.Publisher, book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info);
+            SetData(insertQuery);
+        }
+
+        public void ReduceBookCount(string key)
+        {
+            string updateQuery = string.Format("UPDATE book SET count = count - 1 WHERE id = {0}", key);
+            SetData(updateQuery);
+        }
+
+        public void IncreaseBookCount(string key)
+        {
+            string updateQuery = string.Format("UPDATE book SET count = count + 1 WHERE id = {0}", key);
+            SetData(updateQuery);
+        }
+
+        public void DeleteBook(string key)
+        {
+            string deleteQuery = string.Format("DELETE FROM book WHERE id = {0}", key);
+            SetData(deleteQuery);
+        }
+
+        public void ModifyBookTitle(string key, string title)
+        {
+            string modifyQuery = string.Format("UPDATE book SET title = {1} WHERE id = {0}", key, title);
+            SetData(modifyQuery);
+        }
+
+        public void ModifyBookWriter(string key, string writer)
+        {
+            string modifyQuery = string.Format("UPDATE book SET writer = {1} WHERE id = {0}", key, writer);
+            SetData(modifyQuery);
+        }
+
+        public void ModifyBookPublisher(string key, string publisher)
+        {
+            string modifyQuery = string.Format("UPDATE book SET publisher = {1} WHERE id = {0}", key, publisher);
+            SetData(modifyQuery);
+        }
+
+        public void ModifyBookCount(string key, int count)
+        {
+            string modifyQuery = string.Format("UPDATE book SET count = {1} WHERE id = {0}", key, count);
+            SetData(modifyQuery);
+        }
+
+        public void ModifyBookPrice(string key, string price)
+        {
+            string modifyQuery = string.Format("UPDATE book SET price = {1} WHERE id = {0}", key, price);
+            SetData(modifyQuery);
+        }
+
+        public void ModifyBookReleaseDate(string key, string releaseData)
+        {
+            string modifyQuery = string.Format("UPDATE book SET releaseData = {1} WHERE id = {0}", key, releaseData);
+            SetData(modifyQuery);
+        }
+
+
+        private void SetData(string query)
+        {
+            try
+            {
+                using (MySqlConnection mySql = new MySqlConnection(db.ConnectionAddress))
+                {
+                    mySql.Open();
+
+                    MySqlCommand command = new MySqlCommand(query, mySql);
                     if (command.ExecuteNonQuery() == 1)
                         ExplainingScreen.ExplainSuccessScreen();
                 }
@@ -68,41 +143,5 @@ namespace Library.Model
                 Console.WriteLine(exe.Message);
             }
         }
-
-        public List<BookDto> GetBookList()
-        { return bookList; }
-
-        public int KeyValue
-        {
-            get { return keyValue; } 
-            set { keyValue = value; }
-        }
-
-        public void ReduceBookCount(int key)
-        { bookList[key].Count -= 1; }
-
-        public void IncreaseBookCount(int key)
-        { bookList[key].Count += 1; }
-
-        public void DeleteBook(int key)
-        { bookList.RemoveAt(key); }
-
-        public void ModifyBookTitle(int key, string title)
-        { bookList[key].Title = title; }
-
-        public void ModifyBookWriter(int key, string writer)
-        { bookList[key].Writer = writer; }
-
-        public void ModifyBookPublisher(int key, string publisher)
-        { bookList[key].Publisher = publisher; }
-
-        public void ModifyBookCount(int key, int count)
-        { bookList[key].Count = count; }
-
-        public void ModifyBookPrice(int key, string price)
-        { bookList[key].Price = price; }
-
-        public void ModifyBookReleaseDate(int key, string releaseData)
-        { bookList[key].ReleaseDate = releaseData; }
     }
 }

@@ -14,8 +14,6 @@ namespace Library
         {
             MenuController menu = new MenuController();
             menu.ControllModeMenu();
-            //DbConnector instance = DbConnector.Instance;
-            //instance.test();
         }
     }
 }

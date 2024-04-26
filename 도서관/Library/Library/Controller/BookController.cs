@@ -22,7 +22,7 @@ namespace Library.Controller
 
         public BookController()
         {
-            this.book = BookRepository.Instance; // singleton 생성
+            this.book = new BookRepository();
             this.user = UserRepository.Instance;
             this.menuSelector = new MenuSelector();
             this.inputManager = new InputManager();
@@ -76,10 +76,9 @@ namespace Library.Controller
                 {
                     if (IsBookAddValid())
                     {
-                        book.AddBook(new BookDto(book.KeyValue.ToString(), bookInfoStrings[0], bookInfoStrings[1],
+                        book.AddBook(new BookDto("0", bookInfoStrings[0], bookInfoStrings[1],
                             bookInfoStrings[2], int.Parse(bookInfoStrings[3]), bookInfoStrings[4], bookInfoStrings[5],
                             bookInfoStrings[6], bookInfoStrings[7]));
-                        book.KeyValue += 1;
                     }
                     else
                         ExplainingScreen.ExplainFailScreen();
@@ -125,47 +124,33 @@ namespace Library.Controller
 
             void Modify()
             {
-                List<BookDto> bookList = book.GetBookList();
-                for (int i = 0; i < bookList.Count; i++)
-                {
-                    if (bookList[i].Id.Equals(bookId))
-                    {
-                        if (bookInfoStrings[0] != null && bookInfoStrings[0] != "")
-                            book.ModifyBookTitle(i, bookInfoStrings[0]);
-                        if (bookInfoStrings[1] != null && bookInfoStrings[1] != "")
-                            book.ModifyBookWriter(i, bookInfoStrings[1]);
-                        if (bookInfoStrings[2] != null && bookInfoStrings[2] != "")
-                            book.ModifyBookPublisher(i, bookInfoStrings[2]);
-                        if (bookInfoStrings[3] != null && bookInfoStrings[3] != "")
-                            book.ModifyBookCount(i, int.Parse(bookInfoStrings[3]));
-                        if (bookInfoStrings[4] != null && bookInfoStrings[4] != "")
-                            book.ModifyBookPrice(i, bookInfoStrings[4]);
-                        if (bookInfoStrings[5] != null && bookInfoStrings[5] != "")
-                            book.ModifyBookReleaseDate(i, bookInfoStrings[5]);
-                        break;
-                    }
-                }
+                book.ModifyBookTitle(bookId, bookInfoStrings[0]);
+                book.ModifyBookWriter(bookId, bookInfoStrings[1]);
+                book.ModifyBookPublisher(bookId, bookInfoStrings[2]);
+                book.ModifyBookCount(bookId, int.Parse(bookInfoStrings[3]));
+                book.ModifyBookPrice(bookId, bookInfoStrings[4]);
+                book.ModifyBookReleaseDate(bookId, bookInfoStrings[5]);
             }
         }
 
         private bool IsModifyValid()
         {
-            if (bookInfoStrings[1] != null && !RegularExpressionManager.IsWriterValid(bookInfoStrings[1]))
-                return false;
-            if (bookInfoStrings[5] != null && !RegularExpressionManager.IsReleaseDateValid(bookInfoStrings[5]))
-                return false;
-            if (bookInfoStrings[6] != null && !RegularExpressionManager.IsISBNValid(bookInfoStrings[6]))
-                return false;
-            if (bookInfoStrings[3] != null)
-            {
-                foreach(char value in bookInfoStrings[3])   
-                {
-                    if (('a' <= value && value <= 'z') ||   // 숫자가 아닐 때
-                    ('A' <= value && value <= 'Z') ||
-                    value == '-' || value == ' ')
-                        return false;
-                }
-            }
+            //if (bookInfoStrings[1] != null && !RegularExpressionManager.IsWriterValid(bookInfoStrings[1]))
+            //    return false;
+            //if (bookInfoStrings[5] != null && !RegularExpressionManager.IsReleaseDateValid(bookInfoStrings[5]))
+            //    return false;
+            //if (bookInfoStrings[6] != null && !RegularExpressionManager.IsISBNValid(bookInfoStrings[6]))
+            //    return false;
+            //if (bookInfoStrings[3] != null)
+            //{
+            //    foreach(char value in bookInfoStrings[3])   
+            //    {
+            //        if (('a' <= value && value <= 'z') ||   // 숫자가 아닐 때
+            //        ('A' <= value && value <= 'Z') ||
+            //        value == '-' || value == ' ')
+            //            return false;
+            //    }
+            //}
 
             return true;
         }
@@ -216,7 +201,7 @@ namespace Library.Controller
             {
                 if (bookList[i].Id.Equals(bookId))
                 {
-                    book.ReduceBookCount(i);
+                    book.ReduceBookCount(bookId);
                     user.AddRentalBook(new RentalBookDto(bookList[i], DateTime.Now));
                     break;
                 }
@@ -241,7 +226,7 @@ namespace Library.Controller
             {
                 if (bookList[i].Id.Equals(bookId))
                 {
-                    book.IncreaseBookCount(i);
+                    book.IncreaseBookCount(bookId);
                     user.AddReturnBook(bookList[i]);
                     break;
                 }
@@ -256,7 +241,7 @@ namespace Library.Controller
             {
                 if (bookList[i].Id.Equals(bookId))
                 {
-                    book.DeleteBook(i);
+                    book.DeleteBook(bookId);
                     break;
                 }
             }

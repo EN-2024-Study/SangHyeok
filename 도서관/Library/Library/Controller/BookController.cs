@@ -23,7 +23,7 @@ namespace Library.Controller
         public BookController()
         {
             this.book = new BookRepository();
-            this.user = UserRepository.Instance;
+            this.user = UserRepository.Instance;    
             this.menuSelector = new MenuSelector();
             this.inputManager = new InputManager();
             this.screen = new Screen();

@@ -55,10 +55,6 @@ namespace Library.Utility
             Regex regex = new Regex(@"^[a-zA-Z가-힣]{1,10}$");
             if (regex.IsMatch(writer))
                 return true;
-
-            Console.Clear();
-            Console.WriteLine("작가 문제");
-            Console.ReadLine();
             return false;
         }
 
@@ -67,10 +63,6 @@ namespace Library.Utility
             Regex regex = new Regex(@"^20[0-9]{2}-[0-9]{1,2}-[0-9]{1,2}$");
             if (regex.IsMatch(releaseDate))
                 return true;
-
-            Console.Clear();
-            Console.WriteLine("출시일 문제");
-            Console.ReadLine();
             return false;
         }
 
@@ -80,10 +72,6 @@ namespace Library.Utility
 
             if (regex.IsMatch(ISBN))
                 return true;
-
-            Console.Clear();
-            Console.WriteLine("ISBN 문제");
-            Console.ReadLine();
             return false;
         }
     }

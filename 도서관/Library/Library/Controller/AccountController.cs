@@ -26,7 +26,7 @@ namespace Library.Controller
             this.menuSelector = new MenuSelector();
             this.inputManager = new InputManager();
             this.user = UserRepository.Instance;    // singleton 생성
-            this.manager = ManagerRepository.Instance;  // singleton 생성
+            this.manager = new ManagerRepository(); 
             this.screen = new Screen();
             this.signUpStrings = new string[] { null, null, null, null, null };
             this.modifyStrings = new string[] { null, null, null, null };

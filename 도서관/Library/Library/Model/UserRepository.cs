@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Model
 {
-    public class UserRepository     // singleton
+    public class UserRepository    
     {
         private static UserRepository instance;
         private List<UserDto> userDtoList;

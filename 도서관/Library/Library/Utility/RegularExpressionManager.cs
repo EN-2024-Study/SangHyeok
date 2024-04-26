@@ -52,13 +52,13 @@ namespace Library.Utility
 
         public static bool IsWriterValid(string writer)
         {
-            Regex regex1 = new Regex(@"^[가-힣]{1,10}$");
-            Regex regex2 = new Regex(@"^[a-z]{1,10}$");
-            Regex regex3 = new Regex(@"^[A-Z]{1,10}$");
+            Regex regex = new Regex(@"^[a-zA-Z가-힣]{1,10}$");
+            if (regex.IsMatch(writer))
+                return true;
 
-            if (regex1.IsMatch(writer) || regex2.IsMatch(writer) ||
-                regex3.IsMatch(writer))
-                return true; 
+            Console.Clear();
+            Console.WriteLine("작가 문제");
+            Console.ReadLine();
             return false;
         }
 
@@ -67,16 +67,23 @@ namespace Library.Utility
             Regex regex = new Regex(@"^20[0-9]{2}-[0-9]{1,2}-[0-9]{1,2}$");
             if (regex.IsMatch(releaseDate))
                 return true;
+
+            Console.Clear();
+            Console.WriteLine("출시일 문제");
+            Console.ReadLine();
             return false;
         }
 
         public static bool IsISBNValid(string ISBN)
         {
-            Regex regex1 = new Regex(@"^[0-9]{6}[a-z]{1} [0-9]{13}$");
-            Regex regex2 = new Regex(@"^[0-9]{6}[A-Z]{1} [0-9]{13}$");
+            Regex regex = new Regex(@"^[0-9]{6}[a-zA-Z]{1} [0-9]{13}$");
 
-            if (regex1.IsMatch(ISBN) || regex2.IsMatch(ISBN))
+            if (regex.IsMatch(ISBN))
                 return true;
+
+            Console.Clear();
+            Console.WriteLine("ISBN 문제");
+            Console.ReadLine();
             return false;
         }
     }

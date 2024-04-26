@@ -90,19 +90,19 @@ namespace Library.Model
 
         public void ModifyBookTitle(string key, string title)
         {
-            string modifyQuery = string.Format("UPDATE book SET title = {1} WHERE id = {0}", key, title);
+            string modifyQuery = string.Format("UPDATE book SET title = '{1}' WHERE id = {0}", key, title);
             SetData(modifyQuery);
         }
 
         public void ModifyBookWriter(string key, string writer)
         {
-            string modifyQuery = string.Format("UPDATE book SET writer = {1} WHERE id = {0}", key, writer);
+            string modifyQuery = string.Format("UPDATE book SET writer = '{1}' WHERE id = {0}", key, writer);
             SetData(modifyQuery);
         }
 
         public void ModifyBookPublisher(string key, string publisher)
         {
-            string modifyQuery = string.Format("UPDATE book SET publisher = {1} WHERE id = {0}", key, publisher);
+            string modifyQuery = string.Format("UPDATE book SET publisher = '{1}' WHERE id = {0}", key, publisher);
             SetData(modifyQuery);
         }
 
@@ -114,13 +114,13 @@ namespace Library.Model
 
         public void ModifyBookPrice(string key, string price)
         {
-            string modifyQuery = string.Format("UPDATE book SET price = {1} WHERE id = {0}", key, price);
+            string modifyQuery = string.Format("UPDATE book SET price = '{1}' WHERE id = {0}", key, price);
             SetData(modifyQuery);
         }
 
         public void ModifyBookReleaseDate(string key, string releaseData)
         {
-            string modifyQuery = string.Format("UPDATE book SET releaseData = {1} WHERE id = {0}", key, releaseData);
+            string modifyQuery = string.Format("UPDATE book SET releaseDate = '{1}' WHERE id = {0}", key, releaseData);
             SetData(modifyQuery);
         }
 

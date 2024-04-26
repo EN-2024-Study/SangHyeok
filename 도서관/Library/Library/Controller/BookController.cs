@@ -124,33 +124,39 @@ namespace Library.Controller
 
             void Modify()
             {
-                book.ModifyBookTitle(bookId, bookInfoStrings[0]);
-                book.ModifyBookWriter(bookId, bookInfoStrings[1]);
-                book.ModifyBookPublisher(bookId, bookInfoStrings[2]);
-                book.ModifyBookCount(bookId, int.Parse(bookInfoStrings[3]));
-                book.ModifyBookPrice(bookId, bookInfoStrings[4]);
-                book.ModifyBookReleaseDate(bookId, bookInfoStrings[5]);
+                if (bookInfoStrings[0] != null)
+                    book.ModifyBookTitle(bookId, bookInfoStrings[0]);
+                if (bookInfoStrings[1] != null)
+                    book.ModifyBookWriter(bookId, bookInfoStrings[1]);
+                if (bookInfoStrings[2] != null)
+                    book.ModifyBookPublisher(bookId, bookInfoStrings[2]);
+                if (bookInfoStrings[3] != null)
+                    book.ModifyBookCount(bookId, int.Parse(bookInfoStrings[3]));
+                if (bookInfoStrings[4] != null)
+                    book.ModifyBookPrice(bookId, bookInfoStrings[4]);
+                if (bookInfoStrings[5] != null)
+                    book.ModifyBookReleaseDate(bookId, bookInfoStrings[5]);
             }
         }
 
         private bool IsModifyValid()
         {
-            //if (bookInfoStrings[1] != null && !RegularExpressionManager.IsWriterValid(bookInfoStrings[1]))
-            //    return false;
-            //if (bookInfoStrings[5] != null && !RegularExpressionManager.IsReleaseDateValid(bookInfoStrings[5]))
-            //    return false;
-            //if (bookInfoStrings[6] != null && !RegularExpressionManager.IsISBNValid(bookInfoStrings[6]))
-            //    return false;
-            //if (bookInfoStrings[3] != null)
-            //{
-            //    foreach(char value in bookInfoStrings[3])   
-            //    {
-            //        if (('a' <= value && value <= 'z') ||   // 숫자가 아닐 때
-            //        ('A' <= value && value <= 'Z') ||
-            //        value == '-' || value == ' ')
-            //            return false;
-            //    }
-            //}
+            if (bookInfoStrings[1] != null && !RegularExpressionManager.IsWriterValid(bookInfoStrings[1]))
+                return false;
+            if (bookInfoStrings[5] != null && !RegularExpressionManager.IsReleaseDateValid(bookInfoStrings[5]))
+                return false;
+            if (bookInfoStrings[6] != null && !RegularExpressionManager.IsISBNValid(bookInfoStrings[6]))
+                return false;
+            if (bookInfoStrings[3] != null)
+            {
+                foreach (char value in bookInfoStrings[3])
+                {
+                    if (('a' <= value && value <= 'z') ||   // 숫자가 아닐 때
+                    ('A' <= value && value <= 'Z') ||
+                    value == '-' || value == ' ')
+                        return false;
+                }
+            }
 
             return true;
         }

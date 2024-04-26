@@ -161,7 +161,7 @@ namespace Library.Controller
                         ControllAccountDeleteMenu();
                         break;
                     case (int)Constants.ManagerMode.RentalHistory:
-                        bookController.ShowUserRentalHistory();
+                        accountController.ShowUserRentalHistory();
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;

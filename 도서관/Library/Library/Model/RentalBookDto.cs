@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -7,69 +8,26 @@ using System.Threading.Tasks;
 
 namespace Library.Model
 {
-    public class RentalBookDto
+    public class RentalBookDto : BookDto
     {
-        private BookDto bookDto;
-        private DateTime rentalTime;
+        private string rentalTime, userId;
 
-        public RentalBookDto(BookDto bookDto, DateTime rentalTime)
+        public RentalBookDto(BookDto book, string rentalTime, string userId) : base(book.Id, book.Title, book.Writer, book.Publisher, book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info)
         {
-            this.bookDto = bookDto;
             this.rentalTime = rentalTime;
+            this.userId = userId;
         }
 
-        public string Id
-        {
-            get { return bookDto.Id; }
-            set { bookDto.Id = value; }
-        }
-
-        public string Title
-        {
-            get { return bookDto.Title; }
-            set { bookDto.Title = value; }
-        }
-
-        public string Writer
-        {
-            get { return bookDto.Writer; }
-            set { bookDto.Writer = value; }
-        }
-        public string Publisher
-        {
-            get { return bookDto.Publisher; }
-            set { bookDto.Publisher = value; }
-        }
-        public int Count
-        {
-            get { return bookDto.Count; }
-            set { bookDto.Count = value; }
-        }
-        public string Price
-        {
-            get { return bookDto.Price; }
-            set { bookDto.Price = value; }
-        }
-        public string ReleaseDate
-        {
-            get { return bookDto.ReleaseDate; }
-            set { bookDto.ReleaseDate = value; }
-        }
-        public string ISBN
-        {
-            get { return bookDto.ISBN; }
-            set { bookDto.ISBN = value; }
-        }
-        public string Info
-        {
-            get { return bookDto.Info; }
-            set { bookDto.Info = value; }
-        }
-
-        public DateTime RentalTime
+        public string RentalTime
         {
             get { return rentalTime; }
             set { rentalTime = value; }
+        }
+
+        public string UserId
+        {
+            get { return userId; }
+            set { userId = value; }
         }
     }
 }

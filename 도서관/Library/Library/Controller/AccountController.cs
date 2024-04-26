@@ -17,9 +17,8 @@ namespace Library.Controller
         private UserRepository user;
         private ManagerRepository manager;
         private Screen screen;
-        private string[] signUpStrings;
-        private string[] modifyStrings;
-        private string logInId, logInPassword, searchId;
+        private string[] signUpStrings, modifyStrings, logInStrings;
+        private string searchId, loggedInId;
 
         public AccountController()
         {
@@ -30,9 +29,9 @@ namespace Library.Controller
             this.screen = new Screen();
             this.signUpStrings = new string[] { null, null, null, null, null };
             this.modifyStrings = new string[] { null, null, null, null };
-            this.logInId = null;
-            this.logInPassword = null;
+            this.logInStrings = new string[] { null, null };
             this.searchId = null;
+            this.loggedInId = null;
         }
 
         public bool IsLogIn(int modeType)
@@ -146,16 +145,16 @@ namespace Library.Controller
             void Modify()
             {
                 if (modifyStrings[0] != null && modifyStrings[0] != "")
-                    user.UpdatePassword(modifyStrings[0]);
+                    user.UpdateUser(loggedInId, "password", modifyStrings[0]);
 
                 if (modifyStrings[1] != null && modifyStrings[1] != "")
-                    user.UpdateAge(modifyStrings[1]);
+                    user.UpdateUser(loggedInId, "age", modifyStrings[1]);
 
                 if (modifyStrings[2] != null && modifyStrings[2] != "")
-                    user.UpdatePhoneNumber(modifyStrings[2]);
+                    user.UpdateUser(loggedInId, "phonenumber", modifyStrings[2]);
 
                 if (modifyStrings[3] != null && modifyStrings[3] != "")
-                    user.UpdateAddress(modifyStrings[3]);
+                    user.UpdateUser(loggedInId, "address", modifyStrings[3]);
 
                 modifyStrings = new string[] { null, null, null, null };
             }
@@ -163,8 +162,8 @@ namespace Library.Controller
 
         public void RemoveUser()
         {
-            user.RemoveUser();
-            user.UserIndex = -1;
+            user.RemoveUser(loggedInId);
+            loggedInId = null;
             searchId = null;
         }
 
@@ -200,10 +199,10 @@ namespace Library.Controller
             switch (inputType)
             {
                 case (int)Constants.LogInMenu.Id:
-                    logInId = inputManager.LimitInputLength((int)Constants.InputType.LogInId, false);
+                    logInStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.LogInId, false);
                     break;
                 case (int)Constants.LogInMenu.Password:
-                    logInPassword = inputManager.LimitInputLength((int)Constants.InputType.LogInPassword, true);
+                    logInStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.LogInPassword, true);
                     break;
             }
         }
@@ -240,7 +239,7 @@ namespace Library.Controller
             {
                 if (searchId.Equals(userList[i].Id))
                 {
-                    user.UserIndex = i;
+                    loggedInId = searchId;
                     return true;
                 }
             }
@@ -249,10 +248,10 @@ namespace Library.Controller
 
         private bool IsLogInValid(int modeType)
         {
-            if (logInId == null || logInPassword == null)
+            if (logInStrings[0] == null || logInStrings[1] == null)
                 return false;
-            else if (!RegularExpressionManager.IsAccountIdValid(logInId) ||
-                !RegularExpressionManager.IsAccountPasswordValid(logInPassword))
+            else if (!RegularExpressionManager.IsAccountIdValid(logInStrings[0]) ||
+                !RegularExpressionManager.IsAccountPasswordValid(logInStrings[1]))
                 return false;
 
             if (modeType == (int)Constants.ModeMenu.UserMode)
@@ -260,21 +259,19 @@ namespace Library.Controller
                 List<UserDto> userList = user.GetUserList();
                 for (int i = 0; i < userList.Count; i++)
                 {
-                    if (userList[i].Id.Equals(logInId) && userList[i].Password.Equals(logInPassword))
+                    if (userList[i].Id.Equals(logInStrings[0]) && userList[i].Password.Equals(logInStrings[1]))
                     {
-                        user.UserIndex = i;
-                        logInId = null;
-                        logInPassword = null;
+                        loggedInId = logInStrings[0];
+                        logInStrings = new string[] { null, null };
                         return true;
                     }
                 }
             }
             else if (modeType == (int)Constants.ModeMenu.ManagerMode)
             {
-                if (logInId.Equals(manager.GetManager().Id) && logInPassword.Equals(manager.GetManager().Password))
+                if (logInStrings[0].Equals(manager.GetManager().Id) && logInStrings[1].Equals(manager.GetManager().Password))
                 {
-                    logInId = null;
-                    logInPassword = null;
+                    logInStrings = new string[] { null, null };
                     return true;
                 }
             }
@@ -344,7 +341,17 @@ namespace Library.Controller
             screen.DrawUsers(user.GetUserList());
         }
 
+        public void ShowUserRentalHistory()
+        {
+            Console.Clear();
+            Console.SetWindowSize(70, 30);
+            screen.DrawUserRentalHistory(user.GetUserList());
+        }
+
         public string SearchId
         { get { return searchId; } }
+
+        public string LoggedInId
+        { get { return loggedInId; } }
     }
 }

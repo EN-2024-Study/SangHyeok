@@ -1,32 +1,26 @@
 ﻿using Library.Utility;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI.Relational;
+using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 namespace Library.Model
 {
     public class UserRepository    
     {
         private static UserRepository instance;
-        //private List<UserDto> userDtoList;
 
         private DbConnector db;
-        private int userIndex;
 
         private UserRepository()
         {
             this.db = DbConnector.Instance;
-
-            this.userDtoList = new List<UserDto> 
-            {
-                new UserDto("12345678", "1234", "25", "010-3077-5666", "광진구"),
-                new UserDto("11111111", "1234", "24", "010-1234-5678", "중랑구")
-            };
-            this.userIndex = -1;
         }
 
         public static UserRepository Instance
@@ -72,38 +66,24 @@ namespace Library.Model
             return userList;
         }
 
-        public int UserIndex
+        public void AddUser(UserDto user)
         {
-            get { return userIndex; }
-            set { userIndex = value; }
+            string insertQuery = string.Format("INSERT INTO user VALUES('{0}', '{1}', '{2}', '{3}', '{4}')",
+              user.Id, user.Password, user.Age, user.PhoneNumber, user.Address);
+            db.SetData(insertQuery);
         }
 
-        public void AddUser(UserDto user)
-        { userDtoList.Add(user); }
+        public void RemoveUser(string key)
+        {
+            string deleteQuery = string.Format("DELETE FROM user WHERE id = {0}", key);
+            db.SetData(deleteQuery);
+        }
 
-        public void RemoveUser()
-        { userDtoList.Remove(userDtoList[userIndex]); }
-
-        public void UpdatePassword(string password)
-        { userDtoList[userIndex].Password = password; }
-
-        public void UpdateAge(string age)
-        { userDtoList[userIndex].Age = age; }
-
-        public void UpdatePhoneNumber(string phoneNumber)
-        { userDtoList[userIndex].PhoneNumber = phoneNumber; }
-
-        public void UpdateAddress(string address)
-        { userDtoList[userIndex].Address = address; }
-
-        public List<RentalBookDto> GetRentalBookList()
-        { return userDtoList[userIndex].GetRentalBookList(); }
-
-        public void AddRentalBook(RentalBookDto rentalBook)
-        { userDtoList[userIndex].AddRentalBook(rentalBook); }
-
-        public void SubtractRentalBook(RentalBookDto book)
-        { userDtoList[userIndex].SubtractRentalBook(book); }
+        public void UpdateUser(string key, string updateString, string value)
+        {
+            string updateQuery = string.Format("UPDATE user SET {1} = '{2}' WHERE id = {0}", key, updateString, value);
+            db.SetData(updateQuery);
+        }
 
         public void AddReturnBook(BookDto bookDto)
         { userDtoList[userIndex].AddReturnBook(bookDto); }

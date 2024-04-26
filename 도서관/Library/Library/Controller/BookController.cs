@@ -12,9 +12,9 @@ namespace Library.Controller
     public class BookController
     {
         private BookRepository book;
-        private UserRepository user;
         private MenuSelector menuSelector;
         private InputManager inputManager;
+        private AccountController accountController;
         private Screen screen;
         private string[] searchedBookStrings;
         private string[] bookInfoStrings;
@@ -23,9 +23,9 @@ namespace Library.Controller
         public BookController()
         {
             this.book = new BookRepository();
-            this.user = UserRepository.Instance;    
             this.menuSelector = new MenuSelector();
             this.inputManager = new InputManager();
+            this.accountController = new AccountController();
             this.screen = new Screen();
             this.searchedBookStrings = new string[] { null, null, null };
             this.bookInfoStrings = new string[] { null, null, null, null, null, null, null, null };
@@ -125,17 +125,17 @@ namespace Library.Controller
             void Modify()
             {
                 if (bookInfoStrings[0] != null)
-                    book.ModifyBookTitle(bookId, bookInfoStrings[0]);
+                    book.ModifyBookInfo(bookId, "title", bookInfoStrings[0]);
                 if (bookInfoStrings[1] != null)
-                    book.ModifyBookWriter(bookId, bookInfoStrings[1]);
+                    book.ModifyBookInfo(bookId, "writer", bookInfoStrings[1]);
                 if (bookInfoStrings[2] != null)
-                    book.ModifyBookPublisher(bookId, bookInfoStrings[2]);
+                    book.ModifyBookInfo(bookId, "publisher", bookInfoStrings[2]);
                 if (bookInfoStrings[3] != null)
                     book.ModifyBookCount(bookId, int.Parse(bookInfoStrings[3]));
                 if (bookInfoStrings[4] != null)
-                    book.ModifyBookPrice(bookId, bookInfoStrings[4]);
+                    book.ModifyBookInfo(bookId, "price", bookInfoStrings[4]);
                 if (bookInfoStrings[5] != null)
-                    book.ModifyBookReleaseDate(bookId, bookInfoStrings[5]);
+                    book.ModifyBookInfo(bookId, "releaseDate", bookInfoStrings[5]);
             }
         }
 
@@ -185,7 +185,7 @@ namespace Library.Controller
             }
             else if (idType == (int)Constants.BookIdType.Return)
             {
-                List<RentalBookDto> bookList = user.GetRentalBookList();
+                List<RentalBookDto> bookList = book.GetRentalBookList();
                 foreach (RentalBookDto book in bookList)
                     if (book.Id.Equals(bookId))
                         return true;
@@ -208,7 +208,8 @@ namespace Library.Controller
                 if (bookList[i].Id.Equals(bookId))
                 {
                     book.ReduceBookCount(bookId);
-                    user.AddRentalBook(new RentalBookDto(bookList[i], DateTime.Now));
+                    book.AddRentalBook(new RentalBookDto(bookList[i], 
+                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), accountController.LoggedInId));
                     break;
                 }
             }
@@ -267,19 +268,12 @@ namespace Library.Controller
                     screen.DrawBooks(ExploreSearchedBooks());
                     break;
                 case (int)Constants.BookShowType.Rental:
-                    screen.DrawRentalBooks(17, user.GetRentalBookList());
+                    screen.DrawRentalBooks(17, book.GetRentalBookList());
                     break;
                 case (int)Constants.BookShowType.Return:
                     screen.DrawBooks(user.GetReturnBookList());
                     break;
             }
-        }
-
-        public void ShowUserRentalHistory()
-        {
-            Console.Clear();
-            Console.SetWindowSize(70, 30);
-            screen.DrawUserRentalHistory(user.GetUserList());
         }
 
         public void InputBookId()

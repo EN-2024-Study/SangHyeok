@@ -8,17 +8,15 @@ namespace Library.Model
 {
     public class BookDto
     {
-        private string id;
-        private string title;
-        private string writer;
-        private string publisher;
-        private int count;
-        private string price;
-        private string releaseDate;
-        private string iSBN;
-        private string info;
-
-        public BookDto() { }
+        protected string id;
+        protected string title;
+        protected string writer;
+        protected string publisher;
+        protected int count;
+        protected string price;
+        protected string releaseDate;
+        protected string iSBN;
+        protected string info;
 
         public BookDto(string id, string title, string writer,
             string publisher, int count, string price,

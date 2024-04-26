@@ -19,7 +19,7 @@ namespace Library.Controller
         private Screen screen;
         private string[] signUpStrings;
         private string[] modifyStrings;
-        private string logInId, logInPassword, id;
+        private string logInId, logInPassword, searchId;
 
         public AccountController()
         {
@@ -32,7 +32,7 @@ namespace Library.Controller
             this.modifyStrings = new string[] { null, null, null, null };
             this.logInId = null;
             this.logInPassword = null;
-            this.id = null;
+            this.searchId = null;
         }
 
         public bool IsLogIn(int modeType)
@@ -165,7 +165,7 @@ namespace Library.Controller
         {
             user.RemoveUser();
             user.UserIndex = -1;
-            id = null;
+            searchId = null;
         }
 
         public void InputUserId()
@@ -173,7 +173,7 @@ namespace Library.Controller
             ExplainingScreen.ExplainInputId("유저");
             ExplainingScreen.ExplainInputAccountId();
             ExplainingScreen.DrawIdLogo();
-            id = inputManager.LimitInputLength((int)Constants.InputType.UserId, 9, false);
+            searchId = inputManager.LimitInputLength((int)Constants.InputType.UserId, false);
         }
 
         private void InputInformationToModify(int inputType)
@@ -181,16 +181,16 @@ namespace Library.Controller
             switch (inputType)
             {
                 case (int)Constants.AccountModifyMenu.Password:
-                    modifyStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.ModifyPassword, 5, true);
+                    modifyStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.ModifyPassword, true);
                     break;
                 case (int)Constants.AccountModifyMenu.Age:
-                    modifyStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.ModifyAge, 4, false);
+                    modifyStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.ModifyAge, false);
                     break;
                 case (int)Constants.AccountModifyMenu.PhoneNumber:
-                    modifyStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.ModifyPhoneNumber, 15, false);
+                    modifyStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.ModifyPhoneNumber, false);
                     break;
                 case (int)Constants.AccountModifyMenu.Address:
-                    modifyStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.ModifyAddress, 4, false);
+                    modifyStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.ModifyAddress, false);
                     break;
             }
         }
@@ -200,10 +200,10 @@ namespace Library.Controller
             switch (inputType)
             {
                 case (int)Constants.LogInMenu.Id:
-                    logInId = inputManager.LimitInputLength((int)Constants.InputType.LogInId, 9, false);
+                    logInId = inputManager.LimitInputLength((int)Constants.InputType.LogInId, false);
                     break;
                 case (int)Constants.LogInMenu.Password:
-                    logInPassword = inputManager.LimitInputLength((int)Constants.InputType.LogInPassword, 5, true);
+                    logInPassword = inputManager.LimitInputLength((int)Constants.InputType.LogInPassword, true);
                     break;
             }
         }
@@ -213,32 +213,32 @@ namespace Library.Controller
             switch (inputType)
             {
                 case (int)Constants.SignUpMenu.Id:
-                    signUpStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.SignUpId, 9, false);
+                    signUpStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.SignUpId, false);
                     break;
                 case (int)Constants.SignUpMenu.Password:
-                    signUpStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.SignUpPassword, 5, true);
+                    signUpStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.SignUpPassword, true);
                     break;
                 case (int)Constants.SignUpMenu.Age:
-                    signUpStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.SignUpAge, 4, false);
+                    signUpStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.SignUpAge, false);
                     break;
                 case (int)Constants.SignUpMenu.PhoneNumber:
-                    signUpStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.SignUpPhoneNumber, 14, false);
+                    signUpStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.SignUpPhoneNumber, false);
                     break;
                 case (int)Constants.SignUpMenu.Address:
-                    signUpStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.SignUpAddress, 20, false);
+                    signUpStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.SignUpAddress, false);
                     break;
             }
         }
 
         public bool IsUserIdValid()
         {
-            if (id == null)
+            if (searchId == null)
                 return false;
 
             List<UserDto> userList = user.GetUserList();
             for (int i = 0; i < userList.Count; i++)
             {
-                if (id.Equals(userList[i].Id))
+                if (searchId.Equals(userList[i].Id))
                 {
                     user.UserIndex = i;
                     return true;
@@ -344,7 +344,7 @@ namespace Library.Controller
             screen.DrawUsers(user.GetUserList());
         }
 
-        public string Id
-        { get { return id; } }
+        public string SearchId
+        { get { return searchId; } }
     }
 }

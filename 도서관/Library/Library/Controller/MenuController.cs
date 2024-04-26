@@ -221,7 +221,7 @@ namespace Library.Controller
         {
             accountController.ShowUsers();
             accountController.InputUserId();
-            if (accountController.Id == null)
+            if (accountController.SearchId == null)
                 return;
             else if (accountController.IsUserIdValid())
                 accountController.ModifyInformation();
@@ -236,7 +236,7 @@ namespace Library.Controller
         {
             accountController.ShowUsers();
             accountController.InputUserId();
-            if (accountController.Id == null)
+            if (accountController.SearchId == null)
                 return;
             else if (accountController.IsUserIdValid() && accountController.IsUserRemoveValid())
             {

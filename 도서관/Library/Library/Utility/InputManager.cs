@@ -9,10 +9,11 @@ namespace Library.Utility
 {
     public class InputManager
     {
-        public string LimitInputLength(int digitType, int stringLength, bool isPassword)
+        public string LimitInputLength(int digitType, bool isPassword)
         {
             Console.CursorVisible = true;
             Tuple<int, int> coordinate = GetCoordinate(digitType);
+            int stringLength = GetStringLength(digitType);
             int x = coordinate.Item1;
             int y = coordinate.Item2;
             bool isError = false;
@@ -112,6 +113,59 @@ namespace Library.Utility
             for (int i = 0; i < stringLength * 2; i++)  // 입력란 지우기
                 Console.Write(" ");
             Console.SetCursorPosition(x, y);
+        }
+
+        private int GetStringLength(int digitType)
+        {
+            int length = 0;
+            switch (digitType)
+            {
+                case (int)Constants.InputType.LogInId:
+                case (int)Constants.InputType.UserId:
+                case (int)Constants.InputType.SignUpId:
+                    length = 9;
+                    break;
+                case (int)Constants.InputType.LogInPassword:
+                case (int)Constants.InputType.ModifyPassword:
+                case (int)Constants.InputType.SignUpPassword:
+                    length = 5;
+                    break;
+                case (int)Constants.InputType.ModifyAge:
+                case (int)Constants.InputType.ModifyAddress:
+                case (int)Constants.InputType.SignUpAge:
+                case (int)Constants.InputType.Count:
+                    length = 4;
+                    break;
+                case (int)Constants.InputType.ModifyPhoneNumber:
+                case (int)Constants.InputType.SignUpPhoneNumber:
+                case (int)Constants.InputType.Title:
+                case (int)Constants.InputType.SearchedTitle:
+                    length = 15;
+                    break;
+                case (int)Constants.InputType.SignUpAddress:
+                    length = 20;
+                    break;
+                case (int)Constants.InputType.BookId:
+                    length = 3;
+                    break;
+                case (int)Constants.InputType.Writer:
+                case (int)Constants.InputType.Publisher:
+                case (int)Constants.InputType.Info:
+                case (int)Constants.InputType.SearchedWriter:
+                case (int)Constants.InputType.SearchedPublisher:
+                    length = 10;
+                    break;
+                case (int)Constants.InputType.Price:
+                    length = 7;
+                    break;
+                case (int)Constants.InputType.ReleaseDate:
+                    length = 11;
+                    break;
+                case (int)Constants.InputType.ISBN:
+                    length = 25;
+                    break;
+            }
+            return length;
         }
 
         private Tuple<int, int> GetCoordinate(int digitType)

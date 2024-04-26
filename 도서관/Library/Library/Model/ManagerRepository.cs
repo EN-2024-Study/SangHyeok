@@ -11,11 +11,11 @@ namespace Library.Model
 {
     public class ManagerRepository 
     {
-        DbConnector db;
+        private DbConnector db;
 
         public ManagerRepository()
         {
-            db = DbConnector.Instance;
+            this.db = DbConnector.Instance;
         }
 
 
@@ -23,7 +23,6 @@ namespace Library.Model
         {
             ManagerVo manager = null;
             string selectQuery = string.Format("SELECT * FROM manager");
-            string id, password;
             try
             {
                 using (MySqlConnection mySql = new MySqlConnection(db.ConnectionAddress))
@@ -35,8 +34,8 @@ namespace Library.Model
 
                     while (table.Read())
                     {
-                        id = table["id"].ToString();
-                        password = table["password"].ToString();
+                        string id = table["id"].ToString();
+                        string password = table["password"].ToString();
                         manager = new ManagerVo(id, password);
                         break;
                     }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Library.Utility;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,11 +12,15 @@ namespace Library.Model
     public class UserRepository    
     {
         private static UserRepository instance;
-        private List<UserDto> userDtoList;
+        //private List<UserDto> userDtoList;
+
+        private DbConnector db;
         private int userIndex;
 
         private UserRepository()
         {
+            this.db = DbConnector.Instance;
+
             this.userDtoList = new List<UserDto> 
             {
                 new UserDto("12345678", "1234", "25", "010-3077-5666", "광진구"),
@@ -35,7 +41,35 @@ namespace Library.Model
 
         public List<UserDto> GetUserList()
         {
-            return userDtoList;
+            List<UserDto> userList = null;
+            string selectQuery = string.Format("SELECT * FROM user");
+            try
+            {
+                using (MySqlConnection mySql = new MySqlConnection(db.ConnectionAddress))
+                {
+                    mySql.Open();
+
+                    MySqlCommand command = new MySqlCommand(selectQuery, mySql);
+                    MySqlDataReader table = command.ExecuteReader();
+
+                    while (table.Read())
+                    {
+                        string id = table["id"].ToString();
+                        string password = table["password"].ToString();
+                        string age = table["age"].ToString();
+                        string phoneNumber = table["phonenumber"].ToString();
+                        string address = table["address"].ToString();
+                        userList.Add(new UserDto(id, password, age, phoneNumber, address));
+                        break;
+                    }
+                }
+            }
+            catch (Exception exe)
+            {
+                Console.WriteLine(exe.Message);
+            }
+
+            return userList;
         }
 
         public int UserIndex

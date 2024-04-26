@@ -106,10 +106,10 @@ namespace Library.Controller
                 if (!isSelected)
                     return;
 
-                if (menuSelector.menuValue == (int)Constants.BookModifyInfo.Check &&
-                    IsBookAddValid())
+                if (menuSelector.menuValue == (int)Constants.BookModifyInfo.Check)
                 {
-                    if (IsBookIdValid((int)Constants.BookIdType.Modify))
+                    if (IsBookIdValid((int)Constants.BookIdType.Modify) && 
+                        IsModifyValid())
                     {
                         Modify();
                         bookId = null;
@@ -155,6 +155,14 @@ namespace Library.Controller
                !RegularExpressionManager.IsPublisherValid(bookInfoStrings[2]) ||
                !RegularExpressionManager.IsISBNValid(bookInfoStrings[6]))
                 return false;
+            if (bookInfoStrings[3] != null)
+            {
+                if (('a' <= bookInfoStrings[3][0] && bookInfoStrings[3][0] <= 'z') ||
+                    'A' <= bookInfoStrings[3][0] && bookInfoStrings[3][0] <= 'Z' ||
+                    bookInfoStrings[3][0] == '-')
+                    return false;
+            }
+
             return true;
         }
 

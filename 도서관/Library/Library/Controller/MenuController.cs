@@ -190,7 +190,7 @@ namespace Library.Controller
 
             if (bookController.BookId == null)
                 return;
-            else if (bookController.IsBookReturnValid())
+            else if (bookController.IsBookIdValid() && bookController.IsBookReturnValid())
                 ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
         }
@@ -240,7 +240,7 @@ namespace Library.Controller
             bookController.InputBookId();
             if (bookController.BookId == null)
                 return;
-            else if (bookController.IsBookDeleteValid())
+            else if (bookController.IsBookIdValid() && bookController.IsBookDeleteValid())
             {
                 bookController.DeleteBook();
                 ExplainingScreen.ExplainSuccessScreen();
@@ -255,8 +255,9 @@ namespace Library.Controller
             bookController.InputBookId();
             if (bookController.BookId == null)
                 return;
-            else 
+            else if (bookController.IsBookIdValid())
                 bookController.ModifyBook();
+            menuSelector.WaitForEscKey();
         }
     }
 }

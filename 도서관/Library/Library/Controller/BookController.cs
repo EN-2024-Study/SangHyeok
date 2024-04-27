@@ -96,7 +96,7 @@ namespace Library.Controller
             bool isSelected = true;
             menuSelector.menuValue = 0;
 
-            Console.Clear();
+            ShowBookInfo();
             ExplainingScreen.ExplainSearchBookInfo();
             ExplainingScreen.ExplainInputBookInfo();
             while (isSelected)
@@ -136,6 +136,17 @@ namespace Library.Controller
                 if (bookInfoStrings[5] != null)
                     bookRepository.ModifyBookInfo(bookId, "releaseDate", bookInfoStrings[5]);
             }
+        }
+
+        public bool IsBookIdValid()
+        {
+            if (bookId == null)
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainNoInput();
+                return false;
+            }
+            return true;
         }
 
         private bool IsBookModifyValid()
@@ -195,13 +206,6 @@ namespace Library.Controller
 
         public bool IsBookRentalValid()
         {
-            if (bookId == null)
-            {
-                ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainNoInput();
-                return false;
-            }
-
             List<BookDto> bookList = bookRepository.GetBookList();
             List<RentalBookDto> rentalBookList = bookRepository.GetRentalBookList();
 
@@ -227,13 +231,6 @@ namespace Library.Controller
 
         public bool IsBookReturnValid()
         {
-            if (bookId == null)
-            {
-                ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainNoInput();
-                return false;
-            }
-
             List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
             foreach (RentalBookDto book in bookList)
             {
@@ -252,13 +249,6 @@ namespace Library.Controller
 
         public bool IsBookDeleteValid()
         {
-            if (bookId == null)
-            {
-                ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainNoInput();
-                return false;
-            }
-
             List<RentalBookDto> rentalBookList = bookRepository.GetRentalBookList();
             List<BookDto> bookList = bookRepository.GetBookList();
 
@@ -374,6 +364,24 @@ namespace Library.Controller
                 screen.DrawRentalBooks(y, user.Id, rentalBookList);
                 y += rentalBookList.Count * 13 + 1;
             }
+        }
+
+        private void ShowBookInfo()
+        {
+            List<BookDto> bookList = bookRepository.GetBookList();
+            BookDto book = null;
+            foreach(BookDto value in bookList)
+            {
+                if (value.Id.Equals(bookId))
+                {
+                    book = value;
+                    break;
+                }
+            }
+
+            Console.SetWindowSize(70, 35);
+            Console.Clear();
+            screen.DrawBookInfo(20, book);
         }
 
         public void InputBookId()

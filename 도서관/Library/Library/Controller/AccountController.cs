@@ -107,9 +107,8 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
-            Console.SetWindowSize(70, 35);
 
-            ShowUser();
+            ShowUserInfo();
             while (isSelected)
             {
                 ExplainingScreen.DrawModifyLogo();
@@ -394,9 +393,8 @@ namespace Library.Controller
             screen.DrawUsers(userRepository.GetUserList());
         }
 
-        private void ShowUser()
+        private void ShowUserInfo()
         {
-            Console.Clear();
             List<UserDto> userList = userRepository.GetUserList();
             UserDto loggedUser = null;
 
@@ -409,6 +407,8 @@ namespace Library.Controller
                 }
             }
 
+            Console.SetWindowSize(70, 35);
+            Console.Clear();
             screen.DrawUserInfo(20, loggedUser);
         }
 

@@ -4,6 +4,7 @@ using Library.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,12 +66,12 @@ namespace Library.View
         }
       
         public void DrawRentalBooks(int y, string userId, List<RentalBookDto> bookList)
-        {
+        { 
             DrawUserId(y, userId);
             foreach(RentalBookDto book in bookList)
             {
-                DrawBookInfo(y + 2, book.Id, book.Title, book.Writer, book.Publisher,
-                    book.Count.ToString(), book.Price, book.ReleaseDate, book.ISBN, book.Info);
+                DrawBookInfo(y + 2, new BookDto(book.Id, book.Title, book.Writer, book.Publisher,
+                    book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info));
                 Console.SetCursorPosition(0, y + 12);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("빌린 시간   :" + book.RentalTime);
@@ -88,8 +89,8 @@ namespace Library.View
             DrawUserId(y, userId);
             foreach (ReturnBookDto book in bookList)
             {
-                DrawBookInfo(y + 2, book.Id, book.Title, book.Writer, book.Publisher,
-                    book.Count.ToString(), book.Price, book.ReleaseDate, book.ISBN, book.Info);
+                DrawBookInfo(y + 2, new BookDto(book.Id, book.Title, book.Writer, book.Publisher,
+                    book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info));
                 y += 12;
             }
         }
@@ -100,36 +101,34 @@ namespace Library.View
             int y = 17;
             foreach (BookDto book in bookList)
             {
-                DrawBookInfo(y, book.Id, book.Title, book.Writer, book.Publisher, book.Count.ToString(),
-                    book.Price, book.ReleaseDate, book.ISBN, book.Info);
+                DrawBookInfo(y, book);
                 y += 10;
             }
             Console.ResetColor();
         }
 
-        private void DrawBookInfo(int y, string id, string title, string writer, string publisher,
-            string count, string price, string releaseDate, string ISBN, string info)
+        public void DrawBookInfo(int y, BookDto book)
         {
             Console.SetCursorPosition(0, y);
             Console.Write("=====================================");
             Console.SetCursorPosition(0, y + 1);
-            Console.Write("책 아이디   :" + id);
+            Console.Write("책 아이디   :" + book.Id);
             Console.SetCursorPosition(0, y + 2);
-            Console.Write("책 제목     :" + title);
+            Console.Write("책 제목     :" + book.Title);
             Console.SetCursorPosition(0, y + 3);
-            Console.Write("작가        :" + writer);
+            Console.Write("작가        :" + book.Writer);
             Console.SetCursorPosition(0, y + 4);
-            Console.Write("출판사      :" + publisher);
+            Console.Write("출판사      :" + book.Publisher);
             Console.SetCursorPosition(0, y + 5);
-            Console.Write("수량        :" + count);
+            Console.Write("수량        :" + book.Count);
             Console.SetCursorPosition(0, y + 6);
-            Console.Write("가격        :" + price);
+            Console.Write("가격        :" + book.Price);
             Console.SetCursorPosition(0, y + 7);
-            Console.Write("출시일      :" + releaseDate);
+            Console.Write("출시일      :" + book.ReleaseDate);
             Console.SetCursorPosition(0, y + 8);
-            Console.Write("ISBN        :" + ISBN);
+            Console.Write("ISBN        :" + book.ISBN);
             Console.SetCursorPosition(0, y + 9);
-            Console.Write("책 정보     :" + info);
+            Console.Write("책 정보     :" + book.Info);
         }
 
         private Tuple<int, int> GetCoordinate(int screenType)

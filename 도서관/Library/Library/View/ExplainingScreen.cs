@@ -87,7 +87,7 @@ namespace Library.View
             Console.SetCursorPosition(0, 7);
             Console.Write("정보    - 1 글자 이상 10 글자 이하의 문자 또는 숫자");
             Console.SetCursorPosition(0, 8);
-            Console.Write("===========================================");
+            Console.Write("=====================================================");
         }
 
         public static void ExplainSuccessScreen()

@@ -12,21 +12,18 @@ namespace Library.Utility
     public class DbConnector
     {
         private static DbConnector instance;
-        private string dbServer;
-        private int dbPort;
-        private string dbName;
-        private string dbId;
-        private string dbPassword;
         private string connectionAddress;
+        private MySqlConnection mySql;
 
         private DbConnector()
         {
-            dbServer = "localhost";
-            dbPort = 3306;
-            dbName = "library";
-            dbId = "root";
-            dbPassword = "0000";
-            connectionAddress = string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4}", dbServer, dbPort, dbName, dbId, dbPassword);
+            string dbServer = "localhost";
+            int dbPort = 3306;
+            string dbName = "library";
+            string dbId = "root";
+            string dbPassword = "0000";
+            this.connectionAddress = string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4}", dbServer, dbPort, dbName, dbId, dbPassword);
+            this.mySql = new MySqlConnection(ConnectionAddress);
         }
 
         public static DbConnector Instance
@@ -46,19 +43,20 @@ namespace Library.Utility
         {
             try
             {
-                using (MySqlConnection mySql = new MySqlConnection(ConnectionAddress))
-                {
-                    mySql.Open();
+                mySql.Open();
 
-                    MySqlCommand command = new MySqlCommand(query, mySql);
-                    if (command.ExecuteNonQuery() == 1)
-                        ExplainingScreen.ExplainSuccessScreen();
-                }
+                MySqlCommand command = new MySqlCommand(query, mySql);
+                if (command.ExecuteNonQuery() == 1)
+                    ExplainingScreen.ExplainSuccessScreen();
+                
             }
             catch (Exception exe)
             {
                 Console.WriteLine(exe.Message);
             }
         }
+
+        public MySqlConnection MySql
+        { get { return mySql; } }
     }
 }

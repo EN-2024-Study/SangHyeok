@@ -203,13 +203,14 @@ namespace Library.Controller
         public void RentalBook()
         {
             List<BookDto> bookList = book.GetBookList();
+            DateTime time = DateTime.Now;
             for (int i = 0; i < bookList.Count; i++)
             {
                 if (bookList[i].Id.Equals(bookId))
                 {
-                    book.ReduceBookCount(bookId);
                     book.AddRentalBook(new RentalBookDto(bookList[i], 
-                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), accountController.LoggedInId));
+                        accountController.LoggedInId, time.ToString("yyyy-MM-dd HH:mm:ss"), 
+                        time.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")));
                     break;
                 }
             }
@@ -218,23 +219,13 @@ namespace Library.Controller
 
         public void ReturnBook()
         {
-            List<RentalBookDto> rentalBookList = user.GetRentalBookList();
+            List<RentalBookDto> rentalBookList = book.GetRentalBookList();
             List<BookDto> bookList = book.GetBookList();
             for (int i = 0; i < rentalBookList.Count; i++)
             {
                 if (rentalBookList[i].Id.Equals(bookId))
                 {
-                    user.SubtractRentalBook(rentalBookList[i]);
-                    break;
-                }
-            }
-
-            for (int i = 0; i < bookList.Count; i++)
-            {
-                if (bookList[i].Id.Equals(bookId))
-                {
-                    book.IncreaseBookCount(bookId);
-                    user.AddReturnBook(bookList[i]);
+                    book.SubtractRentalBook(rentalBookList[i]);
                     break;
                 }
             }
@@ -271,7 +262,7 @@ namespace Library.Controller
                     screen.DrawRentalBooks(17, book.GetRentalBookList());
                     break;
                 case (int)Constants.BookShowType.Return:
-                    screen.DrawBooks(user.GetReturnBookList());
+                    screen.DrawBooks(book.GetReturnBookList());
                     break;
             }
         }

@@ -259,6 +259,7 @@ namespace Library.Controller
             if (modeType == (int)Constants.ModeMenu.UserMode)
             {
                 List<UserDto> userList = userRepository.GetUserList();
+
                 for (int i = 0; i < userList.Count; i++)
                 {
                     if (userList[i].Id.Equals(logInStrings[0]) && userList[i].Password.Equals(logInStrings[1]))

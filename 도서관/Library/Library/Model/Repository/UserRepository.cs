@@ -23,27 +23,23 @@ namespace Library.Model
 
         public List<UserDto> GetUserList()
         {
-            List<UserDto> userList = null;
+            List<UserDto> userList = new List<UserDto>();
             string selectQuery = string.Format("SELECT * FROM user");
             try
             {
-                using (MySqlConnection mySql = new MySqlConnection(db.ConnectionAddress))
+                db.MySql.Open();
+
+                MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
+                MySqlDataReader table = command.ExecuteReader();
+
+                while (table.Read())
                 {
-                    mySql.Open();
-
-                    MySqlCommand command = new MySqlCommand(selectQuery, mySql);
-                    MySqlDataReader table = command.ExecuteReader();
-
-                    while (table.Read())
-                    {
-                        string id = table["id"].ToString();
-                        string password = table["password"].ToString();
-                        string age = table["age"].ToString();
-                        string phoneNumber = table["phonenumber"].ToString();
-                        string address = table["address"].ToString();
-                        userList.Add(new UserDto(id, password, age, phoneNumber, address));
-                        break;
-                    }
+                    string id = table["id"].ToString();
+                    string password = table["password"].ToString();
+                    string age = table["age"].ToString();
+                    string phoneNumber = table["phonenumber"].ToString();
+                    string address = table["address"].ToString();
+                    userList.Add(new UserDto(id, password, age, phoneNumber, address));
                 }
             }
             catch (Exception exe)

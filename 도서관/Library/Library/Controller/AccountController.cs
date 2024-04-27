@@ -281,6 +281,7 @@ namespace Library.Controller
                 }
             }
 
+            ExplainingScreen.ExplainFailScreen();
             ExplainingScreen.ExplainInvalidInput("로그인");
             return false;
         }

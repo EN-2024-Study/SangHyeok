@@ -143,7 +143,7 @@ namespace Library.Controller
             if (bookId == null)
             {
                 ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainNoInput();
+                ExplainingScreen.ExplainInvalidInput("책 아이디");
                 return false;
             }
             return true;
@@ -209,16 +209,27 @@ namespace Library.Controller
             List<BookDto> bookList = bookRepository.GetBookList();
             List<RentalBookDto> rentalBookList = bookRepository.GetRentalBookList();
 
-            foreach(RentalBookDto book in rentalBookList)   // 이미 책을 빌렸다면 false
+            foreach(RentalBookDto book in rentalBookList)  
             {
-                if (book.UserId.Equals(accountController.LoggedInId) && book.Id.Equals(bookId))
+                if (book.UserId.Equals(accountController.LoggedInId))
                 {
-                    ExplainingScreen.ExplainFailScreen();
-                    ExplainingScreen.ExplainDuplicationExist("책");
-                    return false;
+                    DateTime now = DateTime.Now;
+                    DateTime returnTime = DateTime.ParseExact(book.RentalTime, "yyyy-MM-dd HH:mm:ss", null);
+                    if (now > returnTime)   // 연체 된 도서가 있다면 false
+                    {
+                        ExplainingScreen.ExplainFailScreen();
+                        ExplainingScreen.ExplainDatePassed();
+                        return false;
+                    }
+
+                    if (book.Id.Equals(bookId))  // 이미 같은 책을 빌렸다면 false
+                    {
+                        ExplainingScreen.ExplainFailScreen();
+                        ExplainingScreen.ExplainDuplicationExist("책");
+                        return false;
+                    }
                 }
             }
-                
 
             foreach (BookDto book in bookList)  // 책의 수량이 1이상이면 true
                 if (book.Id.Equals(bookId) && book.Count > 0)

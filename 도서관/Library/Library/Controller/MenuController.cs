@@ -175,7 +175,7 @@ namespace Library.Controller
             bookController.InputBookId();
             if (bookController.BookId == null)
                 return;
-            else if (bookController.IsBookRentalValid())
+            else if (bookController.IsBookIdValid() && bookController.IsBookRentalValid())
             {
                 bookController.RentalBook();
                 ExplainingScreen.ExplainSuccessScreen();

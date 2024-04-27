@@ -32,6 +32,15 @@ namespace Library.View
             Console.ResetColor();
         }
 
+
+        public static void ExplainDatePassed()
+        {
+            Console.SetCursorPosition(15, 9);
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.Write("연체 된 도서가 존재합니다!");
+            Console.ResetColor();
+        }
+
         public static void ExplainInputId(string str)
         {
             Console.SetCursorPosition(20, 13);

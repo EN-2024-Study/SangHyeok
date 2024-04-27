@@ -1,4 +1,5 @@
 ﻿using Library.Model;
+using Library.Model.DtoVo;
 using Library.Utility;
 using Library.View;
 using System;
@@ -11,7 +12,8 @@ namespace Library.Controller
 {
     public class BookController
     {
-        private BookRepository book;
+        private BookRepository bookRepository;
+        private UserRepository userRepository;
         private MenuSelector menuSelector;
         private InputManager inputManager;
         private AccountController accountController;
@@ -22,7 +24,8 @@ namespace Library.Controller
 
         public BookController()
         {
-            this.book = new BookRepository();
+            this.bookRepository = new BookRepository();
+            this.userRepository = new UserRepository();
             this.menuSelector = new MenuSelector();
             this.inputManager = new InputManager();
             this.accountController = new AccountController();
@@ -76,7 +79,7 @@ namespace Library.Controller
                 {
                     if (IsBookAddValid())
                     {
-                        book.AddBook(new BookDto("0", bookInfoStrings[0], bookInfoStrings[1],
+                        bookRepository.AddBook(new BookDto("0", bookInfoStrings[0], bookInfoStrings[1],
                             bookInfoStrings[2], int.Parse(bookInfoStrings[3]), bookInfoStrings[4], bookInfoStrings[5],
                             bookInfoStrings[6], bookInfoStrings[7]));
                     }
@@ -125,17 +128,17 @@ namespace Library.Controller
             void Modify()
             {
                 if (bookInfoStrings[0] != null)
-                    book.ModifyBookInfo(bookId, "title", bookInfoStrings[0]);
+                    bookRepository.ModifyBookInfo(bookId, "title", bookInfoStrings[0]);
                 if (bookInfoStrings[1] != null)
-                    book.ModifyBookInfo(bookId, "writer", bookInfoStrings[1]);
+                    bookRepository.ModifyBookInfo(bookId, "writer", bookInfoStrings[1]);
                 if (bookInfoStrings[2] != null)
-                    book.ModifyBookInfo(bookId, "publisher", bookInfoStrings[2]);
+                    bookRepository.ModifyBookInfo(bookId, "publisher", bookInfoStrings[2]);
                 if (bookInfoStrings[3] != null)
-                    book.ModifyBookCount(bookId, int.Parse(bookInfoStrings[3]));
+                    bookRepository.ModifyBookInfo(bookId, "count", int.Parse(bookInfoStrings[3]));
                 if (bookInfoStrings[4] != null)
-                    book.ModifyBookInfo(bookId, "price", bookInfoStrings[4]);
+                    bookRepository.ModifyBookInfo(bookId, "price", bookInfoStrings[4]);
                 if (bookInfoStrings[5] != null)
-                    book.ModifyBookInfo(bookId, "releaseDate", bookInfoStrings[5]);
+                    bookRepository.ModifyBookInfo(bookId, "releaseDate", bookInfoStrings[5]);
             }
         }
 
@@ -178,68 +181,56 @@ namespace Library.Controller
                 return false;
             else if (idType == (int)Constants.BookIdType.Rental)
             {
-                List<BookDto> bookList = book.GetBookList();
+                List<BookDto> bookList = bookRepository.GetBookList();
+                DateTime time = DateTime.Now;
                 foreach (BookDto book in bookList)
+                {
                     if (book.Id.Equals(bookId) && book.Count > 0)
+                    {
+                        bookRepository.RentalBook(new RentalBookDto(book,
+                            accountController.LoggedInId, time.ToString("yyyy-MM-dd HH:mm:ss"),
+                            time.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")));
+                        bookId = null;
                         return true;
+                    }
+                }
             }
             else if (idType == (int)Constants.BookIdType.Return)
             {
-                List<RentalBookDto> bookList = book.GetRentalBookList();
+                List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
                 foreach (RentalBookDto book in bookList)
-                    if (book.Id.Equals(bookId))
+                {
+                    if (book.Id.Equals(bookId) && accountController.LoggedInId.Equals(book.UserId))
+                    {
+                        bookRepository.ReturnBook(book);
+                        bookId = null;
                         return true;
+                    }
+                }
             }
             else if (idType == (int)Constants.BookIdType.Modify || idType == (int)Constants.BookIdType.Delete)
             {
-                List<BookDto> bookList = book.GetBookList();
-                foreach (BookDto book in bookList)
+                List<RentalBookDto> rentalBookList = bookRepository.GetRentalBookList();
+                List<BookDto> bookList = bookRepository.GetBookList();
+
+                foreach(RentalBookDto book in rentalBookList)   // 도서가 대여 중이라면 false
+                    if (book.Id.Equals(bookId))
+                        return false;
+                foreach (BookDto book in bookList)  
                     if (book.Id.Equals(bookId))
                         return true;
             }
             return false;
         }
 
-        public void RentalBook()
-        {
-            List<BookDto> bookList = book.GetBookList();
-            DateTime time = DateTime.Now;
-            for (int i = 0; i < bookList.Count; i++)
-            {
-                if (bookList[i].Id.Equals(bookId))
-                {
-                    book.AddRentalBook(new RentalBookDto(bookList[i], 
-                        accountController.LoggedInId, time.ToString("yyyy-MM-dd HH:mm:ss"), 
-                        time.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")));
-                    break;
-                }
-            }
-            bookId = null;
-        }
-
-        public void ReturnBook()
-        {
-            List<RentalBookDto> rentalBookList = book.GetRentalBookList();
-            List<BookDto> bookList = book.GetBookList();
-            for (int i = 0; i < rentalBookList.Count; i++)
-            {
-                if (rentalBookList[i].Id.Equals(bookId))
-                {
-                    book.SubtractRentalBook(rentalBookList[i]);
-                    break;
-                }
-            }
-            bookId = null;
-        }
-
         public void DeleteBook()
         {
-            List<BookDto> bookList = book.GetBookList();
+            List<BookDto> bookList = bookRepository.GetBookList();
             for (int i = 0; i < bookList.Count; i++)
             {
                 if (bookList[i].Id.Equals(bookId))
                 {
-                    book.DeleteBook(bookId);
+                    bookRepository.DeleteBook(bookId);
                     break;
                 }
             }
@@ -253,17 +244,61 @@ namespace Library.Controller
             switch (typeValue)
             {
                 case (int)Constants.BookShowType.All:
-                    screen.DrawBooks(book.GetBookList());
+                    screen.DrawBooks(bookRepository.GetBookList());
                     break;
                 case (int)Constants.BookShowType.Searched:
                     screen.DrawBooks(ExploreSearchedBooks());
                     break;
-                case (int)Constants.BookShowType.Rental:
-                    screen.DrawRentalBooks(17, book.GetRentalBookList());
-                    break;
-                case (int)Constants.BookShowType.Return:
-                    screen.DrawBooks(book.GetReturnBookList());
-                    break;
+            }
+        }
+
+        public void ShowRentalBooks(int coordinateY)
+        {
+            Console.Clear();
+            Console.SetWindowSize(70, 30);
+
+            List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
+            List<RentalBookDto> rentalBookList = new List<RentalBookDto>();
+            foreach(RentalBookDto book in bookList)
+            {
+                if (accountController.LoggedInId.Equals(book.UserId))
+                    rentalBookList.Add(book);
+            }
+            screen.DrawRentalBooks(coordinateY, accountController.LoggedInId, rentalBookList);
+        }
+
+        public void ShowReturnBooks(int coordinateY)
+        {
+            Console.Clear();
+            Console.SetWindowSize(70, 30);
+
+            List<ReturnBookDto> bookList = bookRepository.GetReturnBookList();
+            List<ReturnBookDto> returnBookList = new List<ReturnBookDto>();
+            foreach(ReturnBookDto book in bookList)
+            {
+                if (accountController.LoggedInId.Equals(book.UserId))
+                    returnBookList.Add(book);
+            }
+            screen.DrawReturnBooks(coordinateY, accountController.LoggedInId, returnBookList);
+        }
+
+        public void ShowAllUserRentalHistory()
+        {
+            Console.Clear();
+            Console.SetWindowSize(70, 30);
+
+            int y = 17;
+            List<UserDto> userList = userRepository.GetUserList();
+            List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
+            foreach(UserDto user in userList)
+            {
+                List<RentalBookDto> rentalBookList = new List<RentalBookDto>();
+                foreach (RentalBookDto book in bookList)
+                {
+                    if (user.Id.Equals(book.UserId))
+                        rentalBookList.Add(book);
+                }
+                screen.DrawRentalBooks(y, user.Id, rentalBookList);
             }
         }
 
@@ -324,7 +359,7 @@ namespace Library.Controller
 
         private List<BookDto> ExploreSearchedBooks()
         {
-            List<BookDto> searchedBookList = book.GetBookList();
+            List<BookDto> searchedBookList = bookRepository.GetBookList();
 
             for (int i = 0; i < 3; i++)
             {

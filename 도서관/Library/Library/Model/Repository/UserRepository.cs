@@ -14,23 +14,11 @@ namespace Library.Model
 {
     public class UserRepository    
     {
-        private static UserRepository instance;
-
         private DbConnector db;
 
-        private UserRepository()
+        public UserRepository()
         {
             this.db = DbConnector.Instance;
-        }
-
-        public static UserRepository Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new UserRepository();
-                return instance;
-            }
         }
 
         public List<UserDto> GetUserList()
@@ -84,11 +72,5 @@ namespace Library.Model
             string updateQuery = string.Format("UPDATE user SET {1} = '{2}' WHERE id = {0}", key, updateString, value);
             db.SetData(updateQuery);
         }
-
-        public void AddReturnBook(BookDto bookDto)
-        { userDtoList[userIndex].AddReturnBook(bookDto); }
-
-        public List<BookDto> GetReturnBookList()
-        { return userDtoList[userIndex].GetReturnBookList(); }
     }
 }

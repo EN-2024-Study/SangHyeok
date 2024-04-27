@@ -133,31 +133,24 @@ namespace Library.Model
             db.SetData(insertQuery);
         }
 
-        public void IncreaseBookCount(string key)
-        {
-            string updateQuery = string.Format("UPDATE book SET count = count + 1 WHERE id = {0}", key);
-            db.SetData(updateQuery);
-        }
-
         public void DeleteBook(string key)
         {
             string deleteQuery = string.Format("DELETE FROM book WHERE id = {0}", key);
             db.SetData(deleteQuery);
         }
 
-        public void ModifyBookInfo(string key, string updateString, string value)
+        public void ModifyBookInfo(string key, string updateString, object value)
         {
-            string modifyQuery = string.Format("UPDATE book SET {1} = '{2}' WHERE id = {0}", key, updateString, value);
+            string modifyQuery = null;
+            if (updateString.Equals("count"))
+                modifyQuery = string.Format("UPDATE book SET count = {1} WHERE id = {0}", key, (int)value);
+            else
+                modifyQuery = string.Format("UPDATE book SET {1} = '{2}' WHERE id = {0}", key, (string)updateString, value);
+
             db.SetData(modifyQuery);
         }
 
-        public void ModifyBookCount(string key, int count)
-        {
-            string modifyQuery = string.Format("UPDATE book SET count = {1} WHERE id = {0}", key, count);
-            db.SetData(modifyQuery);
-        }
-
-        public void AddRentalBook(RentalBookDto book)
+        public void RentalBook(RentalBookDto book)
         {
             string query = string.Format("INSERT INTO rentalbook VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}')",
                   book.Id, book.Title, book.Writer, book.Publisher, book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info, book.RentalTime, book.ReturnTime, book.UserId);
@@ -167,7 +160,7 @@ namespace Library.Model
             db.SetData(query);
         }
 
-        public void SubtractRentalBook(RentalBookDto book)
+        public void ReturnBook(RentalBookDto book)
         {
             string query = string.Format("DELETE FROM rentalbook WHERE id = {0}", book.Id);
             db.SetData(query);

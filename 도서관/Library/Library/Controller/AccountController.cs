@@ -14,7 +14,8 @@ namespace Library.Controller
     {
         private MenuSelector menuSelector;
         private InputManager inputManager;
-        private UserRepository user;
+        private UserRepository userRepository;
+        private BookRepository bookRepository;
         private ManagerRepository manager;
         private Screen screen;
         private string[] signUpStrings, modifyStrings, logInStrings;
@@ -24,7 +25,8 @@ namespace Library.Controller
         {
             this.menuSelector = new MenuSelector();
             this.inputManager = new InputManager();
-            this.user = UserRepository.Instance;    // singleton 생성
+            this.userRepository = new UserRepository();
+            this.bookRepository = new BookRepository();
             this.manager = new ManagerRepository(); 
             this.screen = new Screen();
             this.signUpStrings = new string[] { null, null, null, null, null };
@@ -88,7 +90,7 @@ namespace Library.Controller
                     Console.Clear();
                     if (IsSignUpValid())
                     {
-                        user.AddUser(new UserDto(signUpStrings[0], signUpStrings[1], signUpStrings[2],
+                        userRepository.AddUser(new UserDto(signUpStrings[0], signUpStrings[1], signUpStrings[2],
                             signUpStrings[3], signUpStrings[4]));
                         signUpStrings = new string[] { null, null, null, null, null };
                         ExplainingScreen.ExplainSuccessScreen();
@@ -145,16 +147,16 @@ namespace Library.Controller
             void Modify()
             {
                 if (modifyStrings[0] != null && modifyStrings[0] != "")
-                    user.UpdateUser(loggedInId, "password", modifyStrings[0]);
+                    userRepository.UpdateUser(loggedInId, "password", modifyStrings[0]);
 
                 if (modifyStrings[1] != null && modifyStrings[1] != "")
-                    user.UpdateUser(loggedInId, "age", modifyStrings[1]);
+                    userRepository.UpdateUser(loggedInId, "age", modifyStrings[1]);
 
                 if (modifyStrings[2] != null && modifyStrings[2] != "")
-                    user.UpdateUser(loggedInId, "phonenumber", modifyStrings[2]);
+                    userRepository.UpdateUser(loggedInId, "phonenumber", modifyStrings[2]);
 
                 if (modifyStrings[3] != null && modifyStrings[3] != "")
-                    user.UpdateUser(loggedInId, "address", modifyStrings[3]);
+                    userRepository.UpdateUser(loggedInId, "address", modifyStrings[3]);
 
                 modifyStrings = new string[] { null, null, null, null };
             }
@@ -162,7 +164,7 @@ namespace Library.Controller
 
         public void RemoveUser()
         {
-            user.RemoveUser(loggedInId);
+            userRepository.RemoveUser(loggedInId);
             loggedInId = null;
             searchId = null;
         }
@@ -234,7 +236,7 @@ namespace Library.Controller
             if (searchId == null)
                 return false;
 
-            List<UserDto> userList = user.GetUserList();
+            List<UserDto> userList = userRepository.GetUserList();
             for (int i = 0; i < userList.Count; i++)
             {
                 if (searchId.Equals(userList[i].Id))
@@ -256,7 +258,7 @@ namespace Library.Controller
 
             if (modeType == (int)Constants.ModeMenu.UserMode)
             {
-                List<UserDto> userList = user.GetUserList();
+                List<UserDto> userList = userRepository.GetUserList();
                 for (int i = 0; i < userList.Count; i++)
                 {
                     if (userList[i].Id.Equals(logInStrings[0]) && userList[i].Password.Equals(logInStrings[1]))
@@ -281,7 +283,7 @@ namespace Library.Controller
 
         private bool IsSignUpValid()
         {
-            List<UserDto> userList = user.GetUserList();
+            List<UserDto> userList = userRepository.GetUserList();
             foreach (string str in signUpStrings)
             {
                 if (str == null)
@@ -329,23 +331,20 @@ namespace Library.Controller
 
         public bool IsUserRemoveValid()
         {
-            if (user.GetRentalBookList().Count == 0)
-                return true;
-            return false;
+            List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
+            foreach(RentalBookDto book in bookList)
+            {
+                if (book.UserId.Equals(loggedInId))
+                    return false;
+            }
+            return true;
         }
 
         public void ShowUsers()
         {
             Console.SetWindowSize(50, 25);
             Console.Clear();
-            screen.DrawUsers(user.GetUserList());
-        }
-
-        public void ShowUserRentalHistory()
-        {
-            Console.Clear();
-            Console.SetWindowSize(70, 30);
-            screen.DrawUserRentalHistory(user.GetUserList());
+            screen.DrawUsers(userRepository.GetUserList());
         }
 
         public string SearchId

@@ -103,7 +103,7 @@ namespace Library.Controller
                         ControllRentalBookMenu();
                         break;
                     case (int)Constants.UserMode.BookRentalHistory:
-                        bookController.ShowBooks((int)Constants.BookShowType.Rental);
+                        bookController.ShowRentalBooks(17);
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;
@@ -111,7 +111,7 @@ namespace Library.Controller
                         ControllReturnBookMenu();
                         break;
                     case (int)Constants.UserMode.BookReturnHistory:
-                        bookController.ShowBooks((int)Constants.BookShowType.Return);
+                        bookController.ShowReturnBooks(17);
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;
@@ -161,7 +161,7 @@ namespace Library.Controller
                         ControllAccountDeleteMenu();
                         break;
                     case (int)Constants.ManagerMode.RentalHistory:
-                        accountController.ShowUserRentalHistory();
+                        bookController.ShowAllUserRentalHistory();
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;
@@ -177,7 +177,6 @@ namespace Library.Controller
                 return;
             else if (bookController.IsBookIdValid((int)Constants.BookIdType.Rental))
             {
-                bookController.RentalBook();
                 ExplainingScreen.ExplainSuccessScreen();
             }
             else
@@ -187,13 +186,12 @@ namespace Library.Controller
 
         private void ControllReturnBookMenu()
         {
-            bookController.ShowBooks((int)Constants.BookShowType.Rental);
+            bookController.ShowRentalBooks(17);
             bookController.InputBookId();
             if (bookController.BookId == null)
                 return;
             else if (bookController.IsBookIdValid((int)Constants.BookIdType.Return))
             {
-                bookController.ReturnBook();
                 ExplainingScreen.ExplainSuccessScreen();
             }
             else

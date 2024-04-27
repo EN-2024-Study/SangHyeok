@@ -20,7 +20,7 @@ namespace Library.View
         {
             Console.SetCursorPosition(15, 9);
             Console.BackgroundColor = ConsoleColor.Red;
-            Console.Write("이미 " +  str + " 정보가 존재합니다!");
+            Console.Write(str + " 정보가 존재합니다!");
             Console.ResetColor();
         }
 

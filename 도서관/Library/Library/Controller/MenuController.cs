@@ -180,8 +180,6 @@ namespace Library.Controller
                 bookController.RentalBook();
                 ExplainingScreen.ExplainSuccessScreen();
             }
-            else
-                ExplainingScreen.ExplainFailScreen();
             menuSelector.WaitForEscKey();
         }
 
@@ -189,12 +187,11 @@ namespace Library.Controller
         {
             bookController.ShowRentalBooks();
             bookController.InputBookId();
+
             if (bookController.BookId == null)
                 return;
             else if (bookController.IsBookReturnValid())
                 ExplainingScreen.ExplainSuccessScreen();
-            else
-                ExplainingScreen.ExplainFailScreen();
             menuSelector.WaitForEscKey();
         }
 
@@ -207,11 +204,8 @@ namespace Library.Controller
                 menuSelector.WaitForEscKey();
                 ControllModeMenu();
             }
-            else
-            {
-                ExplainingScreen.ExplainFailScreen();
-                menuSelector.WaitForEscKey();
-            }
+
+            menuSelector.WaitForEscKey();
         }
 
         private void ControllAccountModifyMenu()
@@ -223,10 +217,7 @@ namespace Library.Controller
             else if (accountController.IsUserIdValid())
                 accountController.ModifyInformation();
             else
-            {
-                ExplainingScreen.ExplainFailScreen();
                 menuSelector.WaitForEscKey();
-            }
         }
 
         private void ControllAccountDeleteMenu()
@@ -240,8 +231,6 @@ namespace Library.Controller
                 accountController.RemoveUser();
                 ExplainingScreen.ExplainSuccessScreen();
             }
-            else
-                ExplainingScreen.ExplainFailScreen();
             menuSelector.WaitForEscKey();
         }
 
@@ -256,8 +245,7 @@ namespace Library.Controller
                 bookController.DeleteBook();
                 ExplainingScreen.ExplainSuccessScreen();
             }
-            else
-                ExplainingScreen.ExplainFailScreen();
+
             menuSelector.WaitForEscKey();
         }
 

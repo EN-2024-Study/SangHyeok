@@ -83,8 +83,6 @@ namespace Library.Controller
                             bookInfoStrings[2], int.Parse(bookInfoStrings[3]), bookInfoStrings[4], bookInfoStrings[5],
                             bookInfoStrings[6], bookInfoStrings[7]));
                     }
-                    else
-                        ExplainingScreen.ExplainFailScreen();
                     menuSelector.WaitForEscKey();
                     break;
                 }
@@ -115,8 +113,7 @@ namespace Library.Controller
                         bookId = null;
                         ExplainingScreen.ExplainSuccessScreen();
                     }
-                    else
-                        ExplainingScreen.ExplainFailScreen();
+     
                     menuSelector.WaitForEscKey();
                     break;
                 }
@@ -144,11 +141,23 @@ namespace Library.Controller
         private bool IsBookModifyValid()
         {
             if (bookInfoStrings[1] != null && !RegularExpressionManager.IsWriterValid(bookInfoStrings[1]))
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("작가");
                 return false;
+            }
             if (bookInfoStrings[5] != null && !RegularExpressionManager.IsReleaseDateValid(bookInfoStrings[5]))
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("출시일");
                 return false;
+            }
             if (bookInfoStrings[6] != null && !RegularExpressionManager.IsISBNValid(bookInfoStrings[6]))
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("ISBN");
                 return false;
+            }
             if (bookInfoStrings[3] != null)
             {
                 foreach (char value in bookInfoStrings[3])
@@ -156,7 +165,11 @@ namespace Library.Controller
                     if (('a' <= value && value <= 'z') ||   // 숫자가 아니면 false
                     ('A' <= value && value <= 'Z') ||
                     value == '-' || value == ' ')
+                    {
+                        ExplainingScreen.ExplainFailScreen();
+                        ExplainingScreen.ExplainInvalidInput("수량");
                         return false;
+                    }
                 }
             }
 
@@ -166,10 +179,16 @@ namespace Library.Controller
         private bool IsBookAddValid()
         {
             foreach (string str in bookInfoStrings) // 모든 정보가 기입되지 않았다면 false
+            {
                 if (str == null)
+                {
+                    ExplainingScreen.ExplainFailScreen();
+                    ExplainingScreen.ExplainNoInput();
                     return false;
-
-            if (!IsBookModifyValid())   
+                }
+            }
+               
+            if (!IsBookModifyValid())
                 return false;
             return true;
         }
@@ -177,26 +196,43 @@ namespace Library.Controller
         public bool IsBookRentalValid()
         {
             if (bookId == null)
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainNoInput();
                 return false;
+            }
 
             List<BookDto> bookList = bookRepository.GetBookList();
             List<RentalBookDto> rentalBookList = bookRepository.GetRentalBookList();
 
             foreach(RentalBookDto book in rentalBookList)   // 이미 책을 빌렸다면 false
+            {
                 if (book.UserId.Equals(accountController.LoggedInId) && book.Id.Equals(bookId))
-                    return false;   
+                {
+                    ExplainingScreen.ExplainFailScreen();
+                    ExplainingScreen.ExplainDuplicationExist("책");
+                    return false;
+                }
+            }
+                
 
             foreach (BookDto book in bookList)  // 책의 수량이 1이상이면 true
                 if (book.Id.Equals(bookId) && book.Count > 0)
                     return true;
 
+            ExplainingScreen.ExplainFailScreen();
+            ExplainingScreen.ExplainInvalidInput("입력");
             return false;
         }
 
         public bool IsBookReturnValid()
         {
             if (bookId == null)
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainNoInput();
                 return false;
+            }
 
             List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
             foreach (RentalBookDto book in bookList)
@@ -208,24 +244,40 @@ namespace Library.Controller
                     return true;
                 }
             }
+
+            ExplainingScreen.ExplainFailScreen();
+            ExplainingScreen.ExplainInvalidInput("책 아이디");
             return false;
         }
 
         public bool IsBookDeleteValid()
         {
             if (bookId == null)
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainNoInput();
                 return false;
-           
+            }
+
             List<RentalBookDto> rentalBookList = bookRepository.GetRentalBookList();
             List<BookDto> bookList = bookRepository.GetBookList();
 
             foreach(RentalBookDto book in rentalBookList)   // 도서가 대여 중이라면 false
+            {
                 if (book.Id.Equals(bookId))
+                {
+                    ExplainingScreen.ExplainFailScreen();
+                    ExplainingScreen.ExplainDuplicationExist("빌린 도서");
                     return false;
+                }
+            }
+                
             foreach (BookDto book in bookList)  
                 if (book.Id.Equals(bookId))
                     return true;
-            
+
+            ExplainingScreen.ExplainFailScreen();
+            ExplainingScreen.ExplainInvalidInput("책 아이디");
             return false;
         }
 

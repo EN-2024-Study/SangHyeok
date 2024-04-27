@@ -126,12 +126,8 @@ namespace Library.Controller
                         menuSelector.WaitForEscKey();
                         return;
                     }
-                    else
-                    {
-                        ExplainingScreen.ExplainFailScreen();
-                        menuSelector.WaitForEscKey();
-                        Console.Clear();
-                    }
+                    menuSelector.WaitForEscKey();
+                    Console.Clear();
                 }
                 else
                     InputInformationToModify(menuSelector.menuValue);
@@ -227,7 +223,11 @@ namespace Library.Controller
         public bool IsUserIdValid()
         {
             if (searchId == null)
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainNoInput();
                 return false;
+            }
 
             List<UserDto> userList = userRepository.GetUserList();
             for (int i = 0; i < userList.Count; i++)
@@ -238,6 +238,9 @@ namespace Library.Controller
                     return true;
                 }
             }
+
+            ExplainingScreen.ExplainFailScreen();
+            ExplainingScreen.ExplainInvalidInput("유저 아이디");
             return false;
         }
 
@@ -306,14 +309,34 @@ namespace Library.Controller
                 }
             }
 
-            if (!RegularExpressionManager.IsAccountIdValid(signUpStrings[0]) ||
-               !RegularExpressionManager.IsAccountPasswordValid(signUpStrings[1]) ||
-               !RegularExpressionManager.IsAgeValid(signUpStrings[2]) ||
-               !RegularExpressionManager.IsPhoneNumberValid(signUpStrings[3]) ||
-               !RegularExpressionManager.IsAddressValid(signUpStrings[4]))
+            if (!RegularExpressionManager.IsAccountIdValid(signUpStrings[0]))
             {
                 ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainInvalidInput("입력");
+                ExplainingScreen.ExplainInvalidInput("아이디");
+                return false;
+            }
+            if (!RegularExpressionManager.IsAccountPasswordValid(signUpStrings[1]))
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("비밀번호");
+                return false;
+            }
+            if (!RegularExpressionManager.IsAgeValid(signUpStrings[2]))
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("나이");
+                return false;
+            }
+            if (!RegularExpressionManager.IsPhoneNumberValid(signUpStrings[3]))
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("휴대폰");
+                return false;
+            }
+            if (!RegularExpressionManager.IsAddressValid(signUpStrings[4]))
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("주소");
                 return false;
             }
 
@@ -322,25 +345,29 @@ namespace Library.Controller
 
         public bool IsModifyValid()
         {
-            if (modifyStrings[0] != null)
+            if (modifyStrings[0] != null && !RegularExpressionManager.IsAccountPasswordValid(modifyStrings[0]))
             {
-                if (!RegularExpressionManager.IsAccountPasswordValid(modifyStrings[0]))
-                    return false;
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("비밀번호");
+                return false;
             }
-            if (modifyStrings[1] != null)
+            if (modifyStrings[1] != null && !RegularExpressionManager.IsAgeValid(modifyStrings[1]))
             {
-                if (!RegularExpressionManager.IsAgeValid(modifyStrings[1]))
-                    return false;
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("나이");
+                return false;
             }
-            if (modifyStrings[2] != null)
+            if (modifyStrings[2] != null && !RegularExpressionManager.IsPhoneNumberValid(modifyStrings[2]))
             {
-                if (!RegularExpressionManager.IsPhoneNumberValid(modifyStrings[2]))
-                    return false;
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("휴대폰 번호");
+                return false;
             }
-            if (modifyStrings[3] != null)
+            if (modifyStrings[3] != null && !RegularExpressionManager.IsAddressValid(modifyStrings[3]))
             {
-                if (!RegularExpressionManager.IsAddressValid(modifyStrings[3]))
-                    return false;
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("주소");
+                return false;
             }
             return true;
         }
@@ -350,8 +377,12 @@ namespace Library.Controller
             List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
             foreach(RentalBookDto book in bookList)
             {
-                if (book.UserId.Equals(loggedInId))
+                if (book.UserId.Equals(loggedInId)) // 빌린 도서가 존재한다면 false
+                {
+                    ExplainingScreen.ExplainFailScreen();
+                    ExplainingScreen.ExplainDuplicationExist("빌린 도서");
                     return false;
+                }
             }
             return true;
         }

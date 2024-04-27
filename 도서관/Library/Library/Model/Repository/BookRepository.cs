@@ -30,26 +30,19 @@ namespace Library.Model
             string selectQuery = string.Format("SELECT * FROM book");
             List<BookDto> bookList = new List<BookDto>();
 
-            try
-            {
-                db.MySql.Open();
-                MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
-                MySqlDataReader table = command.ExecuteReader();
+            db.MySql.Open();
+            MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
+            MySqlDataReader table = command.ExecuteReader();
 
-                while (table.Read())
-                {
-                    string[] bookInfo = GetBookInfo(table);
-                    bookList.Add(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
-                        bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
-                        bookInfo[7], bookInfo[8]));
-                }
-                db.MySql.Close();
-            }
-            catch (Exception exe)
+            while (table.Read())
             {
-                Console.WriteLine(exe.Message);
+                string[] bookInfo = GetBookInfo(table);
+                bookList.Add(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
+                    bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
+                    bookInfo[7], bookInfo[8]));
             }
-
+            db.MySql.Close();
+           
             return bookList;
         }
 
@@ -59,28 +52,22 @@ namespace Library.Model
             List<RentalBookDto> rentalBookList = new List<RentalBookDto>();
             selectQuery = string.Format("SELECT * FROM rentalbook");
 
-            try
-            {
-                db.MySql.Open();
-                MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
-                MySqlDataReader table = command.ExecuteReader();
+            db.MySql.Open();
+            MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
+            MySqlDataReader table = command.ExecuteReader();
 
-                while (table.Read())
-                {
-                    string[] bookInfo = GetBookInfo(table);
-                    string rentalTime = table["rentaltime"].ToString();
-                    string returnTime = table["returntime"].ToString();
-                    string userId = table["userid"].ToString();
-                    rentalBookList.Add(new RentalBookDto(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
-                        bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
-                        bookInfo[7], bookInfo[8]), userId, rentalTime, returnTime));
-                }
-                db.MySql.Close();
-            }
-            catch (Exception exe)
+            while (table.Read())
             {
-                Console.WriteLine(exe.Message);
+                string[] bookInfo = GetBookInfo(table);
+                string rentalTime = table["rentaltime"].ToString();
+                string returnTime = table["returntime"].ToString();
+                string userId = table["userid"].ToString();
+                rentalBookList.Add(new RentalBookDto(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
+                    bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
+                    bookInfo[7], bookInfo[8]), userId, rentalTime, returnTime));
             }
+            db.MySql.Close();
+          
             return rentalBookList;
         }
 
@@ -90,26 +77,20 @@ namespace Library.Model
             List<ReturnBookDto> returnBookList = new List<ReturnBookDto>();
             selectQuery = string.Format("SELECT * FROM returnbook");
 
-            try
-            {
-                db.MySql.Open();
-                MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
-                MySqlDataReader table = command.ExecuteReader();
+            db.MySql.Open();
+            MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
+            MySqlDataReader table = command.ExecuteReader();
 
-                while (table.Read())
-                {
-                    string[] bookInfo = GetBookInfo(table);
-                    string userId = table["userid"].ToString();
-                    returnBookList.Add(new ReturnBookDto(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
-                        bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
-                        bookInfo[7], bookInfo[8]), userId));
-                }
-                db.MySql.Close();
-            }
-            catch (Exception exe)
+            while (table.Read())
             {
-                Console.WriteLine(exe.Message);
+                string[] bookInfo = GetBookInfo(table);
+                string userId = table["userid"].ToString();
+                returnBookList.Add(new ReturnBookDto(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
+                    bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
+                    bookInfo[7], bookInfo[8]), userId));
             }
+            db.MySql.Close();
+          
             return returnBookList;
         }
 
@@ -154,11 +135,11 @@ namespace Library.Model
 
         public void RentalBook(RentalBookDto book)
         {
-            string query = string.Format("INSERT INTO rentalbook VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}')",
-                  book.Id, book.Title, book.Writer, book.Publisher, book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info, book.RentalTime, book.ReturnTime, book.UserId);
+            string query = string.Format("UPDATE book SET count = count - 1 WHERE id = {0}", book.Id);
             db.SetData(query);
 
-            query = string.Format("UPDATE book SET count = count - 1 WHERE id = {0}", book.Id);
+            query = string.Format("INSERT INTO rentalbook VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}')",
+                  book.Id, book.Title, book.Writer, book.Publisher, book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info, book.RentalTime, book.ReturnTime, book.UserId);
             db.SetData(query);
         }
 

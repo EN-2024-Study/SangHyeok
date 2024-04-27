@@ -103,7 +103,7 @@ namespace Library.Controller
                         ControllRentalBookMenu();
                         break;
                     case (int)Constants.UserMode.BookRentalHistory:
-                        bookController.ShowRentalBooks(17);
+                        bookController.ShowRentalBooks();
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;
@@ -111,7 +111,7 @@ namespace Library.Controller
                         ControllReturnBookMenu();
                         break;
                     case (int)Constants.UserMode.BookReturnHistory:
-                        bookController.ShowReturnBooks(17);
+                        bookController.ShowReturnBooks();
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;
@@ -175,8 +175,9 @@ namespace Library.Controller
             bookController.InputBookId();
             if (bookController.BookId == null)
                 return;
-            else if (bookController.IsBookIdValid((int)Constants.BookIdType.Rental))
+            else if (bookController.IsBookRentalValid())
             {
+                bookController.RentalBook();
                 ExplainingScreen.ExplainSuccessScreen();
             }
             else
@@ -186,14 +187,12 @@ namespace Library.Controller
 
         private void ControllReturnBookMenu()
         {
-            bookController.ShowRentalBooks(17);
+            bookController.ShowRentalBooks();
             bookController.InputBookId();
             if (bookController.BookId == null)
                 return;
-            else if (bookController.IsBookIdValid((int)Constants.BookIdType.Return))
-            {
+            else if (bookController.IsBookReturnValid())
                 ExplainingScreen.ExplainSuccessScreen();
-            }
             else
                 ExplainingScreen.ExplainFailScreen();
             menuSelector.WaitForEscKey();
@@ -252,7 +251,7 @@ namespace Library.Controller
             bookController.InputBookId();
             if (bookController.BookId == null)
                 return;
-            else if (bookController.IsBookIdValid((int)Constants.BookIdType.Delete))
+            else if (bookController.IsBookDeleteValid())
             {
                 bookController.DeleteBook();
                 ExplainingScreen.ExplainSuccessScreen();
@@ -268,13 +267,8 @@ namespace Library.Controller
             bookController.InputBookId();
             if (bookController.BookId == null)
                 return;
-            else if (bookController.IsBookIdValid((int)Constants.BookIdType.Modify))
+            else 
                 bookController.ModifyBook();
-            else
-            {
-                ExplainingScreen.ExplainFailScreen();
-                menuSelector.WaitForEscKey();
-            }
         }
     }
 }

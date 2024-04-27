@@ -8,6 +8,30 @@ namespace Library.View
 {
     public class ExplainingScreen
     {
+        public static void ExplainInvalidInput(string str)
+        {
+            Console.SetCursorPosition(15, 9);
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.Write(str + " 정보가 맞지 않습니다!");
+            Console.ResetColor();
+        }
+
+        public static void ExplainDuplicationExist(string str)
+        {
+            Console.SetCursorPosition(15, 9);
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.Write("이미 " +  str + " 정보가 존재합니다!");
+            Console.ResetColor();
+        }
+
+        public static void ExplainNoInput()
+        {
+            Console.SetCursorPosition(15, 9);
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.Write("모두 입력 후 Enter를 누르세요!");
+            Console.ResetColor();
+        }
+
         public static void ExplainInputId(string str)
         {
             Console.SetCursorPosition(20, 13);

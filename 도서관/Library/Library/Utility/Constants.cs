@@ -82,14 +82,6 @@ namespace Library.Utility
             RentalHistory
         }
 
-        public enum BookIdType
-        {
-            Rental,
-            Return,
-            Modify,
-            Delete
-        }
-
         public enum BookSearchMenu
         {
             Title,

@@ -59,31 +59,33 @@ namespace Library.View
             Console.Write("유저 아이디      :" + userId);
         }
       
-        public void DrawRentalBooks(int y, string userId, List<RentalBookDto> bookList) // 초기 y = 17
+        public void DrawRentalBooks(int y, string userId, List<RentalBookDto> bookList)
         {
             DrawUserId(y, userId);
             foreach(RentalBookDto book in bookList)
             {
                 DrawBookInfo(y + 2, book.Id, book.Title, book.Writer, book.Publisher,
                     book.Count.ToString(), book.Price, book.ReleaseDate, book.ISBN, book.Info);
-                Console.SetCursorPosition(0, y + 11);
+                Console.SetCursorPosition(0, y + 12);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("빌린 시간   :" + book.RentalTime);
-                Console.SetCursorPosition(0, y + 12);
+                Console.SetCursorPosition(0, y + 13);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("반납 시간   :" + book.ReturnTime);
                 Console.ResetColor();
-                y += 13;
+                y += 12;
             }
         }
 
-        public void DrawReturnBooks(int y, string userId, List<ReturnBookDto> bookList)
+        public void DrawReturnBooks(string userId, List<ReturnBookDto> bookList)
         {
+            int y = 17;
             DrawUserId(y, userId);
             foreach (ReturnBookDto book in bookList)
             {
                 DrawBookInfo(y + 2, book.Id, book.Title, book.Writer, book.Publisher,
                     book.Count.ToString(), book.Price, book.ReleaseDate, book.ISBN, book.Info);
+                y += 12;
             }
         }
 

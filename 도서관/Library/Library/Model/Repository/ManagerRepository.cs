@@ -23,25 +23,19 @@ namespace Library.Model
         {
             ManagerVo manager = null;
             string selectQuery = string.Format("SELECT * FROM manager");
-            try
-            {
-                db.MySql.Open();
-                MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
-                MySqlDataReader table = command.ExecuteReader();
+           
+            db.MySql.Open();
+            MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
+            MySqlDataReader table = command.ExecuteReader();
 
-                while (table.Read())
-                {
-                    string id = table["id"].ToString();
-                    string password = table["password"].ToString();
-                    manager = new ManagerVo(id, password);
-                    break;
-                }
-                db.MySql.Close();
-            }
-            catch (Exception exe)
+            while (table.Read())
             {
-                Console.WriteLine(exe.Message);
+                string id = table["id"].ToString();
+                string password = table["password"].ToString();
+                manager = new ManagerVo(id, password);
+                break;
             }
+            db.MySql.Close();
 
             return manager;
         }

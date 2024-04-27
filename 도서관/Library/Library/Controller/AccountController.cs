@@ -58,12 +58,9 @@ namespace Library.Controller
                         menuSelector.WaitForEscKey();
                         return true;
                     }
-                    else
-                    {
-                        ExplainingScreen.ExplainFailScreen();
-                        menuSelector.WaitForEscKey();
-                        Console.Clear();
-                    }
+                   
+                    menuSelector.WaitForEscKey();
+                    Console.Clear();
                 }
                 else
                     InputLogIn(menuSelector.menuValue);
@@ -97,12 +94,8 @@ namespace Library.Controller
                         menuSelector.WaitForEscKey();
                         return true;
                     }
-                    else
-                    {
-                        ExplainingScreen.ExplainFailScreen();
-                        menuSelector.WaitForEscKey();
-                        Console.Clear();
-                    }
+                    menuSelector.WaitForEscKey();
+                    Console.Clear();
                 }
                 else
                     InputSignUp(menuSelector.menuValue);
@@ -251,10 +244,18 @@ namespace Library.Controller
         private bool IsLogInValid(int modeType)
         {
             if (logInStrings[0] == null || logInStrings[1] == null)
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainNoInput();
                 return false;
+            }
             else if (!RegularExpressionManager.IsAccountIdValid(logInStrings[0]) ||
                 !RegularExpressionManager.IsAccountPasswordValid(logInStrings[1]))
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("로그인");
                 return false;
+            }
 
             if (modeType == (int)Constants.ModeMenu.UserMode)
             {
@@ -278,6 +279,7 @@ namespace Library.Controller
                 }
             }
 
+            ExplainingScreen.ExplainInvalidInput("로그인");
             return false;
         }
 
@@ -287,19 +289,33 @@ namespace Library.Controller
             foreach (string str in signUpStrings)
             {
                 if (str == null)
+                {
+                    ExplainingScreen.ExplainFailScreen();
+                    ExplainingScreen.ExplainNoInput();
                     return false;
+                }
             }
 
             foreach (UserDto value in userList)
+            {
                 if (value.Id.Equals(signUpStrings[0]))
+                {
+                    ExplainingScreen.ExplainFailScreen();
+                    ExplainingScreen.ExplainDuplicationExist("아이디");
                     return false;
+                }
+            }
 
             if (!RegularExpressionManager.IsAccountIdValid(signUpStrings[0]) ||
                !RegularExpressionManager.IsAccountPasswordValid(signUpStrings[1]) ||
                !RegularExpressionManager.IsAgeValid(signUpStrings[2]) ||
                !RegularExpressionManager.IsPhoneNumberValid(signUpStrings[3]) ||
                !RegularExpressionManager.IsAddressValid(signUpStrings[4]))
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("입력");
                 return false;
+            }
 
             return true;
         }

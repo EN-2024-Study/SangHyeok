@@ -19,7 +19,8 @@ namespace Library.Controller
         private ManagerRepository manager;
         private Screen screen;
         private string[] signUpStrings, modifyStrings, logInStrings;
-        private string searchId, loggedInId;
+        private string searchId;
+        private static string loggedInId;
 
         public AccountController()
         {
@@ -33,7 +34,6 @@ namespace Library.Controller
             this.modifyStrings = new string[] { null, null, null, null };
             this.logInStrings = new string[] { null, null };
             this.searchId = null;
-            this.loggedInId = null;
         }
 
         public bool IsLogIn(int modeType)
@@ -259,10 +259,9 @@ namespace Library.Controller
             if (modeType == (int)Constants.ModeMenu.UserMode)
             {
                 List<UserDto> userList = userRepository.GetUserList();
-
-                for (int i = 0; i < userList.Count; i++)
+                foreach (UserDto user in userList)
                 {
-                    if (userList[i].Id.Equals(logInStrings[0]) && userList[i].Password.Equals(logInStrings[1]))
+                    if (user.Id.Equals(logInStrings[0]) && user.Password.Equals(logInStrings[1]))
                     {
                         loggedInId = logInStrings[0];
                         logInStrings = new string[] { null, null };

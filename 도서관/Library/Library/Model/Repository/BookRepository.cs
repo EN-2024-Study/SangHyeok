@@ -43,7 +43,7 @@ namespace Library.Model
                         bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
                         bookInfo[7], bookInfo[8]));
                 }
-                
+                db.MySql.Close();
             }
             catch (Exception exe)
             {
@@ -70,11 +70,12 @@ namespace Library.Model
                     string[] bookInfo = GetBookInfo(table);
                     string rentalTime = table["rentaltime"].ToString();
                     string returnTime = table["returntime"].ToString();
-                    string userId = table["returntime"].ToString();
+                    string userId = table["userid"].ToString();
                     rentalBookList.Add(new RentalBookDto(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
                         bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
-                        bookInfo[7], bookInfo[8]), rentalTime, returnTime, userId));
+                        bookInfo[7], bookInfo[8]), userId, rentalTime, returnTime));
                 }
+                db.MySql.Close();
             }
             catch (Exception exe)
             {
@@ -103,6 +104,7 @@ namespace Library.Model
                         bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
                         bookInfo[7], bookInfo[8]), userId));
                 }
+                db.MySql.Close();
             }
             catch (Exception exe)
             {

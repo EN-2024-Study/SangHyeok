@@ -28,7 +28,6 @@ namespace Library.Model
             try
             {
                 db.MySql.Open();
-
                 MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
                 MySqlDataReader table = command.ExecuteReader();
 
@@ -41,6 +40,7 @@ namespace Library.Model
                     string address = table["address"].ToString();
                     userList.Add(new UserDto(id, password, age, phoneNumber, address));
                 }
+                db.MySql.Close();
             }
             catch (Exception exe)
             {

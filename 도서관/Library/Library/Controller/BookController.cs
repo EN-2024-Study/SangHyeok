@@ -259,7 +259,7 @@ namespace Library.Controller
 
             List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
             List<RentalBookDto> rentalBookList = new List<RentalBookDto>();
-            foreach(RentalBookDto book in bookList)
+            foreach (RentalBookDto book in bookList)
             {
                 if (accountController.LoggedInId.Equals(book.UserId))
                     rentalBookList.Add(book);

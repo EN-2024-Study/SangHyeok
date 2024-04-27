@@ -9,7 +9,7 @@ using Library.View;
 
 namespace Library.Utility
 {
-    public class DbConnector
+    public class DbConnector    // singleton
     {
         private static DbConnector instance;
         private string connectionAddress;

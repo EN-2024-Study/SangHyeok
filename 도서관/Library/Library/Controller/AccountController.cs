@@ -107,9 +107,9 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
-            Console.SetWindowSize(70, 25);
-            Console.Clear();
+            Console.SetWindowSize(70, 35);
 
+            ShowUser();
             while (isSelected)
             {
                 ExplainingScreen.DrawModifyLogo();
@@ -387,11 +387,29 @@ namespace Library.Controller
             return true;
         }
 
-        public void ShowUsers()
+        public void ShowAllUser()
         {
             Console.SetWindowSize(50, 25);
             Console.Clear();
             screen.DrawUsers(userRepository.GetUserList());
+        }
+
+        private void ShowUser()
+        {
+            Console.Clear();
+            List<UserDto> userList = userRepository.GetUserList();
+            UserDto loggedUser = null;
+
+            foreach(UserDto user in userList)
+            {
+                if (user.Id.Equals(loggedInId))
+                {
+                    loggedUser = user;
+                    break;
+                }
+            }
+
+            screen.DrawUserInfo(20, loggedUser);
         }
 
         public string SearchId

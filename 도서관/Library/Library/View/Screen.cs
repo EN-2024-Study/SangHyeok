@@ -37,15 +37,7 @@ namespace Library.View
 
             foreach(UserDto user in userList)
             {
-                DrawUserId(y, user.Id);
-                Console.SetCursorPosition(0, y + 2);
-                Console.Write("유저 이름        :" + user.Password);
-                Console.SetCursorPosition(0, y + 3);
-                Console.Write("유저 나이        :" + user.Age);
-                Console.SetCursorPosition(0, y + 4);
-                Console.Write("유저 휴대폰 번호 :" + user.PhoneNumber);
-                Console.SetCursorPosition(0, y + 5);
-                Console.Write("유저 주소        :" + user.Address);
+                DrawUserInfo(y, user);
                 y += 6;
             }
             Console.ResetColor();
@@ -57,6 +49,19 @@ namespace Library.View
             Console.Write("=====================================");
             Console.SetCursorPosition(0, y + 1);
             Console.Write("유저 아이디      :" + userId);
+        }
+
+        public void DrawUserInfo(int y, UserDto user)
+        {
+            DrawUserId(y, user.Id);
+            Console.SetCursorPosition(0, y + 2);
+            Console.Write("유저 이름        :" + user.Password);
+            Console.SetCursorPosition(0, y + 3);
+            Console.Write("유저 나이        :" + user.Age);
+            Console.SetCursorPosition(0, y + 4);
+            Console.Write("유저 휴대폰 번호 :" + user.PhoneNumber);
+            Console.SetCursorPosition(0, y + 5);
+            Console.Write("유저 주소        :" + user.Address);
         }
       
         public void DrawRentalBooks(int y, string userId, List<RentalBookDto> bookList)

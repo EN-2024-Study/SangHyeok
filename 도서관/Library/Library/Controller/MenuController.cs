@@ -210,7 +210,7 @@ namespace Library.Controller
 
         private void ControllAccountModifyMenu()
         {
-            accountController.ShowUsers();
+            accountController.ShowAllUser();
             accountController.InputUserId();
             if (accountController.SearchId == null)
                 return;
@@ -222,7 +222,7 @@ namespace Library.Controller
 
         private void ControllAccountDeleteMenu()
         {
-            accountController.ShowUsers();
+            accountController.ShowAllUser();
             accountController.InputUserId();
             if (accountController.SearchId == null)
                 return;

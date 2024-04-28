@@ -214,7 +214,7 @@ namespace Library.Controller
                 if (book.UserId.Equals(accountController.LoggedInId))
                 {
                     DateTime now = DateTime.Now;
-                    DateTime returnTime = DateTime.ParseExact(book.RentalTime, "yyyy-MM-dd HH:mm:ss", null);
+                    DateTime returnTime = DateTime.ParseExact(book.ReturnTime, "yyyy-MM-dd HH:mm:ss", null);
                     if (now > returnTime)   // 연체 된 도서가 있다면 false
                     {
                         ExplainingScreen.ExplainFailScreen();

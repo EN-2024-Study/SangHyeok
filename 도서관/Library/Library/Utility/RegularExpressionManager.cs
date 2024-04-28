@@ -44,8 +44,9 @@ namespace Library.Utility
 
         public static bool IsAddressValid(string address)
         {
-            Regex regex = new Regex(@"^[가-힣]{2}[구]{1}$");
-            if (regex.IsMatch(address))
+            Regex regex1 = new Regex(@"^[가-힣]{1,6}[도시]{1} [가-힣]{1,6}[시구]{1}$");
+            Regex regex2 = new Regex(@"^[가-힣]{1,6}[도시]{1} [가-힣]{1,2}[구]{1} [가-힣]{1,6}[동]{1}$");
+            if (regex1.IsMatch(address) || regex2.IsMatch(address))
                 return true;
             return false;
         }

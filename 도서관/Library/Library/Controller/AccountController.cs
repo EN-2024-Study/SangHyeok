@@ -78,6 +78,7 @@ namespace Library.Controller
             while (isSelected)
             {
                 ExplainingScreen.DrawSIgnUpLogo();
+                ExplainingScreen.ExplainInputAddress();
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.SignUp);
                 if (!isSelected)
                     continue;
@@ -112,6 +113,7 @@ namespace Library.Controller
             while (isSelected)
             {
                 ExplainingScreen.DrawModifyLogo();
+                ExplainingScreen.ExplainInputAddress();
                 isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.AccountModify);
                 if (!isSelected)
                     continue;

@@ -131,7 +131,6 @@ namespace Library.Utility
                     length = 5;
                     break;
                 case (int)Constants.InputType.ModifyAge:
-                case (int)Constants.InputType.ModifyAddress:
                 case (int)Constants.InputType.SignUpAge:
                 case (int)Constants.InputType.Count:
                     length = 4;
@@ -143,7 +142,8 @@ namespace Library.Utility
                     length = 15;
                     break;
                 case (int)Constants.InputType.SignUpAddress:
-                    length = 20;
+                case (int)Constants.InputType.ModifyAddress:
+                    length = 25;
                     break;
                 case (int)Constants.InputType.BookId:
                     length = 3;

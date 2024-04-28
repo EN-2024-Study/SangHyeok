@@ -59,6 +59,12 @@ namespace Library.View
             Console.Write("8 자리 정수 입력");
         }
 
+        public static void ExplainInputAddress()
+        {
+            Console.SetCursorPosition(0, 19);
+            Console.Write("(주소 형식 : XX시 XX구 or XX시 XX구 XX동)");
+        }
+
         public static void ExplainArrowKeys()
         {
             Console.SetCursorPosition(40, 18);

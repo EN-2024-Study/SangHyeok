@@ -13,9 +13,9 @@ namespace Library.Utility
         {
             Console.CursorVisible = true;
             Tuple<int, int> coordinate = GetCoordinate(digitType);
-            int stringLength = GetStringLength(digitType);
             int x = coordinate.Item1;
             int y = coordinate.Item2;
+            int stringLength = GetStringLength(digitType);
             bool isError = false;
 
             char[] inputString = new char[stringLength];
@@ -25,16 +25,6 @@ namespace Library.Utility
             EraseField(x, y, stringLength);
             while (!isError)
             {
-                if (index == stringLength)  // 입력 길이 초과했을 때
-                {
-                    inputString = new char[stringLength];   // 초기화
-                    bytes = new int[stringLength];
-                    index = 0;
-
-                    EraseField(x, y, stringLength);
-                    continue;
-                }
-
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true); // 입력 받기
 
                 if (keyInfo.Key == ConsoleKey.Enter)
@@ -55,6 +45,9 @@ namespace Library.Utility
                 }
                 else if (char.IsLetterOrDigit(keyInfo.KeyChar) || keyInfo.KeyChar == '-' || keyInfo.KeyChar == ' ')
                 {
+                    if (index == stringLength)  // 입력 길이 초과했을 때 더이상 입력받지 않기
+                        continue;
+
                     inputString[index] = keyInfo.KeyChar;   // 입력값 저장
                     bytes[index++] = Encoding.Default.GetByteCount(keyInfo.KeyChar.ToString());
                     Console.Write(keyInfo.KeyChar);

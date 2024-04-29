@@ -28,7 +28,6 @@ namespace Library.Controller
 
             while (isSelected)
             {
-                Console.SetWindowSize(70, 25);
                 Console.Clear();
                 ExplainingScreen.DrawStartLogo();
                 ExplainingScreen.ExplainArrowKeys();
@@ -57,7 +56,6 @@ namespace Library.Controller
 
             while (isSelected)
             {
-                Console.SetWindowSize(70, 25);
                 Console.Clear();
                 ExplainingScreen.DrawStartLogo();
 
@@ -86,7 +84,6 @@ namespace Library.Controller
 
             while (isSelected)
             {
-                Console.SetWindowSize(70, 20);
                 Console.Clear();
                 ExplainingScreen.DrawLibraryLogo();
 
@@ -121,6 +118,12 @@ namespace Library.Controller
                     case (int)Enums.UserMode.AccountDelete:
                         ControllUserDeleteMenu();
                         break;
+                    case (int)Enums.UserMode.NaverSearch:
+
+                        break;
+                    case (int)Enums.UserMode.RequestBookHistory:
+
+                        break;
                 }
             }
         }
@@ -132,7 +135,6 @@ namespace Library.Controller
 
             while (isSelected)
             {
-                Console.SetWindowSize(70, 20);
                 Console.Clear();
                 ExplainingScreen.DrawLibraryLogo();
 
@@ -164,6 +166,15 @@ namespace Library.Controller
                         bookController.ShowAllUserRentalHistory();
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
+                        break;
+                    case (int)Enums.ManagerMode.NaverSearch:
+
+                        break;
+                    case (int)Enums.ManagerMode.LogManage:
+
+                        break;
+                    case (int)Enums.ManagerMode.RequestBook:
+
                         break;
                 }
             }

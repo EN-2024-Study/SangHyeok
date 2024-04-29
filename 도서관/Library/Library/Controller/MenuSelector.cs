@@ -79,15 +79,15 @@ namespace Library.Controller
                 case (int)Enums.MenuType.SignUp:
                     length = 6;
                     break;
-                case (int)Enums.MenuType.UserMode:
-                case (int)Enums.MenuType.ManagerMode:
+                case (int)Enums.MenuType.BookModify:
                     length = 7;
                     break;
+                case (int)Enums.MenuType.UserMode:
                 case (int)Enums.MenuType.BookAdd:
                     length = 9;
                     break;
-                case (int)Enums.MenuType.BookModify:
-                    length = 7;
+                case (int)Enums.MenuType.ManagerMode:
+                    length = 10;
                     break;
             }
             return length;

@@ -21,10 +21,10 @@ namespace Library.Controller
 
         public BookController(MenuSelector menuSelector, AccountController accountController)
         {
-            this.bookDao = new BookDao();
-            this.userDao = new UserDao();
             this.menuSelector = menuSelector;
             this.accountController = accountController;
+            this.bookDao = new BookDao();
+            this.userDao = new UserDao();
             this.inputManager = new InputManager();
             this.screen = new Screen();
             this.searchedBookStrings = new string[] { null, null, null };
@@ -312,7 +312,6 @@ namespace Library.Controller
         public void ShowBooks(int typeValue)
         {
             Console.Clear();
-            Console.SetWindowSize(70, 30);
             switch (typeValue)
             {
                 case (int)Enums.BookShowType.All:
@@ -327,7 +326,7 @@ namespace Library.Controller
         public void ShowRentalBooks()
         {
             Console.Clear();
-            Console.SetWindowSize(70, 30);
+            Console.SetWindowSize(70, 40);
 
             List<RentalBookDto> bookList = bookDao.GetRentalBookList();
             List<RentalBookDto> rentalBookList = new List<RentalBookDto>();
@@ -342,7 +341,7 @@ namespace Library.Controller
         public void ShowReturnBooks()
         {
             Console.Clear();
-            Console.SetWindowSize(70, 30);
+            Console.SetWindowSize(70, 40);
 
             List<ReturnBookDto> bookList = bookDao.GetReturnBookList();
             List<ReturnBookDto> returnBookList = new List<ReturnBookDto>();
@@ -357,7 +356,7 @@ namespace Library.Controller
         public void ShowAllUserRentalHistory()
         {
             Console.Clear();
-            Console.SetWindowSize(70, 30);
+            Console.SetWindowSize(70, 40);
 
             int y = 17;
             List<UserDto> userList = userDao.GetUserList();
@@ -387,7 +386,7 @@ namespace Library.Controller
                 }
             }
 
-            Console.SetWindowSize(70, 35);
+            Console.SetWindowSize(70, 45);
             Console.Clear();
             screen.DrawBookInfo(20, book);
         }

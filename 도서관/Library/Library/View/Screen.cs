@@ -3,6 +3,7 @@ using Library.Model.DtoVo;
 using Library.Constants;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Library.View
 {
@@ -10,6 +11,7 @@ namespace Library.View
     {
         public void DrawMenu(int screenType, int selectedMenu, bool isEnter)
         {
+            SetWindowSize(screenType);
             string[] menuStrings = SetStrings(screenType);
             Tuple<int, int> coordinate = GetCoordinate(screenType);
 
@@ -92,6 +94,7 @@ namespace Library.View
 
         public void DrawBooks(List<BookDto> bookList)
         {
+            Console.SetWindowSize(70, 40);
             Console.ForegroundColor = ConsoleColor.Yellow;
             int y = 17;
             foreach (BookDto book in bookList)
@@ -156,6 +159,31 @@ namespace Library.View
             return coordinate;
         }
 
+        private void SetWindowSize(int screenType)
+        {
+            switch (screenType)
+            {
+                case (int)Enums.MenuType.Mode:
+                case (int)Enums.MenuType.LogInSignUp:
+                case (int)Enums.MenuType.LogIn:
+                case (int)Enums.MenuType.SignUp:
+                case (int)Enums.MenuType.AccountModify:
+                    Console.SetWindowSize(70, 25);
+                    break;
+                case (int)Enums.MenuType.UserMode:
+                case (int)Enums.MenuType.ManagerMode:
+                case (int)Enums.MenuType.BookAdd:
+                    Console.SetWindowSize(70, 22);
+                    break;
+                case (int)Enums.MenuType.BookModify:
+                    Console.SetWindowSize(70, 35);
+                    break;
+                case (int)Enums.MenuType.BookSearch:
+                    Console.SetWindowSize(70, 40);
+                    break;
+            }
+        }
+
         private string[] SetStrings(int screenType)
         {
             string[] menuString = null;
@@ -173,14 +201,14 @@ namespace Library.View
                     break;
                 case (int)Enums.MenuType.UserMode:
                     menuString = new string[] { "도서 찾기", "도서 대여",
-                    "도서 대여 내역", "도서 반납", "도서 반납 내역", "정보 수정", "계정 삭제"};
+                    "도서 대여 내역", "도서 반납", "도서 반납 내역", "정보 수정", "계정 삭제", "네이버 검색", "요청 도서 내역"};
                     break;
                 case (int)Enums.MenuType.BookSearch:
                     menuString = new string[] { "제목 찾기   :", "작가명 찾기 :", "출판사 찾기 :", "<확인>" };
                     break;
                 case (int)Enums.MenuType.ManagerMode:
                     menuString = new string[] { "도서 찾기", "도서 추가",
-                    "도서 삭제", "도서 수정", "유저 정보 수정", "유저 삭제", "대여 내역"};
+                    "도서 삭제", "도서 수정", "유저 정보 수정", "유저 삭제", "대여 내역", "네이버 검색", "로그 관리", "요청 도서"};
                     break;
                 case (int)Enums.MenuType.SignUp:    
                     menuString = new string[] { "학번(8자리 숫자)                :", "비밀번호(4자리 숫자)            :",

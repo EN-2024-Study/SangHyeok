@@ -40,7 +40,6 @@ namespace Library.Controller
 
             while (isSelected)
             {
-                Console.SetWindowSize(70, 25);
                 ExplainingScreen.DrawStartLogo();
                 isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.LogIn);
                 if (!isSelected)
@@ -68,7 +67,6 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
-            Console.SetWindowSize(70, 25);
             Console.Clear();
 
             while (isSelected)
@@ -387,7 +385,7 @@ namespace Library.Controller
 
         public void ShowAllUser()
         {
-            Console.SetWindowSize(50, 25);
+            Console.SetWindowSize(50, 40);
             Console.Clear();
             screen.DrawUsers(userDao.GetUserList());
         }
@@ -406,7 +404,7 @@ namespace Library.Controller
                 }
             }
 
-            Console.SetWindowSize(70, 35);
+            Console.SetWindowSize(70, 40);
             Console.Clear();
             screen.DrawUserInfo(20, loggedUser);
         }

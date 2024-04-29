@@ -68,7 +68,9 @@ namespace Library.Constants
             BookReturn,
             BookReturnHistory,
             AccountModify,
-            AccountDelete
+            AccountDelete,
+            NaverSearch,
+            RequestBookHistory
         }
 
         public enum ManagerMode
@@ -79,7 +81,10 @@ namespace Library.Constants
             BookModify,
             AccountModify,
             AccountDelete,
-            RentalHistory
+            RentalHistory,
+            NaverSearch,
+            LogManage,
+            RequestBook
         }
 
         public enum BookSearchMenu

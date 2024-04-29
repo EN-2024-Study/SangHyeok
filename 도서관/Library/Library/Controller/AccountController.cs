@@ -247,8 +247,8 @@ namespace Library.Controller
                 ExplainingScreen.ExplainNoInput();
                 return false;
             }
-            else if (!RegularExpressionManager.IsAccountIdValid(logInStrings[0]) ||
-                !RegularExpressionManager.IsAccountPasswordValid(logInStrings[1]))
+            else if (!ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpId, logInStrings[0]) ||
+                !ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, logInStrings[1]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("로그인");
@@ -305,31 +305,31 @@ namespace Library.Controller
                 }
             }
 
-            if (!RegularExpressionManager.IsAccountIdValid(signUpStrings[0]))
+            if (!ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpId, signUpStrings[0]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("아이디");
                 return false;
             }
-            if (!RegularExpressionManager.IsAccountPasswordValid(signUpStrings[1]))
+            if (!ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, signUpStrings[1]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("비밀번호");
                 return false;
             }
-            if (!RegularExpressionManager.IsAgeValid(signUpStrings[2]))
+            if (!ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpAge, signUpStrings[2]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("나이");
                 return false;
             }
-            if (!RegularExpressionManager.IsPhoneNumberValid(signUpStrings[3]))
+            if (!ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPhoneNumber, signUpStrings[3]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("휴대폰");
                 return false;
             }
-            if (!RegularExpressionManager.IsAddressValid(signUpStrings[4]))
+            if (!ExceptionManager.IsAddressValid(signUpStrings[4]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("주소");
@@ -341,25 +341,25 @@ namespace Library.Controller
 
         public bool IsModifyValid()
         {
-            if (modifyStrings[0] != null && !RegularExpressionManager.IsAccountPasswordValid(modifyStrings[0]))
+            if (modifyStrings[0] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, modifyStrings[0]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("비밀번호");
                 return false;
             }
-            if (modifyStrings[1] != null && !RegularExpressionManager.IsAgeValid(modifyStrings[1]))
+            if (modifyStrings[1] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpAge, modifyStrings[1]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("나이");
                 return false;
             }
-            if (modifyStrings[2] != null && !RegularExpressionManager.IsPhoneNumberValid(modifyStrings[2]))
+            if (modifyStrings[2] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPhoneNumber, modifyStrings[2]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("휴대폰 번호");
                 return false;
             }
-            if (modifyStrings[3] != null && !RegularExpressionManager.IsAddressValid(modifyStrings[3]))
+            if (modifyStrings[3] != null && !ExceptionManager.IsAddressValid(modifyStrings[3]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("주소");

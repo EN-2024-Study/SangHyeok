@@ -148,39 +148,31 @@ namespace Library.Controller
 
         private bool IsBookModifyValid()
         {
-            if (bookInfoStrings[1] != null && !RegularExpressionManager.IsWriterValid(bookInfoStrings[1]))
+            if (bookInfoStrings[1] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.Writer, bookInfoStrings[1]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("작가");
                 return false;
             }
-            if (bookInfoStrings[5] != null && !RegularExpressionManager.IsReleaseDateValid(bookInfoStrings[5]))
+            if (bookInfoStrings[3] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.Count, bookInfoStrings[3]))
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("수량");
+                return false;
+            }
+            if (bookInfoStrings[5] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.ReleaseDate, bookInfoStrings[5]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("출시일");
                 return false;
             }
-            if (bookInfoStrings[6] != null && !RegularExpressionManager.IsISBNValid(bookInfoStrings[6]))
+            if (bookInfoStrings[6] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.ISBN, bookInfoStrings[6]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("ISBN");
                 return false;
             }
-            if (bookInfoStrings[3] != null)
-            {
-                foreach (char value in bookInfoStrings[3])
-                {
-                    if (('a' <= value && value <= 'z') ||   // 숫자가 아니면 false
-                    ('A' <= value && value <= 'Z') ||
-                    value == '-' || value == ' ')
-                    {
-                        ExplainingScreen.ExplainFailScreen();
-                        ExplainingScreen.ExplainInvalidInput("수량");
-                        return false;
-                    }
-                }
-            }
-
+           
             return true;
         }
 

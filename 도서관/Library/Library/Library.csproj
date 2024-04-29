@@ -55,7 +55,7 @@
     <Compile Include="Controller\DbConnector.cs" />
     <Compile Include="Controller\InputManager.cs" />
     <Compile Include="Controller\MenuSelector.cs" />
-    <Compile Include="Controller\RegularExpressionManager.cs" />
+    <Compile Include="Controller\ExceptionManager.cs" />
     <Compile Include="View\Screen.cs" />
     <Compile Include="View\ExplainingScreen.cs" />
   </ItemGroup>

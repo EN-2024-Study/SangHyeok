@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.Utility
 {
-    public class Constants
+    public class Enums
     {
         public enum MenuType
         {

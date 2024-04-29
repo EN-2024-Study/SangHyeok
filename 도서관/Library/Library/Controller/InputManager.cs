@@ -113,48 +113,48 @@ namespace Library.Utility
             int length = 0;
             switch (digitType)
             {
-                case (int)Constants.InputType.LogInId:
-                case (int)Constants.InputType.UserId:
-                case (int)Constants.InputType.SignUpId:
+                case (int)Enums.InputType.LogInId:
+                case (int)Enums.InputType.UserId:
+                case (int)Enums.InputType.SignUpId:
                     length = 9;
                     break;
-                case (int)Constants.InputType.LogInPassword:
-                case (int)Constants.InputType.ModifyPassword:
-                case (int)Constants.InputType.SignUpPassword:
+                case (int)Enums.InputType.LogInPassword:
+                case (int)Enums.InputType.ModifyPassword:
+                case (int)Enums.InputType.SignUpPassword:
                     length = 5;
                     break;
-                case (int)Constants.InputType.ModifyAge:
-                case (int)Constants.InputType.SignUpAge:
-                case (int)Constants.InputType.Count:
+                case (int)Enums.InputType.ModifyAge:
+                case (int)Enums.InputType.SignUpAge:
+                case (int)Enums.InputType.Count:
                     length = 4;
                     break;
-                case (int)Constants.InputType.ModifyPhoneNumber:
-                case (int)Constants.InputType.SignUpPhoneNumber:
-                case (int)Constants.InputType.Title:
-                case (int)Constants.InputType.SearchedTitle:
+                case (int)Enums.InputType.ModifyPhoneNumber:
+                case (int)Enums.InputType.SignUpPhoneNumber:
+                case (int)Enums.InputType.Title:
+                case (int)Enums.InputType.SearchedTitle:
                     length = 15;
                     break;
-                case (int)Constants.InputType.SignUpAddress:
-                case (int)Constants.InputType.ModifyAddress:
+                case (int)Enums.InputType.SignUpAddress:
+                case (int)Enums.InputType.ModifyAddress:
                     length = 25;
                     break;
-                case (int)Constants.InputType.BookId:
+                case (int)Enums.InputType.BookId:
                     length = 3;
                     break;
-                case (int)Constants.InputType.Writer:
-                case (int)Constants.InputType.Publisher:
-                case (int)Constants.InputType.Info:
-                case (int)Constants.InputType.SearchedWriter:
-                case (int)Constants.InputType.SearchedPublisher:
+                case (int)Enums.InputType.Writer:
+                case (int)Enums.InputType.Publisher:
+                case (int)Enums.InputType.Info:
+                case (int)Enums.InputType.SearchedWriter:
+                case (int)Enums.InputType.SearchedPublisher:
                     length = 10;
                     break;
-                case (int)Constants.InputType.Price:
+                case (int)Enums.InputType.Price:
                     length = 7;
                     break;
-                case (int)Constants.InputType.ReleaseDate:
+                case (int)Enums.InputType.ReleaseDate:
                     length = 11;
                     break;
-                case (int)Constants.InputType.ISBN:
+                case (int)Enums.InputType.ISBN:
                     length = 25;
                     break;
             }
@@ -166,84 +166,84 @@ namespace Library.Utility
             int x = 0, y = 0;
             switch (digitType)
             {
-                case (int)Constants.InputType.LogInId:
+                case (int)Enums.InputType.LogInId:
                     x = 33;
                     y = 20;
                     break;
-                case (int)Constants.InputType.LogInPassword:
+                case (int)Enums.InputType.LogInPassword:
                     x = 33;
                     y = 21;
                     break;
-                case (int)Constants.InputType.SignUpId:
-                case (int)Constants.InputType.ModifyPassword:
+                case (int)Enums.InputType.SignUpId:
+                case (int)Enums.InputType.ModifyPassword:
                     x = 33;
                     y = 13;
                     break;
-                case (int)Constants.InputType.SignUpPassword:
-                case (int)Constants.InputType.ModifyAge:
+                case (int)Enums.InputType.SignUpPassword:
+                case (int)Enums.InputType.ModifyAge:
                     x = 33;
                     y = 14;
                     break;
-                case (int)Constants.InputType.SignUpAge:
-                case (int)Constants.InputType.ModifyPhoneNumber:
+                case (int)Enums.InputType.SignUpAge:
+                case (int)Enums.InputType.ModifyPhoneNumber:
                     x = 33;
                     y = 15;
                     break;
-                case (int)Constants.InputType.SignUpPhoneNumber:
-                case (int)Constants.InputType.ModifyAddress:
+                case (int)Enums.InputType.SignUpPhoneNumber:
+                case (int)Enums.InputType.ModifyAddress:
                     x = 33;
                     y = 16;
                     break;
-                case (int)Constants.InputType.SignUpAddress:
+                case (int)Enums.InputType.SignUpAddress:
                     x = 33;
                     y = 17;
                     break;
-                case (int)Constants.InputType.SearchedTitle:
+                case (int)Enums.InputType.SearchedTitle:
                     x = 14;
                     y = 4;
                     break;
-                case (int)Constants.InputType.SearchedWriter:
+                case (int)Enums.InputType.SearchedWriter:
                     x = 14;
                     y = 5;
                     break;
-                case (int)Constants.InputType.SearchedPublisher:
+                case (int)Enums.InputType.SearchedPublisher:
                     x = 14;
                     y = 6;
                     break;
-                case (int)Constants.InputType.BookId:
-                case (int)Constants.InputType.UserId:
+                case (int)Enums.InputType.BookId:
+                case (int)Enums.InputType.UserId:
                     x = 38;
                     y = 13;
                     break;
-                case (int)Constants.InputType.Title:
+                case (int)Enums.InputType.Title:
                     x = 10;
                     y = 11;
                     break;
-                case (int)Constants.InputType.Writer:
+                case (int)Enums.InputType.Writer:
                     x = 10;
                     y = 12;
                     break;
-                case (int)Constants.InputType.Publisher:
+                case (int)Enums.InputType.Publisher:
                     x = 10;
                     y = 13;
                     break;
-                case (int)Constants.InputType.Count:
+                case (int)Enums.InputType.Count:
                     x = 10;
                     y = 14;
                     break;
-                case (int)Constants.InputType.Price:
+                case (int)Enums.InputType.Price:
                     x = 10;
                     y = 15;
                     break;
-                case (int)Constants.InputType.ReleaseDate:
+                case (int)Enums.InputType.ReleaseDate:
                     x = 10;
                     y = 16;
                     break;
-                case (int)Constants.InputType.ISBN:
+                case (int)Enums.InputType.ISBN:
                     x = 10;
                     y = 17;
                     break;
-                case (int)Constants.InputType.Info:
+                case (int)Enums.InputType.Info:
                     x = 10;
                     y = 18;
                     break;

@@ -137,24 +137,24 @@ namespace Library.View
 
             switch (screenType)
             {
-                case (int)Constants.MenuType.Mode:
-                case (int)Constants.MenuType.LogInSignUp:
-                case (int)Constants.MenuType.LogIn:
+                case (int)Enums.MenuType.Mode:
+                case (int)Enums.MenuType.LogInSignUp:
+                case (int)Enums.MenuType.LogIn:
                     coordinate = new Tuple<int, int>(10, 20);
                     break;
-                case (int)Constants.MenuType.SignUp:
-                case (int)Constants.MenuType.AccountModify:
+                case (int)Enums.MenuType.SignUp:
+                case (int)Enums.MenuType.AccountModify:
                     coordinate = new Tuple<int, int>(0, 13);
                     break;
-                case (int)Constants.MenuType.UserMode:
-                case (int)Constants.MenuType.ManagerMode:
+                case (int)Enums.MenuType.UserMode:
+                case (int)Enums.MenuType.ManagerMode:
                     coordinate = new Tuple<int, int>(Console.WindowWidth / 2 - 10, 10);
                     break;
-                case (int)Constants.MenuType.BookSearch:
+                case (int)Enums.MenuType.BookSearch:
                     coordinate = new Tuple<int, int>(0, 4);
                     break;
-                case (int)Constants.MenuType.BookAdd:
-                case (int)Constants.MenuType.BookModify:
+                case (int)Enums.MenuType.BookAdd:
+                case (int)Enums.MenuType.BookModify:
                     coordinate = new Tuple<int, int>(0, 11);
                     break;
             }
@@ -166,41 +166,41 @@ namespace Library.View
             string[] menuString = null;
             switch (screenType)
             {
-                case (int)Constants.MenuType.Mode:
+                case (int)Enums.MenuType.Mode:
                     menuString = new string[] { "유저 모드", "관리자 모드" };
                     break;
-                case (int)Constants.MenuType.LogInSignUp:
+                case (int)Enums.MenuType.LogInSignUp:
                     menuString = new string[] { "로그인", "회원가입" };
                     break;
-                case (int)Constants.MenuType.LogIn:
+                case (int)Enums.MenuType.LogIn:
                     menuString = new string[] { "학번(8자리 숫자)     :",
                         "비밀번호(4자리 숫자) :", "<확인>"};
                     break;
-                case (int)Constants.MenuType.UserMode:
+                case (int)Enums.MenuType.UserMode:
                     menuString = new string[] { "도서 찾기", "도서 대여",
                     "도서 대여 내역", "도서 반납", "도서 반납 내역", "정보 수정", "계정 삭제"};
                     break;
-                case (int)Constants.MenuType.BookSearch:
+                case (int)Enums.MenuType.BookSearch:
                     menuString = new string[] { "제목 찾기   :", "작가명 찾기 :", "출판사 찾기 :", "<확인>" };
                     break;
-                case (int)Constants.MenuType.ManagerMode:
+                case (int)Enums.MenuType.ManagerMode:
                     menuString = new string[] { "도서 찾기", "도서 추가",
                     "도서 삭제", "도서 수정", "유저 정보 수정", "유저 삭제", "대여 내역"};
                     break;
-                case (int)Constants.MenuType.SignUp:    
+                case (int)Enums.MenuType.SignUp:    
                     menuString = new string[] { "학번(8자리 숫자)                :", "비밀번호(4자리 숫자)            :",
                     "유저 나이(0 ~ 99세)             :", "유저 휴대폰 번호(010-xxxx-xxxx) :", "유저 주소                       :", "<확인>"};
                     break;
-                case (int)Constants.MenuType.AccountModify:
+                case (int)Enums.MenuType.AccountModify:
                     menuString = new string[] { "비밀번호(4자리 숫자)            :", "유저 나이(8 ~ 99세)             :", 
                         "유저 휴대폰 번호(010-xxxx-xxxx) :", "유저 주소                       :", "<확인>"};
                     break;
-                case (int)Constants.MenuType.BookAdd:
+                case (int)Enums.MenuType.BookAdd:
                     menuString = new string[] { "책 제목 :", "작가    :", "출판사  : ",
                     "수량    :", "가격    :", "출시일  :", "ISBN    :",
                         "책 정보 :", "<확인>"};
                     break;
-                case (int)Constants.MenuType.BookModify:
+                case (int)Enums.MenuType.BookModify:
                     menuString = new string[] { "책 제목 :", "작가    :", "출판사  : ",
                     "수량    :", "가격    :", "출시일  :", "<확인>"};
                     break;

@@ -12,11 +12,11 @@ using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 namespace Library.Model
 {
-    public class UserRepository    
+    public class UserDao    
     {
         private DbConnector db;
 
-        public UserRepository()
+        public UserDao()
         {
             this.db = DbConnector.Instance;
         }

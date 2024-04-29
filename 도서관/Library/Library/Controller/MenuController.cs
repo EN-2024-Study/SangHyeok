@@ -17,8 +17,8 @@ namespace Library.Controller
         public MenuController()
         {
             this.menuSelector = new MenuSelector();
-            this.accountController = new AccountController();
-            this.bookController = new BookController();
+            this.accountController = new AccountController(menuSelector);
+            this.bookController = new BookController(menuSelector, accountController);
         }
 
         public void ControllModeMenu()
@@ -33,17 +33,17 @@ namespace Library.Controller
                 ExplainingScreen.DrawStartLogo();
                 ExplainingScreen.ExplainArrowKeys();
                 ExplainingScreen.ExplainQuitKey();
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.Mode);
+                isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.Mode);
                 if (!isSelected)
                     continue;
 
                 switch (menuSelector.menuValue)
                 {
-                    case (int)Constants.ModeMenu.UserMode:
+                    case (int)Enums.ModeMenu.UserMode:
                         ControllLogInSignUpMenu();
                         break;
-                    case (int)Constants.ModeMenu.ManagerMode:
-                        if (accountController.IsLogIn((int)Constants.ModeMenu.ManagerMode))
+                    case (int)Enums.ModeMenu.ManagerMode:
+                        if (accountController.IsLogIn((int)Enums.ModeMenu.ManagerMode))
                             ControllManagerModeMenu();
                         break;
                 }
@@ -61,17 +61,17 @@ namespace Library.Controller
                 Console.Clear();
                 ExplainingScreen.DrawStartLogo();
 
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.LogInSignUp);
+                isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.LogInSignUp);
                 if (!isSelected)
                     continue;
 
                 switch (menuSelector.menuValue)
                 {
-                    case (int)Constants.LogInSignUpMenu.LogIn:
-                        if (accountController.IsLogIn((int)Constants.ModeMenu.UserMode))
+                    case (int)Enums.LogInSignUpMenu.LogIn:
+                        if (accountController.IsLogIn((int)Enums.ModeMenu.UserMode))
                             ControllUserModeMenu();
                         break;
-                    case (int)Constants.LogInSignUpMenu.SignUp:
+                    case (int)Enums.LogInSignUpMenu.SignUp:
                         if (accountController.IsSignUp())
                             return;
                         break;
@@ -90,35 +90,35 @@ namespace Library.Controller
                 Console.Clear();
                 ExplainingScreen.DrawLibraryLogo();
 
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.UserMode);
+                isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.UserMode);
                 if (!isSelected)
                     continue;
 
                 switch(menuSelector.menuValue)
                 {
-                    case (int)Constants.UserMode.BookSearch:
+                    case (int)Enums.UserMode.BookSearch:
                         bookController.SearchBook();
                         break;
-                    case (int)Constants.UserMode.BookRental:
+                    case (int)Enums.UserMode.BookRental:
                         ControllRentalBookMenu();
                         break;
-                    case (int)Constants.UserMode.BookRentalHistory:
+                    case (int)Enums.UserMode.BookRentalHistory:
                         bookController.ShowRentalBooks();
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;
-                    case (int)Constants.UserMode.BookReturn:
+                    case (int)Enums.UserMode.BookReturn:
                         ControllReturnBookMenu();
                         break;
-                    case (int)Constants.UserMode.BookReturnHistory:
+                    case (int)Enums.UserMode.BookReturnHistory:
                         bookController.ShowReturnBooks();
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;
-                    case (int)Constants.UserMode.AccountModify:
+                    case (int)Enums.UserMode.AccountModify:
                         accountController.ModifyInformation();
                         break;
-                    case (int)Constants.UserMode.AccountDelete:
+                    case (int)Enums.UserMode.AccountDelete:
                         ControllUserDeleteMenu();
                         break;
                 }
@@ -136,31 +136,31 @@ namespace Library.Controller
                 Console.Clear();
                 ExplainingScreen.DrawLibraryLogo();
 
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.ManagerMode);
+                isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.ManagerMode);
                 if (!isSelected)
                     continue;
 
                 switch(menuSelector.menuValue)
                 {
-                    case (int)Constants.ManagerMode.BookSearch:
+                    case (int)Enums.ManagerMode.BookSearch:
                         bookController.SearchBook();
                         break;
-                    case (int)Constants.ManagerMode.BookAdd:
+                    case (int)Enums.ManagerMode.BookAdd:
                         bookController.AddBook();
                         break;
-                    case (int)Constants.ManagerMode.BookDelete:
+                    case (int)Enums.ManagerMode.BookDelete:
                         ControllBookDeleteMenu();
                         break;
-                    case (int)Constants.ManagerMode.BookModify:
+                    case (int)Enums.ManagerMode.BookModify:
                         ControllBookModifyMenu();
                         break;
-                    case (int)Constants.ManagerMode.AccountModify:
+                    case (int)Enums.ManagerMode.AccountModify:
                         ControllAccountModifyMenu();
                         break;
-                    case (int)Constants.ManagerMode.AccountDelete:
+                    case (int)Enums.ManagerMode.AccountDelete:
                         ControllAccountDeleteMenu();
                         break;
-                    case (int)Constants.ManagerMode.RentalHistory:
+                    case (int)Enums.ManagerMode.RentalHistory:
                         bookController.ShowAllUserRentalHistory();
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
@@ -171,7 +171,7 @@ namespace Library.Controller
 
         private void ControllRentalBookMenu()
         {
-            bookController.ShowBooks((int)Constants.BookShowType.All);
+            bookController.ShowBooks((int)Enums.BookShowType.All);
             bookController.InputBookId();
             if (bookController.BookId == null)
                 return;
@@ -236,7 +236,7 @@ namespace Library.Controller
 
         private void ControllBookDeleteMenu()
         {
-            bookController.ShowBooks((int)Constants.BookShowType.All);
+            bookController.ShowBooks((int)Enums.BookShowType.All);
             bookController.InputBookId();
             if (bookController.BookId == null)
                 return;
@@ -251,7 +251,7 @@ namespace Library.Controller
 
         private void ControllBookModifyMenu()
         {
-            bookController.ShowBooks((int)Constants.BookShowType.All);
+            bookController.ShowBooks((int)Enums.BookShowType.All);
             bookController.InputBookId();
             if (bookController.BookId == null)
                 return;

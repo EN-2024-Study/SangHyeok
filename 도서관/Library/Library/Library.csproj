@@ -43,17 +43,17 @@
     <Compile Include="MainProgram.cs" />
     <Compile Include="Model\DtoVo\BookDto.cs" />
     <Compile Include="Model\DtoVo\ReturnBookDto.cs" />
-    <Compile Include="Model\Repository\BookRepository.cs" />
-    <Compile Include="Model\Repository\ManagerRepository.cs" />
+    <Compile Include="Model\Dao\BookDao.cs" />
+    <Compile Include="Model\Dao\ManagerDao.cs" />
     <Compile Include="Model\DtoVo\ManagerVo.cs" />
     <Compile Include="Model\DtoVo\RentalBookDto.cs" />
     <Compile Include="Model\DtoVo\UserDto.cs" />
-    <Compile Include="Model\Repository\UserRepository.cs" />
-    <Compile Include="Utility\Constants.cs" />
+    <Compile Include="Model\Dao\UserDao.cs" />
+    <Compile Include="Constants\Enums.cs" />
     <Compile Include="Controller\DbConnector.cs" />
-    <Compile Include="Utility\InputManager.cs" />
-    <Compile Include="Utility\MenuSelector.cs" />
-    <Compile Include="Utility\RegularExpressionManager.cs" />
+    <Compile Include="Controller\InputManager.cs" />
+    <Compile Include="Controller\MenuSelector.cs" />
+    <Compile Include="Controller\RegularExpressionManager.cs" />
     <Compile Include="View\Screen.cs" />
     <Compile Include="View\ExplainingScreen.cs" />
   </ItemGroup>

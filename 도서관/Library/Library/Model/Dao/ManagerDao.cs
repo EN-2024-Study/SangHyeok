@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Library.Model
 {
-    public class ManagerRepository 
+    public class ManagerDao 
     {
         private DbConnector db;
 
-        public ManagerRepository()
+        public ManagerDao()
         {
             this.db = DbConnector.Instance;
         }

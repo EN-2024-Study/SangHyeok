@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Library.Utility.Constants;
+using static Library.Utility.Enums;
 
 namespace Library.Controller
 {
@@ -14,21 +14,21 @@ namespace Library.Controller
     {
         private MenuSelector menuSelector;
         private InputManager inputManager;
-        private UserRepository userRepository;
-        private BookRepository bookRepository;
-        private ManagerRepository manager;
+        private UserDao userDao;
+        private BookDao bookDao;
+        private ManagerDao manager;
         private Screen screen;
         private string[] signUpStrings, modifyStrings, logInStrings;
         private string searchId;
         private static string loggedInId;
 
-        public AccountController()
+        public AccountController(MenuSelector menuSelector)
         {
-            this.menuSelector = new MenuSelector();
+            this.menuSelector = menuSelector;
             this.inputManager = new InputManager();
-            this.userRepository = new UserRepository();
-            this.bookRepository = new BookRepository();
-            this.manager = new ManagerRepository(); 
+            this.userDao = new UserDao();
+            this.bookDao = new BookDao();
+            this.manager = new ManagerDao(); 
             this.screen = new Screen();
             this.signUpStrings = new string[] { null, null, null, null, null };
             this.modifyStrings = new string[] { null, null, null, null };
@@ -46,11 +46,11 @@ namespace Library.Controller
             {
                 Console.SetWindowSize(70, 25);
                 ExplainingScreen.DrawStartLogo();
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.LogIn);
+                isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.LogIn);
                 if (!isSelected)
                     continue;
 
-                if (menuSelector.menuValue == (int)Constants.LogInMenu.Check)
+                if (menuSelector.menuValue == (int)Enums.LogInMenu.Check)
                 {
                     if (IsLogInValid(modeType))
                     {
@@ -79,16 +79,16 @@ namespace Library.Controller
             {
                 ExplainingScreen.DrawSIgnUpLogo();
                 ExplainingScreen.ExplainInputAddress();
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.SignUp);
+                isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.SignUp);
                 if (!isSelected)
                     continue;
 
-                if (menuSelector.menuValue == (int)Constants.SignUpMenu.Check)
+                if (menuSelector.menuValue == (int)Enums.SignUpMenu.Check)
                 {
                     Console.Clear();
                     if (IsSignUpValid())
                     {
-                        userRepository.AddUser(new UserDto(signUpStrings[0], signUpStrings[1], signUpStrings[2],
+                        userDao.AddUser(new UserDto(signUpStrings[0], signUpStrings[1], signUpStrings[2],
                             signUpStrings[3], signUpStrings[4]));
                         signUpStrings = new string[] { null, null, null, null, null };
                         ExplainingScreen.ExplainSuccessScreen();
@@ -114,11 +114,11 @@ namespace Library.Controller
             {
                 ExplainingScreen.DrawModifyLogo();
                 ExplainingScreen.ExplainInputAddress();
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.AccountModify);
+                isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.AccountModify);
                 if (!isSelected)
                     continue;
 
-                if (menuSelector.menuValue == (int)Constants.AccountModifyMenu.Check)
+                if (menuSelector.menuValue == (int)Enums.AccountModifyMenu.Check)
                 {
                     if (IsModifyValid())
                     {
@@ -137,16 +137,16 @@ namespace Library.Controller
             void Modify()
             {
                 if (modifyStrings[0] != null && modifyStrings[0] != "")
-                    userRepository.UpdateUser(loggedInId, "password", modifyStrings[0]);
+                    userDao.UpdateUser(loggedInId, "password", modifyStrings[0]);
 
                 if (modifyStrings[1] != null && modifyStrings[1] != "")
-                    userRepository.UpdateUser(loggedInId, "age", modifyStrings[1]);
+                    userDao.UpdateUser(loggedInId, "age", modifyStrings[1]);
 
                 if (modifyStrings[2] != null && modifyStrings[2] != "")
-                    userRepository.UpdateUser(loggedInId, "phonenumber", modifyStrings[2]);
+                    userDao.UpdateUser(loggedInId, "phonenumber", modifyStrings[2]);
 
                 if (modifyStrings[3] != null && modifyStrings[3] != "")
-                    userRepository.UpdateUser(loggedInId, "address", modifyStrings[3]);
+                    userDao.UpdateUser(loggedInId, "address", modifyStrings[3]);
 
                 modifyStrings = new string[] { null, null, null, null };
             }
@@ -154,7 +154,7 @@ namespace Library.Controller
 
         public void RemoveUser()
         {
-            userRepository.RemoveUser(loggedInId);
+            userDao.RemoveUser(loggedInId);
             loggedInId = null;
             searchId = null;
         }
@@ -164,24 +164,24 @@ namespace Library.Controller
             ExplainingScreen.ExplainInputId("유저");
             ExplainingScreen.ExplainInputAccountId();
             ExplainingScreen.DrawIdLogo();
-            searchId = inputManager.LimitInputLength((int)Constants.InputType.UserId, false);
+            searchId = inputManager.LimitInputLength((int)Enums.InputType.UserId, false);
         }
 
         private void InputInformationToModify(int inputType)
         {
             switch (inputType)
             {
-                case (int)Constants.AccountModifyMenu.Password:
-                    modifyStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.ModifyPassword, true);
+                case (int)Enums.AccountModifyMenu.Password:
+                    modifyStrings[0] = inputManager.LimitInputLength((int)Enums.InputType.ModifyPassword, true);
                     break;
-                case (int)Constants.AccountModifyMenu.Age:
-                    modifyStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.ModifyAge, false);
+                case (int)Enums.AccountModifyMenu.Age:
+                    modifyStrings[1] = inputManager.LimitInputLength((int)Enums.InputType.ModifyAge, false);
                     break;
-                case (int)Constants.AccountModifyMenu.PhoneNumber:
-                    modifyStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.ModifyPhoneNumber, false);
+                case (int)Enums.AccountModifyMenu.PhoneNumber:
+                    modifyStrings[2] = inputManager.LimitInputLength((int)Enums.InputType.ModifyPhoneNumber, false);
                     break;
-                case (int)Constants.AccountModifyMenu.Address:
-                    modifyStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.ModifyAddress, false);
+                case (int)Enums.AccountModifyMenu.Address:
+                    modifyStrings[3] = inputManager.LimitInputLength((int)Enums.InputType.ModifyAddress, false);
                     break;
             }
         }
@@ -190,11 +190,11 @@ namespace Library.Controller
         {
             switch (inputType)
             {
-                case (int)Constants.LogInMenu.Id:
-                    logInStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.LogInId, false);
+                case (int)Enums.LogInMenu.Id:
+                    logInStrings[0] = inputManager.LimitInputLength((int)Enums.InputType.LogInId, false);
                     break;
-                case (int)Constants.LogInMenu.Password:
-                    logInStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.LogInPassword, true);
+                case (int)Enums.LogInMenu.Password:
+                    logInStrings[1] = inputManager.LimitInputLength((int)Enums.InputType.LogInPassword, true);
                     break;
             }
         }
@@ -203,20 +203,20 @@ namespace Library.Controller
         {
             switch (inputType)
             {
-                case (int)Constants.SignUpMenu.Id:
-                    signUpStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.SignUpId, false);
+                case (int)Enums.SignUpMenu.Id:
+                    signUpStrings[0] = inputManager.LimitInputLength((int)Enums.InputType.SignUpId, false);
                     break;
-                case (int)Constants.SignUpMenu.Password:
-                    signUpStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.SignUpPassword, true);
+                case (int)Enums.SignUpMenu.Password:
+                    signUpStrings[1] = inputManager.LimitInputLength((int)Enums.InputType.SignUpPassword, true);
                     break;
-                case (int)Constants.SignUpMenu.Age:
-                    signUpStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.SignUpAge, false);
+                case (int)Enums.SignUpMenu.Age:
+                    signUpStrings[2] = inputManager.LimitInputLength((int)Enums.InputType.SignUpAge, false);
                     break;
-                case (int)Constants.SignUpMenu.PhoneNumber:
-                    signUpStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.SignUpPhoneNumber, false);
+                case (int)Enums.SignUpMenu.PhoneNumber:
+                    signUpStrings[3] = inputManager.LimitInputLength((int)Enums.InputType.SignUpPhoneNumber, false);
                     break;
-                case (int)Constants.SignUpMenu.Address:
-                    signUpStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.SignUpAddress, false);
+                case (int)Enums.SignUpMenu.Address:
+                    signUpStrings[4] = inputManager.LimitInputLength((int)Enums.InputType.SignUpAddress, false);
                     break;
             }
         }
@@ -230,7 +230,7 @@ namespace Library.Controller
                 return false;
             }
 
-            List<UserDto> userList = userRepository.GetUserList();
+            List<UserDto> userList = userDao.GetUserList();
             for (int i = 0; i < userList.Count; i++)
             {
                 if (searchId.Equals(userList[i].Id))
@@ -261,9 +261,9 @@ namespace Library.Controller
                 return false;
             }
 
-            if (modeType == (int)Constants.ModeMenu.UserMode)
+            if (modeType == (int)Enums.ModeMenu.UserMode)
             {
-                List<UserDto> userList = userRepository.GetUserList();
+                List<UserDto> userList = userDao.GetUserList();
                 foreach (UserDto user in userList)
                 {
                     if (user.Id.Equals(logInStrings[0]) && user.Password.Equals(logInStrings[1]))
@@ -274,7 +274,7 @@ namespace Library.Controller
                     }
                 }
             }
-            else if (modeType == (int)Constants.ModeMenu.ManagerMode)
+            else if (modeType == (int)Enums.ModeMenu.ManagerMode)
             {
                 if (logInStrings[0].Equals(manager.GetManager().Id) && logInStrings[1].Equals(manager.GetManager().Password))
                 {
@@ -290,7 +290,7 @@ namespace Library.Controller
 
         private bool IsSignUpValid()
         {
-            List<UserDto> userList = userRepository.GetUserList();
+            List<UserDto> userList = userDao.GetUserList();
             foreach (string str in signUpStrings)
             {
                 if (str == null)
@@ -376,7 +376,7 @@ namespace Library.Controller
 
         public bool IsUserRemoveValid()
         {
-            List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
+            List<RentalBookDto> bookList = bookDao.GetRentalBookList();
             foreach(RentalBookDto book in bookList)
             {
                 if (book.UserId.Equals(loggedInId)) // 빌린 도서가 존재한다면 false
@@ -393,12 +393,12 @@ namespace Library.Controller
         {
             Console.SetWindowSize(50, 25);
             Console.Clear();
-            screen.DrawUsers(userRepository.GetUserList());
+            screen.DrawUsers(userDao.GetUserList());
         }
 
         private void ShowUserInfo()
         {
-            List<UserDto> userList = userRepository.GetUserList();
+            List<UserDto> userList = userDao.GetUserList();
             UserDto loggedUser = null;
 
             foreach(UserDto user in userList)

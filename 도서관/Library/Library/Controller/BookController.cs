@@ -9,8 +9,8 @@ namespace Library.Controller
 {
     public class BookController
     {
-        private BookRepository bookRepository;
-        private UserRepository userRepository;
+        private BookDao bookDao;
+        private UserDao userDao;
         private MenuSelector menuSelector;
         private InputManager inputManager;
         private AccountController accountController;
@@ -19,13 +19,13 @@ namespace Library.Controller
         private string[] bookInfoStrings;
         private string bookId;
 
-        public BookController()
+        public BookController(MenuSelector menuSelector, AccountController accountController)
         {
-            this.bookRepository = new BookRepository();
-            this.userRepository = new UserRepository();
-            this.menuSelector = new MenuSelector();
+            this.bookDao = new BookDao();
+            this.userDao = new UserDao();
+            this.menuSelector = menuSelector;
+            this.accountController = accountController;
             this.inputManager = new InputManager();
-            this.accountController = new AccountController();
             this.screen = new Screen();
             this.searchedBookStrings = new string[] { null, null, null };
             this.bookInfoStrings = new string[] { null, null, null, null, null, null, null, null };
@@ -37,18 +37,18 @@ namespace Library.Controller
             bool isSelected = true;
             menuSelector.menuValue = 0;
 
-            ShowBooks((int)Constants.BookShowType.All);
+            ShowBooks((int)Enums.BookShowType.All);
             ExplainingScreen.ExplainSearchBookInfo();
             ExplainingScreen.DrawSearchLogo();
             while (isSelected)
             {
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.BookSearch);
+                isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.BookSearch);
                 if (!isSelected)
                     return;
 
-                if (menuSelector.menuValue == (int)Constants.BookSearchMenu.Check)
+                if (menuSelector.menuValue == (int)Enums.BookSearchMenu.Check)
                 {
-                    ShowBooks((int)Constants.BookShowType.Searched);
+                    ShowBooks((int)Enums.BookShowType.Searched);
                     ExplainingScreen.ExplainEcsKey(0);
                     menuSelector.WaitForEscKey();
                     break;
@@ -68,15 +68,15 @@ namespace Library.Controller
             ExplainingScreen.ExplainInputBookInfo();
             while (isSelected)
             {
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.BookAdd);
+                isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.BookAdd);
                 if (!isSelected)
                     return;
 
-                if (menuSelector.menuValue == (int)Constants.BookAddInfo.Check)
+                if (menuSelector.menuValue == (int)Enums.BookAddInfo.Check)
                 {
                     if (IsBookAddValid())
                     {
-                        bookRepository.AddBook(new BookDto("0", bookInfoStrings[0], bookInfoStrings[1],
+                        bookDao.AddBook(new BookDto("0", bookInfoStrings[0], bookInfoStrings[1],
                             bookInfoStrings[2], int.Parse(bookInfoStrings[3]), bookInfoStrings[4], bookInfoStrings[5],
                             bookInfoStrings[6], bookInfoStrings[7]));
                     }
@@ -98,11 +98,11 @@ namespace Library.Controller
             ExplainingScreen.ExplainInputBookInfo();
             while (isSelected)
             {
-                isSelected = menuSelector.IsMenuSelection((int)Constants.MenuType.BookModify);
+                isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.BookModify);
                 if (!isSelected)
                     return;
 
-                if (menuSelector.menuValue == (int)Constants.BookModifyInfo.Check)
+                if (menuSelector.menuValue == (int)Enums.BookModifyInfo.Check)
                 {
                     if (IsBookDeleteValid() && IsBookModifyValid())
                     {
@@ -121,17 +121,17 @@ namespace Library.Controller
             void Modify()
             {
                 if (bookInfoStrings[0] != null)
-                    bookRepository.ModifyBookInfo(bookId, "title", bookInfoStrings[0]);
+                    bookDao.ModifyBookInfo(bookId, "title", bookInfoStrings[0]);
                 if (bookInfoStrings[1] != null)
-                    bookRepository.ModifyBookInfo(bookId, "writer", bookInfoStrings[1]);
+                    bookDao.ModifyBookInfo(bookId, "writer", bookInfoStrings[1]);
                 if (bookInfoStrings[2] != null)
-                    bookRepository.ModifyBookInfo(bookId, "publisher", bookInfoStrings[2]);
+                    bookDao.ModifyBookInfo(bookId, "publisher", bookInfoStrings[2]);
                 if (bookInfoStrings[3] != null)
-                    bookRepository.ModifyBookInfo(bookId, "count", int.Parse(bookInfoStrings[3]));
+                    bookDao.ModifyBookInfo(bookId, "count", int.Parse(bookInfoStrings[3]));
                 if (bookInfoStrings[4] != null)
-                    bookRepository.ModifyBookInfo(bookId, "price", bookInfoStrings[4]);
+                    bookDao.ModifyBookInfo(bookId, "price", bookInfoStrings[4]);
                 if (bookInfoStrings[5] != null)
-                    bookRepository.ModifyBookInfo(bookId, "releaseDate", bookInfoStrings[5]);
+                    bookDao.ModifyBookInfo(bookId, "releaseDate", bookInfoStrings[5]);
             }
         }
 
@@ -203,8 +203,8 @@ namespace Library.Controller
 
         public bool IsBookRentalValid()
         {
-            List<BookDto> bookList = bookRepository.GetBookList();
-            List<RentalBookDto> rentalBookList = bookRepository.GetRentalBookList();
+            List<BookDto> bookList = bookDao.GetBookList();
+            List<RentalBookDto> rentalBookList = bookDao.GetRentalBookList();
 
             foreach(RentalBookDto book in rentalBookList)  
             {
@@ -239,12 +239,12 @@ namespace Library.Controller
 
         public bool IsBookReturnValid()
         {
-            List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
+            List<RentalBookDto> bookList = bookDao.GetRentalBookList();
             foreach (RentalBookDto book in bookList)
             {
                 if (book.Id.Equals(bookId) && accountController.LoggedInId.Equals(book.UserId))
                 {   // 책 아이디 입력이 빌린 책이 맞다면 true 
-                    bookRepository.ReturnBook(book);
+                    bookDao.ReturnBook(book);
                     bookId = null;
                     return true;
                 }
@@ -257,8 +257,8 @@ namespace Library.Controller
 
         public bool IsBookDeleteValid()
         {
-            List<RentalBookDto> rentalBookList = bookRepository.GetRentalBookList();
-            List<BookDto> bookList = bookRepository.GetBookList();
+            List<RentalBookDto> rentalBookList = bookDao.GetRentalBookList();
+            List<BookDto> bookList = bookDao.GetBookList();
 
             foreach(RentalBookDto book in rentalBookList)   // 도서가 대여 중이라면 false
             {
@@ -281,13 +281,13 @@ namespace Library.Controller
 
         public void RentalBook()
         {
-            List<BookDto> bookList = bookRepository.GetBookList();
+            List<BookDto> bookList = bookDao.GetBookList();
             DateTime time = DateTime.Now;
             foreach (BookDto book in bookList)
             {
                 if (book.Id.Equals(bookId) && book.Count > 0)
                 {
-                    bookRepository.RentalBook(new RentalBookDto(book,
+                    bookDao.RentalBook(new RentalBookDto(book,
                         accountController.LoggedInId, time.ToString("yyyy-MM-dd HH:mm:ss"),
                         time.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")));
                     bookId = null;
@@ -297,12 +297,12 @@ namespace Library.Controller
 
         public void DeleteBook()
         {
-            List<BookDto> bookList = bookRepository.GetBookList();
+            List<BookDto> bookList = bookDao.GetBookList();
             for (int i = 0; i < bookList.Count; i++)
             {
                 if (bookList[i].Id.Equals(bookId))
                 {
-                    bookRepository.DeleteBook(bookId);
+                    bookDao.DeleteBook(bookId);
                     break;
                 }
             }
@@ -315,10 +315,10 @@ namespace Library.Controller
             Console.SetWindowSize(70, 30);
             switch (typeValue)
             {
-                case (int)Constants.BookShowType.All:
-                    screen.DrawBooks(bookRepository.GetBookList());
+                case (int)Enums.BookShowType.All:
+                    screen.DrawBooks(bookDao.GetBookList());
                     break;
-                case (int)Constants.BookShowType.Searched:
+                case (int)Enums.BookShowType.Searched:
                     screen.DrawBooks(ExploreSearchedBooks());
                     break;
             }
@@ -329,7 +329,7 @@ namespace Library.Controller
             Console.Clear();
             Console.SetWindowSize(70, 30);
 
-            List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
+            List<RentalBookDto> bookList = bookDao.GetRentalBookList();
             List<RentalBookDto> rentalBookList = new List<RentalBookDto>();
             foreach (RentalBookDto book in bookList)
             {
@@ -344,7 +344,7 @@ namespace Library.Controller
             Console.Clear();
             Console.SetWindowSize(70, 30);
 
-            List<ReturnBookDto> bookList = bookRepository.GetReturnBookList();
+            List<ReturnBookDto> bookList = bookDao.GetReturnBookList();
             List<ReturnBookDto> returnBookList = new List<ReturnBookDto>();
             foreach(ReturnBookDto book in bookList)
             {
@@ -360,8 +360,8 @@ namespace Library.Controller
             Console.SetWindowSize(70, 30);
 
             int y = 17;
-            List<UserDto> userList = userRepository.GetUserList();
-            List<RentalBookDto> bookList = bookRepository.GetRentalBookList();
+            List<UserDto> userList = userDao.GetUserList();
+            List<RentalBookDto> bookList = bookDao.GetRentalBookList();
             foreach(UserDto user in userList)
             {
                 List<RentalBookDto> rentalBookList = new List<RentalBookDto>();
@@ -376,7 +376,7 @@ namespace Library.Controller
 
         private void ShowBookInfo()
         {
-            List<BookDto> bookList = bookRepository.GetBookList();
+            List<BookDto> bookList = bookDao.GetBookList();
             BookDto book = null;
             foreach(BookDto value in bookList)
             {
@@ -397,36 +397,36 @@ namespace Library.Controller
             ExplainingScreen.ExplainInputId("책  ");
             ExplainingScreen.ExplainInputBookId();
             ExplainingScreen.DrawIdLogo();
-            bookId = inputManager.LimitInputLength((int)Constants.InputType.BookId, false);
+            bookId = inputManager.LimitInputLength((int)Enums.InputType.BookId, false);
         }
 
         private void InputBookInfo(int inputType)
         {
             switch (inputType)
             {
-                case (int)Constants.BookAddInfo.Title:
-                    bookInfoStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.Title, false);
+                case (int)Enums.BookAddInfo.Title:
+                    bookInfoStrings[0] = inputManager.LimitInputLength((int)Enums.InputType.Title, false);
                     break;
-                case (int)Constants.BookAddInfo.Writer:
-                    bookInfoStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.Writer, false);
+                case (int)Enums.BookAddInfo.Writer:
+                    bookInfoStrings[1] = inputManager.LimitInputLength((int)Enums.InputType.Writer, false);
                     break;
-                case (int)Constants.BookAddInfo.Publisher:
-                    bookInfoStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.Publisher, false);
+                case (int)Enums.BookAddInfo.Publisher:
+                    bookInfoStrings[2] = inputManager.LimitInputLength((int)Enums.InputType.Publisher, false);
                     break;
-                case (int)Constants.BookAddInfo.Count:
-                    bookInfoStrings[3] = inputManager.LimitInputLength((int)Constants.InputType.Count, false);
+                case (int)Enums.BookAddInfo.Count:
+                    bookInfoStrings[3] = inputManager.LimitInputLength((int)Enums.InputType.Count, false);
                     break;
-                case (int)Constants.BookAddInfo.Price:
-                    bookInfoStrings[4] = inputManager.LimitInputLength((int)Constants.InputType.Price, false);
+                case (int)Enums.BookAddInfo.Price:
+                    bookInfoStrings[4] = inputManager.LimitInputLength((int)Enums.InputType.Price, false);
                     break;
-                case (int)Constants.BookAddInfo.ReleaseDate:
-                    bookInfoStrings[5] = inputManager.LimitInputLength((int)Constants.InputType.ReleaseDate, false);
+                case (int)Enums.BookAddInfo.ReleaseDate:
+                    bookInfoStrings[5] = inputManager.LimitInputLength((int)Enums.InputType.ReleaseDate, false);
                     break;
-                case (int)Constants.BookAddInfo.ISBN:
-                    bookInfoStrings[6] = inputManager.LimitInputLength((int)Constants.InputType.ISBN, false);
+                case (int)Enums.BookAddInfo.ISBN:
+                    bookInfoStrings[6] = inputManager.LimitInputLength((int)Enums.InputType.ISBN, false);
                     break;
-                case (int)Constants.BookAddInfo.Info:
-                    bookInfoStrings[7] = inputManager.LimitInputLength((int)Constants.InputType.Info, false);
+                case (int)Enums.BookAddInfo.Info:
+                    bookInfoStrings[7] = inputManager.LimitInputLength((int)Enums.InputType.Info, false);
                     break;
             }
         }
@@ -435,21 +435,21 @@ namespace Library.Controller
         {
             switch (inputType)
             {
-                case (int)Constants.BookSearchMenu.Title:
-                    searchedBookStrings[0] = inputManager.LimitInputLength((int)Constants.InputType.SearchedTitle, false);
+                case (int)Enums.BookSearchMenu.Title:
+                    searchedBookStrings[0] = inputManager.LimitInputLength((int)Enums.InputType.SearchedTitle, false);
                     break;
-                case (int)Constants.BookSearchMenu.Writer:
-                    searchedBookStrings[1] = inputManager.LimitInputLength((int)Constants.InputType.SearchedWriter, false);
+                case (int)Enums.BookSearchMenu.Writer:
+                    searchedBookStrings[1] = inputManager.LimitInputLength((int)Enums.InputType.SearchedWriter, false);
                     break;
-                case (int)Constants.BookSearchMenu.Publisher:
-                    searchedBookStrings[2] = inputManager.LimitInputLength((int)Constants.InputType.SearchedPublisher, false);
+                case (int)Enums.BookSearchMenu.Publisher:
+                    searchedBookStrings[2] = inputManager.LimitInputLength((int)Enums.InputType.SearchedPublisher, false);
                     break;
             }
         }
 
         private List<BookDto> ExploreSearchedBooks()
         {
-            List<BookDto> searchedBookList = bookRepository.GetBookList();
+            List<BookDto> searchedBookList = bookDao.GetBookList();
 
             for (int i = 0; i < 3; i++)
             {
@@ -461,15 +461,15 @@ namespace Library.Controller
                 {
                     switch (i)
                     {
-                        case (int)Constants.BookSearchMenu.Title:
+                        case (int)Enums.BookSearchMenu.Title:
                             if (book.Title.Contains(searchedBookStrings[i]))
                                 temp.Add(book);
                             break;
-                        case (int)Constants.BookSearchMenu.Writer:
+                        case (int)Enums.BookSearchMenu.Writer:
                             if (book.Writer.Contains(searchedBookStrings[i]))
                                 temp.Add(book);
                             break;
-                        case (int)Constants.BookSearchMenu.Publisher:
+                        case (int)Enums.BookSearchMenu.Publisher:
                             if (book.Publisher.Contains(searchedBookStrings[i]))
                                 temp.Add(book);
                             break;

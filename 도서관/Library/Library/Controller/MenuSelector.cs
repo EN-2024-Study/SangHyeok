@@ -1,9 +1,6 @@
 ﻿using Library.View;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Utility
 {
@@ -65,30 +62,30 @@ namespace Library.Utility
             int length = 0;
             switch (screenValue)
             {
-                case (int)Constants.MenuType.Mode:
-                case (int)Constants.MenuType.LogInSignUp:
+                case (int)Enums.MenuType.Mode:
+                case (int)Enums.MenuType.LogInSignUp:
                     length = 2;
                     break;
-                case (int)Constants.MenuType.LogIn:
+                case (int)Enums.MenuType.LogIn:
                     length = 3;
                     break;
-                case (int)Constants.MenuType.BookSearch:
+                case (int)Enums.MenuType.BookSearch:
                     length = 4;
                     break;
-                case (int)Constants.MenuType.AccountModify:
+                case (int)Enums.MenuType.AccountModify:
                     length = 5;
                     break;
-                case (int)Constants.MenuType.SignUp:
+                case (int)Enums.MenuType.SignUp:
                     length = 6;
                     break;
-                case (int)Constants.MenuType.UserMode:
-                case (int)Constants.MenuType.ManagerMode:
+                case (int)Enums.MenuType.UserMode:
+                case (int)Enums.MenuType.ManagerMode:
                     length = 7;
                     break;
-                case (int)Constants.MenuType.BookAdd:
+                case (int)Enums.MenuType.BookAdd:
                     length = 9;
                     break;
-                case (int)Constants.MenuType.BookModify:
+                case (int)Enums.MenuType.BookModify:
                     length = 7;
                     break;
             }

@@ -16,11 +16,11 @@ using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 namespace Library.Model
 {
-    public class BookRepository    
+    public class BookDao    
     {
         private DbConnector db;
 
-        public BookRepository()
+        public BookDao()
         {
             this.db = DbConnector.Instance;
         }

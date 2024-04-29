@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Net;
+using Library.Constants;
 
-namespace Library.Utility
+namespace Library.Controller
 {
     public class RegularExpressionManager
     {
         public static bool IsAccountIdValid(string id)
         {
-            Regex regex = new Regex(@"^[0-9]{8}$");
+            Regex regex = new Regex(RegularStrings.ID);
             if (regex.IsMatch(id))
                 return true;
             return false;
@@ -20,7 +21,7 @@ namespace Library.Utility
 
         public static bool IsAccountPasswordValid(string password)
         {
-            Regex regex = new Regex(@"^[0-9]{4}$");
+            Regex regex = new Regex(RegularStrings.PASSWORD);
             if (regex.IsMatch(password))
                 return true;
             return false;
@@ -28,7 +29,7 @@ namespace Library.Utility
 
         public static bool IsAgeValid(string age)
         {
-            Regex regex = new Regex(@"^[0-9]{1,2}$");
+            Regex regex = new Regex(RegularStrings.AGE);
             if (regex.IsMatch(age))
                 return true;
             return false;
@@ -36,7 +37,7 @@ namespace Library.Utility
 
         public static bool IsPhoneNumberValid(string phoneNumber)
         {
-            Regex regex = new Regex(@"^010-[0-9]{4}-[0-9]{4}$");
+            Regex regex = new Regex(RegularStrings.PHONENUMBER);
             if (regex.IsMatch(phoneNumber))
                 return true;
             return false;
@@ -44,8 +45,8 @@ namespace Library.Utility
 
         public static bool IsAddressValid(string address)
         {
-            Regex regex1 = new Regex(@"^[가-힣]{1,6}[도시]{1} [가-힣]{1,6}[시구]{1}$");
-            Regex regex2 = new Regex(@"^[가-힣]{1,6}[도시]{1} [가-힣]{1,2}[구]{1} [가-힣]{1,6}[동]{1}$");
+            Regex regex1 = new Regex(RegularStrings.ADDRESS1);
+            Regex regex2 = new Regex(RegularStrings.ADDRESS2);
             if (regex1.IsMatch(address) || regex2.IsMatch(address))
                 return true;
             return false;
@@ -53,7 +54,7 @@ namespace Library.Utility
 
         public static bool IsWriterValid(string writer)
         {
-            Regex regex = new Regex(@"^[a-zA-Z가-힣]{1,10}$");
+            Regex regex = new Regex(RegularStrings.WRITER);
             if (regex.IsMatch(writer))
                 return true;
             return false;
@@ -61,7 +62,7 @@ namespace Library.Utility
 
         public static bool IsReleaseDateValid(string releaseDate)
         {
-            Regex regex = new Regex(@"^20[0-9]{2}-[0-9]{1,2}-[0-9]{1,2}$");
+            Regex regex = new Regex(RegularStrings.RELEASEDATE);
             if (regex.IsMatch(releaseDate))
                 return true;
             return false;
@@ -69,7 +70,7 @@ namespace Library.Utility
 
         public static bool IsISBNValid(string ISBN)
         {
-            Regex regex = new Regex(@"^[0-9]{6}[a-zA-Z]{1} [0-9]{13}$");
+            Regex regex = new Regex(RegularStrings.ISBN);
 
             if (regex.IsMatch(ISBN))
                 return true;

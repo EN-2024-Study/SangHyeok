@@ -17,6 +17,7 @@ namespace Library.Utility
 
         private DbConnector()
         {
+            //this.connectionAddress = Environment.GetEnvironmentVariable("C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin");
             string dbServer = "localhost";
             int dbPort = 3306;
             string dbName = "library";

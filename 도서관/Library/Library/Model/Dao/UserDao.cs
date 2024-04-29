@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static Mysqlx.Expect.Open.Types.Condition.Types;
+using Library.Constants;
 
 namespace Library.Model
 {
@@ -24,7 +25,7 @@ namespace Library.Model
         public List<UserDto> GetUserList()
         {
             List<UserDto> userList = new List<UserDto>();
-            string selectQuery = string.Format("SELECT * FROM user");
+            string selectQuery = QueryStrings.SELECT_USER;
             
             db.MySql.Open();
             MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
@@ -32,11 +33,11 @@ namespace Library.Model
 
             while (table.Read())
             {
-                string id = table["id"].ToString();
-                string password = table["password"].ToString();
-                string age = table["age"].ToString();
-                string phoneNumber = table["phonenumber"].ToString();
-                string address = table["address"].ToString();
+                string id = table[QueryStrings.FIELD_ID].ToString();
+                string password = table[QueryStrings.FIELD_PASSWORD].ToString();
+                string age = table[QueryStrings.FIELD_AGE].ToString();
+                string phoneNumber = table[QueryStrings.FIELD_PHONENUMBER].ToString();
+                string address = table[QueryStrings.FIELD_ADDRESS].ToString();
                 userList.Add(new UserDto(id, password, age, phoneNumber, address));
             }
             db.MySql.Close();
@@ -46,20 +47,20 @@ namespace Library.Model
 
         public void AddUser(UserDto user)
         {
-            string insertQuery = string.Format("INSERT INTO user VALUES('{0}', '{1}', '{2}', '{3}', '{4}')",
+            string insertQuery = string.Format(QueryStrings.INSERT_USER,
               user.Id, user.Password, user.Age, user.PhoneNumber, user.Address);
             db.SetData(insertQuery);
         }
 
         public void RemoveUser(string key)
         {
-            string deleteQuery = string.Format("DELETE FROM user WHERE id = {0}", key);
+            string deleteQuery = string.Format(QueryStrings.DELETE_USER, key);
             db.SetData(deleteQuery);
         }
 
         public void UpdateUser(string key, string updateString, string value)
         {
-            string updateQuery = string.Format("UPDATE user SET {1} = '{2}' WHERE id = {0}", key, updateString, value);
+            string updateQuery = string.Format(QueryStrings.UPDATE_USER, key, updateString, value);
             db.SetData(updateQuery);
         }
     }

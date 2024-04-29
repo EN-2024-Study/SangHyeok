@@ -38,3 +38,5 @@ C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\bin\Debug
 C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\obj\Debug\Library.csproj.CopyComplete
+C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\bin\Debug\Newtonsoft.Json.dll
+C:\Users\user\Desktop\EN#스터디\SangHyeok\도서관\Library\Library\bin\Debug\Newtonsoft.Json.xml

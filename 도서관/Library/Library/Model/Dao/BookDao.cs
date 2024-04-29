@@ -1,4 +1,5 @@
-﻿using Library.Model.DtoVo;
+﻿using Library.Constants;
+using Library.Model.DtoVo;
 using Library.Utility;
 using Library.View;
 using MySql.Data.MySqlClient;
@@ -27,7 +28,7 @@ namespace Library.Model
 
         public List<BookDto> GetBookList()
         {
-            string selectQuery = string.Format("SELECT * FROM book");
+            string selectQuery = QueryStrings.SELECT_BOOK;
             List<BookDto> bookList = new List<BookDto>();
 
             db.MySql.Open();
@@ -48,9 +49,8 @@ namespace Library.Model
 
         public List<RentalBookDto> GetRentalBookList()
         {
-            string selectQuery = null;
             List<RentalBookDto> rentalBookList = new List<RentalBookDto>();
-            selectQuery = string.Format("SELECT * FROM rentalbook");
+            string selectQuery = QueryStrings.SELECT_RENTALBOOK;
 
             db.MySql.Open();
             MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
@@ -59,9 +59,9 @@ namespace Library.Model
             while (table.Read())
             {
                 string[] bookInfo = GetBookInfo(table);
-                string rentalTime = table["rentaltime"].ToString();
-                string returnTime = table["returntime"].ToString();
-                string userId = table["userid"].ToString();
+                string rentalTime = table[QueryStrings.FIELD_RENTALTIME].ToString();
+                string returnTime = table[QueryStrings.FIELD_RETURNTIME].ToString();
+                string userId = table[QueryStrings.FIELD_USERID].ToString();
                 rentalBookList.Add(new RentalBookDto(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
                     bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
                     bookInfo[7], bookInfo[8]), userId, rentalTime, returnTime));
@@ -75,7 +75,7 @@ namespace Library.Model
         {
             string selectQuery = null;
             List<ReturnBookDto> returnBookList = new List<ReturnBookDto>();
-            selectQuery = string.Format("SELECT * FROM returnbook");
+            selectQuery = QueryStrings.SELECT_RETURNBOOK;
 
             db.MySql.Open();
             MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
@@ -84,7 +84,7 @@ namespace Library.Model
             while (table.Read())
             {
                 string[] bookInfo = GetBookInfo(table);
-                string userId = table["userid"].ToString();
+                string userId = table[QueryStrings.FIELD_USERID].ToString();
                 returnBookList.Add(new ReturnBookDto(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
                     bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
                     bookInfo[7], bookInfo[8]), userId));
@@ -97,61 +97,61 @@ namespace Library.Model
         private string[] GetBookInfo(MySqlDataReader table)
         {
             string[] bookInfo = new string[9];
-            bookInfo[0] = table["id"].ToString();
-            bookInfo[1] = table["title"].ToString();
-            bookInfo[2] = table["writer"].ToString();
-            bookInfo[3] = table["publisher"].ToString();
-            bookInfo[4] = table["count"].ToString();
-            bookInfo[5] = table["price"].ToString();
-            bookInfo[6] = table["releasedate"].ToString();
-            bookInfo[7] = table["iSBN"].ToString();
-            bookInfo[8] = table["info"].ToString();
+            bookInfo[0] = table[QueryStrings.FIELD_ID].ToString();
+            bookInfo[1] = table[QueryStrings.FIELD_TITLE].ToString();
+            bookInfo[2] = table[QueryStrings.FIELD_WRITER].ToString();
+            bookInfo[3] = table[QueryStrings.FIELD_PUBLISHER].ToString();
+            bookInfo[4] = table[QueryStrings.FIELD_COUNT].ToString();
+            bookInfo[5] = table[QueryStrings.FIELD_PRICE].ToString();
+            bookInfo[6] = table[QueryStrings.FIELD_RELEASEDATE].ToString();
+            bookInfo[7] = table[QueryStrings.FIELD_ISBN].ToString();
+            bookInfo[8] = table[QueryStrings.FIELD_INFO].ToString();
             return bookInfo;
         }
 
         public void AddBook(BookDto book)
         {
-            string insertQuery = string.Format("INSERT INTO book VALUES( null, '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')",
+            string insertQuery = string.Format(QueryStrings.INSERT_BOOK,
                   book.Title, book.Writer, book.Publisher, book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info);
             db.SetData(insertQuery);
         }
 
         public void DeleteBook(string key)
         {
-            string deleteQuery = string.Format("DELETE FROM book WHERE id = {0}", key);
+            string deleteQuery = string.Format(QueryStrings.DELETE_BOOK, key);
             db.SetData(deleteQuery);
         }
 
         public void ModifyBookInfo(string key, string updateString, object value)
         {
             string modifyQuery = null;
-            if (updateString.Equals("count"))
-                modifyQuery = string.Format("UPDATE book SET count = {1} WHERE id = {0}", key, (int)value);
+            if (updateString.Equals(QueryStrings.FIELD_COUNT))
+                modifyQuery = string.Format(QueryStrings.UPDATE_BOOKCOUNT, key, (int)value);
             else
-                modifyQuery = string.Format("UPDATE book SET {1} = '{2}' WHERE id = {0}", key, (string)updateString, value);
+                modifyQuery = string.Format(QueryStrings.UPDATE_BOOK, key, (string)updateString, value);
 
             db.SetData(modifyQuery);
         }
 
         public void RentalBook(RentalBookDto book)
         {
-            string query = string.Format("UPDATE book SET count = count - 1 WHERE id = {0}", book.Id);
+            string query = string.Format(QueryStrings.UPDATE_BOOKCOUNT_DESCEND, book.Id);
             db.SetData(query);
 
-            query = string.Format("INSERT INTO rentalbook VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}')",
+            query = string.Format(QueryStrings.INSERT_RENTALBOOK,
                   book.Id, book.Title, book.Writer, book.Publisher, book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info, book.RentalTime, book.ReturnTime, book.UserId);
             db.SetData(query);
         }
 
         public void ReturnBook(RentalBookDto book)
         {
-            string query = string.Format("DELETE FROM rentalbook WHERE id = {0}", book.Id);
+            string query = string.Format(QueryStrings.DELETE_RENTALBOOK, book.Id);
             db.SetData(query);
 
-            query = string.Format("UPDATE book SET count = count + 1 WHERE id = {0}", book.Id);
+            query = string.Format(QueryStrings.UPDATE_BOOKCOUNT_INCREASE, book.Id);
             db.SetData(query);
 
-            query = string.Format("INSERT INTO returnbook VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')",
+            query = string.Format(QueryStrings.INSERT_RETURNBOOK,
                   book.Id, book.Title, book.Writer, book.Publisher, book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info, book.UserId);
             db.SetData(query);
         }

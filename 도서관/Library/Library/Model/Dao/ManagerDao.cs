@@ -1,4 +1,5 @@
-﻿using Library.Utility;
+﻿using Library.Constants;
+using Library.Utility;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Library.Model
         public ManagerVo GetManager()
         {
             ManagerVo manager = null;
-            string selectQuery = string.Format("SELECT * FROM manager");
+            string selectQuery = QueryStrings.SELECT_MANAGER;
            
             db.MySql.Open();
             MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
@@ -30,8 +31,8 @@ namespace Library.Model
 
             while (table.Read())
             {
-                string id = table["id"].ToString();
-                string password = table["password"].ToString();
+                string id = table[QueryStrings.FIELD_ID].ToString();
+                string password = table[QueryStrings.FIELD_PASSWORD].ToString();
                 manager = new ManagerVo(id, password);
                 break;
             }

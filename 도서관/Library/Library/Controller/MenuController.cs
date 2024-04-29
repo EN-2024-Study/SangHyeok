@@ -11,14 +11,18 @@ namespace Library.Controller
     public class MenuController
     {
         private MenuSelector menuSelector;
+        private ExceptionManager exceptionManager;
         private AccountController accountController;
         private BookController bookController;
+        private ApiController apiController;
 
         public MenuController()
         {
             this.menuSelector = new MenuSelector();
-            this.accountController = new AccountController(menuSelector);
-            this.bookController = new BookController(menuSelector, accountController);
+            this.exceptionManager = new ExceptionManager();
+            this.accountController = new AccountController(menuSelector, exceptionManager);
+            this.bookController = new BookController(menuSelector, accountController, exceptionManager);
+            this.apiController = new ApiController();
         }
 
         public void ControllModeMenu()
@@ -119,7 +123,7 @@ namespace Library.Controller
                         ControllUserDeleteMenu();
                         break;
                     case (int)Enums.UserMode.NaverSearch:
-
+                        apiController.SearchNaver();
                         break;
                     case (int)Enums.UserMode.RequestBookHistory:
 

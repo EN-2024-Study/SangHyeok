@@ -11,7 +11,7 @@ namespace Library.Controller
 {
     public class ExceptionManager
     {
-        public static bool IsExoressionValid(int type, string str)
+        public bool IsExoressionValid(int type, string str)
         {
             Regex regex = GetRegex(type);
             if (regex.IsMatch(str))
@@ -19,7 +19,7 @@ namespace Library.Controller
             return false;
         }
 
-        public static bool IsAddressValid(string address)
+        public bool IsAddressValid(string address)
         {
             Regex regex1 = new Regex(RegularStrings.ADDRESS1);
             Regex regex2 = new Regex(RegularStrings.ADDRESS2);
@@ -28,7 +28,7 @@ namespace Library.Controller
             return false;
         }
 
-        private static Regex GetRegex(int type)
+        private Regex GetRegex(int type)
         {
             switch (type)
             {

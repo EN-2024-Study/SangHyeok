@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Constants\QueryStrings.cs" />
     <Compile Include="Constants\RegularStrings.cs" />
+    <Compile Include="Controller\ApiController.cs" />
     <Compile Include="Controller\BookController.cs" />
     <Compile Include="Controller\MenuController.cs" />
     <Compile Include="Controller\AccountController.cs" />

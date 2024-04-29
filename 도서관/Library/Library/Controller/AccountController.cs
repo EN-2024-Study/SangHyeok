@@ -9,6 +9,7 @@ namespace Library.Controller
     public class AccountController
     {
         private MenuSelector menuSelector;
+        private ExceptionManager exceptionManager;
         private InputManager inputManager;
         private UserDao userDao;
         private BookDao bookDao;
@@ -18,9 +19,10 @@ namespace Library.Controller
         private string searchId;
         private static string loggedInId;
 
-        public AccountController(MenuSelector menuSelector)
+        public AccountController(MenuSelector menuSelector, ExceptionManager exceptionManager)
         {
             this.menuSelector = menuSelector;
+            this.exceptionManager = exceptionManager;
             this.inputManager = new InputManager();
             this.userDao = new UserDao();
             this.bookDao = new BookDao();
@@ -247,8 +249,8 @@ namespace Library.Controller
                 ExplainingScreen.ExplainNoInput();
                 return false;
             }
-            else if (!ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpId, logInStrings[0]) ||
-                !ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, logInStrings[1]))
+            else if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpId, logInStrings[0]) ||
+                !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, logInStrings[1]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("로그인");
@@ -305,31 +307,31 @@ namespace Library.Controller
                 }
             }
 
-            if (!ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpId, signUpStrings[0]))
+            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpId, signUpStrings[0]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("아이디");
                 return false;
             }
-            if (!ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, signUpStrings[1]))
+            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, signUpStrings[1]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("비밀번호");
                 return false;
             }
-            if (!ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpAge, signUpStrings[2]))
+            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpAge, signUpStrings[2]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("나이");
                 return false;
             }
-            if (!ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPhoneNumber, signUpStrings[3]))
+            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPhoneNumber, signUpStrings[3]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("휴대폰");
                 return false;
             }
-            if (!ExceptionManager.IsAddressValid(signUpStrings[4]))
+            if (!exceptionManager.IsAddressValid(signUpStrings[4]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("주소");
@@ -341,25 +343,25 @@ namespace Library.Controller
 
         public bool IsModifyValid()
         {
-            if (modifyStrings[0] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, modifyStrings[0]))
+            if (modifyStrings[0] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, modifyStrings[0]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("비밀번호");
                 return false;
             }
-            if (modifyStrings[1] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpAge, modifyStrings[1]))
+            if (modifyStrings[1] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpAge, modifyStrings[1]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("나이");
                 return false;
             }
-            if (modifyStrings[2] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPhoneNumber, modifyStrings[2]))
+            if (modifyStrings[2] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPhoneNumber, modifyStrings[2]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("휴대폰 번호");
                 return false;
             }
-            if (modifyStrings[3] != null && !ExceptionManager.IsAddressValid(modifyStrings[3]))
+            if (modifyStrings[3] != null && !exceptionManager.IsAddressValid(modifyStrings[3]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("주소");

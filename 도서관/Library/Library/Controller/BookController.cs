@@ -12,6 +12,7 @@ namespace Library.Controller
         private BookDao bookDao;
         private UserDao userDao;
         private MenuSelector menuSelector;
+        private ExceptionManager exceptionManager;
         private InputManager inputManager;
         private AccountController accountController;
         private Screen screen;
@@ -19,10 +20,11 @@ namespace Library.Controller
         private string[] bookInfoStrings;
         private string bookId;
 
-        public BookController(MenuSelector menuSelector, AccountController accountController)
+        public BookController(MenuSelector menuSelector, AccountController accountController, ExceptionManager exceptionManager)
         {
             this.menuSelector = menuSelector;
             this.accountController = accountController;
+            this.exceptionManager = exceptionManager;
             this.bookDao = new BookDao();
             this.userDao = new UserDao();
             this.inputManager = new InputManager();
@@ -148,25 +150,25 @@ namespace Library.Controller
 
         private bool IsBookModifyValid()
         {
-            if (bookInfoStrings[1] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.Writer, bookInfoStrings[1]))
+            if (bookInfoStrings[1] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.Writer, bookInfoStrings[1]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("작가");
                 return false;
             }
-            if (bookInfoStrings[3] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.Count, bookInfoStrings[3]))
+            if (bookInfoStrings[3] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.Count, bookInfoStrings[3]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("수량");
                 return false;
             }
-            if (bookInfoStrings[5] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.ReleaseDate, bookInfoStrings[5]))
+            if (bookInfoStrings[5] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.ReleaseDate, bookInfoStrings[5]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("출시일");
                 return false;
             }
-            if (bookInfoStrings[6] != null && !ExceptionManager.IsExoressionValid((int)Enums.InputType.ISBN, bookInfoStrings[6]))
+            if (bookInfoStrings[6] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.ISBN, bookInfoStrings[6]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("ISBN");

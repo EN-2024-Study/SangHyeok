@@ -47,6 +47,18 @@ namespace Library.View
             Console.Write(str + " 아이디 입력 :");
         }
 
+        public static void ExplainSearchNaver()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.Write("책 키워드 : ");
+            Console.SetCursorPosition(0, 2);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("ESC : 뒤로가기  ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("ENTER : 선택하기 / 다시 선택");
+            Console.ResetColor();
+        }
+
         public static void ExplainInputBookId()
         {
             Console.SetCursorPosition(20, 11);

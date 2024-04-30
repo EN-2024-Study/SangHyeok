@@ -126,7 +126,7 @@ namespace Library.Controller
                         apiController.SearchNaver((int)Enums.ModeMenu.UserMode);
                         break;
                     case (int)Enums.UserMode.RequestBookHistory:
-                        bookController.ShowNaverBook();
+                        bookController.ShowNaverBook((int)Enums.ModeMenu.UserMode);
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;
@@ -180,7 +180,7 @@ namespace Library.Controller
 
                         break;
                     case (int)Enums.ManagerMode.RequestBook:
-
+                        bookController.AddRequestedBook();
                         break;
                 }
             }

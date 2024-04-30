@@ -31,21 +31,40 @@ namespace Library.Controller
             return false;
         }
 
-        public bool IsRequestValid(List<NaverBookVo> bookList, NaverBookVo book)
+        public bool IsRequestValid(int type, List<NaverBookVo> bookList, NaverBookVo book)
         {
-            foreach (NaverBookVo item in bookList)
-            {
-                if (item.Equals(book))
-                {
-                    ExplainingScreen.ExplainFailScreen();
-                    ExplainingScreen.ExplainDuplicationExist("요청 도서");
-                    return false;
-                }
-            }
             if (book == null)
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("도서 제목");
+                return false;
+            }
+
+            bool isDuplication = false;
+            if (type == (int)Enums.ModeMenu.UserMode)
+            {
+                foreach (NaverBookVo item in bookList)
+                {
+                    if (item.Equals(book))
+                    {
+                        isDuplication = true;
+                        break;
+                    }
+                }
+            }
+            else if (type == (int)Enums.ModeMenu.ManagerMode)
+            {
+                foreach (NaverBookVo item in bookList)
+                    if (item.Equals(book))
+                        return true;
+
+                isDuplication = true;
+            }
+
+            if (isDuplication)
+            {
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainDuplicationExist("요청 도서");
                 return false;
             }
             return true;

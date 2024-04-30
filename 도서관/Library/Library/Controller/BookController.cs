@@ -139,23 +139,17 @@ namespace Library.Controller
 
         public void RequestBook(List<NaverBookVo> bookList)
         {
-            ExplainingScreen.ExplainRequestTitle();
+            ExplainingScreen.ExplainRequestTitle("요청할");
             string inputString = inputManager.LimitInputLength((int)Enums.InputType.RequestBook, false);
             if (inputString == null)
                 return;
 
-            NaverBookVo book = null;
-            foreach (NaverBookVo item in bookList)
+            NaverBookVo book = GetSearchedRequestBook(bookList, inputString);
+            if (!exceptionManager.IsRequestValid((int)Enums.ModeMenu.UserMode, bookDao.GetNaverBookList(), book))
             {
-                if (item.Title.ToString().Contains(inputString))
-                {
-                    book = item;
-                    break;
-                }
-            }
-
-            if (!exceptionManager.IsRequestValid(bookDao.GetNaverBookList(), book))
+                menuSelector.WaitForEscKey();
                 return;
+            }
 
             bookDao.RequestBook(book, accountController.LoggedInId);
             ExplainingScreen.ExplainSuccessScreen();
@@ -190,6 +184,27 @@ namespace Library.Controller
                 }
             }
             bookId = null;
+        }
+
+        public void AddRequestedBook()
+        {
+            ShowNaverBook((int)Enums.ModeMenu.ManagerMode);
+            ExplainingScreen.ExplainRequestTitle("추가할");
+            string inputString = inputManager.LimitInputLength((int)Enums.InputType.RequestBook, false);
+            if (inputString == null)
+                return;
+
+            List<NaverBookVo> bookList = bookDao.GetNaverBookList();
+            NaverBookVo book = GetSearchedRequestBook(bookList, inputString);
+            if (!exceptionManager.IsRequestValid((int)Enums.ModeMenu.ManagerMode, bookList, book))
+            {
+                menuSelector.WaitForEscKey();
+                return;
+            }
+
+            bookDao.AddRequestedBook(book);
+            ExplainingScreen.ExplainSuccessScreen();
+            menuSelector.WaitForEscKey();
         }
 
         public bool IsBookIdValid()
@@ -395,21 +410,28 @@ namespace Library.Controller
             }
         }
 
-        public void ShowNaverBook()
+        public void ShowNaverBook(int type)
         {
             Console.Clear();
             Console.SetWindowSize(80, 40);
-
             List<NaverBookVo> bookList = bookDao.GetNaverBookList();
-            List<NaverBookVo> naverBookList = new List<NaverBookVo>();
-            foreach(NaverBookVo book in bookList)
+
+            if (type == (int)Enums.ModeMenu.UserMode)
             {
-                if (book.Userid.ToString().Equals(accountController.LoggedInId))
-                    naverBookList.Add(book);
+                List<NaverBookVo> naverBookList = new List<NaverBookVo>();
+                foreach (NaverBookVo book in bookList)
+                {
+                    if (book.Userid.ToString().Equals(accountController.LoggedInId))
+                        naverBookList.Add(book);
+                }
+
+                if (naverBookList.Count > 0)
+                    screen.DrawNaverBooks(naverBookList);
             }
-            
-            if (naverBookList.Count > 0)
-                screen.DrawNaverBooks(naverBookList);
+            else if (type == (int)Enums.ModeMenu.ManagerMode)
+            {
+                screen.DrawNaverBooks(bookList);
+            }
         }
 
         private void ShowBookInfo()
@@ -519,6 +541,20 @@ namespace Library.Controller
 
             searchedBookStrings = new string[] { null, null, null };
             return searchedBookList;
+        }
+
+        private NaverBookVo GetSearchedRequestBook(List<NaverBookVo> bookList, string title)
+        {
+            NaverBookVo book = null;
+            foreach (NaverBookVo item in bookList)
+            {
+                if (item.Title.ToString().Contains(title))
+                {
+                    book = item;
+                    break;
+                }
+            }
+            return book;
         }
 
         public string BookId

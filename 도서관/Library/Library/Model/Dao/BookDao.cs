@@ -177,6 +177,15 @@ namespace Library.Model
             db.SetData(insertQuery);
         }
 
+        public void AddRequestedBook(NaverBookVo book)
+        {
+            string insertQuery = string.Format(QueryStrings.INSERT_BOOK,
+                   book.Title.ToString(), book.Writer.ToString(), book.Publisher.ToString(),
+                   1, book.Price.ToString(), book.ReleaseDate.ToString(), book.ISBN.ToString(),
+                   book.Info.ToString());
+            db.SetData(insertQuery);
+        }
+
         private string[] GetBookInfoStrings(MySqlDataReader table)
         {
             string[] bookInfo = new string[9];

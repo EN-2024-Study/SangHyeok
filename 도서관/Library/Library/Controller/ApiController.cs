@@ -23,16 +23,18 @@ namespace Library.Controller
         private readonly string clientId, clientPassword;
         private MenuSelector menuSelector;
         private InputManager inputManager;
+        private AccountController accountController;
         private ExceptionManager exceptionManager;
         private DbConnector db;
         private Screen screen;
 
-        public ApiController(MenuSelector menuSelector, ExceptionManager exceptionManager) 
+        public ApiController(MenuSelector menuSelector, ExceptionManager exceptionManager, AccountController accountController) 
         {
             this.clientId = "YZUNzAPoiLUk2je0tW_2";
             this.clientPassword = "JDoqusR1uP";
             this.menuSelector = menuSelector;
             this.exceptionManager = exceptionManager;
+            this.accountController = accountController;
             this.inputManager = new InputManager();
             this.db = DbConnector.Instance;
             this.screen = new Screen(); 
@@ -113,7 +115,8 @@ namespace Library.Controller
 
                 string insertQuery = string.Format(QueryStrings.INSERT_REQUESTBOOK,
                     book.Title.ToString(), book.Author.ToString(), book.Discount.ToString(),
-                    book.Publisher.ToString(), book.Pubdate.ToString(), book.Isbn.ToString(), book.Description.ToString());
+                    book.Publisher.ToString(), book.Pubdate.ToString(), book.Isbn.ToString(), 
+                    book.Description.ToString(), accountController.LoggedInId);
                 db.SetData(insertQuery);
 
                 ExplainingScreen.ExplainSuccessScreen();

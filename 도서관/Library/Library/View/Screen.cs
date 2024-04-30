@@ -41,33 +41,29 @@ namespace Library.View
             Console.ResetColor();
         }
 
-        private void DrawUserId(int y, string userId)
+        private void DrawUserId(string userId)
         {
-            Console.SetCursorPosition(0, y);
-            Console.Write("=====================================");
-            Console.SetCursorPosition(0, y + 1);
-            Console.Write("유저 아이디      :" + userId);
+            Console.WriteLine("=====================================");
+            Console.WriteLine("유저 아이디      :" + userId);
         }
 
         public void DrawUserInfo(int y, UserDto user)
         {
-            DrawUserId(y, user.Id);
-            Console.SetCursorPosition(0, y + 2);
-            Console.Write("유저 이름        :" + user.Password);
-            Console.SetCursorPosition(0, y + 3);
-            Console.Write("유저 나이        :" + user.Age);
-            Console.SetCursorPosition(0, y + 4);
-            Console.Write("유저 휴대폰 번호 :" + user.PhoneNumber);
-            Console.SetCursorPosition(0, y + 5);
-            Console.Write("유저 주소        :" + user.Address);
+            Console.SetCursorPosition(0, y);
+            DrawUserId(user.Id);
+            Console.WriteLine("유저 이름        :" + user.Password);
+            Console.WriteLine("유저 나이        :" + user.Age);
+            Console.WriteLine("유저 휴대폰 번호 :" + user.PhoneNumber);
+            Console.WriteLine("유저 주소        :" + user.Address);
         }
       
         public void DrawRentalBooks(int y, string userId, List<RentalBookDto> bookList)
-        { 
-            DrawUserId(y, userId);
+        {
+            Console.SetCursorPosition(0, y);
+            DrawUserId(userId);
             foreach(RentalBookDto book in bookList)
             {
-                DrawBookInfo(y + 2, new BookDto(book.Id, book.Title, book.Writer, book.Publisher,
+                DrawBookInfo(new BookDto(book.Id, book.Title, book.Writer, book.Publisher,
                     book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info));
                 Console.SetCursorPosition(0, y + 12);
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -82,51 +78,36 @@ namespace Library.View
 
         public void DrawReturnBooks(string userId, List<ReturnBookDto> bookList)
         {
-            int y = 17;
-            DrawUserId(y, userId);
+            Console.SetCursorPosition(0, 17);
+            DrawUserId(userId);
             foreach (ReturnBookDto book in bookList)
-            {
-                DrawBookInfo(y + 2, new BookDto(book.Id, book.Title, book.Writer, book.Publisher,
+                DrawBookInfo(new BookDto(book.Id, book.Title, book.Writer, book.Publisher,
                     book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info));
-                y += 12;
-            }
         }
 
         public void DrawBooks(List<BookDto> bookList)
         {
             Console.SetWindowSize(70, 40);
             Console.ForegroundColor = ConsoleColor.Yellow;
-            int y = 17;
+            Console.SetCursorPosition(0, 17);
             foreach (BookDto book in bookList)
-            {
-                DrawBookInfo(y, book);
-                y += 10;
-            }
+                DrawBookInfo(book);
+            
             Console.ResetColor();
         }
 
-        public void DrawBookInfo(int y, BookDto book)
+        public void DrawBookInfo(BookDto book)
         {
-            Console.SetCursorPosition(0, y);
-            Console.Write("=====================================");
-            Console.SetCursorPosition(0, y + 1);
-            Console.Write("책 아이디   :" + book.Id);
-            Console.SetCursorPosition(0, y + 2);
-            Console.Write("책 제목     :" + book.Title);
-            Console.SetCursorPosition(0, y + 3);
-            Console.Write("작가        :" + book.Writer);
-            Console.SetCursorPosition(0, y + 4);
-            Console.Write("출판사      :" + book.Publisher);
-            Console.SetCursorPosition(0, y + 5);
-            Console.Write("수량        :" + book.Count);
-            Console.SetCursorPosition(0, y + 6);
-            Console.Write("가격        :" + book.Price);
-            Console.SetCursorPosition(0, y + 7);
-            Console.Write("출시일      :" + book.ReleaseDate);
-            Console.SetCursorPosition(0, y + 8);
-            Console.Write("ISBN        :" + book.ISBN);
-            Console.SetCursorPosition(0, y + 9);
-            Console.Write("책 정보     :" + book.Info);
+            Console.WriteLine("=====================================");
+            Console.WriteLine("책 아이디   :" + book.Id);
+            Console.WriteLine("책 제목     :" + book.Title);
+            Console.WriteLine("작가        :" + book.Writer);
+            Console.WriteLine("출판사      :" + book.Publisher);
+            Console.WriteLine("수량        :" + book.Count);
+            Console.WriteLine("가격        :" + book.Price);
+            Console.WriteLine("출시일      :" + book.ReleaseDate);
+            Console.WriteLine("ISBN        :" + book.ISBN);
+            Console.WriteLine("책 정보     :" + book.Info);
         }
 
         public void DrawNaverBooks(List<NaverBookVo> bookList)

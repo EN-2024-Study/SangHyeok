@@ -449,7 +449,8 @@ namespace Library.Controller
 
             Console.SetWindowSize(70, 45);
             Console.Clear();
-            screen.DrawBookInfo(20, book);
+            Console.SetCursorPosition(0, 20);
+            screen.DrawBookInfo(book);
         }
 
         public void InputBookId()

@@ -155,6 +155,10 @@ namespace Library.Controller
                 case (int)Enums.InputType.ISBN:
                     length = 25;
                     break;
+                case (int)Enums.InputType.NaverSearch:
+                case (int)Enums.InputType.RequestBook:
+                    length = 45;
+                    break;
             }
             return length;
         }
@@ -244,6 +248,14 @@ namespace Library.Controller
                 case (int)Enums.InputType.Info:
                     x = 10;
                     y = 18;
+                    break;
+                case (int)Enums.InputType.NaverSearch:
+                    x = 12;
+                    y = 0;
+                    break;
+                case (int)Enums.InputType.RequestBook:
+                    x = 18;
+                    y = 15;
                     break;
             }
             return new Tuple<int, int>(x, y);

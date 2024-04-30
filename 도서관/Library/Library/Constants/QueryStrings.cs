@@ -26,6 +26,8 @@ namespace Library.Constants
 
         public static readonly string INSERT_RETURNBOOK = "INSERT INTO returnbook VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')";
 
+        public static readonly string INSERT_REQUESTBOOK = "INSERT INTO request_book VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}')";
+
         public static readonly string UPDATE_USER = "UPDATE user SET {1} = '{2}' WHERE id = {0}";
 
         public static readonly string UPDATE_BOOK = "UPDATE book SET {1} = '{2}' WHERE id = {0}";

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using Library.View;
 
-namespace Library.Utility
+namespace Library.Controller
 {
     public class DbConnector    // singleton
     {

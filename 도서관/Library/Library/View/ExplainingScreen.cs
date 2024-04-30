@@ -57,6 +57,14 @@ namespace Library.View
             Console.ResetColor();
         }
 
+        public static void ExplainRequestTitle()
+        {
+            Console.SetCursorPosition(0, 15);
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("요청할 책 키워드 : ");
+            Console.ResetColor();
+        }
+
         public static void ExplainInputBookId()
         {
             Console.SetCursorPosition(20, 11);

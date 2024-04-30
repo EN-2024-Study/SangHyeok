@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -20,41 +21,47 @@ namespace Library.Controller
     public class ApiController
     {
         private readonly string clientId, clientPassword;
-        private List<NaverBookVo> bookList;
         private MenuSelector menuSelector;
+        private InputManager inputManager;
+        private ExceptionManager exceptionManager;
+        private DbConnector db;
         private Screen screen;
 
-        public ApiController(MenuSelector menuSelector) 
+        public ApiController(MenuSelector menuSelector, ExceptionManager exceptionManager) 
         {
             this.clientId = "YZUNzAPoiLUk2je0tW_2";
             this.clientPassword = "JDoqusR1uP";
-            this.bookList = new List<NaverBookVo>();
             this.menuSelector = menuSelector;
+            this.exceptionManager = exceptionManager;
+            this.inputManager = new InputManager();
+            this.db = DbConnector.Instance;
             this.screen = new Screen(); 
         }
 
         public void SearchNaver(int type)
         {
-            SetWindow();
-            string inputString = Console.ReadLine();
-            Console.CursorVisible = false;
-            ReadBookInfo(inputString);
+            Console.Clear();
+            Console.SetWindowSize(50, 5);
+            ExplainingScreen.ExplainSearchNaver();
 
-            Console.SetWindowSize(80, 40);
+            string inputString = inputManager.LimitInputLength((int)Enums.InputType.NaverSearch, false);
+            StreamReader reader = ReadBookInfo(inputString);
+            List<NaverBookVo> bookList = GetBookList(reader);
             screen.DrawNaverBooks(bookList);
 
-            switch(type)
+            switch (type)
             {
                 case (int)Enums.ModeMenu.UserMode:
-
+                    RequestBook(bookList);
                     break;
                 case (int)Enums.ModeMenu.ManagerMode:
+                    ExplainingScreen.ExplainEcsKey(0);
                     menuSelector.WaitForEscKey();
                     break;
             }
         }
 
-        private void ReadBookInfo(string query)
+        private StreamReader ReadBookInfo(string query)
         {
             string url = "https://openapi.naver.com/v1/search/book?query=" + query;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -64,29 +71,54 @@ namespace Library.Controller
             string status = response.StatusCode.ToString();
 
             if (status == "OK")
-                SetBookList(new StreamReader(response.GetResponseStream(), Encoding.UTF8));
+                return new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+            return null;
         }
 
-        private void SetBookList(StreamReader reader)
+        private List<NaverBookVo> GetBookList(StreamReader reader)
         {
             JObject jsonData = JObject.Parse(reader.ReadToEnd());
-            bookList = new List<NaverBookVo>();
+            List<NaverBookVo> bookList = new List<NaverBookVo>();
             for(int i = 0; i < 3; i++)
             {
-                var item = jsonData["items"][i] ;
+                var item = jsonData["items"][i];
                 bookList.Add(new NaverBookVo(item["title"], item["author"], item["discount"], 
                     item["publisher"], item["pubdate"], item["isbn"], item["description"]));
             }
-
+            return bookList;
         }
 
-        private void SetWindow()
+        private void RequestBook(List<NaverBookVo> bookList)
         {
-            Console.Clear();
-            Console.SetWindowSize(50, 5);
-            ExplainingScreen.ExplainSearchNaver();
-            Console.SetCursorPosition(12, 0);
-            Console.CursorVisible = true;
+            bool isContinue = true;
+            while(isContinue)
+            {
+                ExplainingScreen.ExplainRequestTitle();
+                string inputString = inputManager.LimitInputLength((int)Enums.InputType.RequestBook, false);
+                if (inputString == null)
+                    return;
+
+                NaverBookVo book = null;
+                foreach (NaverBookVo item in bookList)
+                {
+                    if (item.Title.ToString().Contains(inputString))
+                    {
+                        book = item;
+                        break;
+                    }
+                }
+
+                if (!exceptionManager.IsRequestValid(book))
+                    continue;
+
+                string insertQuery = string.Format(QueryStrings.INSERT_REQUESTBOOK,
+                    book.Title.ToString(), book.Author.ToString(), book.Discount.ToString(),
+                    book.Publisher.ToString(), book.Pubdate.ToString(), book.Isbn.ToString(), book.Description.ToString());
+                db.SetData(insertQuery);
+
+                ExplainingScreen.ExplainSuccessScreen();
+                menuSelector.WaitForEscKey();
+            }
         }
     }
 }

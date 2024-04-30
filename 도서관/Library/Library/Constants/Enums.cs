@@ -19,7 +19,8 @@ namespace Library.Constants
             SignUp,
             AccountModify,
             BookAdd,
-            BookModify
+            BookModify,
+            NaverSearch
         }
 
         public enum ModeMenu
@@ -152,7 +153,9 @@ namespace Library.Constants
             ISBN,
             Info,
             BookId,
-            UserId
+            UserId,
+            NaverSearch,
+            RequestBook
         }
     }
 }

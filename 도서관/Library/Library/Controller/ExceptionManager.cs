@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Net;
 using Library.Constants;
+using Library.Model;
+using Library.Model.DtoVo;
 
 namespace Library.Controller
 {
@@ -26,6 +28,15 @@ namespace Library.Controller
             if (regex1.IsMatch(address) || regex2.IsMatch(address))
                 return true;
             return false;
+        }
+
+        public bool IsRequestValid(NaverBookVo book)
+        {
+            if (book == null)
+            {
+
+            }
+            return true;
         }
 
         private Regex GetRegex(int type)

@@ -131,7 +131,10 @@ namespace Library.View
 
         public void DrawNaverBooks(List<NaverBookVo> bookList)
         {
-            Console.SetCursorPosition(0, 5);
+            Console.Clear();
+            SetWindowSize((int)Enums.MenuType.NaverSearch);
+            Console.SetCursorPosition(0, 17);
+
             foreach(NaverBookVo book in bookList)
             {
                 Console.WriteLine("===============================================");
@@ -196,6 +199,9 @@ namespace Library.View
                     break;
                 case (int)Enums.MenuType.BookSearch:
                     Console.SetWindowSize(70, 40);
+                    break;
+                case (int)Enums.MenuType.NaverSearch:
+                    Console.SetWindowSize(80, 40);
                     break;
             }
         }

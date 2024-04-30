@@ -45,6 +45,7 @@
     <Compile Include="Controller\AccountController.cs" />
     <Compile Include="MainProgram.cs" />
     <Compile Include="Model\DtoVo\BookDto.cs" />
+    <Compile Include="Model\DtoVo\NaverBookVo.cs" />
     <Compile Include="Model\DtoVo\ReturnBookDto.cs" />
     <Compile Include="Model\Dao\BookDao.cs" />
     <Compile Include="Model\Dao\ManagerDao.cs" />

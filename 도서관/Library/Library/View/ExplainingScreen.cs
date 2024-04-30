@@ -54,8 +54,6 @@ namespace Library.View
             Console.SetCursorPosition(0, 2);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("ESC : 뒤로가기  ");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("ENTER : 선택하기 / 다시 선택");
             Console.ResetColor();
         }
 

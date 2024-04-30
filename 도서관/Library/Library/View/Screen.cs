@@ -129,6 +129,22 @@ namespace Library.View
             Console.Write("책 정보     :" + book.Info);
         }
 
+        public void DrawNaverBooks(List<NaverBookVo> bookList)
+        {
+            Console.SetCursorPosition(0, 5);
+            foreach(NaverBookVo book in bookList)
+            {
+                Console.WriteLine("===============================================");
+                Console.WriteLine("책 제목     :" + book.Title);
+                Console.WriteLine("작가        :" + book.Author);
+                Console.WriteLine("가격        :" + book.Discount);
+                Console.WriteLine("출판사      :" + book.Publisher);
+                Console.WriteLine("출시일      :" + book.Pubdate);
+                Console.WriteLine("ISBN        :" + book.Isbn);
+                Console.WriteLine("책 정보     :" + book.Description);
+            }
+        }
+
         private Tuple<int, int> GetCoordinate(int screenType)
         {
             Tuple<int, int> coordinate = null;

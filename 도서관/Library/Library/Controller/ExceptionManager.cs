@@ -45,7 +45,7 @@ namespace Library.Controller
             {
                 foreach (NaverBookVo item in bookList)
                 {
-                    if (item.Equals(book))
+                    if (item.Equals(book))  // 이미 요청한 책이라면 false
                     {
                         isDuplication = true;
                         break;
@@ -55,7 +55,7 @@ namespace Library.Controller
             else if (type == (int)Enums.ModeMenu.ManagerMode)
             {
                 foreach (NaverBookVo item in bookList)
-                    if (item.Equals(book))
+                    if (item.Equals(book))  // user가 요청한 책 이름과 같다면 true
                         return true;
 
                 isDuplication = true;

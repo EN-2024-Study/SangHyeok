@@ -22,7 +22,7 @@ namespace Library.Controller
             this.exceptionManager = new ExceptionManager();
             this.accountController = new AccountController(menuSelector, exceptionManager);
             this.bookController = new BookController(menuSelector, accountController, exceptionManager);
-            this.apiController = new ApiController(menuSelector, exceptionManager);
+            this.apiController = new ApiController(menuSelector, bookController, accountController);
         }
 
         public void ControllModeMenu()
@@ -126,7 +126,9 @@ namespace Library.Controller
                         apiController.SearchNaver((int)Enums.ModeMenu.UserMode);
                         break;
                     case (int)Enums.UserMode.RequestBookHistory:
-
+                        bookController.ShowNaverBook();
+                        ExplainingScreen.ExplainEcsKey(0);
+                        menuSelector.WaitForEscKey();
                         break;
                 }
             }

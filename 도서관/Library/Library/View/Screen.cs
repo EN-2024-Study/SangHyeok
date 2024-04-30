@@ -139,12 +139,12 @@ namespace Library.View
             {
                 Console.WriteLine("===============================================");
                 Console.WriteLine("책 제목     :" + book.Title);
-                Console.WriteLine("작가        :" + book.Author);
-                Console.WriteLine("가격        :" + book.Discount);
+                Console.WriteLine("작가        :" + book.Writer);
+                Console.WriteLine("가격        :" + book.Price);
                 Console.WriteLine("출판사      :" + book.Publisher);
-                Console.WriteLine("출시일      :" + book.Pubdate);
-                Console.WriteLine("ISBN        :" + book.Isbn);
-                Console.WriteLine("책 정보     :" + book.Description);
+                Console.WriteLine("출시일      :" + book.ReleaseDate);
+                Console.WriteLine("ISBN        :" + book.ISBN);
+                Console.WriteLine("책 정보     :" + book.Info);
             }
         }
 

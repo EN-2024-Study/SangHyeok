@@ -9,26 +9,30 @@ namespace Library.Model.DtoVo
 {
     public class NaverBookVo
     {
-        private JToken title, author, discount, publisher, pubdate, isbn, description;
+        private JToken title, writer, price, publisher, releaseDate, iSBN, info;
+        private string userid;
 
         public NaverBookVo(JToken title, JToken author, JToken discount,
-            JToken publisher, JToken pubdate, JToken isbn, JToken description)
+            JToken publisher, JToken pubdate, JToken isbn, JToken description, string userid)
         {
             this.title = title;
-            this.author = author;
-            this.discount = discount;
+            this.writer = author;
+            this.price = discount;
             this.publisher = publisher;
-            this.pubdate = pubdate;
-            this.isbn = isbn;
-            this.description = description;
+            this.releaseDate = pubdate;
+            this.iSBN = isbn;
+            this.info = description;
+            this.userid = userid;
         }
 
         public JToken Title { get { return title; } }
-        public JToken Author { get { return author; } }
-        public JToken Discount { get { return discount; } }
+        public JToken Writer { get { return writer; } }
+        public JToken Price { get { return price; } }
         public JToken Publisher { get { return publisher; } }
-        public JToken Pubdate { get { return pubdate; } }
-        public JToken Isbn { get { return isbn; } }
-        public JToken Description { get { return description; } }
+        public JToken ReleaseDate { get { return releaseDate; } }
+        public JToken ISBN { get { return iSBN; } }
+        public JToken Info { get { return info; } }
+        public JToken Userid { get { return userid; } }
+
     }
 }

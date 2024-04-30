@@ -18,6 +18,8 @@ namespace Library.Constants
 
         public static readonly string SELECT_USER = "SELECT * FROM user";
 
+        public static readonly string SELECT_REQUESTBOOK = "SELECT * FROM request_book";
+
         public static readonly string INSERT_USER = "INSERT INTO user VALUES('{0}', '{1}', '{2}', '{3}', '{4}')";
 
         public static readonly string INSERT_BOOK = "INSERT INTO book VALUES( null, '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')";

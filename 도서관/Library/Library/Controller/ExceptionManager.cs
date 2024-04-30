@@ -8,6 +8,7 @@ using System.Net;
 using Library.Constants;
 using Library.Model;
 using Library.Model.DtoVo;
+using Library.View;
 
 namespace Library.Controller
 {
@@ -30,11 +31,22 @@ namespace Library.Controller
             return false;
         }
 
-        public bool IsRequestValid(NaverBookVo book)
+        public bool IsRequestValid(List<NaverBookVo> bookList, NaverBookVo book)
         {
+            foreach (NaverBookVo item in bookList)
+            {
+                if (item.Equals(book))
+                {
+                    ExplainingScreen.ExplainFailScreen();
+                    ExplainingScreen.ExplainDuplicationExist("요청 도서");
+                    return false;
+                }
+            }
             if (book == null)
             {
-
+                ExplainingScreen.ExplainFailScreen();
+                ExplainingScreen.ExplainInvalidInput("도서 제목");
+                return false;
             }
             return true;
         }

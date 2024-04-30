@@ -28,8 +28,8 @@ namespace Library.Model
 
         public List<BookDto> GetBookList()
         {
-            string selectQuery = QueryStrings.SELECT_BOOK;
             List<BookDto> bookList = new List<BookDto>();
+            string selectQuery = QueryStrings.SELECT_BOOK;
 
             db.MySql.Open();
             MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
@@ -37,13 +37,13 @@ namespace Library.Model
 
             while (table.Read())
             {
-                string[] bookInfo = GetBookInfo(table);
+                string[] bookInfo = GetBookInfoStrings(table);
                 bookList.Add(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
                     bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
                     bookInfo[7], bookInfo[8]));
             }
+
             db.MySql.Close();
-           
             return bookList;
         }
 
@@ -58,7 +58,7 @@ namespace Library.Model
 
             while (table.Read())
             {
-                string[] bookInfo = GetBookInfo(table);
+                string[] bookInfo = GetBookInfoStrings(table);
                 string rentalTime = table[QueryStrings.FIELD_RENTALTIME].ToString();
                 string returnTime = table[QueryStrings.FIELD_RETURNTIME].ToString();
                 string userId = table[QueryStrings.FIELD_USERID].ToString();
@@ -66,16 +66,15 @@ namespace Library.Model
                     bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
                     bookInfo[7], bookInfo[8]), userId, rentalTime, returnTime));
             }
+
             db.MySql.Close();
-          
             return rentalBookList;
         }
 
         public List<ReturnBookDto> GetReturnBookList()
         {
-            string selectQuery = null;
             List<ReturnBookDto> returnBookList = new List<ReturnBookDto>();
-            selectQuery = QueryStrings.SELECT_RETURNBOOK;
+            string selectQuery = QueryStrings.SELECT_RETURNBOOK;
 
             db.MySql.Open();
             MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
@@ -83,30 +82,43 @@ namespace Library.Model
 
             while (table.Read())
             {
-                string[] bookInfo = GetBookInfo(table);
+                string[] bookInfo = GetBookInfoStrings(table);
                 string userId = table[QueryStrings.FIELD_USERID].ToString();
                 returnBookList.Add(new ReturnBookDto(new BookDto(bookInfo[0], bookInfo[1], bookInfo[2],
                     bookInfo[3], int.Parse(bookInfo[4]), bookInfo[5], bookInfo[6],
                     bookInfo[7], bookInfo[8]), userId));
             }
+
             db.MySql.Close();
-          
             return returnBookList;
         }
 
-        private string[] GetBookInfo(MySqlDataReader table)
+        public List<NaverBookVo> GetNaverBookList()
         {
-            string[] bookInfo = new string[9];
-            bookInfo[0] = table[QueryStrings.FIELD_ID].ToString();
-            bookInfo[1] = table[QueryStrings.FIELD_TITLE].ToString();
-            bookInfo[2] = table[QueryStrings.FIELD_WRITER].ToString();
-            bookInfo[3] = table[QueryStrings.FIELD_PUBLISHER].ToString();
-            bookInfo[4] = table[QueryStrings.FIELD_COUNT].ToString();
-            bookInfo[5] = table[QueryStrings.FIELD_PRICE].ToString();
-            bookInfo[6] = table[QueryStrings.FIELD_RELEASEDATE].ToString();
-            bookInfo[7] = table[QueryStrings.FIELD_ISBN].ToString();
-            bookInfo[8] = table[QueryStrings.FIELD_INFO].ToString();
-            return bookInfo;
+            List<NaverBookVo> naverBookList = new List<NaverBookVo>();
+            string selectQuery = QueryStrings.SELECT_REQUESTBOOK;
+
+            db.MySql.Open();
+            MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
+            MySqlDataReader table = command.ExecuteReader();
+            while (table.Read())
+            {
+                string[] bookInfo = new string[8];
+                bookInfo[0] = table[QueryStrings.FIELD_TITLE].ToString();
+                bookInfo[1] = table[QueryStrings.FIELD_WRITER].ToString();
+                bookInfo[2] = table[QueryStrings.FIELD_PRICE].ToString();
+                bookInfo[3] = table[QueryStrings.FIELD_PUBLISHER].ToString();
+                bookInfo[4] = table[QueryStrings.FIELD_RELEASEDATE].ToString();
+                bookInfo[5] = table[QueryStrings.FIELD_ISBN].ToString();
+                bookInfo[6] = table[QueryStrings.FIELD_INFO].ToString();
+                bookInfo[7] = table[QueryStrings.FIELD_USERID].ToString();
+
+                naverBookList.Add(new NaverBookVo(bookInfo[0], bookInfo[1], bookInfo[2],
+                    bookInfo[3], bookInfo[4], bookInfo[5], bookInfo[6], bookInfo[7]));
+            }
+
+            db.MySql.Close();
+            return naverBookList;
         }
 
         public void AddBook(BookDto book)
@@ -154,6 +166,30 @@ namespace Library.Model
             query = string.Format(QueryStrings.INSERT_RETURNBOOK,
                   book.Id, book.Title, book.Writer, book.Publisher, book.Count, book.Price, book.ReleaseDate, book.ISBN, book.Info, book.UserId);
             db.SetData(query);
+        }
+
+        public void RequestBook(NaverBookVo book, string loggedInId)
+        {
+            string insertQuery = string.Format(QueryStrings.INSERT_REQUESTBOOK,
+                    book.Title.ToString(), book.Writer.ToString(), book.Price.ToString(),
+                    book.Publisher.ToString(), book.ReleaseDate.ToString(), book.ISBN.ToString(),
+                    book.Info.ToString(), loggedInId);
+            db.SetData(insertQuery);
+        }
+
+        private string[] GetBookInfoStrings(MySqlDataReader table)
+        {
+            string[] bookInfo = new string[9];
+            bookInfo[0] = table[QueryStrings.FIELD_ID].ToString();
+            bookInfo[1] = table[QueryStrings.FIELD_TITLE].ToString();
+            bookInfo[2] = table[QueryStrings.FIELD_WRITER].ToString();
+            bookInfo[3] = table[QueryStrings.FIELD_PUBLISHER].ToString();
+            bookInfo[4] = table[QueryStrings.FIELD_COUNT].ToString();
+            bookInfo[5] = table[QueryStrings.FIELD_PRICE].ToString();
+            bookInfo[6] = table[QueryStrings.FIELD_RELEASEDATE].ToString();
+            bookInfo[7] = table[QueryStrings.FIELD_ISBN].ToString();
+            bookInfo[8] = table[QueryStrings.FIELD_INFO].ToString();
+            return bookInfo;
         }
     }
 }

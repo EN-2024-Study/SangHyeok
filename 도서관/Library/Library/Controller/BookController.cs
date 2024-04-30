@@ -137,6 +137,61 @@ namespace Library.Controller
             }
         }
 
+        public void RequestBook(List<NaverBookVo> bookList)
+        {
+            ExplainingScreen.ExplainRequestTitle();
+            string inputString = inputManager.LimitInputLength((int)Enums.InputType.RequestBook, false);
+            if (inputString == null)
+                return;
+
+            NaverBookVo book = null;
+            foreach (NaverBookVo item in bookList)
+            {
+                if (item.Title.ToString().Contains(inputString))
+                {
+                    book = item;
+                    break;
+                }
+            }
+
+            if (!exceptionManager.IsRequestValid(bookDao.GetNaverBookList(), book))
+                return;
+
+            bookDao.RequestBook(book, accountController.LoggedInId);
+            ExplainingScreen.ExplainSuccessScreen();
+            menuSelector.WaitForEscKey();
+        }
+
+        public void RentalBook()
+        {
+            List<BookDto> bookList = bookDao.GetBookList();
+            DateTime time = DateTime.Now;
+            foreach (BookDto book in bookList)
+            {
+                if (book.Id.Equals(bookId) && book.Count > 0)
+                {
+                    bookDao.RentalBook(new RentalBookDto(book,
+                        accountController.LoggedInId, time.ToString("yyyy-MM-dd HH:mm:ss"),
+                        time.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")));
+                    bookId = null;
+                }
+            }
+        }
+
+        public void DeleteBook()
+        {
+            List<BookDto> bookList = bookDao.GetBookList();
+            for (int i = 0; i < bookList.Count; i++)
+            {
+                if (bookList[i].Id.Equals(bookId))
+                {
+                    bookDao.DeleteBook(bookId);
+                    break;
+                }
+            }
+            bookId = null;
+        }
+
         public bool IsBookIdValid()
         {
             if (bookId == null)
@@ -272,37 +327,7 @@ namespace Library.Controller
             ExplainingScreen.ExplainInvalidInput("책 아이디");
             return false;
         }
-
-        public void RentalBook()
-        {
-            List<BookDto> bookList = bookDao.GetBookList();
-            DateTime time = DateTime.Now;
-            foreach (BookDto book in bookList)
-            {
-                if (book.Id.Equals(bookId) && book.Count > 0)
-                {
-                    bookDao.RentalBook(new RentalBookDto(book,
-                        accountController.LoggedInId, time.ToString("yyyy-MM-dd HH:mm:ss"),
-                        time.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")));
-                    bookId = null;
-                }
-            }
-        }
-
-        public void DeleteBook()
-        {
-            List<BookDto> bookList = bookDao.GetBookList();
-            for (int i = 0; i < bookList.Count; i++)
-            {
-                if (bookList[i].Id.Equals(bookId))
-                {
-                    bookDao.DeleteBook(bookId);
-                    break;
-                }
-            }
-            bookId = null;
-        }
-
+       
         public void ShowBooks(int typeValue)
         {
             Console.Clear();
@@ -325,11 +350,11 @@ namespace Library.Controller
             List<RentalBookDto> bookList = bookDao.GetRentalBookList();
             List<RentalBookDto> rentalBookList = new List<RentalBookDto>();
             foreach (RentalBookDto book in bookList)
-            {
                 if (accountController.LoggedInId.Equals(book.UserId))
                     rentalBookList.Add(book);
-            }
-            screen.DrawRentalBooks(17, accountController.LoggedInId, rentalBookList);
+            
+            if (rentalBookList.Count > 0)
+                screen.DrawRentalBooks(17, accountController.LoggedInId, rentalBookList);
         }
 
         public void ShowReturnBooks()
@@ -340,11 +365,11 @@ namespace Library.Controller
             List<ReturnBookDto> bookList = bookDao.GetReturnBookList();
             List<ReturnBookDto> returnBookList = new List<ReturnBookDto>();
             foreach(ReturnBookDto book in bookList)
-            {
                 if (accountController.LoggedInId.Equals(book.UserId))
                     returnBookList.Add(book);
-            }
-            screen.DrawReturnBooks(accountController.LoggedInId, returnBookList);
+
+            if (returnBookList.Count > 0)
+                screen.DrawReturnBooks(accountController.LoggedInId, returnBookList);
         }
 
         public void ShowAllUserRentalHistory()
@@ -362,9 +387,29 @@ namespace Library.Controller
                     if (user.Id.Equals(book.UserId))
                         rentalBookList.Add(book);
 
-                screen.DrawRentalBooks(y, user.Id, rentalBookList);
-                y += rentalBookList.Count * 13 + 1;
+                if (rentalBookList.Count > 0)
+                {
+                    screen.DrawRentalBooks(y, user.Id, rentalBookList);
+                    y += rentalBookList.Count * 13 + 1;
+                }
             }
+        }
+
+        public void ShowNaverBook()
+        {
+            Console.Clear();
+            Console.SetWindowSize(80, 40);
+
+            List<NaverBookVo> bookList = bookDao.GetNaverBookList();
+            List<NaverBookVo> naverBookList = new List<NaverBookVo>();
+            foreach(NaverBookVo book in bookList)
+            {
+                if (book.Userid.ToString().Equals(accountController.LoggedInId))
+                    naverBookList.Add(book);
+            }
+            
+            if (naverBookList.Count > 0)
+                screen.DrawNaverBooks(naverBookList);
         }
 
         private void ShowBookInfo()

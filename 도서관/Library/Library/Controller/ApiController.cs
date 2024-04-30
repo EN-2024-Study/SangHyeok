@@ -21,45 +21,49 @@ namespace Library.Controller
     public class ApiController
     {
         private readonly string clientId, clientPassword;
+        private AccountController accountController;
         private MenuSelector menuSelector;
         private InputManager inputManager;
-        private AccountController accountController;
-        private ExceptionManager exceptionManager;
-        private DbConnector db;
+        private BookController bookController;
         private Screen screen;
 
-        public ApiController(MenuSelector menuSelector, ExceptionManager exceptionManager, AccountController accountController) 
+        public ApiController(MenuSelector menuSelector, BookController bookController, AccountController accountController) 
         {
             this.clientId = "YZUNzAPoiLUk2je0tW_2";
             this.clientPassword = "JDoqusR1uP";
-            this.menuSelector = menuSelector;
-            this.exceptionManager = exceptionManager;
             this.accountController = accountController;
+            this.menuSelector = menuSelector;
+            this.bookController = bookController;
             this.inputManager = new InputManager();
-            this.db = DbConnector.Instance;
             this.screen = new Screen(); 
         }
 
         public void SearchNaver(int type)
         {
-            Console.Clear();
-            Console.SetWindowSize(50, 5);
-            ExplainingScreen.ExplainSearchNaver();
-
-            string inputString = inputManager.LimitInputLength((int)Enums.InputType.NaverSearch, false);
-            StreamReader reader = ReadBookInfo(inputString);
-            List<NaverBookVo> bookList = GetBookList(reader);
-            screen.DrawNaverBooks(bookList);
-
-            switch (type)
+            bool isContinue = true;
+            while(isContinue)
             {
-                case (int)Enums.ModeMenu.UserMode:
-                    RequestBook(bookList);
-                    break;
-                case (int)Enums.ModeMenu.ManagerMode:
-                    ExplainingScreen.ExplainEcsKey(0);
-                    menuSelector.WaitForEscKey();
-                    break;
+                Console.Clear();
+                Console.SetWindowSize(50, 5);
+                ExplainingScreen.ExplainSearchNaver();
+
+                string inputString = inputManager.LimitInputLength((int)Enums.InputType.NaverSearch, false);
+                if (inputString == null || inputString == "")
+                    return;
+                StreamReader reader = ReadBookInfo(inputString);
+                List<NaverBookVo> bookList = GetBookList(reader);
+                screen.DrawNaverBooks(bookList);
+
+                switch (type)
+                {
+                    case (int)Enums.ModeMenu.UserMode:
+                        bookController.RequestBook(bookList);
+                        break;
+                    case (int)Enums.ModeMenu.ManagerMode:
+                        ExplainingScreen.ExplainEcsKey(0);
+                        menuSelector.WaitForEscKey();
+                        break;
+                }
             }
         }
 
@@ -85,43 +89,9 @@ namespace Library.Controller
             {
                 var item = jsonData["items"][i];
                 bookList.Add(new NaverBookVo(item["title"], item["author"], item["discount"], 
-                    item["publisher"], item["pubdate"], item["isbn"], item["description"]));
+                    item["publisher"], item["pubdate"], item["isbn"], item["description"], accountController.LoggedInId));
             }
             return bookList;
-        }
-
-        private void RequestBook(List<NaverBookVo> bookList)
-        {
-            bool isContinue = true;
-            while(isContinue)
-            {
-                ExplainingScreen.ExplainRequestTitle();
-                string inputString = inputManager.LimitInputLength((int)Enums.InputType.RequestBook, false);
-                if (inputString == null)
-                    return;
-
-                NaverBookVo book = null;
-                foreach (NaverBookVo item in bookList)
-                {
-                    if (item.Title.ToString().Contains(inputString))
-                    {
-                        book = item;
-                        break;
-                    }
-                }
-
-                if (!exceptionManager.IsRequestValid(book))
-                    continue;
-
-                string insertQuery = string.Format(QueryStrings.INSERT_REQUESTBOOK,
-                    book.Title.ToString(), book.Author.ToString(), book.Discount.ToString(),
-                    book.Publisher.ToString(), book.Pubdate.ToString(), book.Isbn.ToString(), 
-                    book.Description.ToString(), accountController.LoggedInId);
-                db.SetData(insertQuery);
-
-                ExplainingScreen.ExplainSuccessScreen();
-                menuSelector.WaitForEscKey();
-            }
         }
     }
 }

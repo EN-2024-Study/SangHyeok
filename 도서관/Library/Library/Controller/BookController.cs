@@ -34,7 +34,7 @@ namespace Library.Controller
             this.bookId = null;
         }
 
-        public void SearchBook()
+        public void ControllBookSearchScreen()
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
@@ -60,7 +60,33 @@ namespace Library.Controller
             }
         }
 
-        public void AddBook()
+        public void ControllBookRentalScreen()
+        {
+            ShowBooks((int)Enums.BookShowType.All);
+            InputBookId();
+            if (BookId == null)
+                return;
+            else if (IsBookRentalValid())
+            {
+                RentalBook();
+                ExplainingScreen.ExplainSuccessScreen();
+            }
+            menuSelector.WaitForEscKey();
+        }
+
+        public void ControllReturnBookScreen()
+        {
+            ShowRentalBooks();
+            InputBookId();
+
+            if (BookId == null)
+                return;
+            else if (IsBookReturnValid())
+                ExplainingScreen.ExplainSuccessScreen();
+            menuSelector.WaitForEscKey();
+        }
+
+        public void ControllBookAddScreen()
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
@@ -90,7 +116,33 @@ namespace Library.Controller
             }
         }
 
-        public void ModifyBook()
+        public void ControllBookDeleteScreen()
+        {
+            ShowBooks((int)Enums.BookShowType.All);
+            InputBookId();
+            if (BookId == null)
+                return;
+            else if (IsBookDeleteValid())
+            {
+                DeleteBook();
+                ExplainingScreen.ExplainSuccessScreen();
+            }
+
+            menuSelector.WaitForEscKey();
+        }
+
+        public void InputBookModify()
+        {
+            ShowBooks((int)Enums.BookShowType.All);
+            InputBookId();
+            if (BookId == null)
+                return;
+            else
+                ControllBookModifyScreen();
+            menuSelector.WaitForEscKey();
+        }
+
+        private void ControllBookModifyScreen()
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
@@ -108,7 +160,7 @@ namespace Library.Controller
                 {
                     if (IsBookDeleteValid() && IsBookModifyValid())
                     {
-                        Modify();
+                        ModifyBook();
                         bookId = null;
                         ExplainingScreen.ExplainSuccessScreen();
                     }
@@ -118,22 +170,6 @@ namespace Library.Controller
                 }
                 else
                     InputBookInfo(menuSelector.menuValue);
-            }
-
-            void Modify()
-            {
-                if (bookInfoStrings[0] != null)
-                    bookDao.ModifyBookInfo(bookId, "title", bookInfoStrings[0]);
-                if (bookInfoStrings[1] != null)
-                    bookDao.ModifyBookInfo(bookId, "writer", bookInfoStrings[1]);
-                if (bookInfoStrings[2] != null)
-                    bookDao.ModifyBookInfo(bookId, "publisher", bookInfoStrings[2]);
-                if (bookInfoStrings[3] != null)
-                    bookDao.ModifyBookInfo(bookId, "count", int.Parse(bookInfoStrings[3]));
-                if (bookInfoStrings[4] != null)
-                    bookDao.ModifyBookInfo(bookId, "price", bookInfoStrings[4]);
-                if (bookInfoStrings[5] != null)
-                    bookDao.ModifyBookInfo(bookId, "releaseDate", bookInfoStrings[5]);
             }
         }
 
@@ -156,7 +192,7 @@ namespace Library.Controller
             menuSelector.WaitForEscKey();
         }
 
-        public void RentalBook()
+        private void RentalBook()
         {
             List<BookDto> bookList = bookDao.GetBookList();
             DateTime time = DateTime.Now;
@@ -172,7 +208,7 @@ namespace Library.Controller
             }
         }
 
-        public void DeleteBook()
+        private void DeleteBook()
         {
             List<BookDto> bookList = bookDao.GetBookList();
             for (int i = 0; i < bookList.Count; i++)
@@ -184,6 +220,22 @@ namespace Library.Controller
                 }
             }
             bookId = null;
+        }
+
+        private void ModifyBook()
+        {
+            if (bookInfoStrings[0] != null)
+                bookDao.ModifyBookInfo(bookId, "title", bookInfoStrings[0]);
+            if (bookInfoStrings[1] != null)
+                bookDao.ModifyBookInfo(bookId, "writer", bookInfoStrings[1]);
+            if (bookInfoStrings[2] != null)
+                bookDao.ModifyBookInfo(bookId, "publisher", bookInfoStrings[2]);
+            if (bookInfoStrings[3] != null)
+                bookDao.ModifyBookInfo(bookId, "count", int.Parse(bookInfoStrings[3]));
+            if (bookInfoStrings[4] != null)
+                bookDao.ModifyBookInfo(bookId, "price", bookInfoStrings[4]);
+            if (bookInfoStrings[5] != null)
+                bookDao.ModifyBookInfo(bookId, "releaseDate", bookInfoStrings[5]);
         }
 
         public void AddRequestedBook()
@@ -205,17 +257,6 @@ namespace Library.Controller
             bookDao.AddRequestedBook(book);
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
-        }
-
-        public bool IsBookIdValid()
-        {
-            if (bookId == null)
-            {
-                ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainInvalidInput("책 아이디");
-                return false;
-            }
-            return true;
         }
 
         private bool IsBookModifyValid()
@@ -265,7 +306,7 @@ namespace Library.Controller
             return true;
         }
 
-        public bool IsBookRentalValid()
+        private bool IsBookRentalValid()
         {
             List<BookDto> bookList = bookDao.GetBookList();
             List<RentalBookDto> rentalBookList = bookDao.GetRentalBookList();
@@ -301,7 +342,7 @@ namespace Library.Controller
             return false;
         }
 
-        public bool IsBookReturnValid()
+        private bool IsBookReturnValid()
         {
             List<RentalBookDto> bookList = bookDao.GetRentalBookList();
             foreach (RentalBookDto book in bookList)
@@ -319,7 +360,7 @@ namespace Library.Controller
             return false;
         }
 
-        public bool IsBookDeleteValid()
+        private bool IsBookDeleteValid()
         {
             List<RentalBookDto> rentalBookList = bookDao.GetRentalBookList();
             List<BookDto> bookList = bookDao.GetBookList();
@@ -342,8 +383,8 @@ namespace Library.Controller
             ExplainingScreen.ExplainInvalidInput("책 아이디");
             return false;
         }
-       
-        public void ShowBooks(int typeValue)
+
+        private void ShowBooks(int typeValue)
         {
             Console.Clear();
             switch (typeValue)
@@ -453,7 +494,7 @@ namespace Library.Controller
             screen.DrawBookInfo(book);
         }
 
-        public void InputBookId()
+        private void InputBookId()
         {
             ExplainingScreen.ExplainInputId("책  ");
             ExplainingScreen.ExplainInputBookId();

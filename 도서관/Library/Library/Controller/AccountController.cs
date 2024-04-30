@@ -100,7 +100,7 @@ namespace Library.Controller
             return false;
         }
 
-        public void ModifyInformation()
+        public void ControllUserModifyScreen()
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
@@ -118,7 +118,7 @@ namespace Library.Controller
                 {
                     if (IsModifyValid())
                     {
-                        Modify();
+                        ModifyAccount();
                         ExplainingScreen.ExplainSuccessScreen();
                         menuSelector.WaitForEscKey();
                         return;
@@ -129,23 +129,63 @@ namespace Library.Controller
                 else
                     InputInformationToModify(menuSelector.menuValue);
             }
+        }
 
-            void Modify()
+        public bool ControllUserDeleteScreen()
+        {
+            if (IsUserRemoveValid())
             {
-                if (modifyStrings[0] != null && modifyStrings[0] != "")
-                    userDao.UpdateUser(loggedInId, "password", modifyStrings[0]);
-
-                if (modifyStrings[1] != null && modifyStrings[1] != "")
-                    userDao.UpdateUser(loggedInId, "age", modifyStrings[1]);
-
-                if (modifyStrings[2] != null && modifyStrings[2] != "")
-                    userDao.UpdateUser(loggedInId, "phonenumber", modifyStrings[2]);
-
-                if (modifyStrings[3] != null && modifyStrings[3] != "")
-                    userDao.UpdateUser(loggedInId, "address", modifyStrings[3]);
-
-                modifyStrings = new string[] { null, null, null, null };
+                RemoveUser();
+                ExplainingScreen.ExplainSuccessScreen();
+                menuSelector.WaitForEscKey();
+                return true;
             }
+
+            menuSelector.WaitForEscKey();
+            return false;
+        }
+
+        public void ControllMemberModifyScreen()
+        {
+            ShowAllUser();
+            InputUserId();
+            if (SearchId == null)
+                return;
+            else if (IsUserIdValid())
+                ControllUserModifyScreen();
+            else
+                menuSelector.WaitForEscKey();
+        }
+
+        public void ControllMemberDeleteMenu()
+        {
+            ShowAllUser();
+            InputUserId();
+            if (SearchId == null)
+                return;
+            else if (IsUserIdValid() && IsUserRemoveValid())
+            {
+                RemoveUser();
+                ExplainingScreen.ExplainSuccessScreen();
+            }
+            menuSelector.WaitForEscKey();
+        }
+
+        public void ModifyAccount()
+        {
+            if (modifyStrings[0] != null && modifyStrings[0] != "")
+                userDao.UpdateUser(loggedInId, "password", modifyStrings[0]);
+
+            if (modifyStrings[1] != null && modifyStrings[1] != "")
+                userDao.UpdateUser(loggedInId, "age", modifyStrings[1]);
+
+            if (modifyStrings[2] != null && modifyStrings[2] != "")
+                userDao.UpdateUser(loggedInId, "phonenumber", modifyStrings[2]);
+
+            if (modifyStrings[3] != null && modifyStrings[3] != "")
+                userDao.UpdateUser(loggedInId, "address", modifyStrings[3]);
+
+            modifyStrings = new string[] { null, null, null, null };
         }
 
         public void RemoveUser()

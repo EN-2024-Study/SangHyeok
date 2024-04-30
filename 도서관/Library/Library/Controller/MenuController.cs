@@ -98,10 +98,10 @@ namespace Library.Controller
                 switch(menuSelector.menuValue)
                 {
                     case (int)Enums.UserMode.BookSearch:
-                        bookController.SearchBook();
+                        bookController.ControllBookSearchScreen();
                         break;
                     case (int)Enums.UserMode.BookRental:
-                        ControllRentalBookMenu();
+                        bookController.ControllBookRentalScreen();
                         break;
                     case (int)Enums.UserMode.BookRentalHistory:
                         bookController.ShowRentalBooks();
@@ -109,7 +109,7 @@ namespace Library.Controller
                         menuSelector.WaitForEscKey();
                         break;
                     case (int)Enums.UserMode.BookReturn:
-                        ControllReturnBookMenu();
+                        bookController.ControllReturnBookScreen();
                         break;
                     case (int)Enums.UserMode.BookReturnHistory:
                         bookController.ShowReturnBooks();
@@ -117,10 +117,11 @@ namespace Library.Controller
                         menuSelector.WaitForEscKey();
                         break;
                     case (int)Enums.UserMode.AccountModify:
-                        accountController.ModifyInformation();
+                        accountController.ControllUserModifyScreen();
                         break;
                     case (int)Enums.UserMode.AccountDelete:
-                        ControllUserDeleteMenu();
+                        if (accountController.ControllUserDeleteScreen())
+                            return;
                         break;
                     case (int)Enums.UserMode.NaverSearch:
                         apiController.SearchNaver((int)Enums.ModeMenu.UserMode);
@@ -151,22 +152,22 @@ namespace Library.Controller
                 switch(menuSelector.menuValue)
                 {
                     case (int)Enums.ManagerMode.BookSearch:
-                        bookController.SearchBook();
+                        bookController.ControllBookSearchScreen();
                         break;
                     case (int)Enums.ManagerMode.BookAdd:
-                        bookController.AddBook();
+                        bookController.ControllBookAddScreen();
                         break;
                     case (int)Enums.ManagerMode.BookDelete:
-                        ControllBookDeleteMenu();
+                        bookController.ControllBookDeleteScreen();
                         break;
                     case (int)Enums.ManagerMode.BookModify:
-                        ControllBookModifyMenu();
+                        bookController.InputBookModify();
                         break;
                     case (int)Enums.ManagerMode.AccountModify:
-                        ControllAccountModifyMenu();
+                        accountController.ControllMemberModifyScreen();
                         break;
                     case (int)Enums.ManagerMode.AccountDelete:
-                        ControllAccountDeleteMenu();
+                        accountController.ControllMemberDeleteMenu();
                         break;
                     case (int)Enums.ManagerMode.RentalHistory:
                         bookController.ShowAllUserRentalHistory();
@@ -184,97 +185,6 @@ namespace Library.Controller
                         break;
                 }
             }
-        }
-
-        private void ControllRentalBookMenu()
-        {
-            bookController.ShowBooks((int)Enums.BookShowType.All);
-            bookController.InputBookId();
-            if (bookController.BookId == null)
-                return;
-            else if (bookController.IsBookIdValid() && bookController.IsBookRentalValid())
-            {
-                bookController.RentalBook();
-                ExplainingScreen.ExplainSuccessScreen();
-            }
-            menuSelector.WaitForEscKey();
-        }
-
-        private void ControllReturnBookMenu()
-        {
-            bookController.ShowRentalBooks();
-            bookController.InputBookId();
-
-            if (bookController.BookId == null)
-                return;
-            else if (bookController.IsBookIdValid() && bookController.IsBookReturnValid())
-                ExplainingScreen.ExplainSuccessScreen();
-            menuSelector.WaitForEscKey();
-        }
-
-        private void ControllUserDeleteMenu()
-        {
-            if (accountController.IsUserRemoveValid())
-            {
-                accountController.RemoveUser();
-                ExplainingScreen.ExplainSuccessScreen();
-                menuSelector.WaitForEscKey();
-                ControllModeMenu();
-            }
-
-            menuSelector.WaitForEscKey();
-        }
-
-        private void ControllAccountModifyMenu()
-        {
-            accountController.ShowAllUser();
-            accountController.InputUserId();
-            if (accountController.SearchId == null)
-                return;
-            else if (accountController.IsUserIdValid())
-                accountController.ModifyInformation();
-            else
-                menuSelector.WaitForEscKey();
-        }
-
-        private void ControllAccountDeleteMenu()
-        {
-            accountController.ShowAllUser();
-            accountController.InputUserId();
-            if (accountController.SearchId == null)
-                return;
-            else if (accountController.IsUserIdValid() && accountController.IsUserRemoveValid())
-            {
-                accountController.RemoveUser();
-                ExplainingScreen.ExplainSuccessScreen();
-            }
-            menuSelector.WaitForEscKey();
-        }
-
-        private void ControllBookDeleteMenu()
-        {
-            bookController.ShowBooks((int)Enums.BookShowType.All);
-            bookController.InputBookId();
-            if (bookController.BookId == null)
-                return;
-            else if (bookController.IsBookIdValid() && bookController.IsBookDeleteValid())
-            {
-                bookController.DeleteBook();
-                ExplainingScreen.ExplainSuccessScreen();
-            }
-
-            menuSelector.WaitForEscKey();
-        }
-
-        private void ControllBookModifyMenu()
-        {
-            bookController.ShowBooks((int)Enums.BookShowType.All);
-            bookController.InputBookId();
-            if (bookController.BookId == null)
-                return;
-            else if (bookController.IsBookIdValid())
-                bookController.ModifyBook();
-            menuSelector.WaitForEscKey();
         }
     }
 }

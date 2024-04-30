@@ -20,7 +20,8 @@ namespace Library.Constants
             AccountModify,
             BookAdd,
             BookModify,
-            NaverSearch
+            NaverSearch,
+            Log
         }
 
         public enum ModeMenu
@@ -86,6 +87,15 @@ namespace Library.Constants
             NaverSearch,
             LogManage,
             RequestBook
+        }
+
+        public enum LogMenu
+        {
+            History,
+            Delete,
+            FileSave,
+            FileDelete,
+            Reset
         }
 
         public enum BookSearchMenu

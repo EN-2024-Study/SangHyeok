@@ -146,6 +146,7 @@ namespace Library.View
                     break;
                 case (int)Enums.MenuType.UserMode:
                 case (int)Enums.MenuType.ManagerMode:
+                case (int)Enums.MenuType.Log:
                     coordinate = new Tuple<int, int>(Console.WindowWidth / 2 - 10, 10);
                     break;
                 case (int)Enums.MenuType.BookSearch:
@@ -175,6 +176,9 @@ namespace Library.View
                 case (int)Enums.MenuType.BookAdd:
                     Console.SetWindowSize(70, 22);
                     break;
+                case (int)Enums.MenuType.Log:
+                    Console.SetWindowSize(70, 18);
+                    break;
                 case (int)Enums.MenuType.BookModify:
                     Console.SetWindowSize(70, 35);
                     break;
@@ -184,6 +188,7 @@ namespace Library.View
                 case (int)Enums.MenuType.NaverSearch:
                     Console.SetWindowSize(80, 40);
                     break;
+
             }
         }
 
@@ -229,6 +234,10 @@ namespace Library.View
                 case (int)Enums.MenuType.BookModify:
                     menuString = new string[] { "책 제목 :", "작가    :", "출판사  : ",
                     "수량    :", "가격    :", "출시일  :", "<확인>"};
+                    break;
+                case (int)Enums.MenuType.Log:
+                    menuString = new string[] { "로그 내역", "로그 삭제", "로그 파일 저장", 
+                    "로그 파일 삭제", "로그 리셋"};
                     break;
             }
             return menuString;

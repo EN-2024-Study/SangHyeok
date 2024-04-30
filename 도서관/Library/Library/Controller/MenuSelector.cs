@@ -58,21 +58,6 @@ namespace Library.Controller
                 keyInfo = Console.ReadKey(true);
         }
 
-        //public bool WaitForEnterOrEscKey()
-        //{
-        //    while(true)
-        //    {
-        //        ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-        //        switch (keyInfo.Key)
-        //        {
-        //            case ConsoleKey.Enter:
-        //                return true;
-        //            case ConsoleKey.Escape:
-        //                return false;
-        //        }
-        //    }
-        //}
-
         private int GetMenuCount(int screenValue)
         {
             int length = 0;
@@ -103,6 +88,9 @@ namespace Library.Controller
                     break;
                 case (int)Enums.MenuType.ManagerMode:
                     length = 10;
+                    break;
+                case (int)Enums.MenuType.Log:
+                    length = 5;
                     break;
             }
             return length;

@@ -20,7 +20,7 @@ namespace Library.Controller
         {
             this.menuSelector = new MenuSelector();
             this.exceptionManager = new ExceptionManager();
-            this.accountController = new AccountController(menuSelector, exceptionManager);
+            this.accountController = new AccountController(menuSelector);
             this.bookController = new BookController(menuSelector, accountController);
             this.apiController = new ApiController(menuSelector, bookController, accountController);
         }
@@ -95,7 +95,7 @@ namespace Library.Controller
                 if (!isSelected)
                     continue;
 
-                switch(menuSelector.menuValue)
+                switch (menuSelector.menuValue)
                 {
                     case (int)Enums.UserMode.BookSearch:
                         bookController.ControllBookSearchScreen();
@@ -149,7 +149,7 @@ namespace Library.Controller
                 if (!isSelected)
                     continue;
 
-                switch(menuSelector.menuValue)
+                switch (menuSelector.menuValue)
                 {
                     case (int)Enums.ManagerMode.BookSearch:
                         bookController.ControllBookSearchScreen();
@@ -178,10 +178,46 @@ namespace Library.Controller
                         apiController.SearchNaver((int)Enums.ModeMenu.ManagerMode);
                         break;
                     case (int)Enums.ManagerMode.LogManage:
-
+                        ControllLogMenu();
                         break;
                     case (int)Enums.ManagerMode.RequestBook:
                         bookController.AddRequestedBook();
+                        break;
+                }
+            }
+        }
+
+
+        private void ControllLogMenu()
+        {
+            bool isSelected = true;
+            menuSelector.menuValue = 0;
+
+            while (isSelected)
+            {
+                Console.Clear();
+                ExplainingScreen.DrawLibraryLogo();
+
+                isSelected = menuSelector.IsMenuSelection((int)Enums.MenuType.Log);
+                if (!isSelected)
+                    continue;
+
+                switch (menuSelector.menuValue)
+                {
+                    case (int)Enums.LogMenu.History:
+
+                        break;
+                    case (int)Enums.LogMenu.Delete:
+
+                        break;
+                    case (int)Enums.LogMenu.FileSave:
+
+                        break;
+                    case (int)Enums.LogMenu.FileDelete:
+
+                        break;
+                    case (int)Enums.LogMenu.Reset:
+
                         break;
                 }
             }

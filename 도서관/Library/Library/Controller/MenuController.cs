@@ -21,7 +21,7 @@ namespace Library.Controller
             this.menuSelector = new MenuSelector();
             this.exceptionManager = new ExceptionManager();
             this.accountController = new AccountController(menuSelector, exceptionManager);
-            this.bookController = new BookController(menuSelector, accountController, exceptionManager);
+            this.bookController = new BookController(menuSelector, accountController);
             this.apiController = new ApiController(menuSelector, bookController, accountController);
         }
 

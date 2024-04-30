@@ -4,6 +4,7 @@ using Library.Constants;
 using Library.View;
 using System;
 using System.Collections.Generic;
+using Library.Service;
 
 namespace Library.Controller
 {
@@ -11,8 +12,8 @@ namespace Library.Controller
     {
         private BookDao bookDao;
         private UserDao userDao;
+        private BookService bookService;
         private MenuSelector menuSelector;
-        private ExceptionManager exceptionManager;
         private InputManager inputManager;
         private AccountController accountController;
         private Screen screen;
@@ -20,11 +21,11 @@ namespace Library.Controller
         private string[] bookInfoStrings;
         private string bookId;
 
-        public BookController(MenuSelector menuSelector, AccountController accountController, ExceptionManager exceptionManager)
+        public BookController(MenuSelector menuSelector, AccountController accountController)
         {
             this.menuSelector = menuSelector;
             this.accountController = accountController;
-            this.exceptionManager = exceptionManager;
+            this.bookService = new BookService(bookDao, userDao);
             this.bookDao = new BookDao();
             this.userDao = new UserDao();
             this.inputManager = new InputManager();
@@ -66,9 +67,11 @@ namespace Library.Controller
             InputBookId();
             if (BookId == null)
                 return;
-            else if (IsBookRentalValid())
+            else if (bookService.IsBookRentalValid(bookId, accountController.LoggedInId) && 
+                bookService.IsBookCountValid(bookId))
             {
-                RentalBook();
+                bookService.RentalBook(bookId, accountController.LoggedInId);
+                bookId = null;
                 ExplainingScreen.ExplainSuccessScreen();
             }
             menuSelector.WaitForEscKey();
@@ -81,7 +84,7 @@ namespace Library.Controller
 
             if (BookId == null)
                 return;
-            else if (IsBookReturnValid())
+            else if (bookService.IsBookReturnValid(bookId, accountController.LoggedInId))
                 ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
         }
@@ -102,12 +105,8 @@ namespace Library.Controller
 
                 if (menuSelector.menuValue == (int)Enums.BookAddInfo.Check)
                 {
-                    if (IsBookAddValid())
-                    {
-                        bookDao.AddBook(new BookDto("0", bookInfoStrings[0], bookInfoStrings[1],
-                            bookInfoStrings[2], int.Parse(bookInfoStrings[3]), bookInfoStrings[4], bookInfoStrings[5],
-                            bookInfoStrings[6], bookInfoStrings[7]));
-                    }
+                    if (bookService.IsBookAddValid(bookInfoStrings))
+                        bookService.AddBook(bookInfoStrings);
                     menuSelector.WaitForEscKey();
                     break;
                 }
@@ -122,9 +121,10 @@ namespace Library.Controller
             InputBookId();
             if (BookId == null)
                 return;
-            else if (IsBookDeleteValid())
+            else if (bookService.IsBookDeleteValid(bookId))
             {
-                DeleteBook();
+                bookService.DeleteBook(bookId);
+                bookId = null;
                 ExplainingScreen.ExplainSuccessScreen();
             }
 
@@ -158,9 +158,9 @@ namespace Library.Controller
 
                 if (menuSelector.menuValue == (int)Enums.BookModifyInfo.Check)
                 {
-                    if (IsBookDeleteValid() && IsBookModifyValid())
+                    if (bookService.IsBookDeleteValid(bookId) && bookService.IsBookModifyValid(bookInfoStrings))
                     {
-                        ModifyBook();
+                        bookService.ModifyBook(bookInfoStrings, bookId);
                         bookId = null;
                         ExplainingScreen.ExplainSuccessScreen();
                     }
@@ -181,7 +181,7 @@ namespace Library.Controller
                 return;
 
             NaverBookVo book = GetSearchedRequestBook(bookList, inputString);
-            if (!exceptionManager.IsRequestValid((int)Enums.ModeMenu.UserMode, bookDao.GetNaverBookList(), book))
+            if (!bookService.IsRequestValid((int)Enums.ModeMenu.UserMode, bookDao.GetNaverBookList(), book))
             {
                 menuSelector.WaitForEscKey();
                 return;
@@ -190,52 +190,6 @@ namespace Library.Controller
             bookDao.RequestBook(book, accountController.LoggedInId);
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
-        }
-
-        private void RentalBook()
-        {
-            List<BookDto> bookList = bookDao.GetBookList();
-            DateTime time = DateTime.Now;
-            foreach (BookDto book in bookList)
-            {
-                if (book.Id.Equals(bookId) && book.Count > 0)
-                {
-                    bookDao.RentalBook(new RentalBookDto(book,
-                        accountController.LoggedInId, time.ToString("yyyy-MM-dd HH:mm:ss"),
-                        time.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")));
-                    bookId = null;
-                }
-            }
-        }
-
-        private void DeleteBook()
-        {
-            List<BookDto> bookList = bookDao.GetBookList();
-            for (int i = 0; i < bookList.Count; i++)
-            {
-                if (bookList[i].Id.Equals(bookId))
-                {
-                    bookDao.DeleteBook(bookId);
-                    break;
-                }
-            }
-            bookId = null;
-        }
-
-        private void ModifyBook()
-        {
-            if (bookInfoStrings[0] != null)
-                bookDao.ModifyBookInfo(bookId, "title", bookInfoStrings[0]);
-            if (bookInfoStrings[1] != null)
-                bookDao.ModifyBookInfo(bookId, "writer", bookInfoStrings[1]);
-            if (bookInfoStrings[2] != null)
-                bookDao.ModifyBookInfo(bookId, "publisher", bookInfoStrings[2]);
-            if (bookInfoStrings[3] != null)
-                bookDao.ModifyBookInfo(bookId, "count", int.Parse(bookInfoStrings[3]));
-            if (bookInfoStrings[4] != null)
-                bookDao.ModifyBookInfo(bookId, "price", bookInfoStrings[4]);
-            if (bookInfoStrings[5] != null)
-                bookDao.ModifyBookInfo(bookId, "releaseDate", bookInfoStrings[5]);
         }
 
         public void AddRequestedBook()
@@ -248,7 +202,7 @@ namespace Library.Controller
 
             List<NaverBookVo> bookList = bookDao.GetNaverBookList();
             NaverBookVo book = GetSearchedRequestBook(bookList, inputString);
-            if (!exceptionManager.IsRequestValid((int)Enums.ModeMenu.ManagerMode, bookList, book))
+            if (!bookService.IsRequestValid((int)Enums.ModeMenu.ManagerMode, bookList, book))
             {
                 menuSelector.WaitForEscKey();
                 return;
@@ -257,131 +211,6 @@ namespace Library.Controller
             bookDao.AddRequestedBook(book);
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
-        }
-
-        private bool IsBookModifyValid()
-        {
-            if (bookInfoStrings[1] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.Writer, bookInfoStrings[1]))
-            {
-                ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainInvalidInput("작가");
-                return false;
-            }
-            if (bookInfoStrings[3] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.Count, bookInfoStrings[3]))
-            {
-                ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainInvalidInput("수량");
-                return false;
-            }
-            if (bookInfoStrings[5] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.ReleaseDate, bookInfoStrings[5]))
-            {
-                ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainInvalidInput("출시일");
-                return false;
-            }
-            if (bookInfoStrings[6] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.ISBN, bookInfoStrings[6]))
-            {
-                ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainInvalidInput("ISBN");
-                return false;
-            }
-           
-            return true;
-        }
-
-        private bool IsBookAddValid()
-        {
-            foreach (string str in bookInfoStrings) // 모든 정보가 기입되지 않았다면 false
-            {
-                if (str == null)
-                {
-                    ExplainingScreen.ExplainFailScreen();
-                    ExplainingScreen.ExplainNoInput();
-                    return false;
-                }
-            }
-               
-            if (!IsBookModifyValid())
-                return false;
-            return true;
-        }
-
-        private bool IsBookRentalValid()
-        {
-            List<BookDto> bookList = bookDao.GetBookList();
-            List<RentalBookDto> rentalBookList = bookDao.GetRentalBookList();
-
-            foreach(RentalBookDto book in rentalBookList)  
-            {
-                if (book.UserId.Equals(accountController.LoggedInId))
-                {
-                    DateTime now = DateTime.Now;
-                    DateTime returnTime = DateTime.ParseExact(book.ReturnTime, "yyyy-MM-dd HH:mm:ss", null);
-                    if (now > returnTime)   // 연체 된 도서가 있다면 false
-                    {
-                        ExplainingScreen.ExplainFailScreen();
-                        ExplainingScreen.ExplainDatePassed();
-                        return false;
-                    }
-
-                    if (book.Id.Equals(bookId))  // 이미 같은 책을 빌렸다면 false
-                    {
-                        ExplainingScreen.ExplainFailScreen();
-                        ExplainingScreen.ExplainDuplicationExist("책");
-                        return false;
-                    }
-                }
-            }
-
-            foreach (BookDto book in bookList)  // 책의 수량이 1이상이면 true
-                if (book.Id.Equals(bookId) && book.Count > 0)
-                    return true;
-
-            ExplainingScreen.ExplainFailScreen();
-            ExplainingScreen.ExplainInvalidInput("입력");
-            return false;
-        }
-
-        private bool IsBookReturnValid()
-        {
-            List<RentalBookDto> bookList = bookDao.GetRentalBookList();
-            foreach (RentalBookDto book in bookList)
-            {
-                if (book.Id.Equals(bookId) && accountController.LoggedInId.Equals(book.UserId))
-                {   // 책 아이디 입력이 빌린 책이 맞다면 true 
-                    bookDao.ReturnBook(book);
-                    bookId = null;
-                    return true;
-                }
-            }
-
-            ExplainingScreen.ExplainFailScreen();
-            ExplainingScreen.ExplainInvalidInput("책 아이디");
-            return false;
-        }
-
-        private bool IsBookDeleteValid()
-        {
-            List<RentalBookDto> rentalBookList = bookDao.GetRentalBookList();
-            List<BookDto> bookList = bookDao.GetBookList();
-
-            foreach(RentalBookDto book in rentalBookList)   // 도서가 대여 중이라면 false
-            {
-                if (book.Id.Equals(bookId))
-                {
-                    ExplainingScreen.ExplainFailScreen();
-                    ExplainingScreen.ExplainDuplicationExist("빌린 도서");
-                    return false;
-                }
-            }
-                
-            foreach (BookDto book in bookList)  
-                if (book.Id.Equals(bookId))
-                    return true;
-
-            ExplainingScreen.ExplainFailScreen();
-            ExplainingScreen.ExplainInvalidInput("책 아이디");
-            return false;
         }
 
         private void ShowBooks(int typeValue)

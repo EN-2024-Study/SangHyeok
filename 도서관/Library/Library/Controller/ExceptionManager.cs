@@ -31,45 +31,6 @@ namespace Library.Controller
             return false;
         }
 
-        public bool IsRequestValid(int type, List<NaverBookVo> bookList, NaverBookVo book)
-        {
-            if (book == null)
-            {
-                ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainInvalidInput("도서 제목");
-                return false;
-            }
-
-            bool isDuplication = false;
-            if (type == (int)Enums.ModeMenu.UserMode)
-            {
-                foreach (NaverBookVo item in bookList)
-                {
-                    if (item.Equals(book))  // 이미 요청한 책이라면 false
-                    {
-                        isDuplication = true;
-                        break;
-                    }
-                }
-            }
-            else if (type == (int)Enums.ModeMenu.ManagerMode)
-            {
-                foreach (NaverBookVo item in bookList)
-                    if (item.Equals(book))  // user가 요청한 책 이름과 같다면 true
-                        return true;
-
-                isDuplication = true;
-            }
-
-            if (isDuplication)
-            {
-                ExplainingScreen.ExplainFailScreen();
-                ExplainingScreen.ExplainDuplicationExist("요청 도서");
-                return false;
-            }
-            return true;
-        }
-
         private Regex GetRegex(int type)
         {
             switch (type)

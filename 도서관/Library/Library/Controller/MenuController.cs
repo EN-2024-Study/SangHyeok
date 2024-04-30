@@ -1,4 +1,5 @@
 ﻿using Library.Constants;
+using Library.Model.DtoVo;
 using Library.View;
 using System;
 using System.Collections.Generic;
@@ -85,6 +86,7 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
+            logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "LogIn"));
 
             while (isSelected)
             {
@@ -99,6 +101,7 @@ namespace Library.Controller
                 {
                     case (int)Enums.UserMode.BookSearch:
                         bookController.ControllBookSearchScreen();
+                        logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "책 검색"));
                         break;
                     case (int)Enums.UserMode.BookRental:
                         bookController.ControllBookRentalScreen();
@@ -118,6 +121,7 @@ namespace Library.Controller
                         break;
                     case (int)Enums.UserMode.AccountModify:
                         accountController.ControllUserModifyScreen();
+                        logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "정보 수정"));
                         break;
                     case (int)Enums.UserMode.AccountDelete:
                         if (accountController.ControllUserDeleteScreen())
@@ -139,6 +143,7 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
+            logController.AddLog(new LogDto("", "", "Manager", "21013314", "LogIn"));
 
             while (isSelected)
             {
@@ -153,6 +158,7 @@ namespace Library.Controller
                 {
                     case (int)Enums.ManagerMode.BookSearch:
                         bookController.ControllBookSearchScreen();
+                        logController.AddLog(new LogDto("", "", "Manager", "21013314", "책 검색"));
                         break;
                     case (int)Enums.ManagerMode.BookAdd:
                         bookController.ControllBookAddScreen();
@@ -211,10 +217,10 @@ namespace Library.Controller
                         logController.ControllDeleteScreen();
                         break;
                     case (int)Enums.LogMenu.FileSave:
-
+                        logController.SaveFile();
                         break;
                     case (int)Enums.LogMenu.FileDelete:
-
+                        logController.DeleteFile();
                         break;
                     case (int)Enums.LogMenu.Reset:
                         logController.DeleteAllLog();

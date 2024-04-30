@@ -53,7 +53,7 @@ namespace Library.Model.Dao
 
         public void DeleteLog(string key) 
         {
-            string deleteQuery = string.Format(QueryStrings.DELETE_LOG, key);
+            string deleteQuery = string.Format(QueryStrings.DELETE_LOG, int.Parse(key));
             db.SetData(deleteQuery);
         }
     }

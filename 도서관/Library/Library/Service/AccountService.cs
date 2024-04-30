@@ -1,6 +1,7 @@
 ﻿using Library.Constants;
 using Library.Controller;
 using Library.Model;
+using Library.Model.DtoVo;
 using Library.View;
 using System;
 using System.Collections.Generic;
@@ -45,22 +46,13 @@ namespace Library.Service
             {
                 List<UserDto> userList = userDao.GetUserList();
                 foreach (UserDto user in userList)
-                {
                     if (user.Id.Equals(logInStrings[0]) && user.Password.Equals(logInStrings[1]))
-                    {
-                        loggedInId = logInStrings[0];
-                        logInStrings = new string[] { null, null };
                         return true;
-                    }
-                }
             }
             else if (modeType == (int)Enums.ModeMenu.ManagerMode)
             {
                 if (logInStrings[0].Equals(managerDao.GetManager().Id) && logInStrings[1].Equals(managerDao.GetManager().Password))
-                {
-                    logInStrings = new string[] { null, null };
                     return true;
-                }
             }
 
             ExplainingScreen.ExplainFailScreen();

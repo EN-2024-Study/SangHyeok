@@ -136,10 +136,10 @@ namespace Library.View
             {
                 Console.WriteLine("===============================================");
                 Console.WriteLine("로그 아이디 : " + log.Number);
-                Console.WriteLine("로그 시간   : " + log.Number);
-                Console.WriteLine("사용자      : " + log.Number);
-                Console.WriteLine("로그 정보   : " + log.Number);
-                Console.WriteLine("로그 행위   : " + log.Number);
+                Console.WriteLine("로그 시간   : " + log.Time);
+                Console.WriteLine("사용자      : " + log.User);
+                Console.WriteLine("로그 정보   : " + log.Info);
+                Console.WriteLine("로그 행위   : " + log.Play);
             }
         }
 

@@ -25,6 +25,7 @@ namespace Library.Controller
         private MenuSelector menuSelector;
         private InputManager inputManager;
         private BookController bookController;
+        private LogController logController;
         private Screen screen;
 
         public ApiController(MenuSelector menuSelector, BookController bookController, AccountController accountController) 
@@ -35,6 +36,7 @@ namespace Library.Controller
             this.menuSelector = menuSelector;
             this.bookController = bookController;
             this.inputManager = new InputManager();
+            this.logController = new LogController(menuSelector);
             this.screen = new Screen(); 
         }
 
@@ -57,9 +59,11 @@ namespace Library.Controller
                 switch (type)
                 {
                     case (int)Enums.ModeMenu.UserMode:
+                        logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "네이버 검색"));
                         bookController.RequestBook(bookList);
                         break;
                     case (int)Enums.ModeMenu.ManagerMode:
+                        logController.AddLog(new LogDto("", "", "Manager", "21013314", "네이버 검색"));
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;

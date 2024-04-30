@@ -4,9 +4,8 @@ using Library.Model.DtoVo;
 using Library.View;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Library.Controller
 {
@@ -16,6 +15,7 @@ namespace Library.Controller
         private MenuSelector menuSelector;
         private InputManager inputManager;
         private Screen screen;
+        private string filePath;
 
         public LogController(MenuSelector menuSelector) 
         {
@@ -23,11 +23,13 @@ namespace Library.Controller
             this.screen = new Screen();
             this.inputManager = new InputManager();
             this.menuSelector = menuSelector;
+            this.filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "로그.txt");
         }
 
         public void ControllHistoryScreen()
         {
             ShowHistory();
+            AddLog(new LogDto("", "", "Manager", "21013314", "로그 내역 조회"));
             ExplainingScreen.ExplainEcsKey(0);
             menuSelector.WaitForEscKey();
         }
@@ -42,6 +44,7 @@ namespace Library.Controller
             else if (IsDeleteValid(inputNumber))
             {
                 logDao.DeleteLog(inputNumber);
+                AddLog(new LogDto("", "", "Manager", "21013314", "로그 내역 삭제"));
                 ExplainingScreen.ExplainSuccessScreen();
                 menuSelector.WaitForEscKey();
             }
@@ -53,8 +56,42 @@ namespace Library.Controller
             foreach (LogDto log in logList)
                 logDao.DeleteLog(log.Number);
 
+            AddLog(new LogDto("", "", "Manager", "21013314", "로그 내역 삭제"));
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
+        }
+
+        public void SaveFile()
+        {
+            List<LogDto> logList = logDao.GetLogList();
+            File.WriteAllText(filePath, " ");
+            foreach (LogDto log in logList)
+            {
+                File.AppendAllText(filePath, "============================\n");
+                File.AppendAllText(filePath, (log.Number + "\n"));
+                File.AppendAllText(filePath, (log.Time + "\n"));
+                File.AppendAllText(filePath, (log.User + "\n"));
+                File.AppendAllText(filePath, log.Info);
+                File.AppendAllText(filePath, (log.Play + "\n"));
+            }
+
+            AddLog(new LogDto("", "", "Manager", "21013314", "로그 내역 파일에 저장"));
+            ExplainingScreen.ExplainSuccessScreen();
+            menuSelector.WaitForEscKey();
+        }
+
+        public void DeleteFile()
+        {
+            File.Delete(filePath);
+            AddLog(new LogDto("", "", "Manager", "21013314", "로그 내역 파일 삭제"));
+            ExplainingScreen.ExplainSuccessScreen();
+            menuSelector.WaitForEscKey();
+        }
+
+        public void AddLog(LogDto log)
+        {
+            log.Time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            logDao.AddLog(log);
         }
 
         private bool IsDeleteValid(string inputNumber)
@@ -74,7 +111,7 @@ namespace Library.Controller
         private void ShowHistory()
         {
             Console.Clear();
-            Console.SetWindowSize(50, 40);
+            Console.SetWindowSize(70, 40);
             screen.DrawLogs(logDao.GetLogList());
         }
     }

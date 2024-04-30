@@ -48,8 +48,8 @@ namespace Library.Controller
                 mySql.Open();
 
                 MySqlCommand command = new MySqlCommand(query, mySql);
-                if (command.ExecuteNonQuery() == 1)
-                    ExplainingScreen.ExplainSuccessScreen();
+                if (command.ExecuteNonQuery() == 1) ;
+                    //ExplainingScreen.ExplainSuccessScreen();
                 mySql.Close();
             }
             catch (Exception exe)

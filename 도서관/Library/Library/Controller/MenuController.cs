@@ -11,17 +11,17 @@ namespace Library.Controller
     public class MenuController
     {
         private MenuSelector menuSelector;
-        private ExceptionManager exceptionManager;
         private AccountController accountController;
         private BookController bookController;
         private ApiController apiController;
+        private LogController logController;
 
         public MenuController()
         {
             this.menuSelector = new MenuSelector();
-            this.exceptionManager = new ExceptionManager();
-            this.accountController = new AccountController(menuSelector);
-            this.bookController = new BookController(menuSelector, accountController);
+            this.logController = new LogController(menuSelector);
+            this.accountController = new AccountController(menuSelector, logController);
+            this.bookController = new BookController(menuSelector, accountController, logController);
             this.apiController = new ApiController(menuSelector, bookController, accountController);
         }
 
@@ -205,10 +205,10 @@ namespace Library.Controller
                 switch (menuSelector.menuValue)
                 {
                     case (int)Enums.LogMenu.History:
-
+                        logController.ControllHistoryScreen();
                         break;
                     case (int)Enums.LogMenu.Delete:
-
+                        logController.ControllDeleteScreen();
                         break;
                     case (int)Enums.LogMenu.FileSave:
 
@@ -217,7 +217,7 @@ namespace Library.Controller
 
                         break;
                     case (int)Enums.LogMenu.Reset:
-
+                        logController.DeleteAllLog();
                         break;
                 }
             }

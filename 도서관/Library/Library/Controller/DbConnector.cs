@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using Library.View;
+using System.Management;
 
 namespace Library.Controller
 {
@@ -55,6 +56,13 @@ namespace Library.Controller
             {
                 Console.WriteLine(exe.Message);
             }
+        }
+
+        public MySqlDataReader GetTable(string query)
+        {
+            MySqlCommand command = new MySqlCommand(query, mySql);
+            MySqlDataReader table = command.ExecuteReader();
+            return table;
         }
 
         public MySqlConnection MySql

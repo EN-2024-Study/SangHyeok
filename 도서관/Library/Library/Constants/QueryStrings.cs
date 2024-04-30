@@ -18,7 +18,9 @@ namespace Library.Constants
 
         public static readonly string SELECT_USER = "SELECT * FROM user";
 
-        public static readonly string SELECT_REQUESTBOOK = "SELECT * FROM request_book";
+        public static readonly string SELECT_REQUESTBOOK = "SELECT * FROM requestbook";
+
+        public static readonly string SELECT_LOG = "SELECT * FROM log";
 
         public static readonly string INSERT_USER = "INSERT INTO user VALUES('{0}', '{1}', '{2}', '{3}', '{4}')";
 
@@ -28,7 +30,9 @@ namespace Library.Constants
 
         public static readonly string INSERT_RETURNBOOK = "INSERT INTO returnbook VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')";
 
-        public static readonly string INSERT_REQUESTBOOK = "INSERT INTO request_book VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')";
+        public static readonly string INSERT_REQUESTBOOK = "INSERT INTO requestbook VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')";
+
+        public static readonly string INSERT_LOG = "INSERT INTO log VALUES(null, '{0}', '{1}', '{2}', '{3}')";
 
         public static readonly string UPDATE_USER = "UPDATE user SET {1} = '{2}' WHERE id = {0}";
 
@@ -45,6 +49,8 @@ namespace Library.Constants
         public static readonly string DELETE_BOOK = "DELETE FROM book WHERE id = {0}";
 
         public static readonly string DELETE_RENTALBOOK = "DELETE FROM rentalbook WHERE id = {0}";
+
+        public static readonly string DELETE_LOG = "DELETE FROM log WHERE id = {0}";
 
         public static readonly string FIELD_RENTALTIME = "rentaltime";
 
@@ -78,5 +84,12 @@ namespace Library.Constants
 
         public static readonly string FIELD_INFO = "info";
 
+        public static readonly string FIELD_NUMBER = "number";
+
+        public static readonly string FIELD_TIME = "time";
+
+        public static readonly string FIELD_USER = "user";
+
+        public static readonly string FIELD_PLAY = "play";
     }
 }

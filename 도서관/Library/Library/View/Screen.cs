@@ -129,6 +129,20 @@ namespace Library.View
             }
         }
 
+        public void DrawLogs(List<LogDto> logList)
+        {
+            Console.SetCursorPosition(0, 17);
+            foreach (LogDto log in logList)
+            {
+                Console.WriteLine("===============================================");
+                Console.WriteLine("로그 아이디 : " + log.Number);
+                Console.WriteLine("로그 시간   : " + log.Number);
+                Console.WriteLine("사용자      : " + log.Number);
+                Console.WriteLine("로그 정보   : " + log.Number);
+                Console.WriteLine("로그 행위   : " + log.Number);
+            }
+        }
+
         private Tuple<int, int> GetCoordinate(int screenType)
         {
             Tuple<int, int> coordinate = null;

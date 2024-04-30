@@ -124,6 +124,7 @@ namespace Library.Controller
                 case (int)Enums.InputType.ModifyAge:
                 case (int)Enums.InputType.SignUpAge:
                 case (int)Enums.InputType.Count:
+                case (int)Enums.InputType.LogId:
                     length = 4;
                     break;
                 case (int)Enums.InputType.ModifyPhoneNumber:
@@ -214,6 +215,7 @@ namespace Library.Controller
                     break;
                 case (int)Enums.InputType.BookId:
                 case (int)Enums.InputType.UserId:
+                case (int)Enums.InputType.LogId:
                     x = 38;
                     y = 13;
                     break;

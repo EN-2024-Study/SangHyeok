@@ -26,8 +26,7 @@ namespace Library.Model
             string selectQuery = QueryStrings.SELECT_MANAGER;
            
             db.MySql.Open();
-            MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
-            MySqlDataReader table = command.ExecuteReader();
+            MySqlDataReader table = db.GetTable(selectQuery);
 
             while (table.Read())
             {

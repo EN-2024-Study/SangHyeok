@@ -32,8 +32,7 @@ namespace Library.Model
             string selectQuery = QueryStrings.SELECT_BOOK;
 
             db.MySql.Open();
-            MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
-            MySqlDataReader table = command.ExecuteReader();
+            MySqlDataReader table = db.GetTable(selectQuery);
 
             while (table.Read())
             {
@@ -53,8 +52,7 @@ namespace Library.Model
             string selectQuery = QueryStrings.SELECT_RENTALBOOK;
 
             db.MySql.Open();
-            MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
-            MySqlDataReader table = command.ExecuteReader();
+            MySqlDataReader table = db.GetTable(selectQuery);
 
             while (table.Read())
             {
@@ -77,8 +75,7 @@ namespace Library.Model
             string selectQuery = QueryStrings.SELECT_RETURNBOOK;
 
             db.MySql.Open();
-            MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
-            MySqlDataReader table = command.ExecuteReader();
+            MySqlDataReader table = db.GetTable(selectQuery);
 
             while (table.Read())
             {
@@ -99,8 +96,8 @@ namespace Library.Model
             string selectQuery = QueryStrings.SELECT_REQUESTBOOK;
 
             db.MySql.Open();
-            MySqlCommand command = new MySqlCommand(selectQuery, db.MySql);
-            MySqlDataReader table = command.ExecuteReader();
+            MySqlDataReader table = db.GetTable(selectQuery);
+
             while (table.Read())
             {
                 string[] bookInfo = new string[8];

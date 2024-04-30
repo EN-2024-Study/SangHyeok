@@ -14,15 +14,17 @@ namespace Library.Controller
         private UserDao userDao;
         private BookDao bookDao;
         private ManagerDao managerDao;
+        private LogController logController;
         private AccountService accountService;
         private Screen screen;
         private string[] signUpStrings, modifyStrings, logInStrings;
         private string searchId;
         private static string loggedInId;
 
-        public AccountController(MenuSelector menuSelector)
+        public AccountController(MenuSelector menuSelector, LogController logController)
         {
             this.menuSelector = menuSelector;
+            this.logController = logController;
             this.inputManager = new InputManager();
             this.userDao = new UserDao();
             this.bookDao = new BookDao();

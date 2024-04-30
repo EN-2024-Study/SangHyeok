@@ -16,15 +16,17 @@ namespace Library.Controller
         private MenuSelector menuSelector;
         private InputManager inputManager;
         private AccountController accountController;
+        private LogController logController;
         private Screen screen;
         private string[] searchedBookStrings;
         private string[] bookInfoStrings;
         private string bookId;
 
-        public BookController(MenuSelector menuSelector, AccountController accountController)
+        public BookController(MenuSelector menuSelector, AccountController accountController, LogController logController)
         {
             this.menuSelector = menuSelector;
             this.accountController = accountController;
+            this.logController = logController;
             this.bookService = new BookService(bookDao, userDao);
             this.bookDao = new BookDao();
             this.userDao = new UserDao();

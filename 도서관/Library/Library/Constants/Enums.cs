@@ -165,7 +165,8 @@ namespace Library.Constants
             BookId,
             UserId,
             NaverSearch,
-            RequestBook
+            RequestBook,
+            LogId
         }
     }
 }

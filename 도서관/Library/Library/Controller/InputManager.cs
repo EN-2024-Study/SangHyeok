@@ -142,7 +142,6 @@ namespace Library.Controller
                     break;
                 case (int)Enums.InputType.Writer:
                 case (int)Enums.InputType.Publisher:
-                case (int)Enums.InputType.Info:
                 case (int)Enums.InputType.SearchedWriter:
                 case (int)Enums.InputType.SearchedPublisher:
                     length = 10;
@@ -154,10 +153,11 @@ namespace Library.Controller
                     length = 11;
                     break;
                 case (int)Enums.InputType.ISBN:
-                    length = 25;
+                    length = 14;
                     break;
                 case (int)Enums.InputType.NaverSearch:
                 case (int)Enums.InputType.RequestBook:
+                case (int)Enums.InputType.Info:
                     length = 45;
                     break;
             }

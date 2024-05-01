@@ -26,6 +26,6 @@ namespace Library.Constants
 
         public static readonly string RELEASEDATE = @"^20[0-9]{2}-[0-9]{1,2}-[0-9]{1,2}$";
 
-        public static readonly string ISBN = @"^[0-9]{6}[a-zA-Z]{1} [0-9]{13}$";
+        public static readonly string ISBN = @"^[0-9]{13}$";
     }
 }

@@ -116,9 +116,9 @@ namespace Library.View
             Console.SetCursorPosition(0, 5);
             Console.Write("출시일  - 20xx-xx-xx");
             Console.SetCursorPosition(0, 6);
-            Console.Write("ISBN    - 정수 6 개 + 영어 1 개 + 공백 + 정수 13 개");
+            Console.Write("ISBN    - 정수 13 개");
             Console.SetCursorPosition(0, 7);
-            Console.Write("정보    - 1 글자 이상 10 글자 이하의 문자 또는 숫자");
+            Console.Write("정보    - 특수문자를 제외한 문자 또는 숫자");
             Console.SetCursorPosition(0, 8);
             Console.Write("=====================================================");
         }

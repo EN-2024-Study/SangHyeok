@@ -1,13 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI.Relational;
-using MySqlX.XDevAPI;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using static Mysqlx.Expect.Open.Types.Condition.Types;
 using Library.Constants;
 using Library.Controller;
 
@@ -26,8 +18,9 @@ namespace Library.Model
         {
             List<UserDto> userList = new List<UserDto>();
             string selectQuery = QueryStrings.SELECT_USER;
-            
-            db.MySql.Open();
+
+            if (db.MySql.State == System.Data.ConnectionState.Closed)
+                db.MySql.Open();
             MySqlDataReader table = db.GetTable(selectQuery);
 
             while (table.Read())

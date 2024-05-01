@@ -81,7 +81,7 @@ namespace Library.Controller
         {
             JObject jsonData = JObject.Parse(reader.ReadToEnd());
             List<NaverBookVo> bookList = new List<NaverBookVo>();
-            for(int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++) 
             {
                 var item = jsonData["items"][i];
                 bookList.Add(new NaverBookVo(item["title"], item["author"], item["discount"], 

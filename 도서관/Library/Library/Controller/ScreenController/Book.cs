@@ -117,6 +117,7 @@ namespace Library.Controller.ScreenController
                     {
                         bookService.AddBook(bookInfoStrings);
                         logManager.AddLog(LogStrings.MANAGER, LogStrings.BOOK_ADD, bookInfoStrings[0]);
+                        ExplainingScreen.ExplainSuccessScreen();
                     }
                     menuSelector.WaitForEscKey();
                     break;
@@ -194,7 +195,7 @@ namespace Library.Controller.ScreenController
                 return;
 
             NaverBookVo book = GetSearchedRequestBook(bookList, inputString);
-            if (!bookService.IsRequestValid((int)Enums.ModeMenu.UserMode, bookDao.GetNaverBookList(), book))
+            if (!bookService.IsRequestValid((int)Enums.ModeMenu.UserMode, book))
             {
                 menuSelector.WaitForEscKey();
                 return;
@@ -214,9 +215,8 @@ namespace Library.Controller.ScreenController
             if (inputString == null)
                 return;
 
-            List<NaverBookVo> bookList = bookDao.GetNaverBookList();
-            NaverBookVo book = GetSearchedRequestBook(bookList, inputString);
-            if (!bookService.IsRequestValid((int)Enums.ModeMenu.ManagerMode, bookList, book))
+            NaverBookVo book = GetSearchedRequestBook(bookDao.GetNaverBookList(), inputString);
+            if (!bookService.IsRequestValid((int)Enums.ModeMenu.ManagerMode, book))
             {
                 menuSelector.WaitForEscKey();
                 return;

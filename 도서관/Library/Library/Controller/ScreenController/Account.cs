@@ -161,10 +161,13 @@ namespace Library.Controller.ScreenController
         {
             ShowAllUser();
             InputUserId();
-            if (SearchId == null)
+            if (searchId == null)
                 return;
             else if (accountService.IsUserIdValid(loggedInId, searchId))
+            {
+                loggedInId = searchId;
                 ControllUserModifyScreen();
+            }
             else
                 menuSelector.WaitForEscKey();
         }
@@ -173,10 +176,11 @@ namespace Library.Controller.ScreenController
         {
             ShowAllUser();
             InputUserId();
-            if (SearchId == null)
+            if (searchId == null)
                 return;
             else if (accountService.IsUserIdValid(loggedInId, searchId) && accountService.IsUserRemoveValid(loggedInId))
             {
+                loggedInId = searchId;
                 logManager.AddLog(LogStrings.MANAGER, loggedInId, LogStrings.ACCOUNT_DELETE);
                 RemoveUser();
                 ExplainingScreen.ExplainSuccessScreen();
@@ -278,9 +282,6 @@ namespace Library.Controller.ScreenController
             Console.Clear();
             screen.DrawUserInfo(20, loggedUser);
         }
-
-        public string SearchId
-        { get { return searchId; } }
 
         public string LoggedInId
         { get { return loggedInId; } }

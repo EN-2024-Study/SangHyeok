@@ -24,8 +24,9 @@ namespace Library.Model
         {
             ManagerVo manager = null;
             string selectQuery = QueryStrings.SELECT_MANAGER;
-           
-            db.MySql.Open();
+
+            if (db.MySql.State == System.Data.ConnectionState.Closed)
+                db.MySql.Open();
             MySqlDataReader table = db.GetTable(selectQuery);
 
             while (table.Read())

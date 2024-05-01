@@ -171,13 +171,8 @@ namespace Library.Service
 
             List<UserDto> userList = userDao.GetUserList();
             for (int i = 0; i < userList.Count; i++)
-            {
                 if (searchId.Equals(userList[i].Id))
-                {
-                    loggedInId = searchId;
                     return true;
-                }
-            }
 
             ExplainingScreen.ExplainFailScreen();
             ExplainingScreen.ExplainInvalidInput("유저 아이디");

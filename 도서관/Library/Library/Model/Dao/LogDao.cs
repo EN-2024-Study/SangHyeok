@@ -25,7 +25,8 @@ namespace Library.Model.Dao
             List<LogDto> logList = new List<LogDto>();
             string selectQuery = QueryStrings.SELECT_LOG;
 
-            db.MySql.Open();
+            if (db.MySql.State == System.Data.ConnectionState.Closed)
+                db.MySql.Open();
             MySqlDataReader table = db.GetTable(selectQuery);
             
             while(table.Read())

@@ -2,6 +2,7 @@
 using Library.Controller;
 using Library.Model.DtoVo;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using System.Collections.Generic;
 
 namespace Library.Model
@@ -20,7 +21,8 @@ namespace Library.Model
             List<BookDto> bookList = new List<BookDto>();
             string selectQuery = QueryStrings.SELECT_BOOK;
 
-            db.MySql.Open();
+            if (db.MySql.State == System.Data.ConnectionState.Closed)
+                db.MySql.Open();
             MySqlDataReader table = db.GetTable(selectQuery);
 
             while (table.Read())
@@ -40,7 +42,8 @@ namespace Library.Model
             List<RentalBookDto> rentalBookList = new List<RentalBookDto>();
             string selectQuery = QueryStrings.SELECT_RENTALBOOK;
 
-            db.MySql.Open();
+            if (db.MySql.State == System.Data.ConnectionState.Closed)
+                db.MySql.Open();
             MySqlDataReader table = db.GetTable(selectQuery);
 
             while (table.Read())
@@ -63,7 +66,8 @@ namespace Library.Model
             List<ReturnBookDto> returnBookList = new List<ReturnBookDto>();
             string selectQuery = QueryStrings.SELECT_RETURNBOOK;
 
-            db.MySql.Open();
+            if (db.MySql.State == System.Data.ConnectionState.Closed)
+                db.MySql.Open();
             MySqlDataReader table = db.GetTable(selectQuery);
 
             while (table.Read())
@@ -84,7 +88,8 @@ namespace Library.Model
             List<NaverBookVo> naverBookList = new List<NaverBookVo>();
             string selectQuery = QueryStrings.SELECT_REQUESTBOOK;
 
-            db.MySql.Open();
+            if (db.MySql.State == System.Data.ConnectionState.Closed)
+                db.MySql.Open();
             MySqlDataReader table = db.GetTable(selectQuery);
 
             while (table.Read())

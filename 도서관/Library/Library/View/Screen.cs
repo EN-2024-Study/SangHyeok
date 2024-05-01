@@ -32,7 +32,7 @@ namespace Library.View
         {
             int y = 17;
             Console.ForegroundColor = ConsoleColor.Green;
-
+           
             foreach(UserDto user in userList)
             {
                 DrawUserInfo(y, user);

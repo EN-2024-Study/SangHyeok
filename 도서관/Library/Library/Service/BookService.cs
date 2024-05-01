@@ -5,10 +5,6 @@ using Library.Model.DtoVo;
 using Library.View;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Service
 {
@@ -61,7 +57,7 @@ namespace Library.Service
                     return true;
 
             ExplainingScreen.ExplainFailScreen();
-            ExplainingScreen.ExplainInvalidInput("입력");
+            ExplainingScreen.ExplainInvalidInput("수량");
             return false;
         }
 
@@ -154,8 +150,9 @@ namespace Library.Service
             return true;
         }
 
-        public bool IsRequestValid(int type, List<NaverBookVo> bookList, NaverBookVo book)
+        public bool IsRequestValid(int type, NaverBookVo book)
         {
+            List<NaverBookVo> naverBookList = bookDao.GetNaverBookList();
             if (book == null)
             {
                 ExplainingScreen.ExplainFailScreen();
@@ -166,9 +163,19 @@ namespace Library.Service
             bool isDuplication = false;
             if (type == (int)Enums.ModeMenu.UserMode)
             {
-                foreach (NaverBookVo item in bookList)
+                List<BookDto> bookList = bookDao.GetBookList();
+                foreach (NaverBookVo item in naverBookList)
                 {
                     if (item.ISBN.ToString().Equals(book.ISBN.ToString()))  // 이미 요청한 책이라면 false
+                    {
+                        isDuplication = true;
+                        break;
+                    }
+                }
+
+                foreach(BookDto item in bookList)
+                {
+                    if (item.ISBN.Equals(book.ISBN.ToString()))
                     {
                         isDuplication = true;
                         break;
@@ -177,8 +184,8 @@ namespace Library.Service
             }
             else if (type == (int)Enums.ModeMenu.ManagerMode)
             {
-                foreach (NaverBookVo item in bookList)
-                    if (item.Equals(book))  // user가 요청한 책 이름과 같다면 true
+                foreach (NaverBookVo item in naverBookList)
+                    if (item.ISBN.ToString().Equals(book.ISBN.ToString()))  // user가 요청한 책 이름과 같다면 true
                         return true;
 
                 isDuplication = true;

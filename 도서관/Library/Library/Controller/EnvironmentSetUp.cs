@@ -10,8 +10,8 @@ namespace Library.Controller
 {
     public class EnvironmentSetUp
     {
-        //private static EnvironmentSetUp instance;
         private static readonly string PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "환경변수.txt");
+        public static readonly string LOG_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "로그.txt");
 
         public static string[] GetId(int type)
         {
@@ -19,17 +19,14 @@ namespace Library.Controller
             string[] results = null;
             string title = null;
             bool isRead = false;
-            int index = 0;
 
             switch (type)
             {
                 case (int)Enums.EnvironmentType.Db:
                     title = "DB Address";
-                    results = new string[5];
                     break;
                 case (int)Enums.EnvironmentType.Naver:
                     title = "NAVER API Client";
-                    results = new string[2];
                     break;
             }
 
@@ -44,31 +41,14 @@ namespace Library.Controller
                 }
 
                 if (isRead)
-                    results[index++] = line;
-
-                if (index == results.Length)
+                {
+                    results = line.Split(' ');
                     break;
-
+                }
                 line = reader.ReadLine();
             }
 
             return results;
         }
-
-
-        //private EnvironmentSetUp()
-        //{
-
-        //}
-
-        //public static EnvironmentSetUp Instance
-        //{
-        //    get
-        //    {
-        //        if (instance == null)
-        //            instance = new EnvironmentSetUp();
-        //        return instance;
-        //    }
-        //}
     }
 }

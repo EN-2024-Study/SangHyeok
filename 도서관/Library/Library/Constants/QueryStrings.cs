@@ -50,6 +50,8 @@ namespace Library.Constants
 
         public static readonly string DELETE_RENTALBOOK = "DELETE FROM rentalbook WHERE id = {0}";
 
+        public static readonly string DELETE_RequestBOOK = "DELETE FROM requestbook WHERE title = '{0}'";
+
         public static readonly string DELETE_LOG = "DELETE FROM log WHERE number = {0}";
 
         public static readonly string FIELD_RENTALTIME = "rentaltime";

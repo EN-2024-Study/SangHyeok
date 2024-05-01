@@ -1,0 +1,7 @@
+바탕화면에 저장 후 사용하세요.
+
+DB Address
+localhost 3306 library root 0000
+
+NAVER API Client
+YZUNzAPoiLUk2je0tW_2 JDoqusR1uP

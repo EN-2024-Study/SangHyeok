@@ -1,19 +1,8 @@
 ﻿using Library.Constants;
 using Library.Controller;
 using Library.Model.DtoVo;
-using Library.View;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Diagnostics.Metrics;
-using System.IO;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 namespace Library.Model
 {
@@ -128,6 +117,12 @@ namespace Library.Model
         public void DeleteBook(string key)
         {
             string deleteQuery = string.Format(QueryStrings.DELETE_BOOK, key);
+            db.SetData(deleteQuery);
+        }
+
+        public void DeleteRequestBook(string key)
+        {
+            string deleteQuery = string.Format(QueryStrings.DELETE_RequestBOOK, key);
             db.SetData(deleteQuery);
         }
 

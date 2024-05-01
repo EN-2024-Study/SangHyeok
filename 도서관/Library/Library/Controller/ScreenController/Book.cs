@@ -223,6 +223,7 @@ namespace Library.Controller.ScreenController
             }
 
             bookDao.AddRequestedBook(book);
+            bookDao.DeleteRequestBook(book.Title.ToString());
             logManager.AddLog(LogStrings.MANAGER, LogStrings.REQUESTED_BOOK_ADD, book.Title.ToString());
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();

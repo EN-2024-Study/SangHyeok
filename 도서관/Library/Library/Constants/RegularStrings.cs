@@ -8,7 +8,6 @@ namespace Library.Constants
 {
     public class RegularStrings
     {
-
         public static readonly string ID = @"^[0-9]{8}$";
 
         public static readonly string PASSWORD = @"^[0-9]{4}$";

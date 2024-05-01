@@ -29,7 +29,7 @@ namespace Library.Controller
         public void ControllHistoryScreen()
         {
             ShowHistory();
-            AddLog(new LogDto("", "", "Manager", "21013314", "로그 내역 조회"));
+            AddLog(LogStrings.MANAGER, LogStrings.LOG_HISTORY, LogStrings.BLANK);
             ExplainingScreen.ExplainEcsKey(0);
             menuSelector.WaitForEscKey();
         }
@@ -44,7 +44,7 @@ namespace Library.Controller
             else if (IsDeleteValid(inputNumber))
             {
                 logDao.DeleteLog(inputNumber);
-                AddLog(new LogDto("", "", "Manager", "21013314", "로그 내역 삭제"));
+                AddLog(LogStrings.MANAGER, LogStrings.LOG_DELETE, inputNumber);
                 ExplainingScreen.ExplainSuccessScreen();
                 menuSelector.WaitForEscKey();
             }
@@ -56,7 +56,7 @@ namespace Library.Controller
             foreach (LogDto log in logList)
                 logDao.DeleteLog(log.Number);
 
-            AddLog(new LogDto("", "", "Manager", "21013314", "로그 내역 삭제"));
+            AddLog(LogStrings.MANAGER, LogStrings.LOG_ALL_DELETE, LogStrings.BLANK);
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
         }
@@ -75,7 +75,7 @@ namespace Library.Controller
                 File.AppendAllText(filePath, (log.Play + "\n"));
             }
 
-            AddLog(new LogDto("", "", "Manager", "21013314", "로그 내역 파일에 저장"));
+            AddLog(LogStrings.MANAGER, LogStrings.LOG_SAVE_FILE, LogStrings.BLANK);
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
         }
@@ -83,14 +83,14 @@ namespace Library.Controller
         public void DeleteFile()
         {
             File.Delete(filePath);
-            AddLog(new LogDto("", "", "Manager", "21013314", "로그 내역 파일 삭제"));
+            AddLog(LogStrings.MANAGER, LogStrings.LOG_FILE_DELETE, LogStrings.BLANK);
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
         }
 
-        public void AddLog(LogDto log)
+        public void AddLog(string user, string info, string play)
         {
-            log.Time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            LogDto log = new LogDto(LogStrings.NULL, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), user, info, play);
             logDao.AddLog(log);
         }
 

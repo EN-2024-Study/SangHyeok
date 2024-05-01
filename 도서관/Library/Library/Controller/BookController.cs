@@ -37,7 +37,7 @@ namespace Library.Controller
             this.bookId = null;
         }
 
-        public void ControllBookSearchScreen()
+        public void ControllBookSearchScreen(int type)
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
@@ -54,6 +54,8 @@ namespace Library.Controller
                 if (menuSelector.menuValue == (int)Enums.BookSearchMenu.Check)
                 {
                     ShowBooks((int)Enums.BookShowType.Searched);
+                    RecordSearchedLog(type);
+                    searchedBookStrings = new string[] { null, null, null };
                     ExplainingScreen.ExplainEcsKey(0);
                     menuSelector.WaitForEscKey();
                     break;
@@ -73,8 +75,7 @@ namespace Library.Controller
                 bookService.IsBookCountValid(bookId))
             {
                 bookService.RentalBook(bookId, accountController.LoggedInId);
-                logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "책 대여"));
-
+                logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_RENTAL, bookId + LogStrings.BOOK_ID);
                 bookId = null;
                 ExplainingScreen.ExplainSuccessScreen();
             }
@@ -90,7 +91,7 @@ namespace Library.Controller
                 return;
             else if (bookService.IsBookReturnValid(bookId, accountController.LoggedInId))
             {
-                logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "책 반납"));
+                logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_RETURN, bookId + LogStrings.BOOK_ID);
                 ExplainingScreen.ExplainSuccessScreen();
             }
             menuSelector.WaitForEscKey();
@@ -115,7 +116,7 @@ namespace Library.Controller
                     if (bookService.IsBookAddValid(bookInfoStrings))
                     {
                         bookService.AddBook(bookInfoStrings);
-                        logController.AddLog(new LogDto("", "", "Manager", "21013314", "책 추가"));
+                        logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_ADD, bookInfoStrings[0]);
                     }
                     menuSelector.WaitForEscKey();
                     break;
@@ -134,7 +135,7 @@ namespace Library.Controller
             else if (bookService.IsBookDeleteValid(bookId))
             {
                 bookService.DeleteBook(bookId);
-                logController.AddLog(new LogDto("", "", "Manager", "21013314", "도서 삭제"));
+                logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_DELETE, bookId + LogStrings.BOOK_ID);
                 bookId = null;
                 ExplainingScreen.ExplainSuccessScreen();
             }
@@ -172,8 +173,7 @@ namespace Library.Controller
                     if (bookService.IsBookDeleteValid(bookId) && bookService.IsBookModifyValid(bookInfoStrings))
                     {
                         bookService.ModifyBook(bookInfoStrings, bookId);
-                        logController.AddLog(new LogDto("", "", "Manager", "21013314", "도서 수정"));
-
+                        logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_MODIFY, bookId + LogStrings.BOOK_ID);
                         bookId = null;
                         ExplainingScreen.ExplainSuccessScreen();
                     }
@@ -200,7 +200,7 @@ namespace Library.Controller
                 return;
             }
 
-            logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "네이버 도서 요청"));
+            logController.AddLog(accountController.LoggedInId, LogStrings.REQUEST_BOOK, book.Title.ToString());
             bookDao.RequestBook(book, accountController.LoggedInId);
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
@@ -223,7 +223,7 @@ namespace Library.Controller
             }
 
             bookDao.AddRequestedBook(book);
-            logController.AddLog(new LogDto("", "", "Manager", "21013314", "요청 도서 추가"));
+            logController.AddLog(LogStrings.MANAGER, LogStrings.REQUESTED_BOOK_ADD, book.Title.ToString());
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
         }
@@ -256,7 +256,7 @@ namespace Library.Controller
             if (rentalBookList.Count > 0)
             {
                 screen.DrawRentalBooks(17, accountController.LoggedInId, rentalBookList);
-                logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "책 대여 내역 조회"));
+                logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_RENTAL_HISTORY, LogStrings.BLANK);
             }
         }
 
@@ -274,7 +274,7 @@ namespace Library.Controller
             if (returnBookList.Count > 0)
             {
                 screen.DrawReturnBooks(accountController.LoggedInId, returnBookList);
-                logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "책 반납 내역 조회"));
+                logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_RETURN_HISTORY, LogStrings.BLANK);
             }
         }
 
@@ -297,7 +297,7 @@ namespace Library.Controller
                 {
                     screen.DrawRentalBooks(y, user.Id, rentalBookList);
                     y += rentalBookList.Count * 13 + 1;
-                    logController.AddLog(new LogDto("", "", "Manager", "21013314", "유저들이 빌린 도서 내역 조회"));
+                    logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_RENTAL_HISTORY, LogStrings.BLANK);
                 }
             }
         }
@@ -319,13 +319,13 @@ namespace Library.Controller
 
                 if (naverBookList.Count > 0)
                 {
-                    logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "요청 도서 내역 조회"));
+                    logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_REQUEST_HISTORY, LogStrings.BLANK);
                     screen.DrawNaverBooks(naverBookList);
                 }
             }
             else if (type == (int)Enums.ModeMenu.ManagerMode)
             {
-                logController.AddLog(new LogDto("", "", "Manager", "21013314", "요청 도서 내역 조회"));
+                logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_REQUEST_HISTORY, LogStrings.BLANK);
                 screen.DrawNaverBooks(bookList);
             }
         }
@@ -435,7 +435,6 @@ namespace Library.Controller
                 searchedBookList = temp;
             }
 
-            searchedBookStrings = new string[] { null, null, null };
             return searchedBookList;
         }
 
@@ -451,6 +450,32 @@ namespace Library.Controller
                 }
             }
             return book;
+        }
+
+        private void RecordSearchedLog(int type)
+        {
+            string playString = " ";
+            string user = null;
+            switch(type)
+            {
+                case (int)Enums.ModeMenu.UserMode:
+                    user = accountController.LoggedInId;
+                    break;
+                case (int)Enums.ModeMenu.ManagerMode:
+                    user = LogStrings.MANAGER;
+                    break;
+            }
+
+            foreach(string item in searchedBookStrings)
+            {
+                if (item != null)
+                {
+                    playString = item;
+                    break;
+                }
+            }
+
+            logController.AddLog(user, LogStrings.BOOK_SEARCH, playString);
         }
 
         public string BookId

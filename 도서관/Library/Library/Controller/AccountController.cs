@@ -93,7 +93,7 @@ namespace Library.Controller
                         userDao.AddUser(new UserDto(signUpStrings[0], signUpStrings[1], signUpStrings[2],
                             signUpStrings[3], signUpStrings[4]));
 
-                        logController.AddLog(new LogDto("", "", "USER", signUpStrings[0], "SignUp"));
+                        logController.AddLog(signUpStrings[0], LogStrings.SIGNUP, LogStrings.BLANK);
                         signUpStrings = new string[] { null, null, null, null, null };
                         ExplainingScreen.ExplainSuccessScreen();
                         menuSelector.WaitForEscKey();
@@ -127,6 +127,8 @@ namespace Library.Controller
                     if (accountService.IsModifyValid(modifyStrings))
                     {
                         accountService.ModifyAccount(modifyStrings, loggedInId);
+                        logController.AddLog(loggedInId, LogStrings.ACCOUNT_MODIFY, LogStrings.BLANK);
+                        modifyStrings = new string[] { null, null, null, null };
                         ExplainingScreen.ExplainSuccessScreen();
                         menuSelector.WaitForEscKey();
                         return;
@@ -143,7 +145,7 @@ namespace Library.Controller
         {
             if (accountService.IsUserRemoveValid(loggedInId))
             {
-                logController.AddLog(new LogDto("", "", "USER", loggedInId, "계정 삭제"));
+                logController.AddLog(loggedInId, LogStrings.ACCOUNT_DELETE, LogStrings.BLANK);
                 RemoveUser();
                 ExplainingScreen.ExplainSuccessScreen();
                 menuSelector.WaitForEscKey();
@@ -161,10 +163,7 @@ namespace Library.Controller
             if (SearchId == null)
                 return;
             else if (accountService.IsUserIdValid(loggedInId, searchId))
-            {
                 ControllUserModifyScreen();
-                logController.AddLog(new LogDto("", "", "Manager", "21013314", "회원 정보 수정"));
-            }
             else
                 menuSelector.WaitForEscKey();
         }
@@ -177,8 +176,8 @@ namespace Library.Controller
                 return;
             else if (accountService.IsUserIdValid(loggedInId, searchId) && accountService.IsUserRemoveValid(loggedInId))
             {
+                logController.AddLog(LogStrings.MANAGER, loggedInId, LogStrings.ACCOUNT_DELETE);
                 RemoveUser();
-                logController.AddLog(new LogDto("", "", "Manager", "21013314", "회원 정보 삭제"));
                 ExplainingScreen.ExplainSuccessScreen();
             }
             menuSelector.WaitForEscKey();

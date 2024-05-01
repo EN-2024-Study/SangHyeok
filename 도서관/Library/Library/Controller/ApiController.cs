@@ -59,11 +59,11 @@ namespace Library.Controller
                 switch (type)
                 {
                     case (int)Enums.ModeMenu.UserMode:
-                        logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "네이버 검색"));
+                        logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_NAVERSEARCH, LogStrings.BLANK);
                         bookController.RequestBook(bookList);
                         break;
                     case (int)Enums.ModeMenu.ManagerMode:
-                        logController.AddLog(new LogDto("", "", "Manager", "21013314", "네이버 검색"));
+                        logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_NAVERSEARCH, LogStrings.BLANK);
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;

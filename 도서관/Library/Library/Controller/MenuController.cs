@@ -86,8 +86,7 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
-            logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "LogIn"));
-
+            logController.AddLog(accountController.LoggedInId, LogStrings.LOGIN, LogStrings.BLANK);
             while (isSelected)
             {
                 Console.Clear();
@@ -100,8 +99,7 @@ namespace Library.Controller
                 switch (menuSelector.menuValue)
                 {
                     case (int)Enums.UserMode.BookSearch:
-                        bookController.ControllBookSearchScreen();
-                        logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "책 검색"));
+                        bookController.ControllBookSearchScreen((int)Enums.ModeMenu.UserMode);
                         break;
                     case (int)Enums.UserMode.BookRental:
                         bookController.ControllBookRentalScreen();
@@ -121,7 +119,6 @@ namespace Library.Controller
                         break;
                     case (int)Enums.UserMode.AccountModify:
                         accountController.ControllUserModifyScreen();
-                        logController.AddLog(new LogDto("", "", "USER", accountController.LoggedInId, "정보 수정"));
                         break;
                     case (int)Enums.UserMode.AccountDelete:
                         if (accountController.ControllUserDeleteScreen())
@@ -143,7 +140,7 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
-            logController.AddLog(new LogDto("", "", "Manager", "21013314", "LogIn"));
+            logController.AddLog(LogStrings.MANAGER, LogStrings.LOGIN, LogStrings.BLANK);
 
             while (isSelected)
             {
@@ -157,8 +154,7 @@ namespace Library.Controller
                 switch (menuSelector.menuValue)
                 {
                     case (int)Enums.ManagerMode.BookSearch:
-                        bookController.ControllBookSearchScreen();
-                        logController.AddLog(new LogDto("", "", "Manager", "21013314", "책 검색"));
+                        bookController.ControllBookSearchScreen((int)Enums.ModeMenu.ManagerMode);
                         break;
                     case (int)Enums.ManagerMode.BookAdd:
                         bookController.ControllBookAddScreen();

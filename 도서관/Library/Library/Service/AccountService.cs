@@ -199,7 +199,6 @@ namespace Library.Service
             if (modifyStrings[3] != null && modifyStrings[3] != "")
                 userDao.UpdateUser(loggedInId, "address", modifyStrings[3]);
 
-            modifyStrings = new string[] { null, null, null, null };
         }
     }
 }

@@ -1,34 +1,27 @@
 ﻿using Library.Constants;
-using Library.Model;
+using Library.Controller.ScreenController;
 using Library.Model.DtoVo;
 using Library.View;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Reflection;
-using System.Security.Policy;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Controller
 {
     public class ApiController
     {
         private readonly string clientId, clientPassword;
-        private AccountController accountController;
+        private Account accountController;
         private MenuSelector menuSelector;
         private InputManager inputManager;
-        private BookController bookController;
-        private LogController logController;
+        private Book bookController;
+        private LogManager logManager;
         private Screen screen;
 
-        public ApiController(MenuSelector menuSelector, BookController bookController, AccountController accountController) 
+        public ApiController(MenuSelector menuSelector, Book bookController, Account accountController) 
         {
             this.clientId = "YZUNzAPoiLUk2je0tW_2";
             this.clientPassword = "JDoqusR1uP";
@@ -36,7 +29,7 @@ namespace Library.Controller
             this.menuSelector = menuSelector;
             this.bookController = bookController;
             this.inputManager = new InputManager();
-            this.logController = new LogController(menuSelector);
+            this.logManager = new LogManager(menuSelector);
             this.screen = new Screen(); 
         }
 
@@ -59,11 +52,11 @@ namespace Library.Controller
                 switch (type)
                 {
                     case (int)Enums.ModeMenu.UserMode:
-                        logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_NAVERSEARCH, LogStrings.BLANK);
+                        logManager.AddLog(accountController.LoggedInId, LogStrings.BOOK_NAVERSEARCH, LogStrings.BLANK);
                         bookController.RequestBook(bookList);
                         break;
                     case (int)Enums.ModeMenu.ManagerMode:
-                        logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_NAVERSEARCH, LogStrings.BLANK);
+                        logManager.AddLog(LogStrings.MANAGER, LogStrings.BOOK_NAVERSEARCH, LogStrings.BLANK);
                         ExplainingScreen.ExplainEcsKey(0);
                         menuSelector.WaitForEscKey();
                         break;

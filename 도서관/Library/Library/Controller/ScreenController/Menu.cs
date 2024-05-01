@@ -1,29 +1,24 @@
 ﻿using Library.Constants;
-using Library.Model.DtoVo;
 using Library.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Library.Controller
+namespace Library.Controller.ScreenController
 {
-    public class MenuController
+    public class Menu
     {
         private MenuSelector menuSelector;
-        private AccountController accountController;
-        private BookController bookController;
+        private Account account;
+        private Book bookController;
         private ApiController apiController;
-        private LogController logController;
+        private LogManager logManager;
 
-        public MenuController()
+        public Menu()
         {
             this.menuSelector = new MenuSelector();
-            this.logController = new LogController(menuSelector);
-            this.accountController = new AccountController(menuSelector, logController);
-            this.bookController = new BookController(menuSelector, accountController, logController);
-            this.apiController = new ApiController(menuSelector, bookController, accountController);
+            this.logManager = new LogManager(menuSelector);
+            this.account = new Account(menuSelector, logManager);
+            this.bookController = new Book(menuSelector, account, logManager);
+            this.apiController = new ApiController(menuSelector, bookController, account);
         }
 
         public void ControllModeMenu()
@@ -47,7 +42,7 @@ namespace Library.Controller
                         ControllLogInSignUpMenu();
                         break;
                     case (int)Enums.ModeMenu.ManagerMode:
-                        if (accountController.IsLogIn((int)Enums.ModeMenu.ManagerMode))
+                        if (account.IsLogIn((int)Enums.ModeMenu.ManagerMode))
                             ControllManagerModeMenu();
                         break;
                 }
@@ -71,11 +66,11 @@ namespace Library.Controller
                 switch (menuSelector.menuValue)
                 {
                     case (int)Enums.LogInSignUpMenu.LogIn:
-                        if (accountController.IsLogIn((int)Enums.ModeMenu.UserMode))
+                        if (account.IsLogIn((int)Enums.ModeMenu.UserMode))
                             ControllUserModeMenu();
                         break;
                     case (int)Enums.LogInSignUpMenu.SignUp:
-                        if (accountController.IsSignUp())
+                        if (account.IsSignUp())
                             return;
                         break;
                 }
@@ -86,7 +81,7 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
-            logController.AddLog(accountController.LoggedInId, LogStrings.LOGIN, LogStrings.BLANK);
+            logManager.AddLog(account.LoggedInId, LogStrings.LOGIN, LogStrings.BLANK);
             while (isSelected)
             {
                 Console.Clear();
@@ -118,10 +113,10 @@ namespace Library.Controller
                         menuSelector.WaitForEscKey();
                         break;
                     case (int)Enums.UserMode.AccountModify:
-                        accountController.ControllUserModifyScreen();
+                        account.ControllUserModifyScreen();
                         break;
                     case (int)Enums.UserMode.AccountDelete:
-                        if (accountController.ControllUserDeleteScreen())
+                        if (account.ControllUserDeleteScreen())
                             return;
                         break;
                     case (int)Enums.UserMode.NaverSearch:
@@ -140,7 +135,7 @@ namespace Library.Controller
         {
             bool isSelected = true;
             menuSelector.menuValue = 0;
-            logController.AddLog(LogStrings.MANAGER, LogStrings.LOGIN, LogStrings.BLANK);
+            logManager.AddLog(LogStrings.MANAGER, LogStrings.LOGIN, LogStrings.BLANK);
 
             while (isSelected)
             {
@@ -166,10 +161,10 @@ namespace Library.Controller
                         bookController.InputBookModify();
                         break;
                     case (int)Enums.ManagerMode.AccountModify:
-                        accountController.ControllMemberModifyScreen();
+                        account.ControllMemberModifyScreen();
                         break;
                     case (int)Enums.ManagerMode.AccountDelete:
-                        accountController.ControllMemberDeleteMenu();
+                        account.ControllMemberDeleteMenu();
                         break;
                     case (int)Enums.ManagerMode.RentalHistory:
                         bookController.ShowAllUserRentalHistory();
@@ -207,19 +202,19 @@ namespace Library.Controller
                 switch (menuSelector.menuValue)
                 {
                     case (int)Enums.LogMenu.History:
-                        logController.ControllHistoryScreen();
+                        logManager.ControllHistoryScreen();
                         break;
                     case (int)Enums.LogMenu.Delete:
-                        logController.ControllDeleteScreen();
+                        logManager.ControllDeleteScreen();
                         break;
                     case (int)Enums.LogMenu.FileSave:
-                        logController.SaveFile();
+                        logManager.SaveFile();
                         break;
                     case (int)Enums.LogMenu.FileDelete:
-                        logController.DeleteFile();
+                        logManager.DeleteFile();
                         break;
                     case (int)Enums.LogMenu.Reset:
-                        logController.DeleteAllLog();
+                        logManager.DeleteAllLog();
                         break;
                 }
             }

@@ -6,27 +6,27 @@ using System;
 using System.Collections.Generic;
 using Library.Service;
 
-namespace Library.Controller
+namespace Library.Controller.ScreenController
 {
-    public class BookController
+    public class Book
     {
         private BookDao bookDao;
         private UserDao userDao;
         private BookService bookService;
         private MenuSelector menuSelector;
         private InputManager inputManager;
-        private AccountController accountController;
-        private LogController logController;
+        private Account account;
+        private LogManager logManager;
         private Screen screen;
         private string[] searchedBookStrings;
         private string[] bookInfoStrings;
         private string bookId;
 
-        public BookController(MenuSelector menuSelector, AccountController accountController, LogController logController)
+        public Book(MenuSelector menuSelector, Account account, LogManager logManager)
         {
             this.menuSelector = menuSelector;
-            this.accountController = accountController;
-            this.logController = logController;
+            this.account = account;
+            this.logManager = logManager;
             this.bookService = new BookService(bookDao, userDao);
             this.bookDao = new BookDao();
             this.userDao = new UserDao();
@@ -71,11 +71,11 @@ namespace Library.Controller
             InputBookId();
             if (BookId == null)
                 return;
-            else if (bookService.IsBookRentalValid(bookId, accountController.LoggedInId) && 
+            else if (bookService.IsBookRentalValid(bookId, account.LoggedInId) && 
                 bookService.IsBookCountValid(bookId))
             {
-                bookService.RentalBook(bookId, accountController.LoggedInId);
-                logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_RENTAL, bookId + LogStrings.BOOK_ID);
+                bookService.RentalBook(bookId, account.LoggedInId);
+                logManager.AddLog(account.LoggedInId, LogStrings.BOOK_RENTAL, bookId + LogStrings.BOOK_ID);
                 bookId = null;
                 ExplainingScreen.ExplainSuccessScreen();
             }
@@ -89,9 +89,9 @@ namespace Library.Controller
 
             if (BookId == null)
                 return;
-            else if (bookService.IsBookReturnValid(bookId, accountController.LoggedInId))
+            else if (bookService.IsBookReturnValid(bookId, account.LoggedInId))
             {
-                logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_RETURN, bookId + LogStrings.BOOK_ID);
+                logManager.AddLog(account.LoggedInId, LogStrings.BOOK_RETURN, bookId + LogStrings.BOOK_ID);
                 ExplainingScreen.ExplainSuccessScreen();
             }
             menuSelector.WaitForEscKey();
@@ -116,7 +116,7 @@ namespace Library.Controller
                     if (bookService.IsBookAddValid(bookInfoStrings))
                     {
                         bookService.AddBook(bookInfoStrings);
-                        logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_ADD, bookInfoStrings[0]);
+                        logManager.AddLog(LogStrings.MANAGER, LogStrings.BOOK_ADD, bookInfoStrings[0]);
                     }
                     menuSelector.WaitForEscKey();
                     break;
@@ -135,7 +135,7 @@ namespace Library.Controller
             else if (bookService.IsBookDeleteValid(bookId))
             {
                 bookService.DeleteBook(bookId);
-                logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_DELETE, bookId + LogStrings.BOOK_ID);
+                logManager.AddLog(LogStrings.MANAGER, LogStrings.BOOK_DELETE, bookId + LogStrings.BOOK_ID);
                 bookId = null;
                 ExplainingScreen.ExplainSuccessScreen();
             }
@@ -173,7 +173,7 @@ namespace Library.Controller
                     if (bookService.IsBookDeleteValid(bookId) && bookService.IsBookModifyValid(bookInfoStrings))
                     {
                         bookService.ModifyBook(bookInfoStrings, bookId);
-                        logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_MODIFY, bookId + LogStrings.BOOK_ID);
+                        logManager.AddLog(LogStrings.MANAGER, LogStrings.BOOK_MODIFY, bookId + LogStrings.BOOK_ID);
                         bookId = null;
                         ExplainingScreen.ExplainSuccessScreen();
                     }
@@ -200,8 +200,8 @@ namespace Library.Controller
                 return;
             }
 
-            logController.AddLog(accountController.LoggedInId, LogStrings.REQUEST_BOOK, book.Title.ToString());
-            bookDao.RequestBook(book, accountController.LoggedInId);
+            logManager.AddLog(account.LoggedInId, LogStrings.REQUEST_BOOK, book.Title.ToString());
+            bookDao.RequestBook(book, account.LoggedInId);
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
         }
@@ -223,7 +223,7 @@ namespace Library.Controller
             }
 
             bookDao.AddRequestedBook(book);
-            logController.AddLog(LogStrings.MANAGER, LogStrings.REQUESTED_BOOK_ADD, book.Title.ToString());
+            logManager.AddLog(LogStrings.MANAGER, LogStrings.REQUESTED_BOOK_ADD, book.Title.ToString());
             ExplainingScreen.ExplainSuccessScreen();
             menuSelector.WaitForEscKey();
         }
@@ -250,13 +250,13 @@ namespace Library.Controller
             List<RentalBookDto> bookList = bookDao.GetRentalBookList();
             List<RentalBookDto> rentalBookList = new List<RentalBookDto>();
             foreach (RentalBookDto book in bookList)
-                if (accountController.LoggedInId.Equals(book.UserId))
+                if (account.LoggedInId.Equals(book.UserId))
                     rentalBookList.Add(book);
             
             if (rentalBookList.Count > 0)
             {
-                screen.DrawRentalBooks(17, accountController.LoggedInId, rentalBookList);
-                logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_RENTAL_HISTORY, LogStrings.BLANK);
+                screen.DrawRentalBooks(17, account.LoggedInId, rentalBookList);
+                logManager.AddLog(account.LoggedInId, LogStrings.BOOK_RENTAL_HISTORY, LogStrings.BLANK);
             }
         }
 
@@ -268,13 +268,13 @@ namespace Library.Controller
             List<ReturnBookDto> bookList = bookDao.GetReturnBookList();
             List<ReturnBookDto> returnBookList = new List<ReturnBookDto>();
             foreach(ReturnBookDto book in bookList)
-                if (accountController.LoggedInId.Equals(book.UserId))
+                if (account.LoggedInId.Equals(book.UserId))
                     returnBookList.Add(book);
 
             if (returnBookList.Count > 0)
             {
-                screen.DrawReturnBooks(accountController.LoggedInId, returnBookList);
-                logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_RETURN_HISTORY, LogStrings.BLANK);
+                screen.DrawReturnBooks(account.LoggedInId, returnBookList);
+                logManager.AddLog(account.LoggedInId, LogStrings.BOOK_RETURN_HISTORY, LogStrings.BLANK);
             }
         }
 
@@ -297,7 +297,7 @@ namespace Library.Controller
                 {
                     screen.DrawRentalBooks(y, user.Id, rentalBookList);
                     y += rentalBookList.Count * 13 + 1;
-                    logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_RENTAL_HISTORY, LogStrings.BLANK);
+                    logManager.AddLog(LogStrings.MANAGER, LogStrings.BOOK_RENTAL_HISTORY, LogStrings.BLANK);
                 }
             }
         }
@@ -313,19 +313,19 @@ namespace Library.Controller
                 List<NaverBookVo> naverBookList = new List<NaverBookVo>();
                 foreach (NaverBookVo book in bookList)
                 {
-                    if (book.Userid.ToString().Equals(accountController.LoggedInId))
+                    if (book.Userid.ToString().Equals(account.LoggedInId))
                         naverBookList.Add(book);
                 }
 
                 if (naverBookList.Count > 0)
                 {
-                    logController.AddLog(accountController.LoggedInId, LogStrings.BOOK_REQUEST_HISTORY, LogStrings.BLANK);
+                    logManager.AddLog(account.LoggedInId, LogStrings.BOOK_REQUEST_HISTORY, LogStrings.BLANK);
                     screen.DrawNaverBooks(naverBookList);
                 }
             }
             else if (type == (int)Enums.ModeMenu.ManagerMode)
             {
-                logController.AddLog(LogStrings.MANAGER, LogStrings.BOOK_REQUEST_HISTORY, LogStrings.BLANK);
+                logManager.AddLog(LogStrings.MANAGER, LogStrings.BOOK_REQUEST_HISTORY, LogStrings.BLANK);
                 screen.DrawNaverBooks(bookList);
             }
         }
@@ -459,7 +459,7 @@ namespace Library.Controller
             switch(type)
             {
                 case (int)Enums.ModeMenu.UserMode:
-                    user = accountController.LoggedInId;
+                    user = account.LoggedInId;
                     break;
                 case (int)Enums.ModeMenu.ManagerMode:
                     user = LogStrings.MANAGER;
@@ -475,7 +475,7 @@ namespace Library.Controller
                 }
             }
 
-            logController.AddLog(user, LogStrings.BOOK_SEARCH, playString);
+            logManager.AddLog(user, LogStrings.BOOK_SEARCH, playString);
         }
 
         public string BookId

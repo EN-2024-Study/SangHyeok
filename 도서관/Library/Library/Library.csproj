@@ -42,10 +42,10 @@
     <Compile Include="Constants\QueryStrings.cs" />
     <Compile Include="Constants\RegularStrings.cs" />
     <Compile Include="Controller\ApiController.cs" />
-    <Compile Include="Controller\BookController.cs" />
-    <Compile Include="Controller\LogController.cs" />
-    <Compile Include="Controller\MenuController.cs" />
-    <Compile Include="Controller\AccountController.cs" />
+    <Compile Include="Controller\ScreenController\Book.cs" />
+    <Compile Include="Controller\LogManager.cs" />
+    <Compile Include="Controller\ScreenController\Menu.cs" />
+    <Compile Include="Controller\ScreenController\Account.cs" />
     <Compile Include="MainProgram.cs" />
     <Compile Include="Model\Dao\LogDao.cs" />
     <Compile Include="Model\DtoVo\BookDto.cs" />

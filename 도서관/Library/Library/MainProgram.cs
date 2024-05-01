@@ -1,13 +1,4 @@
-﻿using System;
-using Library.Controller;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
-using System.Runtime.Remoting.Messaging;
-using System.IO;
-using Library.Model;
+﻿using Library.Controller.ScreenController;
 
 namespace Library
 {
@@ -15,7 +6,7 @@ namespace Library
     {
         public static void Main(string[] args)
         {
-            MenuController menu = new MenuController();
+            Menu menu = new Menu();
             menu.ControllModeMenu();
         }
     }

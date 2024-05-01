@@ -6,26 +6,26 @@ using Library.Constants;
 using Library.Service;
 using Library.Model.DtoVo;
 
-namespace Library.Controller
+namespace Library.Controller.ScreenController
 {
-    public class AccountController
+    public class Account
     {
         private MenuSelector menuSelector;
         private InputManager inputManager;
         private UserDao userDao;
         private BookDao bookDao;
         private ManagerDao managerDao;
-        private LogController logController;
+        private LogManager logManager;
         private AccountService accountService;
         private Screen screen;
         private string[] signUpStrings, modifyStrings, logInStrings;
         private string searchId;
         private static string loggedInId;
 
-        public AccountController(MenuSelector menuSelector, LogController logController)
+        public Account(MenuSelector menuSelector, LogManager logManager)
         {
             this.menuSelector = menuSelector;
-            this.logController = logController;
+            this.logManager = logManager;
             this.inputManager = new InputManager();
             this.userDao = new UserDao();
             this.bookDao = new BookDao();
@@ -94,7 +94,7 @@ namespace Library.Controller
                             signUpStrings[(int)Enums.SignUpMenu.Password], signUpStrings[(int)Enums.SignUpMenu.Age],
                             signUpStrings[(int)Enums.SignUpMenu.PhoneNumber], signUpStrings[(int)Enums.SignUpMenu.Address]));
 
-                        logController.AddLog(signUpStrings[(int)Enums.SignUpMenu.Id], LogStrings.SIGNUP, LogStrings.BLANK);
+                        logManager.AddLog(signUpStrings[(int)Enums.SignUpMenu.Id], LogStrings.SIGNUP, LogStrings.BLANK);
                         signUpStrings = new string[] { null, null, null, null, null };
                         ExplainingScreen.ExplainSuccessScreen();
                         menuSelector.WaitForEscKey();
@@ -128,7 +128,7 @@ namespace Library.Controller
                     if (accountService.IsModifyValid(modifyStrings))
                     {
                         accountService.ModifyAccount(modifyStrings, loggedInId);
-                        logController.AddLog(loggedInId, LogStrings.ACCOUNT_MODIFY, LogStrings.BLANK);
+                        logManager.AddLog(loggedInId, LogStrings.ACCOUNT_MODIFY, LogStrings.BLANK);
                         modifyStrings = new string[] { null, null, null, null };
                         ExplainingScreen.ExplainSuccessScreen();
                         menuSelector.WaitForEscKey();
@@ -146,7 +146,7 @@ namespace Library.Controller
         {
             if (accountService.IsUserRemoveValid(loggedInId))
             {
-                logController.AddLog(loggedInId, LogStrings.ACCOUNT_DELETE, LogStrings.BLANK);
+                logManager.AddLog(loggedInId, LogStrings.ACCOUNT_DELETE, LogStrings.BLANK);
                 RemoveUser();
                 ExplainingScreen.ExplainSuccessScreen();
                 menuSelector.WaitForEscKey();
@@ -177,7 +177,7 @@ namespace Library.Controller
                 return;
             else if (accountService.IsUserIdValid(loggedInId, searchId) && accountService.IsUserRemoveValid(loggedInId))
             {
-                logController.AddLog(LogStrings.MANAGER, loggedInId, LogStrings.ACCOUNT_DELETE);
+                logManager.AddLog(LogStrings.MANAGER, loggedInId, LogStrings.ACCOUNT_DELETE);
                 RemoveUser();
                 ExplainingScreen.ExplainSuccessScreen();
             }

@@ -5,11 +5,10 @@ using Library.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Library.Controller
 {
-    public class LogController
+    public class LogManager
     {
         private LogDao logDao;
         private MenuSelector menuSelector;
@@ -17,7 +16,7 @@ namespace Library.Controller
         private Screen screen;
         private string filePath;
 
-        public LogController(MenuSelector menuSelector) 
+        public LogManager(MenuSelector menuSelector) 
         {
             this.logDao = new LogDao();
             this.screen = new Screen();

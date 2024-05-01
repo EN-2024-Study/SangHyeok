@@ -39,7 +39,8 @@ namespace Library.Controller
         {
             try
             {
-                mySql.Open();
+                if(mySql.State == System.Data.ConnectionState.Closed) 
+                    mySql.Open();
 
                 MySqlCommand command = new MySqlCommand(query, mySql);
                 if (command.ExecuteNonQuery() == 1) 

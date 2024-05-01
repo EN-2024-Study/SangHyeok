@@ -27,11 +27,11 @@ namespace Library.Controller.ScreenController
             this.menuSelector = menuSelector;
             this.account = account;
             this.logManager = logManager;
-            this.bookService = new BookService(bookDao, userDao);
             this.bookDao = new BookDao();
             this.userDao = new UserDao();
             this.inputManager = new InputManager();
             this.screen = new Screen();
+            this.bookService = new BookService(bookDao);
             this.searchedBookStrings = new string[] { null, null, null };
             this.bookInfoStrings = new string[] { null, null, null, null, null, null, null, null };
             this.bookId = null;

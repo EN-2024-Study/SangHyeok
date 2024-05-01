@@ -15,20 +15,19 @@ namespace Library.Service
     public class BookService
     {
         private BookDao bookDao;
-        private UserDao userDao;
         private ExceptionManager exceptionManager;
 
-        public BookService(BookDao bookDao, UserDao userDao)
+        public BookService(BookDao bookDao)
         {
             this.bookDao = bookDao;
-            this.userDao = userDao;
             this.exceptionManager = new ExceptionManager();
         }
 
         public bool IsBookRentalValid(string bookId, string loggedInId)
         {
-            List<BookDto> bookList = bookDao.GetBookList();
             List<RentalBookDto> rentalBookList = bookDao.GetRentalBookList();
+            if (rentalBookList == null)
+                return true;
 
             foreach (RentalBookDto book in rentalBookList)
             {
@@ -51,10 +50,7 @@ namespace Library.Service
                     }
                 }
             }
-
-            ExplainingScreen.ExplainFailScreen();
-            ExplainingScreen.ExplainInvalidInput("입력");
-            return false;
+            return true;
         }
 
         public bool IsBookCountValid(string bookId)

@@ -55,7 +55,7 @@ namespace Library.Controller
                 {
                     if (accountService.IsLogInValid(modeType, logInStrings, loggedInId))
                     {
-                        loggedInId = logInStrings[0];
+                        loggedInId = logInStrings[(int)Enums.LogInMenu.Id];
                         logInStrings = new string[] { null, null };
                         ExplainingScreen.ExplainSuccessScreen();
                         menuSelector.WaitForEscKey();
@@ -90,10 +90,11 @@ namespace Library.Controller
                     Console.Clear();
                     if (accountService.IsSignUpValid(signUpStrings))
                     {
-                        userDao.AddUser(new UserDto(signUpStrings[0], signUpStrings[1], signUpStrings[2],
-                            signUpStrings[3], signUpStrings[4]));
+                        userDao.AddUser(new UserDto(signUpStrings[(int)Enums.SignUpMenu.Id], 
+                            signUpStrings[(int)Enums.SignUpMenu.Password], signUpStrings[(int)Enums.SignUpMenu.Age],
+                            signUpStrings[(int)Enums.SignUpMenu.PhoneNumber], signUpStrings[(int)Enums.SignUpMenu.Address]));
 
-                        logController.AddLog(signUpStrings[0], LogStrings.SIGNUP, LogStrings.BLANK);
+                        logController.AddLog(signUpStrings[(int)Enums.SignUpMenu.Id], LogStrings.SIGNUP, LogStrings.BLANK);
                         signUpStrings = new string[] { null, null, null, null, null };
                         ExplainingScreen.ExplainSuccessScreen();
                         menuSelector.WaitForEscKey();

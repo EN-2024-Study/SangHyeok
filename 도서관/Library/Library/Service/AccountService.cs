@@ -28,14 +28,14 @@ namespace Library.Service
 
         public bool IsLogInValid(int modeType, string[] logInStrings, string loggedInId)
         {
-            if (logInStrings[0] == null || logInStrings[1] == null)
+            if (logInStrings[(int)Enums.LogInMenu.Id] == null || logInStrings[(int)Enums.LogInMenu.Password] == null)
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainNoInput();
                 return false;
             }
-            else if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpId, logInStrings[0]) ||
-                !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, logInStrings[1]))
+            else if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpId, logInStrings[(int)Enums.LogInMenu.Id]) ||
+                !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, logInStrings[(int)Enums.LogInMenu.Password]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("로그인");
@@ -46,12 +46,12 @@ namespace Library.Service
             {
                 List<UserDto> userList = userDao.GetUserList();
                 foreach (UserDto user in userList)
-                    if (user.Id.Equals(logInStrings[0]) && user.Password.Equals(logInStrings[1]))
+                    if (user.Id.Equals(logInStrings[(int)Enums.LogInMenu.Id]) && user.Password.Equals(logInStrings[(int)Enums.LogInMenu.Password]))
                         return true;
             }
             else if (modeType == (int)Enums.ModeMenu.ManagerMode)
             {
-                if (logInStrings[0].Equals(managerDao.GetManager().Id) && logInStrings[1].Equals(managerDao.GetManager().Password))
+                if (logInStrings[(int)Enums.LogInMenu.Id].Equals(managerDao.GetManager().Id) && logInStrings[(int)Enums.LogInMenu.Password].Equals(managerDao.GetManager().Password))
                     return true;
             }
 
@@ -75,7 +75,7 @@ namespace Library.Service
 
             foreach (UserDto value in userList)
             {
-                if (value.Id.Equals(signUpStrings[0]))
+                if (value.Id.Equals(signUpStrings[(int)Enums.SignUpMenu.Id]))
                 {
                     ExplainingScreen.ExplainFailScreen();
                     ExplainingScreen.ExplainDuplicationExist("아이디");
@@ -83,31 +83,31 @@ namespace Library.Service
                 }
             }
 
-            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpId, signUpStrings[0]))
+            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpId, signUpStrings[(int)Enums.SignUpMenu.Id]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("아이디");
                 return false;
             }
-            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, signUpStrings[1]))
+            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, signUpStrings[(int)Enums.SignUpMenu.Password]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("비밀번호");
                 return false;
             }
-            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpAge, signUpStrings[2]))
+            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpAge, signUpStrings[(int)Enums.SignUpMenu.Age]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("나이");
                 return false;
             }
-            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPhoneNumber, signUpStrings[3]))
+            if (!exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPhoneNumber, signUpStrings[(int)Enums.SignUpMenu.PhoneNumber]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("휴대폰");
                 return false;
             }
-            if (!exceptionManager.IsAddressValid(signUpStrings[4]))
+            if (!exceptionManager.IsAddressValid(signUpStrings[(int)Enums.SignUpMenu.Address]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("주소");
@@ -119,25 +119,29 @@ namespace Library.Service
 
         public bool IsModifyValid(string[] modifyStrings)
         {
-            if (modifyStrings[0] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, modifyStrings[0]))
+            if (modifyStrings[(int)Enums.AccountModifyMenu.Password] != null && 
+                !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPassword, modifyStrings[(int)Enums.AccountModifyMenu.Password]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("비밀번호");
                 return false;
             }
-            if (modifyStrings[1] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpAge, modifyStrings[1]))
+            if (modifyStrings[(int)Enums.AccountModifyMenu.Age] != null && 
+                !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpAge, modifyStrings[(int)Enums.AccountModifyMenu.Age]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("나이");
                 return false;
             }
-            if (modifyStrings[2] != null && !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPhoneNumber, modifyStrings[2]))
+            if (modifyStrings[(int)Enums.AccountModifyMenu.PhoneNumber] != null && 
+                !exceptionManager.IsExoressionValid((int)Enums.InputType.SignUpPhoneNumber, modifyStrings[(int)Enums.AccountModifyMenu.PhoneNumber]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("휴대폰 번호");
                 return false;
             }
-            if (modifyStrings[3] != null && !exceptionManager.IsAddressValid(modifyStrings[3]))
+            if (modifyStrings[(int)Enums.AccountModifyMenu.Address] != null && 
+                !exceptionManager.IsAddressValid(modifyStrings[(int)Enums.AccountModifyMenu.Address]))
             {
                 ExplainingScreen.ExplainFailScreen();
                 ExplainingScreen.ExplainInvalidInput("주소");
@@ -187,18 +191,17 @@ namespace Library.Service
 
         public void ModifyAccount(string[] modifyStrings, string loggedInId)
         {
-            if (modifyStrings[0] != null && modifyStrings[0] != "")
-                userDao.UpdateUser(loggedInId, "password", modifyStrings[0]);
+            if (modifyStrings[(int)Enums.AccountModifyMenu.Password] != null && modifyStrings[0] != "")
+                userDao.UpdateUser(loggedInId, "password", modifyStrings[(int)Enums.AccountModifyMenu.Password]);
 
-            if (modifyStrings[1] != null && modifyStrings[1] != "")
-                userDao.UpdateUser(loggedInId, "age", modifyStrings[1]);
+            if (modifyStrings[(int)Enums.AccountModifyMenu.Age] != null && modifyStrings[1] != "")
+                userDao.UpdateUser(loggedInId, "age", modifyStrings[(int)Enums.AccountModifyMenu.Age]);
 
-            if (modifyStrings[2] != null && modifyStrings[2] != "")
-                userDao.UpdateUser(loggedInId, "phonenumber", modifyStrings[2]);
+            if (modifyStrings[(int)Enums.AccountModifyMenu.PhoneNumber] != null && modifyStrings[2] != "")
+                userDao.UpdateUser(loggedInId, "phonenumber", modifyStrings[(int)Enums.AccountModifyMenu.PhoneNumber]);
 
-            if (modifyStrings[3] != null && modifyStrings[3] != "")
-                userDao.UpdateUser(loggedInId, "address", modifyStrings[3]);
-
+            if (modifyStrings[(int)Enums.AccountModifyMenu.Address] != null && modifyStrings[3] != "")
+                userDao.UpdateUser(loggedInId, "address", modifyStrings[(int)Enums.AccountModifyMenu.Address]);
         }
     }
 }

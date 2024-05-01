@@ -37,6 +37,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\BookStrings.cs" />
     <Compile Include="Constants\LogStrings.cs" />
     <Compile Include="Constants\QueryStrings.cs" />
     <Compile Include="Constants\RegularStrings.cs" />

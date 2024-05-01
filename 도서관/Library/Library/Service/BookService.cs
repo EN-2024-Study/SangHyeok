@@ -35,7 +35,7 @@ namespace Library.Service
                 if (book.UserId.Equals(loggedInId))
                 {
                     DateTime now = DateTime.Now;
-                    DateTime returnTime = DateTime.ParseExact(book.ReturnTime, "yyyy-MM-dd HH:mm:ss", null);
+                    DateTime returnTime = DateTime.ParseExact(book.ReturnTime, BookStrings.TIME, null);
                     if (now > returnTime)   // 연체 된 도서가 있다면 false
                     {
                         ExplainingScreen.ExplainFailScreen();
@@ -206,17 +206,17 @@ namespace Library.Service
                 if (book.Id.Equals(bookId) && book.Count > 0)
                 {
                     bookDao.RentalBook(new RentalBookDto(book,
-                        loggedInId, time.ToString("yyyy-MM-dd HH:mm:ss"),
-                        time.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")));
+                        loggedInId, time.ToString(BookStrings.TIME),
+                        time.AddDays(7).ToString(BookStrings.TIME)));
                 }
             }
         }
 
         public void AddBook(string[] bookInfoStrings)
         {
-            bookDao.AddBook(new BookDto("0", bookInfoStrings[0], bookInfoStrings[1],
-                           bookInfoStrings[2], int.Parse(bookInfoStrings[3]), bookInfoStrings[4], bookInfoStrings[5],
-                           bookInfoStrings[6], bookInfoStrings[7]));
+            bookDao.AddBook(new BookDto(BookStrings.BLANK, bookInfoStrings[(int)Enums.BookAddInfo.Title], bookInfoStrings[(int)Enums.BookAddInfo.Writer],
+                           bookInfoStrings[(int)Enums.BookAddInfo.Publisher], int.Parse(bookInfoStrings[(int)Enums.BookAddInfo.Count]), bookInfoStrings[(int)Enums.BookAddInfo.Price], 
+                           bookInfoStrings[(int)Enums.BookAddInfo.ReleaseDate], bookInfoStrings[(int)Enums.BookAddInfo.ISBN], bookInfoStrings[(int)Enums.BookAddInfo.Info]));
         }
 
         public void DeleteBook(string bookId)
@@ -234,18 +234,23 @@ namespace Library.Service
 
         public void ModifyBook(string[] bookInfoStrings, string bookId)
         {
-            if (bookInfoStrings[0] != null)
-                bookDao.ModifyBookInfo(bookId, "title", bookInfoStrings[0]);
-            if (bookInfoStrings[1] != null)
-                bookDao.ModifyBookInfo(bookId, "writer", bookInfoStrings[1]);
-            if (bookInfoStrings[2] != null)
-                bookDao.ModifyBookInfo(bookId, "publisher", bookInfoStrings[2]);
-            if (bookInfoStrings[3] != null)
-                bookDao.ModifyBookInfo(bookId, "count", int.Parse(bookInfoStrings[3]));
-            if (bookInfoStrings[4] != null)
-                bookDao.ModifyBookInfo(bookId, "price", bookInfoStrings[4]);
-            if (bookInfoStrings[5] != null)
-                bookDao.ModifyBookInfo(bookId, "releaseDate", bookInfoStrings[5]);
+            if (bookInfoStrings[(int)Enums.BookModifyInfo.Title] != null)
+                bookDao.ModifyBookInfo(bookId, BookStrings.TITLE, bookInfoStrings[0]);
+
+            if (bookInfoStrings[(int)Enums.BookModifyInfo.Writer] != null)
+                bookDao.ModifyBookInfo(bookId, BookStrings.WRITER, bookInfoStrings[1]);
+
+            if (bookInfoStrings[(int)Enums.BookModifyInfo.Publisher] != null)
+                bookDao.ModifyBookInfo(bookId, BookStrings.PUBLISHER, bookInfoStrings[2]);
+
+            if (bookInfoStrings[(int)Enums.BookModifyInfo.Count] != null)
+                bookDao.ModifyBookInfo(bookId, BookStrings.COUNT, int.Parse(bookInfoStrings[3]));
+            
+            if (bookInfoStrings[(int)Enums.BookModifyInfo.Price] != null)
+                bookDao.ModifyBookInfo(bookId, BookStrings.PRICE, bookInfoStrings[4]);
+           
+            if (bookInfoStrings[(int)Enums.BookModifyInfo.ReleaseDate] != null)
+                bookDao.ModifyBookInfo(bookId, BookStrings.RELEASEDATE, bookInfoStrings[5]);
         }
     }
 }

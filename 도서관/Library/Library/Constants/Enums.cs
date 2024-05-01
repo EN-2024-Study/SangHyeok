@@ -169,6 +169,10 @@ namespace Library.Constants
             LogId
         }
 
-        
+        public enum EnvironmentType
+        {
+            Db,
+            Naver
+        }
     }
 }

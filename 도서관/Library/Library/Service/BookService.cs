@@ -168,7 +168,7 @@ namespace Library.Service
             {
                 foreach (NaverBookVo item in bookList)
                 {
-                    if (item.Equals(book))  // 이미 요청한 책이라면 false
+                    if (item.ISBN.ToString().Equals(book.ISBN.ToString()))  // 이미 요청한 책이라면 false
                     {
                         isDuplication = true;
                         break;

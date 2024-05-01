@@ -14,7 +14,6 @@ namespace Library.Controller
         private MenuSelector menuSelector;
         private InputManager inputManager;
         private Screen screen;
-        private string filePath;
 
         public LogManager(MenuSelector menuSelector) 
         {
@@ -22,7 +21,6 @@ namespace Library.Controller
             this.screen = new Screen();
             this.inputManager = new InputManager();
             this.menuSelector = menuSelector;
-            this.filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "로그.txt");
         }
 
         public void ControllHistoryScreen()
@@ -63,6 +61,8 @@ namespace Library.Controller
         public void SaveFile()
         {
             List<LogDto> logList = logDao.GetLogList();
+            string filePath = EnvironmentSetUp.LOG_PATH;
+
             File.WriteAllText(filePath, " ");
             foreach (LogDto log in logList)
             {
@@ -81,6 +81,8 @@ namespace Library.Controller
 
         public void DeleteFile()
         {
+            string filePath = EnvironmentSetUp.LOG_PATH;
+
             File.Delete(filePath);
             AddLog(LogStrings.MANAGER, LogStrings.LOG_FILE_DELETE, LogStrings.BLANK);
             ExplainingScreen.ExplainSuccessScreen();

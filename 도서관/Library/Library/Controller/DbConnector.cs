@@ -7,25 +7,22 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using Library.View;
 using System.Management;
+using Library.Constants;
 
 namespace Library.Controller
 {
     public class DbConnector    // singleton
     {
         private static DbConnector instance;
-        private string connectionAddress;
         private MySqlConnection mySql;
 
         private DbConnector()
         {
-            //this.connectionAddress = Environment.GetEnvironmentVariable("C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin");
-            string dbServer = "localhost";
-            int dbPort = 3306;
-            string dbName = "library";
-            string dbId = "root";
-            string dbPassword = "0000";
-            this.connectionAddress = string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4}", dbServer, dbPort, dbName, dbId, dbPassword);
-            this.mySql = new MySqlConnection(ConnectionAddress);
+            string[] ids = EnvironmentSetUp.GetId((int)Enums.EnvironmentType.Db);
+            string connectionAddress = string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4}", 
+                ids[(int)Enums.DbType.Server], ids[(int)Enums.DbType.Port], ids[(int)Enums.DbType.Name], ids[(int)Enums.DbType.Id], ids[(int)Enums.DbType.Password]);
+            
+            this.mySql = new MySqlConnection(connectionAddress);
         }
 
         public static DbConnector Instance
@@ -37,9 +34,6 @@ namespace Library.Controller
                 return instance;
             }
         }
-
-        public string ConnectionAddress
-        { get { return connectionAddress; } }
 
         public void SetData(string query)
         {

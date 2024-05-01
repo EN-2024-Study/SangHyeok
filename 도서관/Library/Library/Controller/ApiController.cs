@@ -13,7 +13,7 @@ namespace Library.Controller
 {
     public class ApiController
     {
-        private readonly string clientId, clientPassword;
+        string[] ids;
         private Account accountController;
         private MenuSelector menuSelector;
         private InputManager inputManager;
@@ -23,8 +23,7 @@ namespace Library.Controller
 
         public ApiController(MenuSelector menuSelector, Book bookController, Account accountController) 
         {
-            this.clientId = "YZUNzAPoiLUk2je0tW_2";
-            this.clientPassword = "JDoqusR1uP";
+            this.ids = EnvironmentSetUp.GetId((int)Enums.EnvironmentType.Naver);
             this.accountController = accountController;
             this.menuSelector = menuSelector;
             this.bookController = bookController;
@@ -68,8 +67,8 @@ namespace Library.Controller
         {
             string url = "https://openapi.naver.com/v1/search/book?query=" + query;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Headers.Add("X-Naver-Client-Id", clientId);
-            request.Headers.Add("X-Naver-Client-Secret", clientPassword);
+            request.Headers.Add("X-Naver-Client-Id", ids[(int)Enums.NaverType.Id]);
+            request.Headers.Add("X-Naver-Client-Secret", ids[(int)Enums.NaverType.Password]);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string status = response.StatusCode.ToString();
 

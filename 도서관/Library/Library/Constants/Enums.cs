@@ -174,5 +174,20 @@ namespace Library.Constants
             Db,
             Naver
         }
+
+        public enum DbType
+        {
+            Server,
+            Port,
+            Name,
+            Id,
+            Password
+        }
+
+        public enum NaverType
+        {
+            Id,
+            Password
+        }
     }
 }

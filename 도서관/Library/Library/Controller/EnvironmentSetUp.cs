@@ -13,12 +13,13 @@ namespace Library.Controller
         //private static EnvironmentSetUp instance;
         private static readonly string PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "환경변수.txt");
 
-        public static string[] GetDbAddress(int type)
+        public static string[] GetId(int type)
         {
-            string[] reader = File.ReadAllLines(PATH, Encoding.UTF8);
+            StreamReader reader = new StreamReader(PATH, Encoding.UTF8);
             string[] results = null;
             string title = null;
             bool isRead = false;
+            int index = 0;
 
             switch (type)
             {
@@ -32,16 +33,23 @@ namespace Library.Controller
                     break;
             }
 
-            foreach(string item in reader)
+            string line = reader.ReadLine();
+            while (line != null)
             {
-                if (item.Equals(title))
+                if (title.Equals(line))
+                {
                     isRead = true;
+                    line = reader.ReadLine();
+                    continue;
+                }
 
                 if (isRead)
-                {
-                    results = item.Split(' ');
+                    results[index++] = line;
+
+                if (index == results.Length)
                     break;
-                }
+
+                line = reader.ReadLine();
             }
 
             return results;

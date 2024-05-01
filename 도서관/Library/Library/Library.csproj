@@ -42,6 +42,7 @@
     <Compile Include="Constants\QueryStrings.cs" />
     <Compile Include="Constants\RegularStrings.cs" />
     <Compile Include="Controller\ApiController.cs" />
+    <Compile Include="Controller\EnvironmentSetUp.cs" />
     <Compile Include="Controller\ScreenController\Book.cs" />
     <Compile Include="Controller\LogManager.cs" />
     <Compile Include="Controller\ScreenController\Menu.cs" />

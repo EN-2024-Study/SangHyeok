@@ -1,50 +1,48 @@
+import org.json.simple.parser.ParseException;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.util.List;
 
 public class MainPanel extends JPanel {
 
     private JFrame frame;
-    private String inputString;
+    private ImageDao imageDao;
+    private JTextField textField;
 
     public MainPanel(JFrame frame) {
         this.frame = frame;
-        this.inputString = "";
+        this.textField = new JTextField(15);
     }
 
     public JPanel getSearchPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
-        panel.add(getTextField());
+        panel.add(textField);
         panel.add(getSearchButton());
         panel.add(getHistoryButton());
         return panel;
     }
 
-    public JPanel getSearchedPanel() {
+    private JPanel getSearchedPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
-        panel.add(getTextField());
+        panel.add(textField);
         panel.add(getSearchButton());
         panel.add(getGoBackButton());
         return panel;
     }
 
-    private JTextField getTextField() {
-        JTextField textField = new JTextField(15);
-        textField.addActionListener(e -> {
-            inputString = textField.getText();
-        });
-        return textField;
-    }
-
     private JButton getSearchButton() {
         JButton searchButton = new JButton(Constants.BUTTON_SEARCH);
         searchButton.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.add(getSearchedPanel());
-            frame.revalidate();
-            frame.repaint();
+            try {
+                actionListenerForSearchButton();
+            } catch (IOException | ParseException ex) {
+                throw new RuntimeException(ex);
+            }
         });
         return searchButton;
     }
@@ -67,7 +65,19 @@ public class MainPanel extends JPanel {
         return goBackButton;
     }
 
-    public String getInputString() {
-        return inputString;
+    private void actionListenerForSearchButton() throws IOException, ParseException {
+        imageDao = new ImageDao(textField.getText());
+        List<JLabel> labels = imageDao.getImageLabels();
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        for(JLabel label : labels)
+            panel.add(label);
+
+        frame.getContentPane().removeAll();
+        frame.add(getSearchedPanel(), BorderLayout.NORTH);
+        frame.add(panel, BorderLayout.CENTER);
+        frame.revalidate();
+        frame.repaint();
+
     }
 }

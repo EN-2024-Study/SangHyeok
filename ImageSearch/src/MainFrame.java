@@ -14,14 +14,15 @@ public class MainFrame extends JFrame {
         setTitle(Constants.TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setLayout(new FlowLayout());
+        setLayout(new BorderLayout());
         add(mainPanel.getSearchPanel());
+
         setSize(600, 600);
         setVisible(true);
     }
 
     public static void main(String[] args) throws IOException, ParseException {
-//        new MainFrame();
-            ApiConnector connector = new ApiConnector("설현");
+        new MainFrame();
+
     }
 }

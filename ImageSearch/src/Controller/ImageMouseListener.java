@@ -1,3 +1,6 @@
+package Controller;
+
+import View.Components;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;

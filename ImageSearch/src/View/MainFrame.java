@@ -1,19 +1,19 @@
-import org.json.simple.parser.ParseException;
+package View;
 
+import Controller.*;
+import Utility.*;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainFrame extends JFrame {
 
     private Components components;
 
-    public MainFrame() {
+    public MainFrame() throws SQLException {
         this.components = new Components(this);
-
         setTitle(Constants.TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         setLayout(new BorderLayout());
         add(components.getSearchPanel());
 
@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws SQLException {
         new MainFrame();
     }
 }

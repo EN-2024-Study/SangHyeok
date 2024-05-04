@@ -1,4 +1,4 @@
-package Dao;
+package Model;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

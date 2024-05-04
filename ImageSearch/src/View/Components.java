@@ -1,26 +1,31 @@
-import Dao.ImageDao;
-import org.json.simple.parser.ParseException;
+package View;
 
+import Controller.*;
+import Utility.*;
+import org.json.simple.parser.ParseException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Components {
 
     private final JTextField textField;
-    private final SearchedActionListener searchedActionListener;
+    private final PanelActionListener panelActionListener;
     private final ImageMouseListener imageMouseListener;
     private Integer totalImageCount;
     private List<JLabel> imageLabels;
+    private List<JLabel> historyLabels;
 
-    public Components(JFrame frame) {
-        this.searchedActionListener = new SearchedActionListener(frame, this);
+    public Components(JFrame frame) throws SQLException {
+        this.panelActionListener = new PanelActionListener(frame, this);
         this.imageMouseListener = new ImageMouseListener(frame, this);
         this.textField = new JTextField(15);
         this.totalImageCount = 10;
         this.imageLabels = new ArrayList<>();
+        this.historyLabels = new ArrayList<>();
     }
 
     public JPanel getSearchPanel() {
@@ -44,31 +49,31 @@ public class Components {
         return panel;
     }
 
+    public JPanel getHistoryPanel() {
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        JPanel historyPanel = new JPanel();
+        historyPanel.setLayout(new GridLayout(10, 1));
+
+        mainPanel.add(getGoBackButton(), BorderLayout.EAST);
+        mainPanel.add(getDeleteButton(), BorderLayout.WEST);
+        for(JLabel label : historyLabels) {
+            historyPanel.add(label);
+        }
+        mainPanel.add(historyPanel, BorderLayout.CENTER);
+        return mainPanel;
+    }
+
     public JButton getSearchButton() {
         JButton searchButton = new JButton(Constants.BUTTON_SEARCH);
         searchButton.addActionListener(e -> {
             try {
-                searchedActionListener.actionListenerForSearchButton();
-            } catch (IOException | ParseException ex) {
+                panelActionListener.actionForSearchButton();
+            } catch (IOException | ParseException | SQLException ex) {
                 throw new RuntimeException(ex);
             }
         });
         return searchButton;
-    }
-
-    public JButton getHistoryButton() {
-        JButton historyButton = new JButton(Constants.BUTTON_HISTORY);
-//        historyButton.addActionListener(e -> {
-//        });
-        return historyButton;
-    }
-
-    public JButton getGoBackButton() {
-        JButton goBackButton = new JButton(Constants.BUTTTON_GOBACK);
-        goBackButton.addActionListener(e -> {
-            searchedActionListener.actionListenerForGoBackButton();
-        });
-        return goBackButton;
     }
 
     public JComboBox getComboBox() {
@@ -77,7 +82,7 @@ public class Components {
         searchComboBox.addActionListener(e -> {
             try {
                 totalImageCount = (Integer) searchComboBox.getSelectedItem();
-                searchedActionListener.actionListenerForComboBox();
+                panelActionListener.actionListenerForComboBox();
             } catch (IOException | ParseException ex) {
                 throw new RuntimeException(ex);
             }
@@ -104,6 +109,38 @@ public class Components {
         };
     }
 
+    public JButton getHistoryButton() {
+        JButton historyButton = new JButton(Constants.BUTTON_HISTORY);
+        historyButton.addActionListener(e -> {
+            try {
+                panelActionListener.actionForHistoryButton();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        return historyButton;
+    }
+
+    public JButton getGoBackButton() {
+        JButton button = new JButton(Constants.BUTTTON_GOBACK);
+        button.addActionListener(e -> {
+            panelActionListener.actionForGoBackButton();
+        });
+        return button;
+    }
+
+    public JButton getDeleteButton() {
+        JButton button = new JButton(Constants.BUTTTON_DELETE);
+        button.addActionListener(e -> {
+            try {
+                panelActionListener.actionForDeleteButton();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        return button;
+    }
+
     public JTextField getTextField() {
         return textField;
     }
@@ -116,5 +153,9 @@ public class Components {
         this.imageLabels = imageLabels;
         for (JLabel label : imageLabels)
             label.addMouseListener(imageMouseListener);
+    }
+
+    public void setHistoryLabels(List<JLabel> historyLabel) {
+        this.historyLabels = historyLabel;
     }
 }

@@ -45,7 +45,6 @@ public class Components {
         panel.add(textField);
         panel.add(getSearchButton());
         panel.add(getComboBox());
-        panel.add(getGoBackButton());
         return panel;
     }
 
@@ -55,13 +54,21 @@ public class Components {
         JPanel historyPanel = new JPanel();
         historyPanel.setLayout(new GridLayout(10, 1));
 
-        mainPanel.add(getGoBackButton(), BorderLayout.EAST);
+        mainPanel.add(getGoSearchPanelButton(), BorderLayout.EAST);
         mainPanel.add(getDeleteButton(), BorderLayout.WEST);
         for(JLabel label : historyLabels) {
             historyPanel.add(label);
         }
         mainPanel.add(historyPanel, BorderLayout.CENTER);
         return mainPanel;
+    }
+
+    public JButton getGoSearchPanelButton() {
+        JButton button = new JButton(Constants.BUTTTON_GOBACK);
+        button.addActionListener(e -> {
+            panelActionListener.actionGoSearchPanel();
+        });
+        return button;
     }
 
     public JButton getSearchButton() {
@@ -119,14 +126,6 @@ public class Components {
             }
         });
         return historyButton;
-    }
-
-    public JButton getGoBackButton() {
-        JButton button = new JButton(Constants.BUTTTON_GOBACK);
-        button.addActionListener(e -> {
-            panelActionListener.actionForGoBackButton();
-        });
-        return button;
     }
 
     public JButton getDeleteButton() {

@@ -19,17 +19,17 @@ public class SearchedStringDao {
             if (item.equals(s))
                 delete(s);
 
-        String query = String.format("INSERT INTO searched VALUES ('%s')", s);
+        String query = String.format(Constants.INSERT_QUERY, s);
         dbConnector.setQuery(query);
     }
 
     public void delete(String s) throws SQLException {
-        String query = String.format("DELETE FROM searched WHERE searched_string = '%s'", s);
+        String query = String.format(Constants.DELETE_QUERY, s);
         dbConnector.setQuery(query);
     }
 
     public String select(String s) throws SQLException {
-        String query = String.format("SELECT * FROM searched WHERE searched_string = '%s'", s);
+        String query = String.format(Constants.SELECT_WHERE_QUERY, s);
         return dbConnector.selectQuery(query);
     }
 

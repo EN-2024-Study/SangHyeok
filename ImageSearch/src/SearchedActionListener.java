@@ -11,49 +11,42 @@ public class SearchedActionListener {
 
     private JFrame frame;
     private Components components;
-    private List<JLabel> imageLabels;
 
     public SearchedActionListener(JFrame frame, Components component) {
         this.frame = frame;
         this.components = component;
-        this.imageLabels = new ArrayList<>();
     }
 
     public void actionListenerForSearchButton() throws IOException, ParseException {
         ImageDao imageDao = new ImageDao(components.getTextField().getText());
-        imageLabels = imageDao.getImageLabels();
-        setImagePanel();
+        components.setImageLabels(imageDao.getImageLabels());
+        setSearchedPanel();
     }
 
     public void actionListenerForGoBackButton() {
         frame.getContentPane().removeAll();
         frame.add(components.getSearchPanel());
-        resetFrame();
+        restartFrame();
     }
 
-    public void actionListenerForComboBox(Object item) throws IOException, ParseException {
-        components.setTotalImageCount((Integer) item);
-        setImagePanel();
+    public void actionListenerForComboBox() throws IOException, ParseException {
+        setSearchedPanel();
     }
 
     public void actionListenerForHistoryButton() {
         frame.getContentPane().removeAll();
-
+        frame.add(components.getSearchPanel(), BorderLayout.NORTH);
+        restartFrame();
     }
 
-    private void setImagePanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        for(int i = 0; i < components.getTotalImageCount(); i++)
-            panel.add(imageLabels.get(i));
-
+    private void setSearchedPanel() throws IOException, ParseException {
         frame.getContentPane().removeAll();
-        frame.add(panel, BorderLayout.CENTER);
         frame.add(components.getSearchedPanel(), BorderLayout.NORTH);
-        resetFrame();
+        frame.add(components.getImagePanel(), BorderLayout.CENTER);
+        restartFrame();
     }
 
-    private void resetFrame() {
+    private void restartFrame() {
         frame.revalidate();
         frame.repaint();
     }

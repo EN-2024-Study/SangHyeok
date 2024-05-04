@@ -11,11 +11,13 @@ public class Components {
 
     private final JTextField textField;
     private final SearchedActionListener searchedActionListener;
+    private final ImageMouseListener imageMouseListener;
     private Integer totalImageCount;
     private List<JLabel> imageLabels;
 
     public Components(JFrame frame) {
         this.searchedActionListener = new SearchedActionListener(frame, this);
+        this.imageMouseListener = new ImageMouseListener(frame, this);
         this.textField = new JTextField(15);
         this.totalImageCount = 10;
         this.imageLabels = new ArrayList<>();
@@ -74,7 +76,7 @@ public class Components {
 
         searchComboBox.addActionListener(e -> {
             try {
-                totalImageCount = (Integer)searchComboBox.getSelectedItem();
+                totalImageCount = (Integer) searchComboBox.getSelectedItem();
                 searchedActionListener.actionListenerForComboBox();
             } catch (IOException | ParseException ex) {
                 throw new RuntimeException(ex);
@@ -87,9 +89,19 @@ public class Components {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        for(int i = 0; i < getTotalImageCount(); i++)
+        for (int i = 0; i < getTotalImageCount(); i++)
             panel.add(imageLabels.get(i));
+
         return panel;
+    }
+
+    public JDialog getBigImagePanel(ImageIcon image) {
+        return new JDialog() {
+            public void paint(Graphics g) {
+                super.paint(g);
+                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);
+            }
+        };
     }
 
     public JTextField getTextField() {
@@ -100,11 +112,9 @@ public class Components {
         return totalImageCount;
     }
 
-    public void setTotalImageCount(int totalImageCount) {
-        this.totalImageCount = totalImageCount;
-    }
-
     public void setImageLabels(List<JLabel> imageLabels) {
         this.imageLabels = imageLabels;
+        for (JLabel label : imageLabels)
+            label.addMouseListener(imageMouseListener);
     }
 }

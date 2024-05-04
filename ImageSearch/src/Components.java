@@ -8,19 +8,42 @@ import java.util.List;
 
 public class Components {
 
-    private JFrame frame;
-    private MainPanel mainPanel;
+    private final JTextField textField;
+    private final ButtonActionListener buttonActionListener;
+    private Integer totalImageCount;
 
-    public Components(JFrame frame, MainPanel mainPanel) {
-        this.frame = frame;
-        this.mainPanel = mainPanel;
+    public Components(JFrame frame) {
+        this.buttonActionListener = new ButtonActionListener(frame, this);
+        this.textField = new JTextField(15);
+        this.totalImageCount = 10;
+    }
+
+    public JPanel getSearchPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        panel.add(textField);
+        panel.add(getSearchButton());
+        panel.add(getHistoryButton());
+        return panel;
+    }
+
+    public JPanel getSearchedPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        panel.add(textField);
+        panel.add(getSearchButton());
+        panel.add(getComboBox());
+        panel.add(getGoBackButton());
+        return panel;
     }
 
     public JButton getSearchButton() {
         JButton searchButton = new JButton(Constants.BUTTON_SEARCH);
         searchButton.addActionListener(e -> {
             try {
-                actionListenerForSearchButton();
+                buttonActionListener.actionListenerForSearchButton();
             } catch (IOException | ParseException ex) {
                 throw new RuntimeException(ex);
             }
@@ -38,26 +61,34 @@ public class Components {
     public JButton getGoBackButton() {
         JButton goBackButton = new JButton(Constants.BUTTTON_GOBACK);
         goBackButton.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.add(mainPanel.getSearchPanel());
-            frame.revalidate();
-            frame.repaint();
+            buttonActionListener.actionListenerForGoBackButton();
         });
         return goBackButton;
     }
 
-    public void actionListenerForSearchButton() throws IOException, ParseException {
-        ImageDao imageDao = new ImageDao(mainPanel.getTextField().getText());
-        List<JLabel> labels = imageDao.getImageLabels();
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        for(JLabel label : labels)
-            panel.add(label);
+    public JComboBox getComboBox() {
+        JComboBox searchComboBox = new JComboBox(Constants.COMBO_BOX);
 
-        frame.getContentPane().removeAll();
-        frame.add(mainPanel.getSearchedPanel(), BorderLayout.NORTH);
-        frame.add(panel, BorderLayout.CENTER);
-        frame.revalidate();
-        frame.repaint();
+        searchComboBox.addActionListener(e -> {
+            try {
+                buttonActionListener.actionListenerForComboBox(searchComboBox.getSelectedItem());
+            } catch (IOException | ParseException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        return searchComboBox;
+    }
+
+    public JTextField getTextField() {
+        return textField;
+    }
+
+    public int getTotalImageCount() {
+        return totalImageCount;
+    }
+
+    public void setTotalImageCount(int totalImageCount) {
+        this.totalImageCount = totalImageCount;
     }
 }

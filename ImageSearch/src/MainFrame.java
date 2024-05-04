@@ -6,16 +6,16 @@ import java.io.IOException;
 
 public class MainFrame extends JFrame {
 
-    private MainPanel mainPanel;
+    private Components components;
 
     public MainFrame() {
-        this.mainPanel = new MainPanel(this);
+        this.components = new Components(this);
 
         setTitle(Constants.TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setLayout(new BorderLayout());
-        add(mainPanel.getSearchPanel());
+        add(components.getSearchPanel());
 
         setSize(600, 600);
         setVisible(true);

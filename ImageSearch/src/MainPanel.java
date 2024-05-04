@@ -4,9 +4,11 @@ import java.awt.*;
 public class MainPanel extends JPanel {
 
     private JFrame frame;
+    private String inputString;
 
     public MainPanel(JFrame frame) {
         this.frame = frame;
+        this.inputString = "";
     }
 
     public JPanel getSearchPanel() {
@@ -30,8 +32,9 @@ public class MainPanel extends JPanel {
 
     private JTextField getTextField() {
         JTextField textField = new JTextField(15);
-//        textField.addActionListener(e -> {
-//        });
+        textField.addActionListener(e -> {
+            inputString = textField.getText();
+        });
         return textField;
     }
 
@@ -64,4 +67,7 @@ public class MainPanel extends JPanel {
         return goBackButton;
     }
 
+    public String getInputString() {
+        return inputString;
+    }
 }

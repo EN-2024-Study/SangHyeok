@@ -1,3 +1,4 @@
+import Dao.ImageDao;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
@@ -7,12 +8,11 @@ import java.util.List;
 
 public class MainPanel extends JPanel {
 
-    private JFrame frame;
-    private ImageDao imageDao;
+    private Components components;
     private JTextField textField;
 
     public MainPanel(JFrame frame) {
-        this.frame = frame;
+        components = new Components(frame, this);
         this.textField = new JTextField(15);
     }
 
@@ -21,63 +21,21 @@ public class MainPanel extends JPanel {
         panel.setLayout(new FlowLayout());
 
         panel.add(textField);
-        panel.add(getSearchButton());
-        panel.add(getHistoryButton());
+        panel.add(components.getSearchButton());
+        panel.add(components.getHistoryButton());
         return panel;
     }
 
-    private JPanel getSearchedPanel() {
+    public JPanel getSearchedPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         panel.add(textField);
-        panel.add(getSearchButton());
-        panel.add(getGoBackButton());
+        panel.add(components.getSearchButton());
+        panel.add(components.getGoBackButton());
         return panel;
     }
 
-    private JButton getSearchButton() {
-        JButton searchButton = new JButton(Constants.BUTTON_SEARCH);
-        searchButton.addActionListener(e -> {
-            try {
-                actionListenerForSearchButton();
-            } catch (IOException | ParseException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        return searchButton;
-    }
-
-    private JButton getHistoryButton() {
-        JButton historyButton = new JButton(Constants.BUTTON_HISTORY);
-//        historyButton.addActionListener(e -> {
-//        });
-        return historyButton;
-    }
-
-    private JButton getGoBackButton() {
-        JButton goBackButton = new JButton(Constants.BUTTTON_GOBACK);
-        goBackButton.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.add(getSearchPanel());
-            frame.revalidate();
-            frame.repaint();
-        });
-        return goBackButton;
-    }
-
-    private void actionListenerForSearchButton() throws IOException, ParseException {
-        imageDao = new ImageDao(textField.getText());
-        List<JLabel> labels = imageDao.getImageLabels();
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        for(JLabel label : labels)
-            panel.add(label);
-
-        frame.getContentPane().removeAll();
-        frame.add(getSearchedPanel(), BorderLayout.NORTH);
-        frame.add(panel, BorderLayout.CENTER);
-        frame.revalidate();
-        frame.repaint();
-
+    public JTextField getTextField() {
+        return textField;
     }
 }

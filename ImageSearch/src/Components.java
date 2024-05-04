@@ -1,19 +1,17 @@
-import Dao.ImageDao;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.List;
 
 public class Components {
 
     private final JTextField textField;
-    private final ButtonActionListener buttonActionListener;
+    private final SearchedActionListener searchedActionListener;
     private Integer totalImageCount;
 
     public Components(JFrame frame) {
-        this.buttonActionListener = new ButtonActionListener(frame, this);
+        this.searchedActionListener = new SearchedActionListener(frame, this);
         this.textField = new JTextField(15);
         this.totalImageCount = 10;
     }
@@ -43,7 +41,7 @@ public class Components {
         JButton searchButton = new JButton(Constants.BUTTON_SEARCH);
         searchButton.addActionListener(e -> {
             try {
-                buttonActionListener.actionListenerForSearchButton();
+                searchedActionListener.actionListenerForSearchButton();
             } catch (IOException | ParseException ex) {
                 throw new RuntimeException(ex);
             }
@@ -61,7 +59,7 @@ public class Components {
     public JButton getGoBackButton() {
         JButton goBackButton = new JButton(Constants.BUTTTON_GOBACK);
         goBackButton.addActionListener(e -> {
-            buttonActionListener.actionListenerForGoBackButton();
+            searchedActionListener.actionListenerForGoBackButton();
         });
         return goBackButton;
     }
@@ -71,7 +69,7 @@ public class Components {
 
         searchComboBox.addActionListener(e -> {
             try {
-                buttonActionListener.actionListenerForComboBox(searchComboBox.getSelectedItem());
+                searchedActionListener.actionListenerForComboBox(searchComboBox.getSelectedItem());
             } catch (IOException | ParseException ex) {
                 throw new RuntimeException(ex);
             }

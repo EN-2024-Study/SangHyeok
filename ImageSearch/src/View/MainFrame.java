@@ -16,7 +16,9 @@ public class MainFrame extends JFrame {
         setTitle(Constants.TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        add(components.getSearchPanel());
+
+        JPanel searchPanel = components.getSearchPanel();
+        add(searchPanel, BorderLayout.CENTER);
         setSize(600, 600);
         setVisible(true);
     }

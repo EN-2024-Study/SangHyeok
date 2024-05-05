@@ -47,7 +47,8 @@ public class Components {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        mainPanel.add(panel, BorderLayout.CENTER);
+
+        mainPanel.add(panel);
         return mainPanel;
     }
 

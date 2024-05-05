@@ -15,6 +15,7 @@ public class Components {
     private final JTextField textField;
     private final PanelActionListener panelActionListener;
     private final ImageMouseListener imageMouseListener;
+    private final HistoryMouseListener historyMouseListener;
     private Integer totalImageCount;
     private List<JLabel> imageLabels;
     private List<JLabel> historyLabels;
@@ -22,6 +23,7 @@ public class Components {
     public Components(JFrame frame) throws SQLException {
         this.panelActionListener = new PanelActionListener(frame, this);
         this.imageMouseListener = new ImageMouseListener(frame, this);
+        this.historyMouseListener = new HistoryMouseListener(frame, this);
         this.textField = new JTextField(15);
         this.totalImageCount = 10;
         this.imageLabels = new ArrayList<>();
@@ -148,6 +150,10 @@ public class Components {
         return totalImageCount;
     }
 
+    public List<JLabel> getHistoryLabels() {
+        return historyLabels;
+    }
+
     public void setImageLabels(List<JLabel> imageLabels) {
         this.imageLabels = imageLabels;
         for (JLabel label : imageLabels)
@@ -156,5 +162,7 @@ public class Components {
 
     public void setHistoryLabels(List<JLabel> historyLabel) {
         this.historyLabels = historyLabel;
+        for(JLabel label : historyLabel)
+            label.addMouseListener(historyMouseListener);
     }
 }

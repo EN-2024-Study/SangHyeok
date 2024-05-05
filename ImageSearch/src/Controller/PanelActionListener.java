@@ -49,7 +49,6 @@ public class PanelActionListener {
         components.setHistoryLabels(historyLabels);
 
         JPanel panel = components.getHistoryPanel();
-//        panel.add(components.getGoSearchPanelButton());
 
         frame.getContentPane().removeAll();
         frame.add(panel);

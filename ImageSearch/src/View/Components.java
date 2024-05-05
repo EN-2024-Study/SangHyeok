@@ -39,7 +39,7 @@ public class Components {
         panel.add(getHistoryButton());
 
         JPanel mainPanel = new JPanel() {
-            ImageIcon imageIcon = new ImageIcon("src/Model/ImageRepository/MainLogo.jpg");
+            ImageIcon imageIcon = new ImageIcon("src/Model/ImageRepository/Naver_Logo.jpg");
             final Image image = imageIcon.getImage();
             @Override
             public void paintComponent(Graphics g) {

@@ -6,6 +6,7 @@ import org.json.simple.parser.ParseException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +34,22 @@ public class Components {
     public JPanel getSearchPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
-
         panel.add(textField);
         panel.add(getSearchButton());
         panel.add(getHistoryButton());
-        return panel;
+
+        JPanel mainPanel = new JPanel() {
+            ImageIcon imageIcon = new ImageIcon("src/Model/ImageRepository/MainLogo.jpg");
+            final Image image = imageIcon.getImage();
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        mainPanel.add(panel);
+
+        return mainPanel;
     }
 
     public JPanel getSearchedPanel() {
@@ -68,7 +80,11 @@ public class Components {
     public JButton getGoSearchPanelButton() {
         JButton button = new JButton(Constants.BUTTTON_GOBACK);
         button.addActionListener(e -> {
-            panelActionListener.actionGoSearchPanel();
+            try {
+                panelActionListener.actionGoSearchPanel();
+            } catch (MalformedURLException ex) {
+                throw new RuntimeException(ex);
+            }
         });
         return button;
     }
@@ -111,6 +127,7 @@ public class Components {
 
     public JDialog getBigImagePanel(ImageIcon image) {
         return new JDialog() {
+            @Override
             public void paint(Graphics g) {
                 super.paint(g);
                 g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), null);

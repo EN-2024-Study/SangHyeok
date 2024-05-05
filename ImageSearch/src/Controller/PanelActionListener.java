@@ -6,6 +6,7 @@ import Utility.Constants;
 import View.Components;
 import org.json.simple.parser.ParseException;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class PanelActionListener {
         reStartFrame();
     }
 
-    public void actionGoSearchPanel() {
+    public void actionGoSearchPanel() throws MalformedURLException {
         frame.getContentPane().removeAll();
         frame.add(components.getSearchPanel());
         reStartFrame();

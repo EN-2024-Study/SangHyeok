@@ -47,8 +47,7 @@ public class Components {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        mainPanel.add(panel);
-
+        mainPanel.add(panel, BorderLayout.CENTER);
         return mainPanel;
     }
 
@@ -90,7 +89,19 @@ public class Components {
     }
 
     public JButton getSearchButton() {
-        JButton searchButton = new JButton(Constants.BUTTON_SEARCH);
+        ImageIcon imageIcon = new ImageIcon("src/Model/ImageRepository/Searcher.jpg");
+
+        JButton searchButton = new JButton() {
+
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+
+        searchButton.setPreferredSize(new Dimension(50, 20));
+
         searchButton.addActionListener(e -> {
             try {
                 panelActionListener.actionForSearchButton();

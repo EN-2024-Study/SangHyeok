@@ -8,10 +8,11 @@ import java.util.List;
 
 public class DBConnector {
     private static DBConnector instance;
+    private Connection connection;
     private Statement statement;
 
     private DBConnector() throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/image_search", "root", "tkdgur0908");
+        this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/image_search", "root", "tkdgur0908");
         this.statement = connection.createStatement();
     }
 

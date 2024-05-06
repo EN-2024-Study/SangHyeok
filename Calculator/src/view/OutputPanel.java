@@ -1,5 +1,7 @@
 package view;
 
+import Observer.ButtonActionListener;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -26,6 +28,8 @@ public class OutputPanel extends JPanel {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
+        
+        historyButton.addActionListener(new ButtonActionListener());
     }
 
     private void setLabelByFont() {

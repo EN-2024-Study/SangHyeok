@@ -1,6 +1,6 @@
 package view;
 
-import Observer.ButtonActionListener;
+import observer.*;
 import utility.Constants;
 
 import javax.swing.*;
@@ -14,24 +14,25 @@ public class KeypadPanel extends JPanel {
     public KeypadPanel() {
         setLayout(new GridLayout(5, 4));
         initButton();
-        setPanelByButton();
+
+        for(JButton button : buttons)
+            add(button);
     }
 
     private void initButton() {
+        Font font = new Font(Font.DIALOG, Font.BOLD, 36);
         buttonActionListener = new ButtonActionListener();
         buttons = new JButton[20];
 
-        Font font = new Font(Font.DIALOG, Font.BOLD, 36);
-
-        for(int i = 0; i < 20; i++) {
+        for(int i = 0; i < 19; i++) {
             buttons[i] = new JButton(Constants.BUTTON_STRINGS[i]);
             buttons[i].setFont(font);
             buttons[i].addActionListener(buttonActionListener);
         }
-    }
 
-    private void setPanelByButton() {
-        for(JButton button : buttons)
-            add(button);
+        buttons[19] = new JButton(Constants.BUTTON_STRINGS[19]);
+        buttons[19].setForeground(Color.BLUE);
+        buttons[19].setFont(font);
+        buttons[19].addActionListener(buttonActionListener);
     }
 }

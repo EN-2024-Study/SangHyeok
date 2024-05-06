@@ -1,6 +1,7 @@
 package view;
 
-import Observer.ButtonActionListener;
+import observer.ButtonActionListener;
+import observer.ButtonMouserListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,19 +18,23 @@ public class OutputPanel extends JPanel {
     }
 
     private void init() {
+        setBackground(Color.WHITE);
+
         numberLabel = new JLabel("test");
         explainLabel = new JLabel("표준");
         historyButton = new JButton() {
-            ImageIcon imageIcon = new ImageIcon("src/view/HistoryLogo.jpg");
+            ImageIcon imageIcon = new ImageIcon("src/view/imageFile/HistoryLogo.jpg");
             final Image image = imageIcon.getImage();
+
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        
+
         historyButton.addActionListener(new ButtonActionListener());
+        historyButton.addMouseListener(new ButtonMouserListener());
     }
 
     private void setLabelByFont() {
@@ -42,6 +47,7 @@ public class OutputPanel extends JPanel {
     private void setPanelByLayout() {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
+
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 1;

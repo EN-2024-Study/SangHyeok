@@ -31,6 +31,7 @@ public class KeypadPanel extends JPanel {
         }
 
         buttons[19] = new JButton(Constants.BUTTON_STRINGS[19]);
+        buttons[19].setOpaque(true);
         buttons[19].setForeground(Color.BLUE);
         buttons[19].setFont(font);
         buttons[19].addActionListener(buttonActionListener);

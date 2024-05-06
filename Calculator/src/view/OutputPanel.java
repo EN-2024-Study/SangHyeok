@@ -8,23 +8,32 @@ import java.awt.*;
 
 public class OutputPanel extends JPanel {
 
-    private JLabel numberLabel, explainLabel;
+    private JLabel numberLabel, buttonLabel, blankLabel;
     private JButton historyButton;
 
     public OutputPanel() {
         init();
-        setLabelByFont();
         setPanelByLayout();
     }
 
     private void init() {
         setBackground(Color.WHITE);
 
-        numberLabel = new JLabel("test");
-        explainLabel = new JLabel("표준");
+        Font font = new Font(Font.DIALOG, Font.BOLD, 30);
+        numberLabel = new JLabel("0");
+        blankLabel = new JLabel(" ");
+        numberLabel.setHorizontalAlignment(JLabel.RIGHT);
+        numberLabel.setFont(font);
+
+        initButtonLabel();
+    }
+
+    private void initButtonLabel() {
+        buttonLabel = new JLabel();
+        buttonLabel.setLayout(new GridLayout(1, 1));
+
         historyButton = new JButton() {
-            ImageIcon imageIcon = new ImageIcon("src/view/imageFile/HistoryLogo.jpg");
-            final Image image = imageIcon.getImage();
+            final Image image = new ImageIcon("src/view/imageFile/HistoryLogo.jpg").getImage();
 
             @Override
             public void paintComponent(Graphics g) {
@@ -33,35 +42,27 @@ public class OutputPanel extends JPanel {
             }
         };
 
-        historyButton.addActionListener(new ButtonActionListener());
         historyButton.addMouseListener(new ButtonMouserListener());
-    }
-
-    private void setLabelByFont() {
-        Font font = new Font(Font.DIALOG, Font.BOLD, 30);
-        numberLabel.setFont(font);
-        explainLabel.setFont(font);
-        historyButton.setFont(font);
+        buttonLabel.add(historyButton);
     }
 
     private void setPanelByLayout() {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 1;
-        c.weightx = 0.5;
-        c.weighty = 0.1;
-        c.fill = GridBagConstraints.BOTH;
-        add(explainLabel, c);
+        add(blankLabel, c);
 
         c.gridx = 1;
-        c.weightx = 0.05;
-        add(historyButton, c);
-
         c.gridy = 1;
-        c.weighty = 0.6;
         add(numberLabel, c);
+
+        c.gridx = 1;
+        c.gridy = 0;
+        add(buttonLabel, c);
     }
 }

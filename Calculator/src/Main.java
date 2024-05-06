@@ -14,26 +14,28 @@ import java.awt.*;
 public class Main extends JFrame {
 
     private PanelVo panelVo;
+    private JPanel mainPanel;
 
     public Main() {
         init();
-        setFrameByLayout();
+        setMainPanelByLayout();
+
+        addComponentListener(new FrameComponentListener(this, mainPanel, panelVo));
+        add(mainPanel);
+        setSize(450, 600);
         setVisible(true);
     }
 
     private void init() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridBagLayout());
         panelVo = new PanelVo(new TopPanel(), new SmallNumberPanel(), new BigNumberPanel(), new KeypadPanel(), new HistoryPanel());
-        initFrame();
-    }
-
-    private void initFrame() {
         setTitle(Constants.TITLE);
+        setLayout(new GridLayout(1, 2));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        addComponentListener(new FrameComponentListener(this, panelVo));
     }
 
-    private void setFrameByLayout() {
-        setLayout(new GridBagLayout());
+    private void setMainPanelByLayout() {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
@@ -41,21 +43,19 @@ public class Main extends JFrame {
 
         c.gridy = 0;
         c.weighty = 0.2;
-        add(panelVo.getTopPanel(), c);
+        mainPanel.add(panelVo.getTopPanel(), c);
 
         c.gridy = 1;
         c.weighty = 0.3;
-        add(panelVo.getSmallNumberPanel(), c);
+        mainPanel.add(panelVo.getSmallNumberPanel(), c);
 
         c.gridy = 2;
         c.weighty = 0.4;
-        add(panelVo.getBigNumberPanel(), c);
+        mainPanel.add(panelVo.getBigNumberPanel(), c);
 
         c.gridy = 3;
         c.weighty = 0.7;
-        add(panelVo.getKeypadPanel(), c);
-
-        setSize(450, 600);
+        mainPanel.add(panelVo.getKeypadPanel(), c);
     }
 
     public static void main(String[] args) {

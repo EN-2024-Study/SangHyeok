@@ -5,11 +5,11 @@ import observer.ButtonActionListener;
 import javax.swing.*;
 import java.awt.*;
 
-public class TopPanel extends JPanel {
+public class HistoryButtonPanel extends JPanel {
 
     private JButton historyButton;
 
-    public TopPanel() {
+    public HistoryButtonPanel() {
         historyButton = new JButton() {
             final Image IMAGE = new ImageIcon("src/view/imageFile/HistoryLogo.jpg").getImage();
 

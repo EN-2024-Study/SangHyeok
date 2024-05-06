@@ -2,11 +2,10 @@ import Model.PanelVo;
 import observer.FrameComponentListener;
 import utility.Constants;
 import view.LogPanel.HistoryPanel;
-import view.LogPanel.ResultScrollPane;
 import view.MainPanel.SmallNumberPanel;
 import view.MainPanel.KeypadPanel;
 import view.MainPanel.BigNumberPanel;
-import view.MainPanel.TopPanel;
+import view.MainPanel.HistoryButtonPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +28,7 @@ public class Main extends JFrame {
     private void init() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
-        panelVo = new PanelVo(new TopPanel(), new SmallNumberPanel(), new BigNumberPanel(), new KeypadPanel(), new HistoryPanel());
+        panelVo = new PanelVo(new HistoryButtonPanel(), new SmallNumberPanel(), new BigNumberPanel(), new KeypadPanel(), new HistoryPanel());
         setTitle(Constants.TITLE);
         setLayout(new GridLayout(1, 2));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,7 +42,7 @@ public class Main extends JFrame {
 
         c.gridy = 0;
         c.weighty = 0.2;
-        mainPanel.add(panelVo.getTopPanel(), c);
+        mainPanel.add(panelVo.getHistoryButtonPanel(), c);
 
         c.gridy = 1;
         c.weighty = 0.3;

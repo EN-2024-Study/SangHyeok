@@ -4,18 +4,18 @@ import javax.swing.*;
 
 public class PanelVo {
 
-    private JPanel topPanel, smallNumberPanel, bigNumberPanel, keypadPanel, historyPanel;
+    private JPanel historyButtonPanel, smallNumberPanel, bigNumberPanel, keypadPanel, historyPanel;
 
-    public PanelVo (JPanel topPanel, JPanel smallNumberPanel, JPanel bigNumberPanel, JPanel keypadPanel, JPanel historyPanel) {
-        this.topPanel = topPanel;
+    public PanelVo (JPanel historyButtonPanel, JPanel smallNumberPanel, JPanel bigNumberPanel, JPanel keypadPanel, JPanel historyPanel) {
+        this.historyButtonPanel = historyButtonPanel;
         this.smallNumberPanel = smallNumberPanel;
         this.bigNumberPanel = bigNumberPanel;
         this.keypadPanel = keypadPanel;
         this.historyPanel = historyPanel;
     }
 
-    public JPanel getTopPanel() {
-        return topPanel;
+    public JPanel getHistoryButtonPanel() {
+        return historyButtonPanel;
     }
     public JPanel getSmallNumberPanel() {
         return smallNumberPanel;

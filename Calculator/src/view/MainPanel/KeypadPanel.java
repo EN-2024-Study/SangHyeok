@@ -1,4 +1,4 @@
-package view;
+package view.MainPanel;
 
 import observer.*;
 import utility.Constants;
@@ -39,6 +39,5 @@ public class KeypadPanel extends JPanel {
         buttons[19].setForeground(Color.white);
         buttons[19].setFont(font);
         buttons[19].addActionListener(buttonActionListener);
-
     }
 }

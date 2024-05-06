@@ -9,11 +9,11 @@ import java.util.List;
 
 public class ButtonActionListener implements ActionListener {
 
-    private List<Integer> operators;
+    private String operator;
     private List<String> operands;
 
     public ButtonActionListener() {
-        this.operators = new ArrayList<>();
+        this.operator = "";
         this.operands = new ArrayList<>();
     }
 
@@ -25,14 +25,20 @@ public class ButtonActionListener implements ActionListener {
             if (item.equals(e.getActionCommand())) {
                 isKeypad = true;
                 if (item.chars().allMatch(Character::isDigit))
-                    operators.add(Integer.parseInt(item));
-                else
                     operands.add(item);
+                else {
+                    operator = item;
+                    compute();
+                }
             }
         }
 
         if (!isKeypad) {
 
         }
+    }
+
+    private void compute() {
+
     }
 }

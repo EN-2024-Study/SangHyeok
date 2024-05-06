@@ -1,13 +1,13 @@
-package view;
+package view.MainPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class smallNumberPanel extends JPanel {
+public class SmallNumberPanel extends JPanel {
 
     private JLabel numberLabel;
 
-    public smallNumberPanel() {
+    public SmallNumberPanel() {
         numberLabel = new JLabel("test");
         numberLabel.setHorizontalAlignment(JLabel.RIGHT);
 

@@ -25,7 +25,7 @@ public class ImageMouseListener extends MouseAdapter {
             if (e.getClickCount() == 2) {
                 try {
                     setLabelSize(e);
-                } catch (IOException | ParseException ex) {
+                } catch (IOException | ParseException ex) { // 좀 더 상세하게 예외처리하기
                     throw new RuntimeException(ex);
                 }
             }

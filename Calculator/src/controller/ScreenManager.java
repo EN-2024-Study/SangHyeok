@@ -12,6 +12,8 @@ import view.mainPanel.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ScreenManager {
 
@@ -83,17 +85,35 @@ public class ScreenManager {
         panelVo.getKeypadPanel().setVisible(false);
         frame.setLayout(new GridLayout(2, 1));
         frame.add(panelVo.getDownHistoryPanel());
-        setTopPanelBackground();
+        setTopPanelBackground(new Color(171, 171, 171));
+        addTopPanelMouseListener();
 
-        frame.revalidate();
-        frame.repaint();
+        restartFrame();
     }
 
-    private void setTopPanelBackground() {
-        Color color = new Color(171, 171, 171);
+    private void setTopPanelBackground(Color color) {
         panelVo.getHistoryButtonPanel().setBackground(color);
         panelVo.getSmallNumberPanel().setBackground(color);
         panelVo.getBigNumberPanel().setBackground(color);
+    }
+
+    private void addTopPanelMouseListener() {
+        MouseAdapter mouseAdapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (e.getComponent().equals(panelVo.getHistoryButtonPanel()) ||
+                            e.getComponent().equals(panelVo.getSmallNumberPanel()) ||
+                                    e.getComponent().equals(panelVo.getBigNumberPanel())) {
+                        hideRightHistoryPanel();
+                    }
+                }
+            }
+        };
+
+        panelVo.getHistoryButtonPanel().addMouseListener(mouseAdapter);
+        panelVo.getSmallNumberPanel().addMouseListener(mouseAdapter);
+        panelVo.getBigNumberPanel().addMouseListener(mouseAdapter);
     }
 
     public void showRightHistoryPanel() {
@@ -101,17 +121,27 @@ public class ScreenManager {
 
         frame.setLayout(new GridLayout(1, 2));
         frame.add(panelVo.getRightHistoryPanel());
-
-        frame.revalidate();
-        frame.repaint();
+        restartFrame();
     }
 
     public void hideRightHistoryPanel() {
         panelVo.getHistoryButtonPanel().showButton();
         frame.remove(panelVo.getRightHistoryPanel());
+        frame.remove(panelVo.getDownHistoryPanel());
+
+        frame.setLayout(new GridLayout(1, 1));
+        panelVo.getKeypadPanel().setVisible(true);
+
+        setTopPanelBackground(Color.WHITE);
+        restartFrame();
     }
 
     public void preventFrameFromSize(ComponentEvent e) {
         frame.setSize(new Dimension(400, e.getComponent().getSize().height));
+    }
+
+    private void restartFrame() {
+        frame.revalidate();
+        frame.repaint();
     }
 }

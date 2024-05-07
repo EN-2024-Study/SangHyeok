@@ -79,8 +79,8 @@ public class ScreenManager {
 
     }
 
-    public void showDonwHistoryPanel() {
-        System.out.println("showDonwHistoryPanel");
+    public void showDownHistoryPanel() {
+        panelVo.getKeypadPanel().setVisible(false);
         frame.setLayout(new GridLayout(2, 1));
         frame.add(panelVo.getDownHistoryPanel());
 

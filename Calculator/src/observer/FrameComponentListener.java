@@ -1,11 +1,7 @@
 package observer;
 
 import controller.ScreenManager;
-import model.PanelVo;
-import view.mainPanel.Main;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 public class FrameComponentListener extends ComponentAdapter {

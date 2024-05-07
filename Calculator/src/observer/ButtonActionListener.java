@@ -19,22 +19,27 @@ public class ButtonActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch(e.getActionCommand()) {
-            case Constants.TRASH_BUTTON:
-                screenManager.deleteHistory();
-                break;
-            case Constants.HISTORY_BUTTON:
-                screenManager.showDonwHistoryPanel();
-                break;
-        }
+        boolean isKeypad = false;
 
         for(String item : Constants.BUTTON_STRINGS) {
             if (item.equals(e.getActionCommand())) {
+                isKeypad = true;
                 if (item.chars().allMatch(Character::isDigit))
                     calculationRepository.addNumber(Integer.parseInt(item));
                 else {
                     calculationRepository.setOperator(item);
                 }
+            }
+        }
+
+        if (!isKeypad) {
+            switch(e.getActionCommand()) {
+                case Constants.TRASH_BUTTON:
+                    screenManager.deleteHistory();
+                    break;
+                case Constants.HISTORY_BUTTON:
+                    screenManager.showDownHistoryPanel();
+                    break;
             }
         }
     }

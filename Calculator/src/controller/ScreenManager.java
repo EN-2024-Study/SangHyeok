@@ -4,6 +4,7 @@ import model.ListenerVo;
 import model.PanelVo;
 import observer.ButtonActionListener;
 import observer.FrameComponentListener;
+import observer.PanelMouseListener;
 import utility.Constants;
 import view.historyPanel.DownHistoryPanel;
 import view.historyPanel.RightHistoryPanel;
@@ -86,7 +87,6 @@ public class ScreenManager {
         frame.setLayout(new GridLayout(2, 1));
         frame.add(panelVo.getDownHistoryPanel());
         setTopPanelBackground(new Color(171, 171, 171));
-        addTopPanelMouseListener();
 
         restartFrame();
     }
@@ -97,19 +97,8 @@ public class ScreenManager {
         panelVo.getBigNumberPanel().setBackground(color);
     }
 
-    private void addTopPanelMouseListener() {
-        MouseAdapter mouseAdapter = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    if (e.getComponent().equals(panelVo.getHistoryButtonPanel()) ||
-                            e.getComponent().equals(panelVo.getSmallNumberPanel()) ||
-                                    e.getComponent().equals(panelVo.getBigNumberPanel())) {
-                        hideRightHistoryPanel();
-                    }
-                }
-            }
-        };
+    public void addTopPanelMouseListener() {
+        MouseAdapter mouseAdapter = new PanelMouseListener(panelVo, this);
 
         panelVo.getHistoryButtonPanel().addMouseListener(mouseAdapter);
         panelVo.getSmallNumberPanel().addMouseListener(mouseAdapter);

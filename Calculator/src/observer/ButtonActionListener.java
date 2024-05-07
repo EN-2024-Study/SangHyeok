@@ -33,8 +33,10 @@ public class ButtonActionListener implements ActionListener {
         }
 
         if (!isKeypad) {
-            if (e.getSource().getClass().toString().contains("HistoryButtonPanel"))
+            if (e.getSource().getClass().toString().contains(Constants.HISTORY_BUTTON)) {
                 screenManager.showDownHistoryPanel();
+                screenManager.addTopPanelMouseListener();
+            }
             else if (e.getSource().getClass().toString().contains(Constants.TRASH_BUTTON))
                 screenManager.deleteHistory();
         }

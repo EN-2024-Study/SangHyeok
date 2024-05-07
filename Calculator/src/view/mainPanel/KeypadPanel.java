@@ -20,7 +20,7 @@ public class KeypadPanel extends JPanel {
     }
 
     private void initButton() {
-        final Font FONT = new Font(Font.DIALOG, Font.BOLD, 36);
+        final Font FONT = new Font(Font.DIALOG, Font.BOLD, 33);
         buttonActionListener = new ButtonActionListener();
         buttons = new JButton[20];
 

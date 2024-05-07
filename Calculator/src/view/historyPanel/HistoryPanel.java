@@ -21,6 +21,9 @@ public class HistoryPanel extends JPanel {
         historyButtonList = new ArrayList<>();
         for(int i = 0; i < 5; i++) {
             JButton button = new JButton("test" + (i + 1));
+            button.setBackground(Color.WHITE);
+            button.setOpaque(true);
+            button.setBorderPainted(false);
             historyButtonList.add(button);
         }
     }
@@ -32,5 +35,6 @@ public class HistoryPanel extends JPanel {
             panel.add(button);
         }
         scrollPane = new JScrollPane(panel);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     }
 }

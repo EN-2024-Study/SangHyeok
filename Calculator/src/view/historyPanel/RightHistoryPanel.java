@@ -19,8 +19,10 @@ public class RightHistoryPanel extends JPanel {
         explainPanel.setLayout(new GridLayout(1, 1));
         explainPanel.setBackground(Color.WHITE);
         explainPanel.setPreferredSize(new Dimension(getWidth(), getHeight() + 80));
+
         JLabel label = new JLabel("기록");
-        label.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
+        label.setFont(new Font(Font.DIALOG, Font.PLAIN, Constants.FONT_SIZE));
+
         explainPanel.add(label);
         return explainPanel;
     }
@@ -33,6 +35,7 @@ public class RightHistoryPanel extends JPanel {
         JButton deleteButton = new JButton(Constants.TRASH);
         deleteButton.addActionListener(new ButtonActionListener());
         deleteButton.setBorderPainted(false);
+
         deletePanel.add(deleteButton);
         return deletePanel;
     }

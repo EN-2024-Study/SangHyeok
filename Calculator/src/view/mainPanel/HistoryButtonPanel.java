@@ -10,7 +10,13 @@ public class HistoryButtonPanel extends JPanel {
     private JButton historyButton;
 
     public HistoryButtonPanel() {
-        historyButton = new JButton() {
+        initHistoryButton();
+        setBackground(Color.WHITE);
+        setPanelByLayout();
+    }
+
+    private void initHistoryButton() {
+        historyButton = new JButton("history") {
             final Image IMAGE = new ImageIcon("src/view/imageFile/HistoryLogo.jpg").getImage();
 
             @Override
@@ -20,11 +26,12 @@ public class HistoryButtonPanel extends JPanel {
             }
         };
 
-        historyButton.setBackground(Color.RED);
         historyButton.addActionListener(new ButtonActionListener());
-        setBackground(Color.WHITE);
-        setLayout(new FlowLayout(FlowLayout.RIGHT));
-        add(historyButton);
+    }
+
+    private void setPanelByLayout() {
+        setLayout(new BorderLayout());
+        add(historyButton, BorderLayout.EAST);
     }
 
     public void hideButton() {

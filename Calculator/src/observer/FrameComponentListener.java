@@ -1,6 +1,8 @@
 package observer;
 
+import controller.ScreenManager;
 import model.PanelVo;
+import view.mainPanel.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,32 +10,21 @@ import java.awt.event.*;
 
 public class FrameComponentListener extends ComponentAdapter {
 
-    private Frame frame;
-    private PanelVo panelVo;
+    private ScreenManager screenManager;
 
-    public FrameComponentListener(Frame frame, PanelVo panelVo) {
-        this.frame = frame;
-        this.panelVo = panelVo;
+    public FrameComponentListener(ScreenManager screenManager) {
+        this.screenManager = screenManager;
     }
 
     @Override
     public void componentResized(ComponentEvent e) {
         if (e.getComponent().getSize().width > 900)
-            setFrameByHistoryPanel();
+            screenManager.showRightHistoryPanel();
 
-        if (e.getComponent().getSize().width < 700) {
-            panelVo.getHistoryButtonPanel().showButton();
-            frame.remove(panelVo.getRightHistoryPanel());
-        }
+        if (e.getComponent().getSize().width < 700)
+            screenManager.hideRightHistoryPanel();
 
         if (e.getComponent().getSize().width < 400)
-            frame.setSize(new Dimension(400, e.getComponent().getSize().height));
-    }
-
-    private void setFrameByHistoryPanel() {
-        panelVo.getHistoryButtonPanel().hideButton();
-        frame.add(panelVo.getRightHistoryPanel());
-        frame.revalidate();
-        frame.repaint();
+            screenManager.preventFrameFromSize(e);
     }
 }

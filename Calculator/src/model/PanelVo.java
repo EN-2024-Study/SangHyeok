@@ -10,7 +10,9 @@ public class PanelVo {
 
     private JPanel historyButtonPanel, smallNumberPanel, bigNumberPanel, keypadPanel, rightHistoryPanel, downHistoryPanel;
 
-    public PanelVo (JPanel historyButtonPanel, JPanel smallNumberPanel, JPanel bigNumberPanel, JPanel keypadPanel, JPanel rightHistoryPanel, JPanel downHistoryPanel) {
+    public PanelVo (HistoryButtonPanel historyButtonPanel, SmallNumberPanel smallNumberPanel,
+                    BigNumberPanel bigNumberPanel, KeypadPanel keypadPanel,
+                    RightHistoryPanel rightHistoryPanel, DownHistoryPanel downHistoryPanel) {
         this.historyButtonPanel = historyButtonPanel;
         this.smallNumberPanel = smallNumberPanel;
         this.bigNumberPanel = bigNumberPanel;

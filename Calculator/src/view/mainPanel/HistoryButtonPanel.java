@@ -1,5 +1,7 @@
 package view.mainPanel;
 
+import model.ListenerVo;
+import observer.ButtonActionListener;
 import utility.Constants;
 
 import javax.swing.*;
@@ -9,13 +11,12 @@ public class HistoryButtonPanel extends JPanel {
 
     private JButton historyButton;
 
-    public HistoryButtonPanel() {
-        initHistoryButton();
-        setBackground(Color.WHITE);
-        setPanelByLayout();
+    public HistoryButtonPanel(ButtonActionListener buttonActionListener) {
+        initHistoryButton(buttonActionListener);
+        initPanel();
     }
 
-    private void initHistoryButton() {
+    private void initHistoryButton(ButtonActionListener buttonActionListener) {
         historyButton = new JButton(Constants.HISTORY_BUTTON) {
             final Image IMAGE = new ImageIcon("src/view/imageFile/HistoryLogo.jpg").getImage();
 
@@ -25,10 +26,11 @@ public class HistoryButtonPanel extends JPanel {
                 g.drawImage(IMAGE, 0, 0, getWidth(), getHeight(), this);
             }
         };
-
+        historyButton.addActionListener(buttonActionListener);
     }
 
-    private void setPanelByLayout() {
+    private void initPanel() {
+        setBackground(Color.WHITE);
         setLayout(new BorderLayout());
         add(historyButton, BorderLayout.EAST);
     }

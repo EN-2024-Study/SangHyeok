@@ -1,6 +1,8 @@
 package view.historyPanel;
 
+import observer.ButtonActionListener;
 import utility.Constants;
+import view.mainPanel.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,18 +11,18 @@ public class RightHistoryPanel extends JPanel {
 
     private HistoryScrollPanel historyScrollPanel;
 
-    public RightHistoryPanel() {
-        historyScrollPanel = new HistoryScrollPanel();
+    public RightHistoryPanel(ButtonActionListener buttonActionListener) {
+        this.historyScrollPanel = new HistoryScrollPanel();
         setBackground(Color.WHITE);
-        initPanelByLayout();
+        initPanelByLayout(buttonActionListener);
     }
 
-    private void initPanelByLayout() {
+    private void initPanelByLayout(ButtonActionListener buttonActionListener) {
         setLayout(new BorderLayout());
 
         add(getExplainPanel(), BorderLayout.NORTH);
         add(historyScrollPanel, BorderLayout.CENTER);
-        add(historyScrollPanel.getDeletePanel(), BorderLayout.SOUTH);
+        add(historyScrollPanel.getDeletePanel(buttonActionListener), BorderLayout.SOUTH);
     }
 
     private JPanel getExplainPanel() {

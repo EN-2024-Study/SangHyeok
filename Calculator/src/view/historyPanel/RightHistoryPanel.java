@@ -1,17 +1,26 @@
 package view.historyPanel;
 
-import observer.ButtonActionListener;
 import utility.Constants;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class RightHistoryPanel extends JPanel {
 
+    private HistoryScrollPanel historyScrollPanel;
+
     public RightHistoryPanel() {
+        historyScrollPanel = new HistoryScrollPanel();
         setBackground(Color.WHITE);
-        initPanelByLayout(getExplainPanel(), getDeletePanel());
+        initPanelByLayout();
+    }
+
+    private void initPanelByLayout() {
+        setLayout(new BorderLayout());
+
+        add(getExplainPanel(), BorderLayout.NORTH);
+        add(historyScrollPanel, BorderLayout.CENTER);
+        add(historyScrollPanel.getDeletePanel(), BorderLayout.SOUTH);
     }
 
     private JPanel getExplainPanel() {
@@ -25,25 +34,5 @@ public class RightHistoryPanel extends JPanel {
 
         explainPanel.add(label);
         return explainPanel;
-    }
-
-    private JPanel getDeletePanel() {
-        JPanel deletePanel = new JPanel();
-        deletePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        deletePanel.setBackground(Color.WHITE);
-
-        JButton deleteButton = new JButton(Constants.TRASH);
-        deleteButton.addActionListener(new ButtonActionListener());
-        deleteButton.setBorderPainted(false);
-
-        deletePanel.add(deleteButton);
-        return deletePanel;
-    }
-
-    private void initPanelByLayout(JPanel explainPanel, JPanel deletePanel) {
-        setLayout(new BorderLayout());
-        add(explainPanel, BorderLayout.NORTH);
-        add(new HistoryPanel(), BorderLayout.CENTER);
-        add(deletePanel, BorderLayout.SOUTH);
     }
 }

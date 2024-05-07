@@ -19,7 +19,7 @@ public class FrameComponentListener extends ComponentAdapter {
     @Override
     public void componentResized(ComponentEvent e) {
         if (e.getComponent().getSize().width > 900)
-            setFrameByHistorypanel();
+            setFrameByHistoryPanel();
 
         if (e.getComponent().getSize().width < 700) {
             panelVo.getHistoryButtonPanel().showButton();
@@ -30,9 +30,8 @@ public class FrameComponentListener extends ComponentAdapter {
             frame.setSize(new Dimension(400, e.getComponent().getSize().height));
     }
 
-    private void setFrameByHistorypanel() {
+    private void setFrameByHistoryPanel() {
         panelVo.getHistoryButtonPanel().hideButton();
-
         frame.add(panelVo.getRightHistoryPanel());
         frame.revalidate();
         frame.repaint();

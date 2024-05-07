@@ -9,7 +9,7 @@ import java.awt.*;
 public class KeypadPanel extends JPanel {
 
     private JButton[] buttons;
-    private ButtonActionListener buttonActionListener;
+    private KeypadActionListener keypadActionListener;
 
     public KeypadPanel() {
         setLayout(new GridLayout(5, 4));
@@ -21,13 +21,13 @@ public class KeypadPanel extends JPanel {
 
     private void initButton() {
         final Font FONT = new Font(Font.DIALOG, Font.BOLD, 33);
-        buttonActionListener = new ButtonActionListener();
+        keypadActionListener = new KeypadActionListener();
         buttons = new JButton[20];
 
         for(int i = 0; i < 19; i++) {
             buttons[i] = new JButton(Constants.BUTTON_STRINGS[i]);
             buttons[i].setFont(FONT);
-            buttons[i].addActionListener(buttonActionListener);
+            buttons[i].addActionListener(keypadActionListener);
         }
 
         buttons[19] = new JButton(Constants.BUTTON_STRINGS[19]);
@@ -37,6 +37,6 @@ public class KeypadPanel extends JPanel {
 
         buttons[19].setForeground(Color.white);
         buttons[19].setFont(FONT);
-        buttons[19].addActionListener(buttonActionListener);
+        buttons[19].addActionListener(keypadActionListener);
     }
 }

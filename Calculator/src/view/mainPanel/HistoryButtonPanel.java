@@ -1,6 +1,6 @@
 package view.mainPanel;
 
-import observer.ButtonActionListener;
+import utility.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,7 @@ public class HistoryButtonPanel extends JPanel {
     }
 
     private void initHistoryButton() {
-        historyButton = new JButton("history") {
+        historyButton = new JButton(Constants.HISTORY_BUTTON) {
             final Image IMAGE = new ImageIcon("src/view/imageFile/HistoryLogo.jpg").getImage();
 
             @Override
@@ -26,7 +26,6 @@ public class HistoryButtonPanel extends JPanel {
             }
         };
 
-        historyButton.addActionListener(new ButtonActionListener());
     }
 
     private void setPanelByLayout() {

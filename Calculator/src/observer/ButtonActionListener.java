@@ -33,14 +33,10 @@ public class ButtonActionListener implements ActionListener {
         }
 
         if (!isKeypad) {
-            switch(e.getActionCommand()) {
-                case Constants.TRASH_BUTTON:
-                    screenManager.deleteHistory();
-                    break;
-                case Constants.HISTORY_BUTTON:
-                    screenManager.showDownHistoryPanel();
-                    break;
-            }
+            if (e.getSource().getClass().toString().contains("HistoryButtonPanel"))
+                screenManager.showDownHistoryPanel();
+            else if (e.getSource().getClass().toString().contains(Constants.TRASH_BUTTON))
+                screenManager.deleteHistory();
         }
     }
 }

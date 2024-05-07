@@ -83,9 +83,17 @@ public class ScreenManager {
         panelVo.getKeypadPanel().setVisible(false);
         frame.setLayout(new GridLayout(2, 1));
         frame.add(panelVo.getDownHistoryPanel());
+        setTopPanelBackground();
 
         frame.revalidate();
         frame.repaint();
+    }
+
+    private void setTopPanelBackground() {
+        Color color = new Color(171, 171, 171);
+        panelVo.getHistoryButtonPanel().setBackground(color);
+        panelVo.getSmallNumberPanel().setBackground(color);
+        panelVo.getBigNumberPanel().setBackground(color);
     }
 
     public void showRightHistoryPanel() {

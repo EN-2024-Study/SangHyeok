@@ -17,15 +17,18 @@ public class HistoryButtonPanel extends JPanel {
     }
 
     private void initHistoryButton(ButtonActionListener buttonActionListener) {
-        historyButton = new JButton(Constants.HISTORY_BUTTON) {
-            final Image IMAGE = new ImageIcon("src/view/imageFile/HistoryLogo.jpg").getImage();
+        historyButton = new JButton() {
+            Image image = new ImageIcon("src/view/imageFile/HistoryLogo.png").getImage();
 
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(IMAGE, 0, 0, getWidth(), getHeight(), this);
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
+
+        historyButton.setBorderPainted(false);
+        historyButton.setFocusPainted(false);
         historyButton.addActionListener(buttonActionListener);
     }
 

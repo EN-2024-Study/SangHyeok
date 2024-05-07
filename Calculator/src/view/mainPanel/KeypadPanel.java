@@ -30,7 +30,6 @@ public class KeypadPanel extends JPanel {
         }
 
         buttons[19] = new JButton(Constants.BUTTON_STRINGS[19]);
-
         buttons[19].setBackground(new Color(0, 103, 192));
         buttons[19].setOpaque(true);
         buttons[19].setBorderPainted(false);

@@ -1,20 +1,17 @@
 package observer;
 
+import model.CalculationRepository;
 import utility.Constants;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ButtonActionListener implements ActionListener {
 
-    private String operator;
-    private List<String> operands;
+    private CalculationRepository calculationRepository;
 
     public ButtonActionListener() {
-        this.operator = "";
-        this.operands = new ArrayList<>();
+        this.calculationRepository = new CalculationRepository();
     }
 
     @Override
@@ -25,9 +22,9 @@ public class ButtonActionListener implements ActionListener {
             if (item.equals(e.getActionCommand())) {
                 isKeypad = true;
                 if (item.chars().allMatch(Character::isDigit))
-                    operands.add(item);
+                    calculationRepository.addNumber(Integer.parseInt(item));
                 else {
-                    operator = item;
+                    calculationRepository.setOperator(item);
                     compute();
                 }
             }

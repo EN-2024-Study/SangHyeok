@@ -1,20 +1,20 @@
 package model;
 
-import view.historyPanel.EarlyHistoryPanel;
+import view.historyPanel.RightHistoryPanel;
 import view.mainPanel.*;
 
 import javax.swing.*;
 
 public class PanelVo {
 
-    private JPanel historyButtonPanel, smallNumberPanel, bigNumberPanel, keypadPanel, earlyHistoryPanel;
+    private JPanel historyButtonPanel, smallNumberPanel, bigNumberPanel, keypadPanel, rightHistoryPanel;
 
-    public PanelVo (JPanel historyButtonPanel, JPanel smallNumberPanel, JPanel bigNumberPanel, JPanel keypadPanel, JPanel earlyHistoryPanel) {
+    public PanelVo (JPanel historyButtonPanel, JPanel smallNumberPanel, JPanel bigNumberPanel, JPanel keypadPanel, JPanel rightHistoryPanel) {
         this.historyButtonPanel = historyButtonPanel;
         this.smallNumberPanel = smallNumberPanel;
         this.bigNumberPanel = bigNumberPanel;
         this.keypadPanel = keypadPanel;
-        this.earlyHistoryPanel = earlyHistoryPanel;
+        this.rightHistoryPanel = rightHistoryPanel;
     }
 
     public HistoryButtonPanel getHistoryButtonPanel() {
@@ -29,7 +29,7 @@ public class PanelVo {
     public KeypadPanel getKeypadPanel() {
         return (KeypadPanel) keypadPanel;
     }
-    public EarlyHistoryPanel getEarlyHistoryPanel() {
-        return (EarlyHistoryPanel) earlyHistoryPanel;
+    public RightHistoryPanel getRightHistoryPanel() {
+        return (RightHistoryPanel) rightHistoryPanel;
     }
 }

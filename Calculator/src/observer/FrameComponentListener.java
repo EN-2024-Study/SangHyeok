@@ -23,7 +23,7 @@ public class FrameComponentListener extends ComponentAdapter {
 
         if (e.getComponent().getSize().width < 700) {
             panelVo.getHistoryButtonPanel().showButton();
-            frame.remove(panelVo.getEarlyHistoryPanel());
+            frame.remove(panelVo.getRightHistoryPanel());
         }
 
         if (e.getComponent().getSize().width < 400)
@@ -33,7 +33,7 @@ public class FrameComponentListener extends ComponentAdapter {
     private void setFrameByHistorypanel() {
         panelVo.getHistoryButtonPanel().hideButton();
 
-        frame.add(panelVo.getEarlyHistoryPanel());
+        frame.add(panelVo.getRightHistoryPanel());
         frame.revalidate();
         frame.repaint();
     }

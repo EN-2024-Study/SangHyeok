@@ -3,11 +3,11 @@ package view.historyPanel;
 import javax.swing.*;
 import java.awt.*;
 
-public class EarlyHistoryPanel extends JPanel {
+public class RightHistoryPanel extends JPanel {
 
-    private JPanel explainPanel;
+    private JPanel explainPanel, historyPanel, deletePanel;
 
-    public EarlyHistoryPanel() {
+    public RightHistoryPanel() {
         setBackground(Color.WHITE);
         initExplainPanel();
         initPanelByLayout();

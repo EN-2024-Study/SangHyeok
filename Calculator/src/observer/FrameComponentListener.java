@@ -1,6 +1,6 @@
 package observer;
 
-import Model.PanelVo;
+import model.PanelVo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,30 +10,30 @@ public class FrameComponentListener extends ComponentAdapter {
 
     private Frame frame;
     private PanelVo panelVo;
-    private JPanel leftPanel;
 
-    public FrameComponentListener(Frame frame, JPanel leftPanel, PanelVo panelVo) {
+    public FrameComponentListener(Frame frame, PanelVo panelVo) {
         this.frame = frame;
         this.panelVo = panelVo;
-        this.leftPanel = leftPanel;
     }
 
     @Override
     public void componentResized(ComponentEvent e) {
         if (e.getComponent().getSize().width > 900)
-            setFrame();
+            setFrameByHistorypanel();
 
-        if (e.getComponent().getSize().width < 700)
-            frame.remove(panelVo.getHistoryPanel());
+        if (e.getComponent().getSize().width < 700) {
+            panelVo.getHistoryButtonPanel().showButton();
+            frame.remove(panelVo.getEarlyHistoryPanel());
+        }
 
         if (e.getComponent().getSize().width < 400)
             frame.setSize(new Dimension(400, e.getComponent().getSize().height));
     }
 
-    private void setFrame() {
-        frame.add(leftPanel);
-        frame.add(panelVo.getHistoryPanel());
+    private void setFrameByHistorypanel() {
+        panelVo.getHistoryButtonPanel().hideButton();
 
+        frame.add(panelVo.getEarlyHistoryPanel());
         frame.revalidate();
         frame.repaint();
     }

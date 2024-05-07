@@ -1,4 +1,4 @@
-package view.MainPanel;
+package view.mainPanel;
 
 import observer.ButtonActionListener;
 
@@ -25,5 +25,13 @@ public class HistoryButtonPanel extends JPanel {
         setBackground(Color.WHITE);
         setLayout(new FlowLayout(FlowLayout.RIGHT));
         add(historyButton);
+    }
+
+    public void hideButton() {
+        setVisible(false);
+    }
+
+    public void showButton() {
+        setVisible(true);
     }
 }

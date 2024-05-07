@@ -1,11 +1,11 @@
-import Model.PanelVo;
+import model.PanelVo;
 import observer.FrameComponentListener;
 import utility.Constants;
-import view.LogPanel.HistoryPanel;
-import view.MainPanel.SmallNumberPanel;
-import view.MainPanel.KeypadPanel;
-import view.MainPanel.BigNumberPanel;
-import view.MainPanel.HistoryButtonPanel;
+import view.historyPanel.EarlyHistoryPanel;
+import view.mainPanel.SmallNumberPanel;
+import view.mainPanel.KeypadPanel;
+import view.mainPanel.BigNumberPanel;
+import view.mainPanel.HistoryButtonPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,9 +18,8 @@ public class Main extends JFrame {
     public Main() {
         init();
         setMainPanelByLayout();
-
-        addComponentListener(new FrameComponentListener(this, mainPanel, panelVo));
         add(mainPanel);
+
         setSize(450, 600);
         setVisible(true);
     }
@@ -28,10 +27,11 @@ public class Main extends JFrame {
     private void init() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
-        panelVo = new PanelVo(new HistoryButtonPanel(), new SmallNumberPanel(), new BigNumberPanel(), new KeypadPanel(), new HistoryPanel());
+        panelVo = new PanelVo(new HistoryButtonPanel(), new SmallNumberPanel(), new BigNumberPanel(), new KeypadPanel(), new EarlyHistoryPanel());
         setTitle(Constants.TITLE);
         setLayout(new GridLayout(1, 2));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addComponentListener(new FrameComponentListener(this, panelVo));
     }
 
     private void setMainPanelByLayout() {

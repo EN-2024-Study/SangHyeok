@@ -20,12 +20,13 @@ public class KeypadPanel extends JPanel {
     }
 
     private void initButton() {
+        final Font FONT = new Font(Font.DIALOG, Font.BOLD, 36);
         buttonActionListener = new ButtonActionListener();
         buttons = new JButton[20];
 
         for(int i = 0; i < 19; i++) {
             buttons[i] = new JButton(Constants.BUTTON_STRINGS[i]);
-            buttons[i].setFont(Constants.FONT);
+            buttons[i].setFont(FONT);
             buttons[i].addActionListener(buttonActionListener);
         }
 
@@ -35,7 +36,7 @@ public class KeypadPanel extends JPanel {
         buttons[19].setBorderPainted(false);
 
         buttons[19].setForeground(Color.white);
-        buttons[19].setFont(Constants.FONT);
+        buttons[19].setFont(FONT);
         buttons[19].addActionListener(buttonActionListener);
     }
 }

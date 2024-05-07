@@ -1,35 +1,46 @@
 package view.historyPanel;
 
+import observer.ButtonActionListener;
+import utility.Constants;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class RightHistoryPanel extends JPanel {
 
-    private JPanel explainPanel, historyPanel, deletePanel;
-
     public RightHistoryPanel() {
         setBackground(Color.WHITE);
-        initExplainPanel();
-        initPanelByLayout();
+        initPanelByLayout(getExplainPanel(), getDeletePanel());
     }
 
-    private void initExplainPanel() {
-        explainPanel = new JPanel();
-        explainPanel.setLayout(new GridLayout(3, 1));
+    private JPanel getExplainPanel() {
+        JPanel explainPanel = new JPanel();
+        explainPanel.setLayout(new GridLayout(1, 1));
         explainPanel.setBackground(Color.WHITE);
-
-        JLabel label1 = new JLabel("기록");
-        JLabel label2 = new JLabel(" ");
-        JLabel label3 = new JLabel("아직 기록이 없음");
-
-        explainPanel.add(label1);
-        explainPanel.add(label2);
-        explainPanel.add(label3);
+        explainPanel.setPreferredSize(new Dimension(getWidth(), getHeight() + 80));
+        JLabel label = new JLabel("기록");
+        label.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
+        explainPanel.add(label);
+        return explainPanel;
     }
 
-    private void initPanelByLayout() {
-        setLayout(new GridLayout(10, 1));
-        add(explainPanel);
-//        add(resultScrollPanel);
+    private JPanel getDeletePanel() {
+        JPanel deletePanel = new JPanel();
+        deletePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        deletePanel.setBackground(Color.WHITE);
+
+        JButton deleteButton = new JButton(Constants.TRASH);
+        deleteButton.addActionListener(new ButtonActionListener());
+        deleteButton.setBorderPainted(false);
+        deletePanel.add(deleteButton);
+        return deletePanel;
+    }
+
+    private void initPanelByLayout(JPanel explainPanel, JPanel deletePanel) {
+        setLayout(new BorderLayout());
+        add(explainPanel, BorderLayout.NORTH);
+        add(new HistoryPanel(), BorderLayout.CENTER);
+        add(deletePanel, BorderLayout.SOUTH);
     }
 }

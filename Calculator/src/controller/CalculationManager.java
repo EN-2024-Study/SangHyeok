@@ -16,9 +16,9 @@ public class CalculationManager {
 
     public void addNumber(int number) {
         if (calculationRepository.isEmptyInputNumberList() && number != 0)
-            screenManager.setBigNumber(true, String.valueOf(number));
+            screenManager.setBigNumber(String.valueOf(number));
         else if (!calculationRepository.isEmptyInputNumberList())
-            screenManager.setBigNumber(false, String.valueOf(number));
+            screenManager.setBigNumber(String.valueOf(number));
         else if (number == 0)
             return;
         calculationRepository.addNumber(number);

@@ -2,6 +2,8 @@ package view.mainPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 public class BigNumberPanel extends JPanel {
 
@@ -19,28 +21,15 @@ public class BigNumberPanel extends JPanel {
         add(numberLabel);
     }
 
-    public void setFirstDigit(String number) {
-        numberLabel.setText(number);
-    }
-
     public void setNumber(String addNumber) {
-
-        if (numberLabel.getText().length() % 3 == 0)
-            setComma(addNumber);
-        else
-            numberLabel.setText(numberLabel.getText() + addNumber);
-    }
-
-    private void setComma(String addNumber) {
-        StringBuilder resultNumber = new StringBuilder();
-        for (int i = 0; i < numberLabel.getText().length(); i++) {
-            char c = numberLabel.getText().charAt(i);
-            resultNumber.append(c);
-            if (i % 3 == 0)
-                resultNumber.append(",");
+        if (numberLabel.getText().equals("0")) {
+            numberLabel.setText(addNumber);
+            return;
         }
-        resultNumber.append(addNumber);
 
-        numberLabel.setText(resultNumber.toString());
+        String labelString = (numberLabel.getText() + addNumber).replaceAll(",", "");
+        Long num = Long.parseLong(labelString);
+        DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
+        numberLabel.setText(decimalFormat.format(num));
     }
 }

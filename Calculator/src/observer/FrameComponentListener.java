@@ -18,7 +18,7 @@ public class FrameComponentListener extends ComponentAdapter {
             screenManager.showRightHistoryPanel();
 
         if (e.getComponent().getSize().width < 700)
-            screenManager.hideRightHistoryPanel();
+            screenManager.hideHistoryPanel();
 
         if (e.getComponent().getSize().width < 400)
             screenManager.preventFrameFromSize(e);

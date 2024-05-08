@@ -9,9 +9,9 @@ public class CalculationManager {
     private ScreenManager screenManager;
     private CalculationRepository calculationRepository;
 
-    public CalculationManager(ScreenManager screenManager, CalculationRepository calculationRepository) {
+    public CalculationManager(ScreenManager screenManager) {
         this.screenManager = screenManager;
-        this.calculationRepository = calculationRepository;
+        this.calculationRepository = new CalculationRepository();
     }
 
     public void addNumber(int number) {

@@ -10,15 +10,13 @@ import java.awt.*;
 public class ScreenManager {
 
     private Main frame;
-    private CalculationRepository calculationRepository;
     private CalculationManager calculationManager;
     private PanelVo panelVo;
     private ListenerVo listenerVo;
 
     public ScreenManager(Main frame) {
         this.frame = frame;
-        this.calculationRepository = new CalculationRepository();
-        this.calculationManager = new CalculationManager(this, calculationRepository);
+        this.calculationManager = new CalculationManager(this);
         this.listenerVo = new ListenerVo(new ComponentListener(this), new ButtonListener(this, calculationManager),
                 new KeypadListener(calculationManager), new PanelMouseListener(this));
         this.panelVo = new PanelVo(new HistoryButtonPanel(listenerVo.getButtonListener()), new SmallNumberPanel(), new BigNumberPanel(),

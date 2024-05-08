@@ -3,7 +3,6 @@ package view.mainPanel;
 import controller.ScreenManager;
 import model.ListenerVo;
 import model.PanelVo;
-import observer.FrameComponentListener;
 import utility.Constants;
 
 import javax.swing.*;
@@ -13,21 +12,23 @@ public class Main extends JFrame {
 
     public Main() {
         new ScreenManager(this);
-        setSize(450, 600);
-        setVisible(true);
     }
 
     public void initFrame(PanelVo panelVo, ListenerVo listenerVo) {
-        setTitle(Constants.TITLE);
-        setLayout(new GridLayout(1, 1));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         addKeyListener(listenerVo.getKeypadListener());
-        addComponentListener(listenerVo.getFrameComponentListener());
-        add(getMainPanel(panelVo));
-
+        addComponentListener(listenerVo.getComponentListener());
         setFocusable(true);
         requestFocus();
+
+        setLayout(new GridLayout(1, 1));
+        add(getMainPanel(panelVo));
+
+        setTitle("계산기");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(Constants.FRAME_MINI_SIZE);
+        setSize(Constants.FRAME_MINI_SIZE);
+        pack();
+        setVisible(true);
     }
 
     private JPanel getMainPanel(PanelVo panelVo) {

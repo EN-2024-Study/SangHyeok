@@ -13,11 +13,11 @@ public class RightHistoryPanel extends JPanel {
 
     public RightHistoryPanel(ButtonListener buttonListener) {
         this.historyScrollPanel = new HistoryScrollPanel();
-        setBackground(Color.WHITE);
-        initPanelByLayout(buttonListener);
+        initPanel(buttonListener);
     }
 
-    private void initPanelByLayout(ButtonListener buttonListener) {
+    private void initPanel(ButtonListener buttonListener) {
+        setBackground(Color.WHITE);
         setLayout(new BorderLayout());
 
         add(getExplainPanel(), BorderLayout.NORTH);
@@ -32,7 +32,7 @@ public class RightHistoryPanel extends JPanel {
         explainPanel.setPreferredSize(new Dimension(getWidth(), getHeight() + 80));
 
         JLabel label = new JLabel("기록");
-        label.setFont(new Font(Font.DIALOG, Font.PLAIN, Constants.FONT_SIZE));
+        label.setFont(new Font(Font.DIALOG, Font.PLAIN, 26));
 
         explainPanel.add(label);
         return explainPanel;

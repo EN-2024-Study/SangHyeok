@@ -2,27 +2,25 @@ package model;
 
 import observer.ButtonListener;
 import observer.KeypadListener;
-import observer.FrameComponentListener;
+import observer.ComponentListener;
 import observer.PanelMouseListener;
-
-import java.awt.event.ActionListener;
 
 public class ListenerVo {
 
     private KeypadListener keypadListener;
-    private FrameComponentListener frameComponentListener;
+    private ComponentListener componentListener;
     private ButtonListener buttonListener;
     private PanelMouseListener panelMouseListener;
 
-    public ListenerVo(FrameComponentListener frameComponentListener, ButtonListener buttonListener, KeypadListener keypadListener, PanelMouseListener panelMouseListener) {
-        this.frameComponentListener = frameComponentListener;
+    public ListenerVo(ComponentListener componentListener, ButtonListener buttonListener, KeypadListener keypadListener, PanelMouseListener panelMouseListener) {
+        this.componentListener = componentListener;
         this.buttonListener = buttonListener;
         this.keypadListener = keypadListener;
         this.panelMouseListener = panelMouseListener;
     }
 
-    public FrameComponentListener getFrameComponentListener() {
-        return frameComponentListener;
+    public ComponentListener getComponentListener() {
+        return componentListener;
     }
     public KeypadListener getKeypadListener() {
         return keypadListener;

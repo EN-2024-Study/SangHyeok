@@ -13,10 +13,10 @@ public class DownHistoryPanel extends JPanel {
     public DownHistoryPanel(ButtonListener buttonListener) {
         historyScrollPanel = new HistoryScrollPanel();
         setBackground(Color.WHITE);
-        initPanelByLayout(buttonListener);
+        initPanel(buttonListener);
     }
 
-    private void initPanelByLayout(ButtonListener buttonListener) {
+    private void initPanel(ButtonListener buttonListener) {
         setLayout(new BorderLayout());
         add(historyScrollPanel, BorderLayout.CENTER);
         add(historyScrollPanel.getDeletePanel(buttonListener), BorderLayout.SOUTH);

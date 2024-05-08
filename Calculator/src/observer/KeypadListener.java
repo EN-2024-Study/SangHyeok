@@ -33,7 +33,11 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     public void keyReleased(KeyEvent e) {
         if (48 <= e.getKeyCode() && e.getKeyCode() <= 57)
             calculationRepository.addNumber((int) e.getKeyChar() - 48);
+        else if (e.getKeyCode() == 8) { // delete key -> CE
 
+        } else if (e.getKeyCode() == 27) {  // esc key -> C
 
+        }
+        System.out.println("keyCode = " + e.getKeyCode());
     }
 }

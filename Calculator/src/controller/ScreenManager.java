@@ -5,15 +5,14 @@ import model.ListenerVo;
 import model.PanelVo;
 import observer.ButtonListener;
 import observer.KeypadListener;
-import observer.FrameComponentListener;
+import observer.ComponentListener;
 import observer.PanelMouseListener;
 import view.historyPanel.DownHistoryPanel;
 import view.historyPanel.RightHistoryPanel;
 import view.mainPanel.*;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
 
 public class ScreenManager {
 
@@ -25,10 +24,11 @@ public class ScreenManager {
     public ScreenManager(Main frame) {
         this.frame = frame;
         this.calculationRepository = new CalculationRepository();
-        this.listenerVo = new ListenerVo(new FrameComponentListener(this), new ButtonListener(this, calculationRepository),
+        this.listenerVo = new ListenerVo(new ComponentListener(this), new ButtonListener(this, calculationRepository),
                 new KeypadListener(this, calculationRepository), new PanelMouseListener(this));
         this.panelVo = new PanelVo(new HistoryButtonPanel(listenerVo.getButtonListener()), new SmallNumberPanel(), new BigNumberPanel(),
                 new KeypadPanel(listenerVo.getKeypadListener()), new RightHistoryPanel(listenerVo.getButtonListener()), new DownHistoryPanel(listenerVo.getButtonListener()));
+
         frame.initFrame(panelVo, listenerVo);
     }
 
@@ -38,6 +38,14 @@ public class ScreenManager {
         frame.add(panelVo.getDownHistoryPanel());
         setTopPanelBackground(new Color(171, 171, 171));
 
+        restartFrame();
+    }
+
+    public void showRightHistoryPanel() {
+        panelVo.getHistoryButtonPanel().hideButton();
+
+        frame.setLayout(new GridLayout(1, 2));
+        frame.add(panelVo.getRightHistoryPanel());
         restartFrame();
     }
 
@@ -59,12 +67,12 @@ public class ScreenManager {
         panelVo.getBigNumberPanel().removeMouseListener(listenerVo.getPanelMouseListener());
     }
 
-    public void showRightHistoryPanel() {
-        panelVo.getHistoryButtonPanel().hideButton();
+    public void addHistoryPanelComponentListener() {
+        panelVo.getRightHistoryPanel().addComponentListener(listenerVo.getComponentListener());
+    }
 
-        frame.setLayout(new GridLayout(1, 2));
-        frame.add(panelVo.getRightHistoryPanel());
-        restartFrame();
+    public void removeHistoryPanelComponentListener() {
+        panelVo.getRightHistoryPanel().removeComponentListener(listenerVo.getComponentListener());
     }
 
     public void hideHistoryPanel() {
@@ -77,10 +85,6 @@ public class ScreenManager {
 
         setTopPanelBackground(Color.WHITE);
         restartFrame();
-    }
-
-    public void preventFrameFromSize(ComponentEvent e) {
-        frame.setSize(new Dimension(400, e.getComponent().getSize().height));
     }
 
     private void restartFrame() {

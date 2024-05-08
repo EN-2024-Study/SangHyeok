@@ -1,31 +1,26 @@
 package observer;
 
 import controller.ScreenManager;
-import model.PanelVo;
-import view.mainPanel.Main;
+import utility.Constants;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class PanelMouseListener extends MouseAdapter {
 
-    private PanelVo panelVo;
     private ScreenManager screenManager;
 
-    public PanelMouseListener(PanelVo panelVo, ScreenManager screenManager) {
-        this.panelVo = panelVo;
+    public PanelMouseListener(ScreenManager screenManager) {
         this.screenManager = screenManager;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getComponent().equals(panelVo.getHistoryButtonPanel()) ||
-                e.getComponent().equals(panelVo.getSmallNumberPanel()) ||
-                e.getComponent().equals(panelVo.getBigNumberPanel())) {
+        if (e.getSource().getClass().toString().contains(Constants.HISTORY_BUTTON_PANEL) ||
+                e.getSource().getClass().toString().contains(Constants.SMALL_NUMBER_PANEL) ||
+                e.getSource().getClass().toString().contains(Constants.BIG_NUMBER_PANEL)) {
             screenManager.hideHistoryPanel();
-            panelVo.getHistoryButtonPanel().removeMouseListener(this);
-            panelVo.getSmallNumberPanel().removeMouseListener(this);
-            panelVo.getBigNumberPanel().removeMouseListener(this);
+            screenManager.removeTopPanelMouseListener();
         }
     }
 }

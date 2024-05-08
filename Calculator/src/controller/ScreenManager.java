@@ -25,7 +25,8 @@ public class ScreenManager {
     public ScreenManager(Main frame) {
         this.frame = frame;
         this.calculationRepository = new CalculationRepository();
-        this.listenerVo = new ListenerVo(new FrameComponentListener(this), new ButtonListener(this, calculationRepository), new KeypadListener(this, calculationRepository));
+        this.listenerVo = new ListenerVo(new FrameComponentListener(this), new ButtonListener(this, calculationRepository),
+                new KeypadListener(this, calculationRepository), new PanelMouseListener(this));
         this.panelVo = new PanelVo(new HistoryButtonPanel(listenerVo.getButtonListener()), new SmallNumberPanel(), new BigNumberPanel(),
                 new KeypadPanel(listenerVo.getKeypadListener()), new RightHistoryPanel(listenerVo.getButtonListener()), new DownHistoryPanel(listenerVo.getButtonListener()));
         frame.initFrame(panelVo, listenerVo.getFrameComponentListener());
@@ -47,11 +48,15 @@ public class ScreenManager {
     }
 
     public void addTopPanelMouseListener() {
-        MouseAdapter mouseAdapter = new PanelMouseListener(panelVo, this);
+        panelVo.getHistoryButtonPanel().addMouseListener(listenerVo.getPanelMouseListener());
+        panelVo.getSmallNumberPanel().addMouseListener(listenerVo.getPanelMouseListener());
+        panelVo.getBigNumberPanel().addMouseListener(listenerVo.getPanelMouseListener());
+    }
 
-        panelVo.getHistoryButtonPanel().addMouseListener(mouseAdapter);
-        panelVo.getSmallNumberPanel().addMouseListener(mouseAdapter);
-        panelVo.getBigNumberPanel().addMouseListener(mouseAdapter);
+    public void removeTopPanelMouseListener() {
+        panelVo.getHistoryButtonPanel().removeMouseListener(listenerVo.getPanelMouseListener());
+        panelVo.getSmallNumberPanel().removeMouseListener(listenerVo.getPanelMouseListener());
+        panelVo.getBigNumberPanel().removeMouseListener(listenerVo.getPanelMouseListener());
     }
 
     public void showRightHistoryPanel() {

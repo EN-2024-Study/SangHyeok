@@ -10,10 +10,8 @@ import java.awt.*;
 
 public class Main extends JFrame {
 
-    private ScreenManager screenManager;
-
     public Main() {
-        this.screenManager = new ScreenManager(this);
+        new ScreenManager(this);
         setSize(450, 600);
         setVisible(true);
     }

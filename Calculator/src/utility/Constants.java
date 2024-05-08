@@ -18,7 +18,7 @@ public class Constants {
     public final static String POINT_STRING = ".";
     public final static String EQUAL_STRING = "=";
     public final static String TRASH_BUTTON = "\uD83D\uDDD1";
-    public final static String HISTORY_BUTTON = "HistoryButtonPanel";
+    public final static String HISTORY_BUTTON_PANEL = "HistoryButtonPanel";
     public final static String SMALL_NUMBER_PANEL = "SmallNumberPanel";
     public final static String BIG_NUMBER_PANEL = "BigNumberPanel";
 }

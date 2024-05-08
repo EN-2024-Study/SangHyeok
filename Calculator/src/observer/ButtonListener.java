@@ -20,13 +20,10 @@ public class ButtonListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getSource().getClass());
-        if (e.getSource().getClass().toString().contains(Constants.HISTORY_BUTTON)) {
+        if (e.getSource().getClass().toString().contains(Constants.HISTORY_BUTTON_PANEL)) {
             screenManager.showDownHistoryPanel();
             screenManager.addTopPanelMouseListener();
-        }
-        else if (e.getSource().getClass().toString().contains(Constants.TRASH_BUTTON))
+        } else if (e.getActionCommand().contains(Constants.TRASH_BUTTON))
             calculationManager.deleteHistory();
-
     }
 }

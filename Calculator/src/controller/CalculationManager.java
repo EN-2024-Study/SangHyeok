@@ -15,12 +15,15 @@ public class CalculationManager {
     }
 
     public void addNumber(int number) {
+        if (calculationRepository.isEmptyInputNumberList())
+            screenManager.setBigNumber(true, String.valueOf(number));
+        else
+            screenManager.setBigNumber(false, String.valueOf(number));
         calculationRepository.addNumber(number);
     }
 
     public void deleteHistory() {
         calculationRepository.deleteHistory();
-        System.out.println("Test");
     }
 
     public void processOperation(String operation) {

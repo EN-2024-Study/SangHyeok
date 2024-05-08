@@ -29,6 +29,10 @@ public class CalculationRepository {
         this.secondOperator = secondOperator;
     }
 
+    public boolean isEmptyInputNumberList() {
+        return this.inputNumberList.isEmpty();
+    }
+
     public boolean isEmptyFirstOperator() {
         return this.firstOperator.isEmpty();
     }

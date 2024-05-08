@@ -16,22 +16,14 @@ public class DownHistoryPanel extends JPanel {
 
     public DownHistoryPanel(ButtonListener buttonListener) {
         historyDeleteButtonPanel = new HistoryDeleteButtonPanel(buttonListener);
-        inithistoryList();
+        initHistoryList();
         initScrollPane();
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
         add(historyDeleteButtonPanel, BorderLayout.SOUTH);
     }
 
-    public void hideDeleteButtonPanel() {
-        historyDeleteButtonPanel.setVisible(false);
-    }
-
-    public void showDeleteButtonPanel() {
-        historyDeleteButtonPanel.setVisible(true);
-    }
-
-    private void inithistoryList() {
+    private void initHistoryList() {
         historyList = new ArrayList<>();
         for(int i = 0; i < 5; i++) {
             JButton button = new JButton("test" + (i + 1));
@@ -53,7 +45,7 @@ public class DownHistoryPanel extends JPanel {
     }
 
 
-    private class HistoryDeleteButtonPanel extends JPanel {
+    private class HistoryDeleteButtonPanel extends JPanel {     // 1회성 Class
 
         private JButton deleteButton;
 

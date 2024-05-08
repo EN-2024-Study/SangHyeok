@@ -74,6 +74,10 @@ public class ScreenManager {
         restartFrame();
     }
 
+    public void setBigNumber(boolean isFirst, String number) {
+        panelVo.getBigNumberPanel().setNumber(isFirst, number);
+    }
+
     private void restartFrame() {
         frame.revalidate();
         frame.repaint();

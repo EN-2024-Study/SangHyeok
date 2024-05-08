@@ -18,4 +18,11 @@ public class BigNumberPanel extends JPanel {
         setLayout(new FlowLayout(FlowLayout.RIGHT));
         add(numberLabel);
     }
+
+    public void setNumber(boolean isFirst, String number) {
+        if (isFirst)
+            numberLabel.setText(number);
+        else
+            numberLabel.setText(numberLabel.getText() + number);
+    }
 }

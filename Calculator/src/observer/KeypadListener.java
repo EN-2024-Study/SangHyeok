@@ -19,18 +19,14 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        boolean isDigit = false;
-
         for (String item : Constants.NUMBER_STRINGS) {
             if (item.equals(e.getActionCommand())) {
-                isDigit = true;
                 calculationManager.addNumber(Integer.parseInt(item));
-                break;
+                return;
             }
         }
 
-        if (!isDigit)
-            calculationManager.processOperation(e.getActionCommand());
+        calculationManager.processOperation(e.getActionCommand());
     }
 
     @Override

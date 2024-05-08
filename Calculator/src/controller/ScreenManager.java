@@ -29,7 +29,7 @@ public class ScreenManager {
                 new KeypadListener(this, calculationRepository), new PanelMouseListener(this));
         this.panelVo = new PanelVo(new HistoryButtonPanel(listenerVo.getButtonListener()), new SmallNumberPanel(), new BigNumberPanel(),
                 new KeypadPanel(listenerVo.getKeypadListener()), new RightHistoryPanel(listenerVo.getButtonListener()), new DownHistoryPanel(listenerVo.getButtonListener()));
-        frame.initFrame(panelVo, listenerVo.getFrameComponentListener());
+        frame.initFrame(panelVo, listenerVo);
     }
 
     public void showDownHistoryPanel() {

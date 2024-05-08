@@ -4,12 +4,9 @@ import controller.ScreenManager;
 import model.CalculationRepository;
 import utility.Constants;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
-public class KeypadListener implements ActionListener, KeyListener {
+public class KeypadListener extends KeyAdapter implements ActionListener {
 
     private ScreenManager screenManager;
     private CalculationRepository calculationRepository;
@@ -33,17 +30,10 @@ public class KeypadListener implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
     public void keyReleased(KeyEvent e) {
+        if (48 <= e.getKeyCode() && e.getKeyCode() <= 57)
+            calculationRepository.addNumber((int) e.getKeyChar() - 48);
+
 
     }
 }

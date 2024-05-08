@@ -1,6 +1,7 @@
 package view.mainPanel;
 
 import controller.ScreenManager;
+import model.ListenerVo;
 import model.PanelVo;
 import observer.FrameComponentListener;
 import utility.Constants;
@@ -16,12 +17,17 @@ public class Main extends JFrame {
         setVisible(true);
     }
 
-    public void initFrame(PanelVo panelVo, FrameComponentListener frameComponentListener) {
+    public void initFrame(PanelVo panelVo, ListenerVo listenerVo) {
         setTitle(Constants.TITLE);
         setLayout(new GridLayout(1, 1));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        addComponentListener(frameComponentListener);
+
+        addKeyListener(listenerVo.getKeypadListener());
+        addComponentListener(listenerVo.getFrameComponentListener());
         add(getMainPanel(panelVo));
+
+        setFocusable(true);
+        requestFocus();
     }
 
     private JPanel getMainPanel(PanelVo panelVo) {

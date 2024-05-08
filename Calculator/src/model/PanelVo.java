@@ -1,7 +1,6 @@
 package model;
 
-import view.historyPanel.DownHistoryPanel;
-import view.historyPanel.RightHistoryPanel;
+import view.historyPanel.*;
 import view.mainPanel.*;
 
 import javax.swing.*;

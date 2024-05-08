@@ -1,24 +1,77 @@
 package view.historyPanel;
 
 import observer.ButtonListener;
-import observer.KeypadListener;
+import utility.Constants;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DownHistoryPanel extends JPanel {
 
-    private HistoryScrollPanel historyScrollPanel;
+    private JScrollPane scrollPane;
+    private List<JButton> historyList;
+    private HistoryDeleteButtonPanel historyDeleteButtonPanel;
 
     public DownHistoryPanel(ButtonListener buttonListener) {
-        historyScrollPanel = new HistoryScrollPanel();
-        setBackground(Color.WHITE);
-        initPanel(buttonListener);
+        historyDeleteButtonPanel = new HistoryDeleteButtonPanel(buttonListener);
+        inithistoryList();
+        initScrollPane();
+        setLayout(new BorderLayout());
+        add(scrollPane, BorderLayout.CENTER);
+        add(historyDeleteButtonPanel, BorderLayout.SOUTH);
     }
 
-    private void initPanel(ButtonListener buttonListener) {
-        setLayout(new BorderLayout());
-        add(historyScrollPanel, BorderLayout.CENTER);
-        add(historyScrollPanel.getDeletePanel(buttonListener), BorderLayout.SOUTH);
+    public void hideDeleteButtonPanel() {
+        historyDeleteButtonPanel.setVisible(false);
+    }
+
+    public void showDeleteButtonPanel() {
+        historyDeleteButtonPanel.setVisible(true);
+    }
+
+    private void inithistoryList() {
+        historyList = new ArrayList<>();
+        for(int i = 0; i < 5; i++) {
+            JButton button = new JButton("test" + (i + 1));
+            button.setBackground(Color.WHITE);
+            button.setOpaque(true);
+            button.setBorderPainted(false);
+            historyList.add(button);
+        }
+    }
+
+    private void initScrollPane() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(historyList.size(), 1));
+        for(JButton button : historyList)
+            panel.add(button);
+
+        scrollPane = new JScrollPane(panel);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    }
+
+
+    private class HistoryDeleteButtonPanel extends JPanel {
+
+        private JButton deleteButton;
+
+        public HistoryDeleteButtonPanel(ButtonListener buttonListener) {
+            initButton(buttonListener);
+            initPanel();
+        }
+
+        private void initPanel() {
+            setLayout(new BorderLayout());
+            setBackground(Color.WHITE);
+            add(deleteButton, BorderLayout.EAST);
+        }
+
+        private void initButton(ButtonListener buttonListener) {
+            deleteButton = new JButton(Constants.TRASH_BUTTON);
+            deleteButton.addActionListener(buttonListener);
+            deleteButton.setBorderPainted(false);
+        }
     }
 }

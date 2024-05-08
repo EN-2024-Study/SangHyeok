@@ -1,17 +1,10 @@
 package controller;
 
-import model.CalculationRepository;
-import model.ListenerVo;
-import model.PanelVo;
-import observer.ButtonListener;
-import observer.KeypadListener;
-import observer.ComponentListener;
-import observer.PanelMouseListener;
-import view.historyPanel.DownHistoryPanel;
-import view.historyPanel.RightHistoryPanel;
+import model.*;
+import observer.*;
+import view.historyPanel.*;
 import view.mainPanel.*;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class ScreenManager {
@@ -27,7 +20,7 @@ public class ScreenManager {
         this.calculationRepository = new CalculationRepository();
         this.calculationManager = new CalculationManager(this, calculationRepository);
         this.listenerVo = new ListenerVo(new ComponentListener(this), new ButtonListener(this, calculationManager),
-                new KeypadListener(this, calculationManager), new PanelMouseListener(this));
+                new KeypadListener(calculationManager), new PanelMouseListener(this));
         this.panelVo = new PanelVo(new HistoryButtonPanel(listenerVo.getButtonListener()), new SmallNumberPanel(), new BigNumberPanel(),
                 new KeypadPanel(listenerVo.getKeypadListener()), new RightHistoryPanel(listenerVo.getButtonListener()), new DownHistoryPanel(listenerVo.getButtonListener()));
 

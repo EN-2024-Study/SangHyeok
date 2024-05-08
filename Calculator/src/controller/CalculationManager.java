@@ -20,6 +20,7 @@ public class CalculationManager {
 
     public void deleteHistory() {
         calculationRepository.deleteHistory();
+        System.out.println("Test");
     }
 
     public void processOperation(String operation) {

@@ -15,5 +15,4 @@ public class SmallNumberPanel extends JPanel {
         setLayout(new GridLayout(1, 1));
         add(numberLabel);
     }
-
 }

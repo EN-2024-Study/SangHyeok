@@ -9,12 +9,10 @@ import java.awt.event.*;
 
 public class KeypadListener extends KeyAdapter implements ActionListener {
 
-    private ScreenManager screenManager;
     private CalculationManager calculationManager;
     private boolean isShift;
 
-    public KeypadListener(ScreenManager screenManager, CalculationManager calculationManager) {
-        this.screenManager = screenManager;
+    public KeypadListener(CalculationManager calculationManager) {
         this.calculationManager = calculationManager;
         this.isShift = false;
     }

@@ -16,7 +16,7 @@ public class PanelMouseListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource().getClass().toString().contains(Constants.HISTORY_BUTTON_PANEL) ||
+        if (e.getSource().getClass().toString().contains(Constants.HISTORY_BUTTON) ||
                 e.getSource().getClass().toString().contains(Constants.SMALL_NUMBER_PANEL) ||
                 e.getSource().getClass().toString().contains(Constants.BIG_NUMBER_PANEL)) {
             screenManager.hideHistoryPanel();

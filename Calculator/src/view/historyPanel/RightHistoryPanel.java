@@ -1,28 +1,15 @@
 package view.historyPanel;
 
 import observer.ButtonListener;
-import observer.KeypadListener;
-import utility.Constants;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class RightHistoryPanel extends JPanel {
-
-    private HistoryScrollPanel historyScrollPanel;
+public class RightHistoryPanel extends DownHistoryPanel {
 
     public RightHistoryPanel(ButtonListener buttonListener) {
-        this.historyScrollPanel = new HistoryScrollPanel();
-        initPanel(buttonListener);
-    }
-
-    private void initPanel(ButtonListener buttonListener) {
-        setBackground(Color.WHITE);
-        setLayout(new BorderLayout());
-
-        add(getExplainPanel(), BorderLayout.NORTH);
-        add(historyScrollPanel, BorderLayout.CENTER);
-        add(historyScrollPanel.getDeletePanel(buttonListener), BorderLayout.SOUTH);
+        super(buttonListener);
+        super.add(getExplainPanel(), BorderLayout.NORTH);
     }
 
     private JPanel getExplainPanel() {

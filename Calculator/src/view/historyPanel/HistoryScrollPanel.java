@@ -1,8 +1,7 @@
 package view.historyPanel;
 
-import observer.ButtonActionListener;
+import observer.KeypadListener;
 import utility.Constants;
-import view.mainPanel.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,14 +41,14 @@ public class HistoryScrollPanel extends JPanel {
         scrollPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     }
 
-    public JPanel getDeletePanel(ButtonActionListener buttonActionListener) {
+    public JPanel getDeletePanel(KeypadListener keypadListener) {
         JPanel deletePanel = new JPanel();
         deletePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         deletePanel.setBackground(Color.WHITE);
 
         JButton deleteButton = new JButton(Constants.TRASH_BUTTON);
         deleteButton.setBorderPainted(false);
-        deleteButton.addActionListener(buttonActionListener);
+        deleteButton.addActionListener(keypadListener);
 
         deletePanel.add(deleteButton);
         return deletePanel;

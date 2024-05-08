@@ -1,37 +1,34 @@
 package controller;
 
+import model.CalculationRepository;
 import model.ListenerVo;
 import model.PanelVo;
-import observer.ButtonActionListener;
+import observer.ButtonListener;
+import observer.KeypadListener;
 import observer.FrameComponentListener;
 import observer.PanelMouseListener;
-import utility.Constants;
 import view.historyPanel.DownHistoryPanel;
 import view.historyPanel.RightHistoryPanel;
 import view.mainPanel.*;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class ScreenManager {
 
     private Main frame;
+    private CalculationRepository calculationRepository;
     private PanelVo panelVo;
     private ListenerVo listenerVo;
 
     public ScreenManager(Main frame) {
         this.frame = frame;
-        this.listenerVo = new ListenerVo(new FrameComponentListener(this), new ButtonActionListener(this));
+        this.calculationRepository = new CalculationRepository();
+        this.listenerVo = new ListenerVo(new FrameComponentListener(this), new ButtonListener(this, calculationRepository), new KeypadListener(this, calculationRepository));
         this.panelVo = new PanelVo(new HistoryButtonPanel(listenerVo.getButtonActionListener()), new SmallNumberPanel(), new BigNumberPanel(),
                 new KeypadPanel(listenerVo.getButtonActionListener()), new RightHistoryPanel(listenerVo.getButtonActionListener()), new DownHistoryPanel(listenerVo.getButtonActionListener()));
         frame.initFrame(panelVo, listenerVo.getFrameComponentListener());
-    }
-
-    public void deleteHistory() {
-
     }
 
     public void showDownHistoryPanel() {

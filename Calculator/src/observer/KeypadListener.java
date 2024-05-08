@@ -6,24 +6,23 @@ import utility.Constants;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class ButtonActionListener implements ActionListener {
+public class KeypadListener implements ActionListener, KeyListener {
 
     private ScreenManager screenManager;
     private CalculationRepository calculationRepository;
 
-    public ButtonActionListener(ScreenManager screenManager) {
+    public KeypadListener(ScreenManager screenManager, CalculationRepository calculationRepository) {
         this.screenManager = screenManager;
-        this.calculationRepository = new CalculationRepository();
+        this.calculationRepository = calculationRepository;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        boolean isKeypad = false;
-
         for(String item : Constants.BUTTON_STRINGS) {
             if (item.equals(e.getActionCommand())) {
-                isKeypad = true;
                 if (item.chars().allMatch(Character::isDigit))
                     calculationRepository.addNumber(Integer.parseInt(item));
                 else {
@@ -31,14 +30,20 @@ public class ButtonActionListener implements ActionListener {
                 }
             }
         }
+    }
 
-        if (!isKeypad) {
-            if (e.getSource().getClass().toString().contains(Constants.HISTORY_BUTTON)) {
-                screenManager.showDownHistoryPanel();
-                screenManager.addTopPanelMouseListener();
-            }
-            else if (e.getSource().getClass().toString().contains(Constants.TRASH_BUTTON))
-                screenManager.deleteHistory();
-        }
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

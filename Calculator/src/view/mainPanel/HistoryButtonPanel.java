@@ -1,8 +1,6 @@
 package view.mainPanel;
 
-import model.ListenerVo;
-import observer.ButtonActionListener;
-import utility.Constants;
+import observer.KeypadListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +9,12 @@ public class HistoryButtonPanel extends JPanel {
 
     private JButton historyButton;
 
-    public HistoryButtonPanel(ButtonActionListener buttonActionListener) {
-        initHistoryButton(buttonActionListener);
+    public HistoryButtonPanel(KeypadListener keypadListener) {
+        initHistoryButton(keypadListener);
         initPanel();
     }
 
-    private void initHistoryButton(ButtonActionListener buttonActionListener) {
+    private void initHistoryButton(KeypadListener keypadListener) {
         historyButton = new JButton() {
             Image image = new ImageIcon("src/view/imageFile/HistoryLogo.png").getImage();
 
@@ -29,7 +27,7 @@ public class HistoryButtonPanel extends JPanel {
 
         historyButton.setBorderPainted(false);
         historyButton.setFocusPainted(false);
-        historyButton.addActionListener(buttonActionListener);
+        historyButton.addActionListener(keypadListener);
     }
 
     private void initPanel() {

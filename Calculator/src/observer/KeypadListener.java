@@ -1,5 +1,6 @@
 package observer;
 
+import controller.CalculationManager;
 import controller.ScreenManager;
 import model.CalculationRepository;
 import utility.Constants;
@@ -9,12 +10,12 @@ import java.awt.event.*;
 public class KeypadListener extends KeyAdapter implements ActionListener {
 
     private ScreenManager screenManager;
-    private CalculationRepository calculationRepository;
+    private CalculationManager calculationManager;
     private boolean isShift;
 
-    public KeypadListener(ScreenManager screenManager, CalculationRepository calculationRepository) {
+    public KeypadListener(ScreenManager screenManager, CalculationManager calculationManager) {
         this.screenManager = screenManager;
-        this.calculationRepository = calculationRepository;
+        this.calculationManager = calculationManager;
         this.isShift = false;
     }
 
@@ -25,13 +26,13 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
         for (String item : Constants.NUMBER_STRINGS) {
             if (item.equals(e.getActionCommand())) {
                 isDigit = true;
-                calculationRepository.addNumber(Integer.parseInt(item));
+                calculationManager.addNumber(Integer.parseInt(item));
                 break;
             }
         }
 
         if (!isDigit)
-            processOperation(e.getActionCommand());
+            calculationManager.processOperation(e.getActionCommand());
     }
 
     @Override
@@ -45,59 +46,37 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
         String operation = "";
 
         if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {
-            calculationRepository.addNumber((int) e.getKeyChar() - 48);
+            calculationManager.addNumber((int) e.getKeyChar() - 48);
             return;
         } else if (e.getKeyCode() == 8) // delete
-            operation = "⌫";
+            operation = Constants.DELETE_STRING;
         else if (e.getKeyCode() == 27)  // esc
-            operation = "C";
+            operation = Constants.C_STRING;
         else if (e.getKeyCode() == 120) // F9
-            operation = "±";
-        else if (e.getKeyCode() == 45)
-            operation = "-";
-        else if (e.getKeyCode() == 47)
-            operation = "÷";
-        else if (e.getKeyCode() == 46)
-            operation = ".";
+            operation = Constants.SIGN_STRING;
+        else if (e.getKeyCode() == 45)  // -
+            operation = Constants.SUBTRACT_STRING;
+        else if (e.getKeyCode() == 47)  // /
+            operation = Constants.DIVIDE_STRING;
+        else if (e.getKeyCode() == 46)  // .
+            operation = Constants.POINT_STRING;
         else if (e.getKeyCode() == 61) {
             if (isShift)
-                operation = "+";
+                operation = Constants.ADD_STRING;   // +
             else
-                operation = "=";
+                operation = Constants.EQUAL_STRING; // =
             isShift = false;
         }
 
-        processOperation(operation);
-    }
-
-    private void processOperation(String operation) {
-        if (!isKeypadValid(operation))
-            return;
-
-        switch (operation) {
-            case "+":
-            case "-":
-            case "÷":
-            case "×":
-            case "CE":
-            case "C":
-            case "⌫":
-            case "±":
-            case ".":
-            case "=":
-                break;
-        }
+        if (isKeypadValid(operation))
+            calculationManager.processOperation(operation);
     }
 
     private boolean isKeypadValid(String str) {
-        boolean isKeypad = false;
+        for (String item : Constants.KEYPAD_STRINGS)
+            if (item.equals(str))
+                return true;
 
-        for (String item : Constants.KEYPAD_STRINGS) {
-            if (item.equals(str)) {
-                isKeypad = true;
-                break;
-            }
-        }
-        return isKeypad;
+        return false;
     }
 }

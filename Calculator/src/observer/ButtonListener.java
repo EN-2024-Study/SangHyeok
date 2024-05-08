@@ -1,5 +1,6 @@
 package observer;
 
+import controller.CalculationManager;
 import controller.ScreenManager;
 import model.CalculationRepository;
 import utility.Constants;
@@ -10,11 +11,11 @@ import java.awt.event.ActionListener;
 public class ButtonListener implements ActionListener {
 
     private ScreenManager screenManager;
-    private CalculationRepository calculationRepository;
+    private CalculationManager calculationManager;
 
-    public ButtonListener(ScreenManager screenManager, CalculationRepository calculationRepository) {
+    public ButtonListener(ScreenManager screenManager, CalculationManager calculationManager) {
         this.screenManager = screenManager;
-        this.calculationRepository = calculationRepository;
+        this.calculationManager = calculationManager;
     }
 
     @Override
@@ -24,6 +25,6 @@ public class ButtonListener implements ActionListener {
             screenManager.addTopPanelMouseListener();
         }
         else if (e.getSource().getClass().toString().contains(Constants.TRASH_BUTTON))
-            calculationRepository.deleteHistory();
+            calculationManager.deleteHistory();
     }
 }

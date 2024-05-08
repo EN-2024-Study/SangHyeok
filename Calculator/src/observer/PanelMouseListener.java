@@ -19,16 +19,13 @@ public class PanelMouseListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            if (e.getComponent().equals(panelVo.getHistoryButtonPanel()) ||
-                    e.getComponent().equals(panelVo.getSmallNumberPanel()) ||
-                    e.getComponent().equals(panelVo.getBigNumberPanel())) {
-                screenManager.hideHistoryPanel();
-                panelVo.getHistoryButtonPanel().removeMouseListener(this);
-                panelVo.getSmallNumberPanel().removeMouseListener(this);
-                panelVo.getBigNumberPanel().removeMouseListener(this);
-                System.out.println("test");
-            }
+        if (e.getComponent().equals(panelVo.getHistoryButtonPanel()) ||
+                e.getComponent().equals(panelVo.getSmallNumberPanel()) ||
+                e.getComponent().equals(panelVo.getBigNumberPanel())) {
+            screenManager.hideHistoryPanel();
+            panelVo.getHistoryButtonPanel().removeMouseListener(this);
+            panelVo.getSmallNumberPanel().removeMouseListener(this);
+            panelVo.getBigNumberPanel().removeMouseListener(this);
         }
     }
 }

@@ -8,21 +8,21 @@ import java.awt.event.ActionListener;
 
 public class ListenerVo {
 
-    private KeypadListener buttonActionListener;
+    private KeypadListener keypadListener;
     private FrameComponentListener frameComponentListener;
     private ButtonListener buttonListener;
 
     public ListenerVo(FrameComponentListener frameComponentListener, ButtonListener buttonListener, KeypadListener keypadListener) {
         this.frameComponentListener = frameComponentListener;
         this.buttonListener = buttonListener;
-        this.buttonActionListener = keypadListener;
+        this.keypadListener = keypadListener;
     }
 
     public FrameComponentListener getFrameComponentListener() {
         return frameComponentListener;
     }
-    public KeypadListener getButtonActionListener() {
-        return buttonActionListener;
+    public KeypadListener getKeypadListener() {
+        return keypadListener;
     }
 
     public ButtonListener getButtonListener() {

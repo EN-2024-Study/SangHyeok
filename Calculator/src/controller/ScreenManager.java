@@ -26,8 +26,8 @@ public class ScreenManager {
         this.frame = frame;
         this.calculationRepository = new CalculationRepository();
         this.listenerVo = new ListenerVo(new FrameComponentListener(this), new ButtonListener(this, calculationRepository), new KeypadListener(this, calculationRepository));
-        this.panelVo = new PanelVo(new HistoryButtonPanel(listenerVo.getButtonActionListener()), new SmallNumberPanel(), new BigNumberPanel(),
-                new KeypadPanel(listenerVo.getButtonActionListener()), new RightHistoryPanel(listenerVo.getButtonActionListener()), new DownHistoryPanel(listenerVo.getButtonActionListener()));
+        this.panelVo = new PanelVo(new HistoryButtonPanel(listenerVo.getButtonListener()), new SmallNumberPanel(), new BigNumberPanel(),
+                new KeypadPanel(listenerVo.getKeypadListener()), new RightHistoryPanel(listenerVo.getButtonListener()), new DownHistoryPanel(listenerVo.getButtonListener()));
         frame.initFrame(panelVo, listenerVo.getFrameComponentListener());
     }
 

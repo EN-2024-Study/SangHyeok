@@ -27,7 +27,6 @@ public class Main extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(Constants.FRAME_MINI_SIZE);
         setSize(Constants.FRAME_MINI_SIZE);
-        pack();
         setVisible(true);
     }
 

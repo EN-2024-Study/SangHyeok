@@ -23,13 +23,14 @@ public class KeypadPanel extends JPanel {
         buttons = new JButton[20];
 
         for(int i = 0; i < 19; i++) {
-            buttons[i] = new JButton(Constants.BUTTON_STRINGS[i]);
+            buttons[i] = new JButton(Constants.KEYPAD_STRINGS[i]);
             buttons[i].setFont(FONT);
 
             buttons[i].addActionListener(keypadListener);
+            buttons[i].addKeyListener(keypadListener);
         }
 
-        buttons[19] = new JButton(Constants.BUTTON_STRINGS[19]);
+        buttons[19] = new JButton(Constants.KEYPAD_STRINGS[19]);
         buttons[19].setBackground(new Color(0, 103, 192));
         buttons[19].setOpaque(true);
         buttons[19].setBorderPainted(false);
@@ -37,5 +38,6 @@ public class KeypadPanel extends JPanel {
         buttons[19].setFont(FONT);
 
         buttons[19].addActionListener(keypadListener);
+        buttons[19].addKeyListener(keypadListener);
     }
 }

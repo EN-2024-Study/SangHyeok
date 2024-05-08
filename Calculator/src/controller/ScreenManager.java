@@ -67,14 +67,6 @@ public class ScreenManager {
         panelVo.getBigNumberPanel().removeMouseListener(listenerVo.getPanelMouseListener());
     }
 
-    public void addHistoryPanelComponentListener() {
-        panelVo.getRightHistoryPanel().addComponentListener(listenerVo.getComponentListener());
-    }
-
-    public void removeHistoryPanelComponentListener() {
-        panelVo.getRightHistoryPanel().removeComponentListener(listenerVo.getComponentListener());
-    }
-
     public void hideHistoryPanel() {
         panelVo.getHistoryButtonPanel().showButton();
         frame.remove(panelVo.getRightHistoryPanel());

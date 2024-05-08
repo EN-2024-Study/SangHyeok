@@ -6,45 +6,35 @@ import java.util.List;
 public class CalculationRepository {
 
     private List<String> historyList;
-    private List<Integer> numberList;
-    private String operator;
+    private List<Integer> inputNumberList;
+    private String firstOperator;
+    private String secondOperator;
 
     public CalculationRepository() {
         this.historyList = new ArrayList<>();
-        this.numberList = new ArrayList<>();
-        this.operator = "";
-    }
-
-    public boolean IsEmptyNumberList() {
-        return this.numberList.isEmpty();
-    }
-
-    public boolean IsEmptyOperator() {
-        return operator.equals("");
+        this.inputNumberList = new ArrayList<>();
+        this.firstOperator = "";
+        this.secondOperator = "";
     }
 
     public void addNumber(int number) {
-        this.numberList.add(number);
-
-        for(Integer i : this.numberList)
-            System.out.println(i);
-        System.out.println("==================");
+        this.inputNumberList.add(number);
     }
 
-    public Integer getLastNumber() {
-        return this.numberList.get(this.numberList.size() - 1);
+    public void setFirstOperator(String firstOperator) {
+        this.firstOperator = firstOperator;
     }
 
-    public String getOperator() {
-        return this.operator;
+    public void setSecondOperator(String secondOperator) {
+        this.secondOperator = secondOperator;
     }
 
-    public void setOperator(String operator) {
-        this.operator = operator;
+    public boolean isEmptyFirstOperator() {
+        return this.firstOperator.isEmpty();
     }
 
-    public void addHistory(String history) {
-        this.historyList.add(history);
+    public boolean isEmptySecondOperator() {
+        return this.secondOperator.isEmpty();
     }
 
     public void deleteHistory() {

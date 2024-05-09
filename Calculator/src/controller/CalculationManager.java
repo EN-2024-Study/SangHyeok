@@ -19,7 +19,6 @@ public class CalculationManager {
             return;
         else if (calculationRepository.isEmptyInputNumberList() && number == 0)
             return;
-
         calculationRepository.addInputNumber(number);
         screenManager.setBigNumber(String.valueOf(number));
     }
@@ -42,9 +41,11 @@ public class CalculationManager {
                 break;
             case Constants.DELETE_STRING:
                 processDelete();
+                break;
             case Constants.SIGN_STRING:
             case Constants.POINT_STRING:
                 processPoint(operation);
+                break;
             case Constants.EQUAL_STRING:
                 break;
         }
@@ -60,7 +61,6 @@ public class CalculationManager {
     private void processPoint(String operation) {
         if (calculationRepository.hasDecimalPoint())
             return;
-
         calculationRepository.addInputNumber(operation.charAt(0));
         screenManager.setBigNumber(operation);
     }

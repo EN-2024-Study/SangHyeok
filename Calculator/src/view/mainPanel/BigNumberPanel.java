@@ -22,18 +22,25 @@ public class BigNumberPanel extends JPanel {
         add(numberLabel);
     }
 
-    public void setNumber(String addNumber) {
-        if (numberLabel.getText().equals("0") && !addNumber.equals(Constants.POINT_STRING))
-            numberLabel.setText(addNumber);
+    public void setNumber(String addString) {
+        if (numberLabel.getText().equals("0")) { // 처음 문자가 들어왔을 때
 
-        else if (addNumber.equals(Constants.POINT_STRING))
-            numberLabel.setText(numberLabel.getText() + Constants.POINT_STRING);
+            if (addString.equals(Constants.POINT_STRING)) { // 첫 문자가 소수점이라면 소수점 삽입
+                numberLabel.setText("0" + addString);
+                return;
+            }
+            for (String n : Constants.NUMBER_STRINGS) {
+                if (n.equals(addString)) {    // 첫 문자가 숫자라면 그대로 삽입
+                    numberLabel.setText(addString);
+                }
+            }
+        } else if (numberLabel.getText().contains(Constants.POINT_STRING))    // 소수점이 이미 들어와있을 때
+            numberLabel.setText(numberLabel.getText() + addString);
 
-        else if (numberLabel.getText().contains(Constants.POINT_STRING))
-            numberLabel.setText(numberLabel.getText() + addNumber);
-
+        else if (addString.equals(Constants.POINT_STRING))  // 소수점이 처음 들어왔을 때 삽입
+            numberLabel.setText(numberLabel.getText() + addString);
         else
-            processComma(addNumber);
+            processComma(addString);    // 컴마 처리
     }
 
     private void processComma(String addNumber) {

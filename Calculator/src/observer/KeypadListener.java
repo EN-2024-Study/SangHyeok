@@ -75,7 +75,6 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
         for (String item : Constants.KEYPAD_STRINGS)
             if (item.equals(str))
                 return true;
-
         return false;
     }
 }

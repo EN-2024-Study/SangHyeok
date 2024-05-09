@@ -26,7 +26,7 @@ public class CalculationRepository {
     }
 
     public boolean isMaxInputNumberList() {
-        return this.inputNumberList.size() > 15;
+        return this.inputNumberList.size() >= 16;
     }
 
     public void clearInputNumberList() {

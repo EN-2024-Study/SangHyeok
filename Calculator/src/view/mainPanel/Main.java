@@ -49,7 +49,7 @@ public class Main extends JFrame {
         return mainPanel;
     }
 
-    private JPanel getTopPanel(PanelVo panelVo) {
+    public JPanel getTopPanel(PanelVo panelVo) {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();

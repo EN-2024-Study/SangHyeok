@@ -11,12 +11,12 @@ public class BigNumberPanel extends JPanel {
     public BigNumberPanel() {
         numberLabel = new JLabel("0");
 
-        Font font = new Font(Font.DIALOG, Font.BOLD, 60);
+        Font font = new Font(Font.DIALOG, Font.BOLD, 50);
         numberLabel.setFont(font);
         numberLabel.setHorizontalAlignment(JLabel.RIGHT);
 
         setBackground(Color.WHITE);
-        setLayout(new FlowLayout(FlowLayout.RIGHT));
+        setLayout(new GridLayout(1, 1));
         add(numberLabel);
     }
 

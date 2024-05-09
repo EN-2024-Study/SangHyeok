@@ -21,6 +21,7 @@ public class PanelMouseListener extends MouseAdapter {
                 e.getSource().getClass().toString().contains(Constants.BIG_NUMBER_PANEL)) {
             screenManager.hideHistoryPanel();
             screenManager.removeTopPanelMouseListener();
+            screenManager.processkeypadAction(Constants.EQUAL_STRING);
         }
     }
 }

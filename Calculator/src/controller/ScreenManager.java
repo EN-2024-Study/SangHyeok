@@ -31,8 +31,8 @@ public class ScreenManager {
         panelVo.getKeypadPanel().setVisible(false);
         frame.setLayout(new GridLayout(2, 1));
         frame.add(panelVo.getDownHistoryPanel());
-        setTopPanelBackground(new Color(171, 171, 171));
 
+        setTopPanelBackground(new Color(171, 171, 171));
         restartFrame();
     }
 
@@ -76,7 +76,6 @@ public class ScreenManager {
 
     public void processkeypadAction(String buttonPressed) {
         JButton[] buttons = panelVo.getKeypadPanel().getButtons();
-        System.out.println(buttonPressed);
         for (JButton button : buttons) {
             if (button.getText().equals(buttonPressed)) {
                 button.setFocusable(true);

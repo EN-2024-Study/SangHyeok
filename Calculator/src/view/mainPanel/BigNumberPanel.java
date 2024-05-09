@@ -1,7 +1,10 @@
 package view.mainPanel;
 
+import utility.Constants;
+
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class BigNumberPanel extends JPanel {
@@ -21,15 +24,18 @@ public class BigNumberPanel extends JPanel {
     }
 
     public void setNumber(String addNumber) {
-        if (numberLabel.getText().equals("0")) {
+        if (numberLabel.getText().equals("0") && !addNumber.equals(Constants.POINT_STRING)) {
             numberLabel.setText(addNumber);
+            return;
+        } else if (addNumber.equals(Constants.POINT_STRING)) {
+            numberLabel.setText(numberLabel.getText() + Constants.POINT_STRING);
             return;
         }
 
         String labelString = (numberLabel.getText() + addNumber).replaceAll(",", "");
-        Long num = Long.parseLong(labelString);
+        BigDecimal bigDecimal = new BigDecimal(labelString);
         DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
-        numberLabel.setText(decimalFormat.format(num));
+        numberLabel.setText(decimalFormat.format(bigDecimal));
     }
 
     public void resetNumber() {

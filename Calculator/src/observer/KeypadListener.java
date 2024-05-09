@@ -23,7 +23,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (String item : Constants.NUMBER_STRINGS) {
             if (item.equals(e.getActionCommand())) {
-                calculationManager.addInputNumber(Integer.parseInt(item));
+                calculationManager.addInputNumber(item.charAt(0));
                 return;
             }
         }
@@ -42,7 +42,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
         String operation = "";
 
         if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {
-            calculationManager.addInputNumber((int) e.getKeyChar() - 48);
+            calculationManager.addInputNumber(Character.forDigit(e.getKeyChar() - 48, 10));
             screenManager.processkeypadAction(String.valueOf(e.getKeyChar() - 48));
             return;
         } else if (e.getKeyCode() == 8) // delete

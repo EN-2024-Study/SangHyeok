@@ -6,7 +6,7 @@ import java.util.List;
 public class CalculationRepository {
 
     private List<String> historyList;
-    private List<Integer> inputNumberList;
+    private List<Character> inputNumberList;
     private String firstOperator;
     private String secondOperator;
 
@@ -17,7 +17,7 @@ public class CalculationRepository {
         this.secondOperator = "";
     }
 
-    public void addInputNumber(int number) {
+    public void addInputNumber(Character number) {
         this.inputNumberList.add(number);
     }
 
@@ -27,6 +27,13 @@ public class CalculationRepository {
 
     public boolean isMaxInputNumberList() {
         return this.inputNumberList.size() >= 16;
+    }
+
+    public boolean hasDecimalPoint() {
+        for(Character number : this.inputNumberList)
+            if(number.equals('.'))
+                return true;
+        return false;
     }
 
     public void clearInputNumberList() {

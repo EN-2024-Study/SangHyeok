@@ -14,7 +14,7 @@ public class CalculationManager {
         this.calculationRepository = new CalculationRepository();
     }
 
-    public void addInputNumber(int number) {
+    public void addInputNumber(Character number) {
         if (calculationRepository.isMaxInputNumberList())
             return;
         else if (calculationRepository.isEmptyInputNumberList() && number == 0)
@@ -44,6 +44,7 @@ public class CalculationManager {
                 processDelete();
             case Constants.SIGN_STRING:
             case Constants.POINT_STRING:
+                processPoint(operation);
             case Constants.EQUAL_STRING:
                 break;
         }
@@ -56,4 +57,11 @@ public class CalculationManager {
         screenManager.deleteBigNumber();
     }
 
+    private void processPoint(String operation) {
+        if (calculationRepository.hasDecimalPoint())
+            return;
+
+        calculationRepository.addInputNumber(operation.charAt(0));
+        screenManager.setBigNumber(operation);
+    }
 }

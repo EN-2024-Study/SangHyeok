@@ -13,6 +13,7 @@ public class BigNumberPanel extends JPanel {
 
     public BigNumberPanel() {
         numberLabel = new JLabel("0");
+
         numberLabel.setFont(new Font(Font.DIALOG, Font.BOLD, Constants.BIG_NUMBER_MAX_SIZE));
         numberLabel.setHorizontalAlignment(JLabel.RIGHT);
 

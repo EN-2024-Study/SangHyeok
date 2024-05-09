@@ -16,6 +16,8 @@ public class ComponentListener extends ComponentAdapter {
 
     @Override
     public void componentResized(ComponentEvent e) {
+        screenManager.setBigNumberFont();
+
         if (e.getComponent().getSize().width > 800) {
             screenManager.showRightHistoryPanel();
         }

@@ -106,12 +106,12 @@ public class ScreenManager {
         int fontMaxSize = Constants.BIG_NUMBER_MAX_SIZE;
         int fontMinSize = Constants.BIG_NUMBER_MIN_SIZE;
 
-        while(frame.getWidth() < label.getPreferredSize().getWidth())
-            label.setFont(new Font(Font.DIALOG, Font.BOLD, --fontMaxSize));
-
         while(frame.getWidth() > label.getPreferredSize().getWidth() &&
                 fontMinSize < fontMaxSize)
             label.setFont(new Font(Font.DIALOG, Font.BOLD, ++fontMinSize));
+
+        while(frame.getWidth() < label.getPreferredSize().getWidth())
+            label.setFont(new Font(Font.DIALOG, Font.BOLD, --fontMaxSize));
     }
 
     private void restartFrame() {

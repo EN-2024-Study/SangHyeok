@@ -23,24 +23,33 @@ public class BigNumberPanel extends JPanel {
     }
 
     public void setNumber(String addString) {
-        if (numberLabel.getText().equals("0")) { // 처음 문자가 들어왔을 때
+        if (isFirstInput(addString))  // 처음 문자가 들어왔을 때
+            return;
 
-            if (addString.equals(Constants.POINT_STRING)) { // 첫 문자가 소수점이라면 소수점 삽입
-                numberLabel.setText("0" + addString);
-                return;
-            }
-            for (String n : Constants.NUMBER_STRINGS) {
-                if (n.equals(addString)) {    // 첫 문자가 숫자라면 그대로 삽입
-                    numberLabel.setText(addString);
-                }
-            }
-        } else if (numberLabel.getText().contains(Constants.POINT_STRING))    // 소수점이 이미 들어와있을 때
+        if (numberLabel.getText().contains(Constants.POINT_STRING))    // 소수점이 이미 들어와있을 때
             numberLabel.setText(numberLabel.getText() + addString);
 
         else if (addString.equals(Constants.POINT_STRING))  // 소수점이 처음 들어왔을 때 삽입
             numberLabel.setText(numberLabel.getText() + addString);
         else
             processComma(addString);    // 컴마 처리
+    }
+
+    private boolean isFirstInput(String addString) {
+        if (numberLabel.getText().equals("0")) {
+
+            if (addString.equals(Constants.POINT_STRING)) { // 첫 문자가 소수점이라면 소수점 삽입
+                numberLabel.setText("0" + addString);
+                return true;
+            }
+            for (String n : Constants.NUMBER_STRINGS) {
+                if (n.equals(addString)) {    // 첫 문자가 숫자라면 그대로 삽입
+                    numberLabel.setText(addString);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void processComma(String addNumber) {

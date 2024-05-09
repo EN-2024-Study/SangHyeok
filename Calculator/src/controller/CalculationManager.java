@@ -37,11 +37,15 @@ public class CalculationManager {
             case Constants.SUBTRACT_STRING:
             case Constants.DIVIDE_STRING:
             case Constants.MULTIPLY_STRING:
+                break;
             case Constants.CE_STRING:
             case Constants.C_STRING:
                 calculationRepository.clearInputNumberList();
-
+                screenManager.resetBigNumber();
+                break;
             case Constants.DELETE_STRING:
+                calculationRepository.deleteInputNumber();
+                screenManager.deleteBigNumber();
             case Constants.SIGN_STRING:
             case Constants.POINT_STRING:
             case Constants.EQUAL_STRING:

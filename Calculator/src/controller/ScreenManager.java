@@ -76,6 +76,14 @@ public class ScreenManager {
         panelVo.getBigNumberPanel().setNumber(number);
     }
 
+    public void resetBigNumber() {
+        panelVo.getBigNumberPanel().resetNumber();
+    }
+
+    public void deleteBigNumber() {
+        panelVo.getBigNumberPanel().deleteNumber();
+    }
+
     private void restartFrame() {
         frame.revalidate();
         frame.repaint();

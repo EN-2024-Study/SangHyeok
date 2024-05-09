@@ -33,6 +33,10 @@ public class CalculationRepository {
         this.inputNumberList.clear();
     }
 
+    public void deleteInputNumber() {
+        this.inputNumberList.remove(this.inputNumberList.size() - 1);
+    }
+
     public boolean isEmptyFirstOperator() {
         return this.firstOperator.isEmpty();
     }

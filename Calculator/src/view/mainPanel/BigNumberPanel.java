@@ -32,4 +32,24 @@ public class BigNumberPanel extends JPanel {
         DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
         numberLabel.setText(decimalFormat.format(num));
     }
+
+    public void resetNumber() {
+        numberLabel.setText("0");
+    }
+
+    public void deleteNumber() {
+        if (numberLabel.getText().length() == 1) {
+            numberLabel.setText("0");
+            return;
+        }
+
+        StringBuilder result = new StringBuilder();
+        for(int i = 0; i < numberLabel.getText().length() - 2; i++)
+            result.append(numberLabel.getText().charAt(i));
+
+        if (numberLabel.getText().charAt(numberLabel.getText().length() - 2) != ',')
+            result.append(numberLabel.getText().charAt(numberLabel.getText().length() - 2));
+
+        numberLabel.setText(result.toString());
+    }
 }

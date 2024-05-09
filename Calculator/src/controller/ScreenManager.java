@@ -88,14 +88,25 @@ public class ScreenManager {
 
     public void setBigNumber(String number) {
         panelVo.getBigNumberPanel().setNumber(number);
+        setBigNumberFont();
     }
 
     public void resetBigNumber() {
         panelVo.getBigNumberPanel().resetNumber();
+        setBigNumberFont();
     }
 
     public void deleteBigNumber() {
         panelVo.getBigNumberPanel().deleteNumber();
+        setBigNumberFont();
+    }
+
+    private void setBigNumberFont() {
+        JLabel label = panelVo.getBigNumberPanel().getNumberLabel();
+        int fontSize = Constants.BIG_NUMBER_MAX_SIZE;
+
+        while(frame.getWidth() < label.getPreferredSize().getWidth())
+            label.setFont(new Font(Font.DIALOG, Font.BOLD, --fontSize));
     }
 
     private void restartFrame() {

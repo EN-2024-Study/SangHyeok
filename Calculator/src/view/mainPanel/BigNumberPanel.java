@@ -13,9 +13,7 @@ public class BigNumberPanel extends JPanel {
 
     public BigNumberPanel() {
         numberLabel = new JLabel("0");
-
-        Font font = new Font(Font.DIALOG, Font.BOLD, 50);
-        numberLabel.setFont(font);
+        numberLabel.setFont(new Font(Font.DIALOG, Font.BOLD, Constants.BIG_NUMBER_MAX_SIZE));
         numberLabel.setHorizontalAlignment(JLabel.RIGHT);
 
         setBackground(Color.WHITE);
@@ -32,7 +30,7 @@ public class BigNumberPanel extends JPanel {
 
         else if (numberLabel.getText().contains(Constants.POINT_STRING))
             numberLabel.setText(numberLabel.getText() + addNumber);
-        
+
         else
             processComma(addNumber);
     }
@@ -62,5 +60,9 @@ public class BigNumberPanel extends JPanel {
             result.append(numberLabel.getText().charAt(numberLabel.getText().length() - 2));
 
         numberLabel.setText(result.toString());
+    }
+
+    public JLabel getNumberLabel() {
+        return numberLabel;
     }
 }

@@ -26,11 +26,14 @@ public class BigNumberPanel extends JPanel {
     public void setNumber(String addNumber) {
         if (numberLabel.getText().equals("0") && !addNumber.equals(Constants.POINT_STRING))
             numberLabel.setText(addNumber);
-         else if (addNumber.equals(Constants.POINT_STRING))
+
+        else if (addNumber.equals(Constants.POINT_STRING))
             numberLabel.setText(numberLabel.getText() + Constants.POINT_STRING);
-         else if (hasPoint())
+
+        else if (numberLabel.getText().contains(Constants.POINT_STRING))
             numberLabel.setText(numberLabel.getText() + addNumber);
-         else
+        
+        else
             processComma(addNumber);
     }
 
@@ -39,13 +42,6 @@ public class BigNumberPanel extends JPanel {
         BigDecimal bigDecimal = new BigDecimal(labelString);
         DecimalFormat decimalFormat = new DecimalFormat("###,###");
         numberLabel.setText(decimalFormat.format(bigDecimal));
-    }
-
-    private boolean hasPoint() {
-        for (int i = 0; i < numberLabel.getText().length(); i++)
-            if (numberLabel.getText().charAt(i) == Constants.POINT_STRING.charAt(0))
-                return true;
-        return false;
     }
 
     public void resetNumber() {

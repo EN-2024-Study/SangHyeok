@@ -19,11 +19,8 @@ public class CalculationManager {
             return;
         else if (calculationRepository.isEmptyInputNumberList() && number == 0)
             return;
-        else if (!calculationRepository.isEmptyInputNumberList())
-            screenManager.setBigNumber(String.valueOf(number));
-        else if (number == 0)
-            return;
 
+        screenManager.setBigNumber(String.valueOf(number));
         calculationRepository.addInputNumber(number);
     }
 
@@ -44,12 +41,19 @@ public class CalculationManager {
                 screenManager.resetBigNumber();
                 break;
             case Constants.DELETE_STRING:
-                calculationRepository.deleteInputNumber();
-                screenManager.deleteBigNumber();
+                processDelete();
             case Constants.SIGN_STRING:
             case Constants.POINT_STRING:
             case Constants.EQUAL_STRING:
                 break;
         }
     }
+
+    private void processDelete() {
+        if (calculationRepository.isEmptyInputNumberList())
+            return;
+        calculationRepository.deleteInputNumber();
+        screenManager.deleteBigNumber();
+    }
+
 }

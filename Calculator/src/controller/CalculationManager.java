@@ -20,8 +20,8 @@ public class CalculationManager {
         else if (calculationRepository.isEmptyInputNumberList() && number == 0)
             return;
 
-        screenManager.setBigNumber(String.valueOf(number));
         calculationRepository.addInputNumber(number);
+        screenManager.setBigNumber(String.valueOf(number));
     }
 
     public void deleteHistory() {

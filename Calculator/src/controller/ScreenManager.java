@@ -2,9 +2,11 @@ package controller;
 
 import model.*;
 import observer.*;
+import utility.Constants;
 import view.historyPanel.*;
 import view.mainPanel.*;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class ScreenManager {
@@ -18,7 +20,7 @@ public class ScreenManager {
         this.frame = frame;
         this.calculationManager = new CalculationManager(this);
         this.listenerVo = new ListenerVo(new ComponentListener(this), new ButtonListener(this, calculationManager),
-                new KeypadListener(calculationManager), new PanelMouseListener(this));
+                new KeypadListener(this, calculationManager), new PanelMouseListener(this));
         this.panelVo = new PanelVo(new HistoryButtonPanel(listenerVo.getButtonListener()), new SmallNumberPanel(), new BigNumberPanel(),
                 new KeypadPanel(listenerVo.getKeypadListener()), new RightHistoryPanel(listenerVo.getButtonListener()), new DownHistoryPanel(listenerVo.getButtonListener()));
 
@@ -70,6 +72,19 @@ public class ScreenManager {
 
         setTopPanelBackground(Color.WHITE);
         restartFrame();
+    }
+
+    public void processkeypadAction(String buttonPressed) {
+        JButton[] buttons = panelVo.getKeypadPanel().getButtons();
+        System.out.println(buttonPressed);
+        for (JButton button : buttons) {
+            if (button.getText().equals(buttonPressed)) {
+                button.setFocusable(true);
+                button.setFocusPainted(true);
+                button.requestFocus();
+                break;
+            }
+        }
     }
 
     public void setBigNumber(String number) {

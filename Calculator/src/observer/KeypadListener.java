@@ -10,9 +10,11 @@ import java.awt.event.*;
 public class KeypadListener extends KeyAdapter implements ActionListener {
 
     private CalculationManager calculationManager;
+    private ScreenManager screenManager;
     private boolean isShift;
 
-    public KeypadListener(CalculationManager calculationManager) {
+    public KeypadListener(ScreenManager screenManager, CalculationManager calculationManager) {
+        this.screenManager = screenManager;
         this.calculationManager = calculationManager;
         this.isShift = false;
     }
@@ -41,6 +43,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
         if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {
             calculationManager.addInputNumber((int) e.getKeyChar() - 48);
+            screenManager.processkeypadAction(String.valueOf(e.getKeyChar() - 48));
             return;
         } else if (e.getKeyCode() == 8) // delete
             operation = Constants.DELETE_STRING;
@@ -62,11 +65,13 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
             isShift = false;
         }
 
-        if (isKeypadValid(operation))
+        if (isOperatorValid(operation)) {
             calculationManager.processOperation(operation);
+            screenManager.processkeypadAction(operation);
+        }
     }
 
-    private boolean isKeypadValid(String str) {
+    private boolean isOperatorValid(String str) {
         for (String item : Constants.KEYPAD_STRINGS)
             if (item.equals(str))
                 return true;

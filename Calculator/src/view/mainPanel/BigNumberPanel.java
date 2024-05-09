@@ -3,7 +3,6 @@ package view.mainPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 public class BigNumberPanel extends JPanel {
 

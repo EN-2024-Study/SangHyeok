@@ -40,4 +40,8 @@ public class KeypadPanel extends JPanel {
         buttons[19].addActionListener(keypadListener);
         buttons[19].addKeyListener(keypadListener);
     }
+
+    public JButton[] getButtons() {
+        return buttons;
+    }
 }

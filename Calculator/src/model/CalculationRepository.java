@@ -1,5 +1,7 @@
 package model;
 
+import utility.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,12 @@ public class CalculationRepository {
     }
 
     public void addInputNumber(Character number) {
+        if (number == Constants.POINT_STRING.charAt(0) && isEmptyInputNumberList()) {
+            this.inputNumberList.add('0');
+            this.inputNumberList.add(number);
+            return;
+        }
+
         this.inputNumberList.add(number);
     }
 
@@ -26,6 +34,8 @@ public class CalculationRepository {
     }
 
     public boolean isMaxInputNumberList() {
+        if (hasDecimalPoint())
+            return this.inputNumberList.size() >= 17;
         return this.inputNumberList.size() >= 16;
     }
 

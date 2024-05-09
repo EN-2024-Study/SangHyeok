@@ -24,18 +24,28 @@ public class BigNumberPanel extends JPanel {
     }
 
     public void setNumber(String addNumber) {
-        if (numberLabel.getText().equals("0") && !addNumber.equals(Constants.POINT_STRING)) {
+        if (numberLabel.getText().equals("0") && !addNumber.equals(Constants.POINT_STRING))
             numberLabel.setText(addNumber);
-            return;
-        } else if (addNumber.equals(Constants.POINT_STRING)) {
+         else if (addNumber.equals(Constants.POINT_STRING))
             numberLabel.setText(numberLabel.getText() + Constants.POINT_STRING);
-            return;
-        }
+         else if (hasPoint())
+            numberLabel.setText(numberLabel.getText() + addNumber);
+         else
+            processComma(addNumber);
+    }
 
+    private void processComma(String addNumber) {
         String labelString = (numberLabel.getText() + addNumber).replaceAll(",", "");
         BigDecimal bigDecimal = new BigDecimal(labelString);
-        DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
+        DecimalFormat decimalFormat = new DecimalFormat("###,###");
         numberLabel.setText(decimalFormat.format(bigDecimal));
+    }
+
+    private boolean hasPoint() {
+        for (int i = 0; i < numberLabel.getText().length(); i++)
+            if (numberLabel.getText().charAt(i) == Constants.POINT_STRING.charAt(0))
+                return true;
+        return false;
     }
 
     public void resetNumber() {
@@ -49,7 +59,7 @@ public class BigNumberPanel extends JPanel {
         }
 
         StringBuilder result = new StringBuilder();
-        for(int i = 0; i < numberLabel.getText().length() - 2; i++)
+        for (int i = 0; i < numberLabel.getText().length() - 2; i++)
             result.append(numberLabel.getText().charAt(i));
 
         if (numberLabel.getText().charAt(numberLabel.getText().length() - 2) != ',')

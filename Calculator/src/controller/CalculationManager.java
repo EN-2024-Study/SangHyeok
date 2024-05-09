@@ -14,18 +14,21 @@ public class CalculationManager {
         this.calculationRepository = new CalculationRepository();
     }
 
-    public void addNumber(int number) {
-        if (calculationRepository.isEmptyInputNumberList() && number != 0)
-            screenManager.setBigNumber(String.valueOf(number));
+    public void addInputNumber(int number) {
+        if (calculationRepository.isMaxInputNumberList())
+            return;
+        else if (calculationRepository.isEmptyInputNumberList() && number == 0)
+            return;
         else if (!calculationRepository.isEmptyInputNumberList())
             screenManager.setBigNumber(String.valueOf(number));
         else if (number == 0)
             return;
-        calculationRepository.addNumber(number);
+
+        calculationRepository.addInputNumber(number);
     }
 
     public void deleteHistory() {
-        calculationRepository.deleteHistory();
+        calculationRepository.clearHistoryList();
     }
 
     public void processOperation(String operation) {
@@ -36,6 +39,8 @@ public class CalculationManager {
             case Constants.MULTIPLY_STRING:
             case Constants.CE_STRING:
             case Constants.C_STRING:
+                calculationRepository.clearInputNumberList();
+
             case Constants.DELETE_STRING:
             case Constants.SIGN_STRING:
             case Constants.POINT_STRING:

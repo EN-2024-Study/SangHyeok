@@ -17,20 +17,20 @@ public class CalculationRepository {
         this.secondOperator = "";
     }
 
-    public void addNumber(int number) {
+    public void addInputNumber(int number) {
         this.inputNumberList.add(number);
-    }
-
-    public void setFirstOperator(String firstOperator) {
-        this.firstOperator = firstOperator;
-    }
-
-    public void setSecondOperator(String secondOperator) {
-        this.secondOperator = secondOperator;
     }
 
     public boolean isEmptyInputNumberList() {
         return this.inputNumberList.isEmpty();
+    }
+
+    public boolean isMaxInputNumberList() {
+        return this.inputNumberList.size() > 15;
+    }
+
+    public void clearInputNumberList() {
+        this.inputNumberList.clear();
     }
 
     public boolean isEmptyFirstOperator() {
@@ -41,7 +41,15 @@ public class CalculationRepository {
         return this.secondOperator.isEmpty();
     }
 
-    public void deleteHistory() {
-        historyList = new ArrayList<>();
+    public void setFirstOperator(String firstOperator) {
+        this.firstOperator = firstOperator;
+    }
+
+    public void setSecondOperator(String secondOperator) {
+        this.secondOperator = secondOperator;
+    }
+
+    public void clearHistoryList() {
+        this.historyList.clear();
     }
 }

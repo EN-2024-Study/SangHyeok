@@ -1,8 +1,8 @@
 package view;
 
-import Listener.Repository.ListenerRepository;
+import listener.repository.ListenerRepository;
 import controller.CalculationManager;
-import view.Repository.PanelRepository;
+import view.repository.PanelRepository;
 import view.mainPanel.*;
 
 import javax.swing.*;
@@ -15,7 +15,7 @@ public class ScreenManager {
     private MainFrame frame;
 
     public ScreenManager() {
-        CalculationManager calculationManager = new CalculationManager(this);
+        CalculationManager calculationManager = new CalculationManager();
 
         this.listenerRepository = new ListenerRepository(this, calculationManager);
         this.panelRepository = new PanelRepository(listenerRepository.getButtonListener(), listenerRepository.getKeypadListener());

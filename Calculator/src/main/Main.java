@@ -1,7 +1,6 @@
-package Main;
+package main;
 
 import view.ScreenManager;
-import view.mainPanel.MainFrame;
 
 public class Main {
 

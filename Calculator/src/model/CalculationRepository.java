@@ -74,7 +74,7 @@ public class CalculationRepository {
         return str.contains(".");
     }
 
-    public void clearInputNumberList() {
+    public void clearInputNumber() {
         this.inputNumber = "0";
     }
 

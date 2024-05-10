@@ -1,4 +1,4 @@
-package Listener;
+package listener;
 
 import controller.CalculationManager;
 import view.ScreenManager;

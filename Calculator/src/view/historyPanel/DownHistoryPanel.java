@@ -44,7 +44,6 @@ public class DownHistoryPanel extends JPanel {
         scrollPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     }
 
-
     private class HistoryDeleteButtonPanel extends JPanel {     // 1회성 Class
 
         private JButton deleteButton;

@@ -1,9 +1,7 @@
-package observer;
+package Listener;
 
-import controller.ScreenManager;
-import utility.Constants;
+import view.ScreenManager;
 
-import javax.swing.*;
 import java.awt.event.*;
 
 public class ComponentListener extends ComponentAdapter {

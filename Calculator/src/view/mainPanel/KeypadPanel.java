@@ -1,6 +1,6 @@
 package view.mainPanel;
 
-import observer.*;
+import Listener.*;
 import utility.Constants;
 
 import javax.swing.*;

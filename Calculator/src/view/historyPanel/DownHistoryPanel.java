@@ -1,6 +1,6 @@
 package view.historyPanel;
 
-import observer.ButtonListener;
+import Listener.ButtonListener;
 import utility.Constants;
 
 import javax.swing.*;

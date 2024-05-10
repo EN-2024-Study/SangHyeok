@@ -1,8 +1,7 @@
-package observer;
+package Listener;
 
 import controller.CalculationManager;
-import controller.ScreenManager;
-import model.CalculationRepository;
+import view.ScreenManager;
 import utility.Constants;
 
 import java.awt.event.*;
@@ -43,7 +42,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
         if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {
             calculationManager.addInputNumber(Character.forDigit(e.getKeyChar() - 48, 10));
-            screenManager.processkeypadAction(String.valueOf(e.getKeyChar() - 48));
+            screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
             return;
         } else if (e.getKeyCode() == 8) // delete
             operation = Constants.DELETE_STRING;
@@ -67,7 +66,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
         if (isOperatorValid(operation)) {
             calculationManager.processOperation(operation);
-            screenManager.processkeypadAction(operation);
+            screenManager.processKeypadAction(operation);
         }
     }
 

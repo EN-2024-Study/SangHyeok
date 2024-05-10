@@ -1,6 +1,6 @@
-package observer;
+package Listener;
 
-import controller.ScreenManager;
+import view.ScreenManager;
 import utility.Constants;
 
 import java.awt.event.MouseAdapter;
@@ -21,7 +21,7 @@ public class PanelMouseListener extends MouseAdapter {
                 e.getSource().getClass().toString().contains(Constants.BIG_NUMBER_PANEL)) {
             screenManager.hideHistoryPanel();
             screenManager.removeTopPanelMouseListener();
-            screenManager.processkeypadAction(Constants.EQUAL_STRING);
+            screenManager.processKeypadAction(Constants.EQUAL_STRING);
         }
     }
 }

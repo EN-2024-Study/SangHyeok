@@ -1,7 +1,6 @@
 package view.mainPanel;
 
-import observer.ButtonListener;
-import observer.KeypadListener;
+import Listener.ButtonListener;
 
 import javax.swing.*;
 import java.awt.*;

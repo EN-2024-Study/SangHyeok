@@ -7,23 +7,11 @@ import java.awt.*;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
-public class BigNumberPanel extends JPanel {
-
-    private JLabel numberLabel;
+public class BigNumberPanel extends SmallNumberPanel {
 
     public BigNumberPanel() {
-        numberLabel = new JLabel("0");
-
-        numberLabel.setFont(new Font(Font.DIALOG, Font.BOLD, Constants.BIG_NUMBER_MAX_SIZE));
-        numberLabel.setHorizontalAlignment(JLabel.RIGHT);
-
-        setBackground(Color.WHITE);
-        setLayout(new GridLayout(1, 1));
-        add(numberLabel);
-    }
-
-    public void setNumber(String number) {
-        numberLabel.setText(number);
+        super();
+        super.numberLabel.setFont(new Font(Font.DIALOG, Font.BOLD, Constants.BIG_NUMBER_MAX_SIZE));
     }
 
     public void setFont(int frameWidthSize) {

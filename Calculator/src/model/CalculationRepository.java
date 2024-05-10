@@ -39,6 +39,9 @@ public class CalculationRepository {
 
     private boolean isFirstInput(String addNumber) {
         if (inputNumber.equals("0")) {
+            if (addNumber.equals("0")) // 첫 숫자가 0이라면 저장하지 않고 종료
+                return true;
+
             for (String n : Constants.NUMBER_STRINGS) {
                 if (n.equals(addNumber)) {
                     this.inputNumber = addNumber;  // 첫 문자가 숫자라면 숫자 삽입
@@ -58,10 +61,6 @@ public class CalculationRepository {
         DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
         return decimalFormat.format(bigDecimal);
-    }
-
-    public boolean isEmptyInputNumberList() {
-        return this.inputNumber.equals("0");
     }
 
     private boolean isMaxInputNumberList() {
@@ -97,5 +96,21 @@ public class CalculationRepository {
 
     public String getInputNumber() {
         return inputNumber;
+    }
+
+    public String getFirstOperator() {
+        return firstOperator;
+    }
+
+    public String getSecondOperator() {
+        return secondOperator;
+    }
+
+    public void setFirstOperator(String operator) {
+        this.firstOperator = operator;
+    }
+
+    public void setSecondOperator(String operator) {
+        this.secondOperator = operator;
     }
 }

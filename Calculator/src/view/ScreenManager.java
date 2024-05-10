@@ -20,6 +20,7 @@ public class ScreenManager {
         this.listenerRepository = new ListenerRepository(this, calculationManager);
         this.panelRepository = new PanelRepository(listenerRepository.getButtonListener(), listenerRepository.getKeypadListener());
         this.frame = new MainFrame(getMainPanel(), listenerRepository.getComponentListener(), listenerRepository.getKeypadListener());
+        panelRepository.getSmallNumberPanel().hideNumber();
     }
 
     private JPanel getMainPanel() {
@@ -127,6 +128,10 @@ public class ScreenManager {
     public void setBigNumber(String number) {
         panelRepository.getBigNumberPanel().setNumber(number);
         setBigNumberFont();
+    }
+
+    public void setSmallNumber(String state) {
+
     }
 
     public void setBigNumberFont() {

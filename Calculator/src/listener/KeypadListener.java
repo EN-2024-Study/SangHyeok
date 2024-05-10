@@ -28,7 +28,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
             }
         }
 
-        processOperator(e.getActionCommand());
+        processKey(e.getActionCommand());
     }
 
     @Override
@@ -74,7 +74,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
         }
 
         if (isOperatorValid(operator)) {
-            processOperator(operator);
+            processKey(operator);
             screenManager.processKeypadAction(operator);
         }
     }
@@ -85,19 +85,13 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
             isShift = false;
     }
 
-    private void processOperator(String operator) {
+    private void processKey(String operator) {
         switch (operator) {
             case Constants.ADD_STRING:
-
-                break;
             case Constants.SUBTRACT_STRING:
-
-                break;
             case Constants.DIVIDE_STRING:
-
-                break;
             case Constants.MULTIPLY_STRING:
-
+                calculationManager.processOperator(operator);
                 break;
             case Constants.CE_STRING:
             case Constants.C_STRING:
@@ -117,6 +111,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 break;
         }
         screenManager.setBigNumber(calculationManager.getInputNumber());
+//        screenManager.setSmallNumber(calculationManager.getCalculationState());
     }
 
     private boolean isOperatorValid(String str) {

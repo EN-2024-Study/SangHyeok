@@ -11,14 +11,11 @@ public class CalculationManager {
     }
 
     public void processInputNumber(String number) {
-        if (calculationRepository.isEmptyInputNumberList() && number.equals("0"))
-            return;  // 첫 문자가 0 일 때 그냥 반환
-
         calculationRepository.addInputNumber(number);
     }
 
-    public void processAdd() {
-
+    public void processOperator(String operator) {
+        calculationRepository.setFirstOperator(operator);
     }
 
     public void processC() {
@@ -40,4 +37,8 @@ public class CalculationManager {
     public String getInputNumber() {
         return calculationRepository.getInputNumber();
     }
+
+//    public String getCalculationState() {
+//
+//    }
 }

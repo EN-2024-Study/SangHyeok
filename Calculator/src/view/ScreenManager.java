@@ -3,7 +3,6 @@ package view;
 import Listener.Repository.ListenerRepository;
 import controller.CalculationManager;
 import view.Repository.PanelRepository;
-import view.historyPanel.*;
 import view.mainPanel.*;
 
 import javax.swing.*;
@@ -11,13 +10,13 @@ import java.awt.*;
 
 public class ScreenManager {
 
-    private CalculationManager calculationManager;
     private ListenerRepository listenerRepository;
     private PanelRepository panelRepository;
     private MainFrame frame;
 
     public ScreenManager() {
-        this.calculationManager = new CalculationManager(this);
+        CalculationManager calculationManager = new CalculationManager(this);
+
         this.listenerRepository = new ListenerRepository(this, calculationManager);
         this.panelRepository = new PanelRepository(listenerRepository.getButtonListener(), listenerRepository.getKeypadListener());
         this.frame = new MainFrame(getMainPanel(), listenerRepository.getComponentListener(), listenerRepository.getKeypadListener());

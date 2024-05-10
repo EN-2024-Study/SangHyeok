@@ -86,13 +86,14 @@ public class ScreenManager {
         panelRepository.getBigNumberPanel().setBackground(color);
     }
 
-    public void addTopPanelMouseListener() {
-        panelRepository.getHistoryButtonPanel().addMouseListener(listenerRepository.getPanelMouseListener());
-        panelRepository.getSmallNumberPanel().addMouseListener(listenerRepository.getPanelMouseListener());
-        panelRepository.getBigNumberPanel().addMouseListener(listenerRepository.getPanelMouseListener());
-    }
+    public void processTopPanelMouseListener(boolean isAdd) {
+        if (isAdd) {
+            panelRepository.getHistoryButtonPanel().addMouseListener(listenerRepository.getPanelMouseListener());
+            panelRepository.getSmallNumberPanel().addMouseListener(listenerRepository.getPanelMouseListener());
+            panelRepository.getBigNumberPanel().addMouseListener(listenerRepository.getPanelMouseListener());
+            return;
+        }
 
-    public void removeTopPanelMouseListener() {
         panelRepository.getHistoryButtonPanel().removeMouseListener(listenerRepository.getPanelMouseListener());
         panelRepository.getSmallNumberPanel().removeMouseListener(listenerRepository.getPanelMouseListener());
         panelRepository.getBigNumberPanel().removeMouseListener(listenerRepository.getPanelMouseListener());

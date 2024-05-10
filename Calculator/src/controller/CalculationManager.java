@@ -31,9 +31,16 @@ public class CalculationManager {
     public void processOperation(String operation) {
         switch (operation) {
             case Constants.ADD_STRING:
+
+                break;
             case Constants.SUBTRACT_STRING:
+
+                break;
             case Constants.DIVIDE_STRING:
+
+                break;
             case Constants.MULTIPLY_STRING:
+
                 break;
             case Constants.CE_STRING:
             case Constants.C_STRING:
@@ -44,10 +51,13 @@ public class CalculationManager {
                 processDelete();
                 break;
             case Constants.SIGN_STRING:
+
+                break;
             case Constants.POINT_STRING:
                 processPoint(operation);
                 break;
             case Constants.EQUAL_STRING:
+
                 break;
         }
     }

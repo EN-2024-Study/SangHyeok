@@ -26,10 +26,6 @@ public class BigNumberPanel extends JPanel {
         numberLabel.setText(number);
     }
 
-    public void resetNumber() {
-        numberLabel.setText("0");
-    }
-
     public void setFont(int frameWidthSize) {
         int fontMaxSize = Constants.BIG_NUMBER_MAX_SIZE;
         int fontMinSize = Constants.BIG_NUMBER_MIN_SIZE;

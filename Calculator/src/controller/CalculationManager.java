@@ -1,9 +1,6 @@
 package controller;
 
-import utility.Constants;
-
 import model.CalculationRepository;
-import view.ScreenManager;
 
 public class CalculationManager {
 
@@ -13,29 +10,34 @@ public class CalculationManager {
         this.calculationRepository = new CalculationRepository();
     }
 
-    public String addInputNumber(String number) {
+    public void processInputNumber(String number) {
         if (calculationRepository.isEmptyInputNumberList() && number.equals("0"))
-            return calculationRepository.getInputNumber(); // 첫 문자가 0 일 때 그냥 반환
+            return;  // 첫 문자가 0 일 때 그냥 반환
 
         calculationRepository.addInputNumber(number);
-        return calculationRepository.getInputNumber();
     }
 
-    public void deleteHistory() {
-        calculationRepository.clearHistoryList();
+    public void processAdd() {
+
     }
 
     public void processC() {
         calculationRepository.clearInputNumber();
     }
 
-    public String processDelete() {
+    public void processDelete() {
         calculationRepository.deleteInputNumber();
-        return calculationRepository.getInputNumber();
     }
 
-    public String processPoint(String operator) {
+    public void processPoint(String operator) {
         calculationRepository.addDecimalPoint(operator);
+    }
+
+    public void deleteHistory() {
+        calculationRepository.clearHistoryList();
+    }
+
+    public String getInputNumber() {
         return calculationRepository.getInputNumber();
     }
 }

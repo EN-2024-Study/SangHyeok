@@ -22,13 +22,12 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (String item : Constants.NUMBER_STRINGS) {
             if (item.equals(e.getActionCommand())) {
-                String number = calculationManager.addInputNumber(item);
-                screenManager.setBigNumber(number);
+                calculationManager.processInputNumber(item);
+                screenManager.setBigNumber(calculationManager.getInputNumber());
                 return;
             }
         }
 
-//        calculationManager.processOperator(e.getActionCommand());
         processOperator(e.getActionCommand());
     }
 
@@ -40,18 +39,21 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
             if (isShift)
                 operator = Constants.MULTIPLY_STRING;
             else {
-                String number = calculationManager.addInputNumber(String.valueOf(e.getKeyChar() - 48));
-                screenManager.setBigNumber(number);
+                calculationManager.processInputNumber(String.valueOf(e.getKeyChar() - 48));
+                screenManager.setBigNumber(calculationManager.getInputNumber());
                 screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
+                return;
             }
         }
         else if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {    // 숫자
-            String number = calculationManager.addInputNumber(String.valueOf(e.getKeyChar() - 48));
-            screenManager.setBigNumber(number);
+            calculationManager.processInputNumber(String.valueOf(e.getKeyChar() - 48));
+            screenManager.setBigNumber(calculationManager.getInputNumber());
             screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
             return;
-        } else if (e.getKeyCode() == 16)   // shift
+        } else if (e.getKeyCode() == 16) {   // shift
             isShift = true;
+            return;
+        }
         else if (e.getKeyCode() == 8) // delete
             operator = Constants.DELETE_STRING;
         else if (e.getKeyCode() == 27)  // esc
@@ -72,7 +74,6 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
         }
 
         if (isOperatorValid(operator)) {
-//            calculationManager.processOperator(operator);
             processOperator(operator);
             screenManager.processKeypadAction(operator);
         }
@@ -85,7 +86,6 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     }
 
     private void processOperator(String operator) {
-        String number = "";
         switch (operator) {
             case Constants.ADD_STRING:
 
@@ -102,23 +102,21 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
             case Constants.CE_STRING:
             case Constants.C_STRING:
                 calculationManager.processC();
-                screenManager.resetBigNumber();
                 break;
             case Constants.DELETE_STRING:
-                number = calculationManager.processDelete();
-                screenManager.setBigNumber(number);
+                calculationManager.processDelete();
                 break;
             case Constants.SIGN_STRING:
 
                 break;
             case Constants.POINT_STRING:
-                number = calculationManager.processPoint(operator);
-                screenManager.setBigNumber(number);
+                calculationManager.processPoint(operator);
                 break;
             case Constants.EQUAL_STRING:
 
                 break;
         }
+        screenManager.setBigNumber(calculationManager.getInputNumber());
     }
 
     private boolean isOperatorValid(String str) {

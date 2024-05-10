@@ -134,11 +134,6 @@ public class ScreenManager {
         setBigNumberFont();
     }
 
-    public void deleteBigNumber() {
-        panelRepository.getBigNumberPanel().deleteNumber();
-        setBigNumberFont();
-    }
-
     public void setBigNumberFont() {
         panelRepository.getBigNumberPanel().setFont(frame.getWidth());
     }

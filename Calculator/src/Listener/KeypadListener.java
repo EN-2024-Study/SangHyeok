@@ -22,7 +22,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (String item : Constants.NUMBER_STRINGS) {
             if (item.equals(e.getActionCommand())) {
-                calculationManager.addInputNumber(item.charAt(0));
+                calculationManager.addInputNumber(item);
                 return;
             }
         }
@@ -38,12 +38,12 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
             if (isShift)
                 operation = Constants.MULTIPLY_STRING;
             else {
-                calculationManager.addInputNumber(Character.forDigit(e.getKeyChar() - 48, 10));
+                calculationManager.addInputNumber(String.valueOf(e.getKeyChar() - 48));
                 screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
             }
         }
-        else if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {
-            calculationManager.addInputNumber(Character.forDigit(e.getKeyChar() - 48, 10));
+        else if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {    // 숫자
+            calculationManager.addInputNumber(String.valueOf(e.getKeyChar() - 48));
             screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
             return;
         } else if (e.getKeyCode() == 16)   // shift

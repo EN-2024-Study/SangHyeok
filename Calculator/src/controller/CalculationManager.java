@@ -15,13 +15,11 @@ public class CalculationManager {
         this.calculationRepository = new CalculationRepository();
     }
 
-    public void addInputNumber(Character number) {
-        if (calculationRepository.isMaxInputNumberList())
-            return;
-        else if (calculationRepository.isEmptyInputNumberList() && number == 0)
-            return;
+    public void addInputNumber(String number) {
+        if (calculationRepository.isEmptyInputNumberList() && number.equals("0"))
+            return; // 첫 문자가 0 일 때 그냥 반환
         calculationRepository.addInputNumber(number);
-        screenManager.setBigNumber(String.valueOf(number));
+        screenManager.setBigNumber(calculationRepository.getInputNumber());
     }
 
     public void deleteHistory() {
@@ -63,16 +61,12 @@ public class CalculationManager {
     }
 
     private void processDelete() {
-        if (calculationRepository.isEmptyInputNumberList())
-            return;
         calculationRepository.deleteInputNumber();
-        screenManager.deleteBigNumber();
+        screenManager.setBigNumber(calculationRepository.getInputNumber());
     }
 
     private void processPoint(String operation) {
-        if (calculationRepository.hasDecimalPoint())
-            return;
-        calculationRepository.addInputNumber(operation.charAt(0));
-        screenManager.setBigNumber(operation);
+        calculationRepository.addDecimalPoint(operation);
+        screenManager.setBigNumber(calculationRepository.getInputNumber());
     }
 }

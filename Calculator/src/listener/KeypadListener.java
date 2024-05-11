@@ -22,8 +22,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (String item : Constants.NUMBER_STRINGS) {
             if (item.equals(e.getActionCommand())) {
-                calculationManager.processInputNumber(item);
-                screenManager.setBigNumber(calculationManager.getInputNumber());
+                processNumber(item);
                 return;
             }
         }
@@ -39,15 +38,13 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
             if (isShift)
                 operator = Constants.MULTIPLY_STRING;
             else {
-                calculationManager.processInputNumber(String.valueOf(e.getKeyChar() - 48));
-                screenManager.setBigNumber(calculationManager.getInputNumber());
+                processNumber(String.valueOf(e.getKeyChar() - 48));
                 screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
                 return;
             }
         }
-        else if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {    // 숫자
-            calculationManager.processInputNumber(String.valueOf(e.getKeyChar() - 48));
-            screenManager.setBigNumber(calculationManager.getInputNumber());
+        else if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {    // 숫자 처리
+            processNumber(String.valueOf(e.getKeyChar() - 48));
             screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
             return;
         } else if (e.getKeyCode() == 16) {   // shift
@@ -85,6 +82,11 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
             isShift = false;
     }
 
+    private void processNumber(String number) {
+        calculationManager.processInputNumber(number);
+        screenManager.setBigNumber(calculationManager.getOutputNumber());
+    }
+
     private void processKey(String operator) {
         switch (operator) {
             case Constants.ADD_STRING:
@@ -110,8 +112,8 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 calculationManager.processEqual(operator);
                 break;
         }
-        screenManager.setBigNumber(calculationManager.getInputNumber());
         screenManager.setSmallNumber(calculationManager.getCalculationState());
+        screenManager.setBigNumber(calculationManager.getOutputNumber());
     }
 
     private boolean isOperatorValid(String str) {

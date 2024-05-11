@@ -43,6 +43,7 @@ public class CalculationManager {
     public void processC() {
         this.inputNumber = "0";
         this.firstOperator = "";
+        this.calculationState = "";
         this.firstNumber = new BigDecimal(0);
         this.equalOperator = false;
         this.isSettingOperator = false;
@@ -144,20 +145,23 @@ public class CalculationManager {
     }
 
     private void setCalculationState() {
-        BigDecimal secondOperand = new BigDecimal(inputNumber);
+        BigDecimal secondNumber = new BigDecimal(inputNumber);
 
         switch (firstOperator) {
             case Constants.ADD_STRING:
-                this.calculationState = firstNumber.add(secondOperand).toString();
+                this.calculationState = firstNumber + firstOperator + secondNumber + Constants.EQUAL_STRING;
+                this.inputNumber = firstNumber.add(secondNumber).toString();
                 break;
             case Constants.SUBTRACT_STRING:
-                this.calculationState = firstNumber.subtract(secondOperand).toString();
+                this.calculationState = firstNumber + firstOperator + secondNumber + Constants.EQUAL_STRING;
+                this.inputNumber = firstNumber.subtract(secondNumber).toString();
                 break;
             case Constants.MULTIPLY_STRING:
-                this.calculationState = firstNumber.multiply(secondOperand).toString();
+                this.calculationState = firstNumber + firstOperator + secondNumber + Constants.EQUAL_STRING;
+                this.inputNumber = firstNumber.multiply(secondNumber).toString();
                 break;
             case Constants.DIVIDE_STRING:
-                processDivide(secondOperand);
+                processDivide(secondNumber);
                 break;
         }
     }

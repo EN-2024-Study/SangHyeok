@@ -15,21 +15,23 @@ public class CalculationManager {
 
     private HistoryRepository historyRepository;
     private String outputNumber;
-    private String firstOperator;
-    private String secondOperator;
+    private String firstOperator, secondOperator;
     private String calculationState;
-    private BigDecimal firstNumber;
-    private BigDecimal secondNumber;
+    private BigDecimal firstNumber, secondNumber;
     private LastInputType lastInputType;
 
     public CalculationManager() {
         this.historyRepository = new HistoryRepository();
+        processC();
+    }
+
+    public void processC() {
         this.outputNumber = "0";
         this.firstOperator = "";
         this.secondOperator = "";
         this.calculationState = " ";
-        this.firstNumber = null;
-        this.secondNumber = null;
+        this.firstNumber = new BigDecimal(0);
+        this.secondNumber = new BigDecimal(0);
         this.lastInputType = LastInputType.InitialValue;
     }
 
@@ -42,25 +44,14 @@ public class CalculationManager {
     }
 
     public void processOperator(String operator) {
-        this.lastInputType = LastInputType.Operator;
-
-        if (!operator.isEmpty()) {
-            this.secondOperator = operator;
-        }
-        else
+        if (this.lastInputType == LastInputType.Operator || this.firstOperator.isEmpty())   // 연산자가 연속입력일 때 연산자만 바꾸기
             this.firstOperator = operator;
+        else
+            this.secondOperator = operator;
 
+        this.lastInputType = LastInputType.Operator;
         setCalcStateByOperator();
         this.outputNumber = this.firstNumber.toString();    // 마지막 입력이 소수점이였을 때 연산자가 들어오면 소수점 삭제
-    }
-
-    public void processC() {
-        this.outputNumber = "0";
-        this.firstOperator = "";
-        this.secondOperator = "";
-        this.calculationState = " ";
-        this.firstNumber = null;
-        this.secondNumber = null;
     }
 
     public void processDelete() {
@@ -100,12 +91,13 @@ public class CalculationManager {
         if (this.firstOperator.isEmpty()) {   // 연산자가 비어있다면 연산자에 삽입
             this.firstOperator = operator;
             this.lastInputType = LastInputType.Operator;
+            setCalcStateByOperator();
+            return;
 
         } else if (this.lastInputType == LastInputType.Equal)
             this.firstNumber = new BigDecimal(this.outputNumber);
-         else
-            this.lastInputType = LastInputType.Equal;
 
+        this.lastInputType = LastInputType.Equal;
         setCalcStateByEqual();
     }
 

@@ -35,20 +35,20 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
         String operator = "";
 
         if (e.getKeyCode() == 56) {     // 8과 곱셈 처리
-            if (isShift)
+            if (this.isShift)
                 operator = Constants.MULTIPLY_STRING;
             else {
                 processNumber(String.valueOf(e.getKeyChar() - 48));
-                screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
+                this.screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
                 return;
             }
         }
         else if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {    // 숫자 처리
             processNumber(String.valueOf(e.getKeyChar() - 48));
-            screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
+            this.screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
             return;
         } else if (e.getKeyCode() == 16) {   // shift
-            isShift = true;
+            this.isShift = true;
             return;
         }
         else if (e.getKeyCode() == 8) // delete
@@ -64,7 +64,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
         else if (e.getKeyCode() == 47)  // /
             operator = Constants.DIVIDE_STRING;
         else if (e.getKeyCode() == 61) {
-            if (isShift)
+            if (this.isShift)
                 operator = Constants.ADD_STRING;   // +
             else
                 operator = Constants.EQUAL_STRING; // =
@@ -72,19 +72,19 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
         if (isOperatorValid(operator)) {
             processKey(operator);
-            screenManager.processKeypadAction(operator);
+            this.screenManager.processKeypadAction(operator);
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == 16)   // shift
-            isShift = false;
+            this.isShift = false;
     }
 
     private void processNumber(String number) {
-        calculationManager.processInputNumber(number);
-        screenManager.setBigNumber(calculationManager.getOutputNumber());
+        this.calculationManager.processInputNumber(number);
+        this.screenManager.setBigNumber(this.calculationManager.getOutputNumber());
     }
 
     private void processKey(String operator) {
@@ -93,27 +93,27 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
             case Constants.SUBTRACT_STRING:
             case Constants.DIVIDE_STRING:
             case Constants.MULTIPLY_STRING:
-                calculationManager.processOperator(operator);
+                this.calculationManager.processOperator(operator);
                 break;
             case Constants.CE_STRING:
             case Constants.C_STRING:
-                calculationManager.processC();
+                this.calculationManager.processC();
                 break;
             case Constants.DELETE_STRING:
-                calculationManager.processDelete();
+                this.calculationManager.processDelete();
                 break;
             case Constants.SIGN_STRING:
 
                 break;
             case Constants.POINT_STRING:
-                calculationManager.processPoint(operator);
+                this.calculationManager.processPoint(operator);
                 break;
             case Constants.EQUAL_STRING:
-                calculationManager.processEqual(operator);
+                this.calculationManager.processEqual(operator);
                 break;
         }
-        screenManager.setSmallNumber(calculationManager.getCalculationState());
-        screenManager.setBigNumber(calculationManager.getOutputNumber());
+        this.screenManager.setSmallNumber(this.calculationManager.getCalculationState());
+        this.screenManager.setBigNumber(this.calculationManager.getOutputNumber());
     }
 
     private boolean isOperatorValid(String str) {

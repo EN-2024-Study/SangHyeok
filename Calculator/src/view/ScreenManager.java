@@ -20,7 +20,6 @@ public class ScreenManager {
         this.listenerRepository = new ListenerRepository(this, calculationManager);
         this.panelRepository = new PanelRepository(listenerRepository.getButtonListener(), listenerRepository.getKeypadListener());
         this.frame = new MainFrame(getMainPanel(), listenerRepository.getComponentListener(), listenerRepository.getKeypadListener());
-        panelRepository.getSmallNumberPanel().hideNumber();
     }
 
     private JPanel getMainPanel() {
@@ -38,7 +37,7 @@ public class ScreenManager {
 
         c.gridy = 2;
         c.weighty = 0.7;
-        mainPanel.add(panelRepository.getKeypadPanel(), c);
+        mainPanel.add(this.panelRepository.getKeypadPanel(), c);
         return mainPanel;
     }
 
@@ -52,69 +51,69 @@ public class ScreenManager {
 
         c.gridy = 0;
         c.weighty = 0.2;
-        topPanel.add(panelRepository.getHistoryButtonPanel(), c);
+        topPanel.add(this.panelRepository.getHistoryButtonPanel(), c);
 
         c.gridy = 1;
         c.weighty = 0.3;
-        topPanel.add(panelRepository.getSmallNumberPanel(), c);
+        topPanel.add(this.panelRepository.getSmallNumberPanel(), c);
 
         c.gridy = 2;
         c.weighty = 0.4;
-        topPanel.add(panelRepository.getBigNumberPanel(), c);
+        topPanel.add(this.panelRepository.getBigNumberPanel(), c);
         return topPanel;
     }
 
     public void showDownHistoryPanel() {
-        panelRepository.getKeypadPanel().setVisible(false);
-        frame.setLayout(new GridLayout(2, 1));
-        frame.add(panelRepository.getDownHistoryPanel());
+        this.panelRepository.getKeypadPanel().setVisible(false);
+        this.frame.setLayout(new GridLayout(2, 1));
+        this.frame.add(this.panelRepository.getDownHistoryPanel());
 
         setTopPanelBackground(new Color(171, 171, 171));
         restartFrame();
     }
 
     public void showRightHistoryPanel() {
-        panelRepository.getHistoryButtonPanel().hideButton();
+        this.panelRepository.getHistoryButtonPanel().hideButton();
 
-        frame.setLayout(new GridLayout(1, 2));
-        frame.add(panelRepository.getRightHistoryPanel());
+        this.frame.setLayout(new GridLayout(1, 2));
+        this.frame.add(this.panelRepository.getRightHistoryPanel());
         restartFrame();
     }
 
     private void setTopPanelBackground(Color color) {
-        panelRepository.getHistoryButtonPanel().setBackground(color);
-        panelRepository.getSmallNumberPanel().setBackground(color);
-        panelRepository.getBigNumberPanel().setBackground(color);
+        this.panelRepository.getHistoryButtonPanel().setBackground(color);
+        this.panelRepository.getSmallNumberPanel().setBackground(color);
+        this.panelRepository.getBigNumberPanel().setBackground(color);
     }
 
     public void processTopPanelMouseListener(boolean isAdd) {
         if (isAdd) {
-            panelRepository.getHistoryButtonPanel().addMouseListener(listenerRepository.getPanelMouseListener());
-            panelRepository.getSmallNumberPanel().addMouseListener(listenerRepository.getPanelMouseListener());
-            panelRepository.getBigNumberPanel().addMouseListener(listenerRepository.getPanelMouseListener());
+            this.panelRepository.getHistoryButtonPanel().addMouseListener(this.listenerRepository.getPanelMouseListener());
+            this.panelRepository.getSmallNumberPanel().addMouseListener(this.listenerRepository.getPanelMouseListener());
+            this.panelRepository.getBigNumberPanel().addMouseListener(this.listenerRepository.getPanelMouseListener());
             return;
         }
 
-        panelRepository.getHistoryButtonPanel().removeMouseListener(listenerRepository.getPanelMouseListener());
-        panelRepository.getSmallNumberPanel().removeMouseListener(listenerRepository.getPanelMouseListener());
-        panelRepository.getBigNumberPanel().removeMouseListener(listenerRepository.getPanelMouseListener());
+        this.panelRepository.getHistoryButtonPanel().removeMouseListener(this.listenerRepository.getPanelMouseListener());
+        this.panelRepository.getSmallNumberPanel().removeMouseListener(this.listenerRepository.getPanelMouseListener());
+        this.panelRepository.getBigNumberPanel().removeMouseListener(this.listenerRepository.getPanelMouseListener());
     }
 
     public void hideHistoryPanel() {
-        panelRepository.getHistoryButtonPanel().showButton();
+        this.panelRepository.getHistoryButtonPanel().showButton();
 
-        frame.remove(panelRepository.getRightHistoryPanel());
-        frame.remove(panelRepository.getDownHistoryPanel());
+        this.frame.remove(this.panelRepository.getRightHistoryPanel());
+        this.frame.remove(this.panelRepository.getDownHistoryPanel());
 
-        frame.setLayout(new GridLayout(1, 1));
-        panelRepository.getKeypadPanel().setVisible(true);
+        this.frame.setLayout(new GridLayout(1, 1));
+        this.panelRepository.getKeypadPanel().setVisible(true);
 
         setTopPanelBackground(Color.WHITE);
         restartFrame();
     }
 
     public void processKeypadAction(String buttonPressed) {
-        JButton[] buttons = panelRepository.getKeypadPanel().getButtons();
+        JButton[] buttons = this.panelRepository.getKeypadPanel().getButtons();
         for (JButton button : buttons) {
             if (button.getText().equals(buttonPressed)) {
                 button.setFocusable(true);
@@ -126,23 +125,20 @@ public class ScreenManager {
     }
 
     public void setBigNumber(String number) {
-        panelRepository.getBigNumberPanel().setNumber(number);
+        this.panelRepository.getBigNumberPanel().setNumber(number);
         setBigNumberFont();
     }
 
     public void setSmallNumber(String state) {
-        if (state.isEmpty())
-            return;
-        panelRepository.getSmallNumberPanel().setNumber(state);
-        panelRepository.getSmallNumberPanel().showNumber();
+        this.panelRepository.getSmallNumberPanel().setNumber(state);
     }
 
     public void setBigNumberFont() {
-        panelRepository.getBigNumberPanel().setFont(frame.getWidth());
+        this.panelRepository.getBigNumberPanel().setFont(this.frame.getWidth());
     }
 
     private void restartFrame() {
-        frame.revalidate();
-        frame.repaint();
+        this.frame.revalidate();
+        this.frame.repaint();
     }
 }

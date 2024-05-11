@@ -176,6 +176,6 @@ public class CalculationManager {
             return;
         }
 
-        this.outputNumber = this.firstNumber.multiply(secondNumber).toString();
+        this.outputNumber = this.firstNumber.divide(secondNumber).toString();
     }
 }

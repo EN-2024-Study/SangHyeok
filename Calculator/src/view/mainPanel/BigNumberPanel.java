@@ -11,6 +11,7 @@ public class BigNumberPanel extends SmallNumberPanel {
 
     public BigNumberPanel() {
         super();
+        super.numberLabel.setText("0");
         super.numberLabel.setFont(new Font(Font.DIALOG, Font.BOLD, Constants.BIG_NUMBER_MAX_SIZE));
     }
 

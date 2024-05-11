@@ -20,6 +20,7 @@ public class CalculationManager {
     private String calculationState;
     private BigDecimal firstNumber, secondNumber;
     private LastInputType lastInputType;
+    private boolean isInput;
 
     public CalculationManager() {
         this.historyRepository = new HistoryRepository();
@@ -34,6 +35,7 @@ public class CalculationManager {
         this.firstNumber = new BigDecimal("0");
         this.secondNumber = new BigDecimal("0");
         this.lastInputType = LastInputType.InitialValue;
+        this.isInput = true;
     }
 
     public void processCE() {
@@ -50,6 +52,7 @@ public class CalculationManager {
             this.outputNumber = "0";
 
         this.lastInputType = LastInputType.Number;
+        this.isInput = true;
         addInputNumber(number);
     }
 
@@ -93,11 +96,14 @@ public class CalculationManager {
             this.secondOperator = operator;
 
         this.lastInputType = LastInputType.Operator;
+        this.isInput = false;
         setCalcStateByOperator();
         this.outputNumber = this.firstNumber.toString();    // 마지막 입력이 소수점이였을 때 연산자가 들어오면 소수점 삭제
     }
 
     public void processEqual(String operator) {
+        this.isInput = false;
+
         if (this.firstOperator.isEmpty()) {   // 연산자가 비어있다면 연산자에 삽입
             this.firstOperator = operator;
             this.lastInputType = LastInputType.Operator;
@@ -124,6 +130,8 @@ public class CalculationManager {
     }
 
     public String getOutputNumber() {
+        if (isInput)
+            return outputNumber;
         return getTrimNumberString(outputNumber);
     }
 
@@ -237,7 +245,7 @@ public class CalculationManager {
         if (integerPart.equals("0"))    // 실수부가 0이면 소수자리 개수 하나 더 늘어남
             maxSize = 18;
 
-        while (result.toString().length() > maxSize)    
+        while (result.toString().length() > maxSize)
             result = result.setScale(--scaleSize, RoundingMode.HALF_EVEN).stripTrailingZeros();
 
         return result.toString();

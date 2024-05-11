@@ -3,7 +3,6 @@ package controller;
 import model.HistoryRepository;
 import utility.Constants;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class CalculationManager {
@@ -42,6 +41,7 @@ public class CalculationManager {
         this.firstOperator = operator;
         this.lastInputType = LastInputType.Operator;
         setCalculationState();
+        this.outputNumber = this.firstNumber.toString();    // 마지막 입력이 소수점이였을 때 연산자가 들어올 수 있으므로
     }
 
     public void processC() {
@@ -54,6 +54,10 @@ public class CalculationManager {
     public void processDelete() {
         if (this.lastInputType == LastInputType.Operator)  // 연산자가 나온 직후이면 return
             return;
+        else if (this.lastInputType == LastInputType.Equal) {
+            this.calculationState = " ";    
+            return;
+        }
 
         if (outputNumber.length() == 1) {    // 숫자가 1의자리 수일 떄
             this.outputNumber = "0";
@@ -70,6 +74,11 @@ public class CalculationManager {
     public void processPoint(String point) {
         if (this.outputNumber.contains(Constants.POINT_STRING))   // 이미 소수점이 있다면 return
             return;
+        if (this.lastInputType == LastInputType.Operator) { // 마지막 입력이 연산자였다면 "0."으로 삽입
+            this.outputNumber = "0" + point;
+            this.lastInputType = LastInputType.Number;
+            return;
+        }
 
         this.lastInputType = LastInputType.Number;
         this.outputNumber += point;
@@ -79,6 +88,7 @@ public class CalculationManager {
         if (this.firstOperator.isEmpty()) {   // 연산자가 비어있다면 연산자에 삽입
             this.firstOperator = operator;
             this.lastInputType = LastInputType.Operator;
+            setCalculationState();
             return;
         }
 
@@ -134,6 +144,7 @@ public class CalculationManager {
         if (this.lastInputType == LastInputType.Operator) {
             this.firstNumber = new BigDecimal(this.outputNumber);
             this.calculationState = this.firstNumber + this.firstOperator;
+            System.out.println(this.calculationState);
             return;
         }
 

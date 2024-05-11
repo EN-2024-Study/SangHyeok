@@ -8,7 +8,7 @@ public class SmallNumberPanel extends JPanel {
     protected JLabel numberLabel;
 
     public SmallNumberPanel() {
-        numberLabel = new JLabel("");
+        numberLabel = new JLabel(" ");
         numberLabel.setHorizontalAlignment(JLabel.RIGHT);
 
         setBackground(Color.WHITE);

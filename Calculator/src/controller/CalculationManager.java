@@ -22,7 +22,7 @@ public class CalculationManager {
         this.historyRepository = new HistoryRepository();
         this.outputNumber = "0";
         this.firstOperator = "";
-        this.calculationState = "";
+        this.calculationState = " ";
         this.firstNumber = new BigDecimal(0);
         this.lastInputType = LastInputType.InitialValue;
     }
@@ -47,8 +47,8 @@ public class CalculationManager {
     public void processC() {
         this.outputNumber = "0";
         this.firstOperator = "";
-        this.calculationState = "";
-        this.firstNumber = new BigDecimal(0);
+        this.calculationState = " ";
+        this.firstNumber = new BigDecimal("0");
     }
 
     public void processDelete() {
@@ -61,14 +61,14 @@ public class CalculationManager {
         }
 
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < outputNumber.length() - 1; i++)  // 마지막 자릿 수만 제외
+        for (int i = 0; i < outputNumber.length() - 1; i++)  // 마지막 자릿 수만 삭제
             result.append(outputNumber.charAt(i));
 
-        this.outputNumber = processComma(result.toString());
+        this.outputNumber = result.toString();
     }
 
     public void processPoint(String point) {
-        if (hasDecimalPoint(this.outputNumber))   // 이미 소수점이 있다면 return
+        if (this.outputNumber.contains(Constants.POINT_STRING))   // 이미 소수점이 있다면 return
             return;
 
         this.lastInputType = LastInputType.Number;
@@ -107,13 +107,12 @@ public class CalculationManager {
             return;
 
         this.outputNumber += addNumber;
-        this.outputNumber = processComma(outputNumber);   // 컴마 처리
     }
 
     private boolean isMaxInputNumberList() {
-        if (hasDecimalPoint(outputNumber))
-            return this.outputNumber.length() >= 22;
-        return this.outputNumber.length() >= 21;
+        if (outputNumber.contains(Constants.POINT_STRING))
+            return this.outputNumber.length() >= 17;
+        return this.outputNumber.length() >= 16;
     }
 
     private boolean isFirstInput(String addNumber) {
@@ -131,21 +130,6 @@ public class CalculationManager {
         return false;
     }
 
-    private String processComma(String str) {
-        if (hasDecimalPoint(str))
-            return str;
-
-        String temp = str.replaceAll(",", "");
-        BigDecimal bigDecimal = new BigDecimal(temp);
-        DecimalFormat decimalFormat = new DecimalFormat("###,###");
-
-        return decimalFormat.format(bigDecimal);
-    }
-
-    private boolean hasDecimalPoint(String str) {
-        return str.contains(".");
-    }
-
     private void setCalculationState() {
         if (this.lastInputType == LastInputType.Operator) {
             this.firstNumber = new BigDecimal(this.outputNumber);
@@ -153,7 +137,7 @@ public class CalculationManager {
             return;
         }
 
-        //-----------------lastInputType == LastInputType.Equal--------------------
+        // lastInputType == LastInputType.equal 일 때
         BigDecimal secondNumber = new BigDecimal(outputNumber);
         this.calculationState = this.firstNumber + this.firstOperator + secondNumber + Constants.EQUAL_STRING;
 
@@ -168,12 +152,13 @@ public class CalculationManager {
                 this.outputNumber = this.firstNumber.multiply(secondNumber).toString();
                 break;
             case Constants.DIVIDE_STRING:
-                processDivide(secondNumber);
+                if (!isProcessDivide(secondNumber))
+                    return;
                 break;
         }
     }
 
-    private void processDivide(BigDecimal secondNumber) {
+    private boolean isProcessDivide(BigDecimal secondNumber) {
         if (Objects.equals(secondNumber, new BigDecimal("0"))) {    // 0으로 나눴을 때
             this.calculationState = this.firstNumber + this.firstOperator;
 
@@ -181,10 +166,11 @@ public class CalculationManager {
                 this.outputNumber = "정의되지 않은 결과입니다";
             else
                 this.outputNumber = "0으로 나눌 수 없습니다";
-            return;
+            return false;
         }
 
         // 정상적으로 나눴을 때
         this.outputNumber = this.firstNumber.divide(secondNumber).toString();
+        return true;
     }
 }

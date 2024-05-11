@@ -11,14 +11,18 @@ public class CalculationRepository {
 
     private List<String> historyList;
     private String inputNumber;
+    private BigDecimal firstOperand;
     private String firstOperator;
     private boolean equal;
+    private String calculationState;
 
     public CalculationRepository() {
         this.historyList = new ArrayList<>();
         this.inputNumber = "0";
+        this.firstOperand = new BigDecimal(0);
         this.firstOperator = "";
         this.equal = false;
+        this.calculationState = "";
     }
 
     public void addDecimalPoint(String point) {
@@ -102,8 +106,17 @@ public class CalculationRepository {
         return firstOperator;
     }
 
+    public BigDecimal getFirstOperand() {
+        return firstOperand;
+    }
+
     public void setFirstOperator(String operator) {
         this.firstOperator = operator;
+    }
+
+    public void setFirstOperand() {
+        this.firstOperand = new BigDecimal(inputNumber);
+        this.inputNumber = "0";
     }
 
     public boolean hasEqual() {
@@ -112,5 +125,32 @@ public class CalculationRepository {
 
     public void setEqual(boolean equal) {
         this.equal = equal;
+    }
+
+    public void setCalculationState() {
+        BigDecimal secondOperand = new BigDecimal(inputNumber);
+
+        switch (firstOperator) {
+            case Constants.ADD_STRING:
+                calculationState = firstOperand.add(secondOperand).toString();
+                break;
+            case Constants.SUBTRACT_STRING:
+                calculationState = firstOperand.subtract(secondOperand).toString();
+                break;
+            case Constants.MULTIPLY_STRING:
+                calculationState = firstOperand.multiply(secondOperand).toString();
+                break;
+            case Constants.DIVIDE_STRING:
+                processDivide(secondOperand);
+                break;
+        }
+    }
+
+    private void processDivide(BigDecimal secondOperand) {
+
+    }
+
+    public String getCalculationState() {
+        return calculationState;
     }
 }

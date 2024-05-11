@@ -34,6 +34,9 @@ public class BigNumberPanel extends SmallNumberPanel {
     }
 
     private String processComma(String str) {
+        if (!isDigit(str))
+            return str;
+        
         String temp = str.replaceAll(",", "");
 
         if (temp.contains(Constants.POINT_STRING)) {
@@ -51,4 +54,10 @@ public class BigNumberPanel extends SmallNumberPanel {
         return decimalFormat.format(bigDecimal);
     }
 
+    private boolean isDigit(String str) {
+        for(int i = 0; i < str.length(); i++)
+            if (!Character.isDigit(str.charAt(i)))
+                return false;
+        return true;
+    }
 }

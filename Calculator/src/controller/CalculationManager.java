@@ -4,6 +4,7 @@ import model.HistoryRepository;
 import utility.Constants;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Objects;
 
@@ -55,6 +56,10 @@ public class CalculationManager {
     public void processOperator(String operator) {
         if (this.lastInputType == LastInputType.Operator || this.firstOperator.isEmpty())   // 연산자가 연속입력일 때 연산자만 바꾸기
             this.firstOperator = operator;
+        else if (this.lastInputType == LastInputType.Equal) {
+            this.firstNumber = new BigDecimal(this.outputNumber);
+            this.firstOperator = operator;
+        }
         else
             this.secondOperator = operator;
 
@@ -103,14 +108,14 @@ public class CalculationManager {
             setCalcStateByOperator();
             return;
 
-        } else if (this.lastInputType == LastInputType.Equal)
+        } else if (firstOperator.equals(Constants.EQUAL_STRING))   // "number = number =" 경우 return
+            return;
+        else if (this.lastInputType == LastInputType.Equal) // "number ==" 경우
             this.firstNumber = new BigDecimal(this.outputNumber);
-        else if (this.lastInputType == LastInputType.Operator) {
-            this.secondNumber = this.firstNumber;
-        }
 
         this.lastInputType = LastInputType.Equal;
-        setCalcStateByEqual();
+        this.calculationState = this.firstNumber + this.firstOperator + this.secondNumber + Constants.EQUAL_STRING; // "number operator number ="
+        calculate();
     }
 
     public String getCalculationState() {
@@ -166,16 +171,6 @@ public class CalculationManager {
             this.secondNumber = new BigDecimal(this.outputNumber);
     }
 
-    private void setCalcStateByEqual() {
-        if (firstOperator.equals(Constants.EQUAL_STRING))   // "number = number =" 경우 return
-            return;
-
-        // "number operator number ="
-        this.calculationState = this.firstNumber + this.firstOperator + this.secondNumber + Constants.EQUAL_STRING;
-        calculate();
-//        this.secondNumber = this.firstNumber;
-    }
-
     private void setCalcStateByOperator() {
         if (this.secondOperator.isEmpty()) {    // 연산자가 한개만 들어온 상태
             this.calculationState = this.firstNumber + this.firstOperator;
@@ -212,13 +207,17 @@ public class CalculationManager {
             return;
 
         // 정상적으로 나눴을 때
-        int scaleSize = 16;
-        this.firstNumber = this.firstNumber.divide(this.secondNumber, scaleSize, RoundingMode.HALF_EVEN);
+//        int scaleSize = 16;
+//        this.firstNumber = this.firstNumber.divide(this.secondNumber, scaleSize, RoundingMode.HALF_EVEN);
+//        while (this.firstNumber.toString().length() > 17)
+//            this.firstNumber = this.firstNumber.divide(this.secondNumber, --scaleSize, RoundingMode.HALF_EVEN);
 
-        while (this.firstNumber.toString().length() > 17)
-            this.firstNumber = this.firstNumber.divide(this.secondNumber, --scaleSize, RoundingMode.HALF_EVEN);
+        this.firstNumber = this.firstNumber.divide(this.secondNumber, MathContext.DECIMAL128);
 
-        this.outputNumber = this.firstNumber.stripTrailingZeros().toString();
+        this.outputNumber = this.firstNumber.setScale(16, RoundingMode.HALF_EVEN).stripTrailingZeros().toString();
+        System.out.println(outputNumber);
+        System.out.println(firstNumber);
+        System.out.println("=============");
     }
 
     private boolean isDivideValid() {

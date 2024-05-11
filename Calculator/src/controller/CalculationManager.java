@@ -30,8 +30,8 @@ public class CalculationManager {
         this.firstOperator = "";
         this.secondOperator = "";
         this.calculationState = " ";
-        this.firstNumber = new BigDecimal(0);
-        this.secondNumber = new BigDecimal(0);
+        this.firstNumber = new BigDecimal("0");
+        this.secondNumber = new BigDecimal("0");
         this.lastInputType = LastInputType.InitialValue;
     }
 
@@ -96,6 +96,9 @@ public class CalculationManager {
 
         } else if (this.lastInputType == LastInputType.Equal)
             this.firstNumber = new BigDecimal(this.outputNumber);
+        else if (this.lastInputType == LastInputType.Operator) {
+            this.secondNumber = this.firstNumber;
+        }
 
         this.lastInputType = LastInputType.Equal;
         setCalcStateByEqual();

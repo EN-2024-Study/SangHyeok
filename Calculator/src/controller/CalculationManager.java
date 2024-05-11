@@ -35,6 +35,15 @@ public class CalculationManager {
         this.lastInputType = LastInputType.InitialValue;
     }
 
+    public void processCE() {
+        if (this.lastInputType == LastInputType.Equal) {
+            processC();
+            return;
+        }
+        this.outputNumber = "0";
+        this.secondNumber = new BigDecimal("0");
+    }
+
     public void processInputNumber(String number) {
         if (this.lastInputType == LastInputType.Operator || this.lastInputType == LastInputType.Equal)   // 연산자가 나온 직후 숫자가 들어왔을 때
             this.outputNumber = "0";

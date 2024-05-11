@@ -96,6 +96,8 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 this.calculationManager.processOperator(operator);
                 break;
             case Constants.CE_STRING:
+                this.calculationManager.processCE();
+                break;
             case Constants.C_STRING:
                 this.calculationManager.processC();
                 break;

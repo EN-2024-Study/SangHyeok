@@ -2,7 +2,9 @@ package controller;
 
 import model.HistoryRepository;
 import utility.Constants;
+
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public class CalculationManager {
@@ -10,11 +12,13 @@ public class CalculationManager {
     private enum LastInputType {
         InitialValue, Number, Equal, Operator
     }
+
     private HistoryRepository historyRepository;
     private String outputNumber;
     private String firstOperator;
     private String calculationState;
     private BigDecimal firstNumber;
+    private BigDecimal secondNumber;
     private LastInputType lastInputType;
 
     public CalculationManager() {
@@ -23,12 +27,13 @@ public class CalculationManager {
         this.firstOperator = "";
         this.calculationState = " ";
         this.firstNumber = new BigDecimal(0);
+        this.secondNumber = new BigDecimal(0);
         this.lastInputType = LastInputType.InitialValue;
     }
 
     public void processInputNumber(String number) {
         if (this.lastInputType == LastInputType.Operator ||
-        this.lastInputType == LastInputType.Equal) {  // 연산자가 나온 직후 숫자가 들어왔을 때
+                this.lastInputType == LastInputType.Equal) {  // 연산자가 나온 직후 숫자가 들어왔을 때
             this.firstNumber = new BigDecimal(this.outputNumber);
             this.outputNumber = "0";
         }
@@ -40,7 +45,7 @@ public class CalculationManager {
     public void processOperator(String operator) {
         this.firstOperator = operator;
         this.lastInputType = LastInputType.Operator;
-        setCalculationState();
+        setCalculationState(false);
         this.outputNumber = this.firstNumber.toString();    // 마지막 입력이 소수점이였을 때 연산자가 들어올 수 있으므로
     }
 
@@ -54,8 +59,8 @@ public class CalculationManager {
     public void processDelete() {
         if (this.lastInputType == LastInputType.Operator)  // 연산자가 나온 직후이면 return
             return;
-        else if (this.lastInputType == LastInputType.Equal) {
-            this.calculationState = " ";    
+        else if (this.lastInputType == LastInputType.Equal) {   // '='이 나온 직후이면 계산 식 초기화
+            this.calculationState = " ";
             return;
         }
 
@@ -88,12 +93,14 @@ public class CalculationManager {
         if (this.firstOperator.isEmpty()) {   // 연산자가 비어있다면 연산자에 삽입
             this.firstOperator = operator;
             this.lastInputType = LastInputType.Operator;
-            setCalculationState();
-            return;
+            setCalculationState(false);
+        } else if (this.lastInputType == LastInputType.Equal) {
+            this.firstNumber = new BigDecimal(this.outputNumber);
+            setCalculationState(true);
+        } else {
+            this.lastInputType = LastInputType.Equal;
+            setCalculationState(false);
         }
-
-        this.lastInputType = LastInputType.Equal;
-        setCalculationState();
     }
 
     public String getCalculationState() {
@@ -140,16 +147,16 @@ public class CalculationManager {
         return false;
     }
 
-    private void setCalculationState() {
+    private void setCalculationState(boolean isContinueEqual) {
         if (this.lastInputType == LastInputType.Operator) {
             this.firstNumber = new BigDecimal(this.outputNumber);
             this.calculationState = this.firstNumber + this.firstOperator;
-            System.out.println(this.calculationState);
             return;
         }
 
-        // lastInputType == LastInputType.equal 일 때
-        BigDecimal secondNumber = new BigDecimal(outputNumber);
+        // ===lastInputType == LastInputType.equal 일 때===
+        if (!isContinueEqual)   // '='이 연속으로 나오지 않았을 때 두번째 피연산자 조정
+            this.secondNumber = new BigDecimal(outputNumber);
         this.calculationState = this.firstNumber + this.firstOperator + secondNumber + Constants.EQUAL_STRING;
 
         switch (firstOperator) {
@@ -181,7 +188,7 @@ public class CalculationManager {
         }
 
         // 정상적으로 나눴을 때
-        this.outputNumber = this.firstNumber.divide(secondNumber).toString();
+        this.outputNumber = this.firstNumber.divide(secondNumber, 16, RoundingMode.HALF_EVEN).toString();
         return true;
     }
 }

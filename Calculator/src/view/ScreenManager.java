@@ -131,7 +131,10 @@ public class ScreenManager {
     }
 
     public void setSmallNumber(String state) {
-
+        if (state.isEmpty())
+            return;
+        panelRepository.getSmallNumberPanel().setNumber(state);
+        panelRepository.getSmallNumberPanel().showNumber();
     }
 
     public void setBigNumberFont() {

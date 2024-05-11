@@ -12,13 +12,13 @@ public class CalculationRepository {
     private List<String> historyList;
     private String inputNumber;
     private String firstOperator;
-    private String secondOperator;
+    private boolean equal;
 
     public CalculationRepository() {
         this.historyList = new ArrayList<>();
         this.inputNumber = "0";
         this.firstOperator = "";
-        this.secondOperator = "";
+        this.equal = false;
     }
 
     public void addDecimalPoint(String point) {
@@ -102,15 +102,15 @@ public class CalculationRepository {
         return firstOperator;
     }
 
-    public String getSecondOperator() {
-        return secondOperator;
-    }
-
     public void setFirstOperator(String operator) {
         this.firstOperator = operator;
     }
 
-    public void setSecondOperator(String operator) {
-        this.secondOperator = operator;
+    public boolean hasEqual() {
+        return equal;
+    }
+
+    public void setEqual(boolean equal) {
+        this.equal = equal;
     }
 }

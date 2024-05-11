@@ -107,11 +107,11 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 calculationManager.processPoint(operator);
                 break;
             case Constants.EQUAL_STRING:
-
+                calculationManager.processEqual(operator);
                 break;
         }
         screenManager.setBigNumber(calculationManager.getInputNumber());
-//        screenManager.setSmallNumber(calculationManager.getCalculationState());
+        screenManager.setSmallNumber(calculationManager.getCalculationState());
     }
 
     private boolean isOperatorValid(String str) {

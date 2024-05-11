@@ -30,15 +30,31 @@ public class CalculationManager {
         calculationRepository.addDecimalPoint(operator);
     }
 
-    public void deleteHistory() {
-        calculationRepository.clearHistoryList();
+    public void processEqual(String operator) {
+        if (calculationRepository.getFirstOperator().isEmpty()) {
+            calculationRepository.setFirstOperator(operator);
+        }
+        calculationRepository.setEqual(true);
+    }
+
+    public String getCalculationState() {
+        String result = calculationRepository.getInputNumber();
+        String firstOperator = calculationRepository.getFirstOperator();
+        boolean equal = calculationRepository.hasEqual();
+
+        if (firstOperator.isEmpty())
+            return "";
+        else if (!equal)
+            return result + firstOperator;
+        else
+            return result + firstOperator + result;
     }
 
     public String getInputNumber() {
         return calculationRepository.getInputNumber();
     }
 
-//    public String getCalculationState() {
-//
-//    }
+    public void deleteHistory() {
+        calculationRepository.clearHistoryList();
+    }
 }

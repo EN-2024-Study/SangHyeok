@@ -36,7 +36,7 @@ public class BigNumberPanel extends SmallNumberPanel {
     private String processComma(String str) {
         if (!isDigit(str))
             return str;
-        
+
         String temp = str.replaceAll(",", "");
 
         if (temp.contains(Constants.POINT_STRING)) {

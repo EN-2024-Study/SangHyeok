@@ -116,6 +116,7 @@ public class ScreenManager {
         JButton[] buttons = this.panelRepository.getKeypadPanel().getButtons();
         for (JButton button : buttons) {
             if (button.getText().equals(buttonPressed)) {
+//                button.doClick(10);
                 button.setFocusable(true);
                 button.setFocusPainted(true);
                 button.requestFocus();

@@ -11,7 +11,7 @@ import java.util.Objects;
 public class CalculationManager {
 
     private enum LastInputType {
-        InitialValue, Number, Equal, Operator
+        InitialValue, Number, Equal, Operator, Point
     }
 
     private HistoryRepository historyRepository;
@@ -79,24 +79,23 @@ public class CalculationManager {
     public void processPoint(String point) {
         if (this.outputNumber.contains(Constants.POINT_STRING))   // 이미 소수점이 있다면 return
             return;
-        if (this.lastInputType == LastInputType.Operator) { // 마지막 입력이 연산자였다면 "0."으로 삽입
+        if (this.lastInputType == LastInputType.Operator)  // 마지막 입력이 연산자였다면 "0."으로 삽입
             this.outputNumber = "0" + point;
-            this.lastInputType = LastInputType.Number;
-            return;
-        }
+         else
+            this.outputNumber += point;
 
-        this.lastInputType = LastInputType.Number;
-        this.outputNumber += point;
+        this.lastInputType = LastInputType.Point;
     }
 
     public void processOperator(String operator) {
-        if (this.lastInputType == LastInputType.Operator || this.firstOperator.isEmpty() || this.lastInputType == LastInputType.Equal)   // 연산자가 연속입력일 때나 처음 연산자 입력이 들어오면 연산자만 바꾸기
+        if ((this.lastInputType == LastInputType.Operator || this.firstOperator.isEmpty() || this.lastInputType == LastInputType.Equal) && this.lastInputType == LastInputType.Point)   // 연산자가 연속입력일 때나 처음 연산자 입력이 들어오면 연산자만 바꾸기
             this.firstOperator = operator;
         else
             this.secondOperator = operator;
 
         this.lastInputType = LastInputType.Operator;
         this.isInput = false;
+
         setCalcStateByOperator();
         this.outputNumber = this.firstNumber.toString();    // 마지막 입력이 소수점이였을 때 연산자가 들어오면 소수점 삭제
     }
@@ -114,7 +113,7 @@ public class CalculationManager {
             return;
         else if (this.lastInputType == LastInputType.Equal) // "number ==" 경우
             this.firstNumber = new BigDecimal(this.outputNumber);
-        else if (this.lastInputType == LastInputType.Operator) {
+        else if (this.lastInputType == LastInputType.Operator) {    // 연산자 직후 "=" 경우
             this.secondNumber = new BigDecimal(this.outputNumber);
         }
 
@@ -232,6 +231,9 @@ public class CalculationManager {
     }
 
     private String getTrimNumberString(String str) {
+        if (!isDigit(str))
+            return str;
+
         int maxSize = 17;
         int scaleSize = 16;
         BigDecimal result = new BigDecimal(str).setScale(scaleSize, RoundingMode.HALF_EVEN).stripTrailingZeros();
@@ -249,5 +251,12 @@ public class CalculationManager {
             result = result.setScale(--scaleSize, RoundingMode.HALF_EVEN).stripTrailingZeros();
 
         return result.toString();
+    }
+
+    private boolean isDigit(String str) {
+        for(int i = 0; i < str.length(); i++)
+            if (!Character.isDigit(str.charAt(i)))
+                return false;
+        return true;
     }
 }

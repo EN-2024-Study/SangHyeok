@@ -155,6 +155,9 @@ public class CalculationManager {
         }
 
         // ===lastInputType == LastInputType.equal 일 때===
+        if (firstOperator.equals(Constants.EQUAL_STRING))
+            return;
+
         if (!isContinueEqual)   // '='이 연속으로 나오지 않았을 때 두번째 피연산자 조정
             this.secondNumber = new BigDecimal(outputNumber);
         this.calculationState = this.firstNumber + this.firstOperator + secondNumber + Constants.EQUAL_STRING;
@@ -170,14 +173,14 @@ public class CalculationManager {
                 this.outputNumber = this.firstNumber.multiply(secondNumber).toString();
                 break;
             case Constants.DIVIDE_STRING:
-                if (!isProcessDivide(secondNumber))
+                if (!isProcessDivide())
                     return;
                 break;
         }
     }
 
-    private boolean isProcessDivide(BigDecimal secondNumber) {
-        if (Objects.equals(secondNumber, new BigDecimal("0"))) {    // 0으로 나눴을 때
+    private boolean isProcessDivide() {
+        if (Objects.equals(this.secondNumber, new BigDecimal("0"))) {    // 0으로 나눴을 때
             this.calculationState = this.firstNumber + this.firstOperator;
 
             if (Objects.equals(this.firstNumber, new BigDecimal("0")))
@@ -188,7 +191,13 @@ public class CalculationManager {
         }
 
         // 정상적으로 나눴을 때
-        this.outputNumber = this.firstNumber.divide(secondNumber, 16, RoundingMode.HALF_EVEN).toString();
+        int scaleSize = 16;
+        this.firstNumber = this.firstNumber.divide(this.secondNumber, scaleSize, RoundingMode.HALF_EVEN);
+
+        while(this.firstNumber.toString().length() > 17)
+            this.firstNumber = this.firstNumber.divide(this.secondNumber, --scaleSize, RoundingMode.HALF_EVEN);
+
+        this.outputNumber = this.firstNumber.stripTrailingZeros().toString();
         return true;
     }
 }

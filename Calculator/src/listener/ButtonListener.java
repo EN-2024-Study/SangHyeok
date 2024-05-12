@@ -22,7 +22,13 @@ public class ButtonListener implements ActionListener {
         if (e.getSource().getClass().toString().contains(Constants.HISTORY_BUTTON_PANEL)) {
             screenManager.showDownHistoryPanel();
             screenManager.processTopPanelMouseListener(true);
-        } else if (e.getActionCommand().contains(Constants.TRASH_BUTTON))
+            return;
+        } else if (e.getActionCommand().contains(Constants.TRASH_BUTTON)) {
             calculationManager.deleteHistory();
+            return;
+        }
+
+        // HistoryPanel 에 history click
+        System.out.println("test");
     }
 }

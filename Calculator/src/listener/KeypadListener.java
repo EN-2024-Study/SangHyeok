@@ -134,7 +134,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
         for (int i = 0; i < number.length(); i++) {
             if (!Character.isDigit(number.charAt(i))) {
-                if (number.charAt(i) != '.' && number.charAt(i) != '-' && number.charAt(i) != 'E') {
+                if (number.charAt(i) != '.' && number.charAt(i) != '-' && number.charAt(i) != '+' && number.charAt(i) != 'E') {
                     isDigit = false;
                     this.screenManager.processKeypadActionListener(false);
                     this.calculationManager.initLastInputType();

@@ -16,20 +16,21 @@ public class DownHistoryPanel extends JPanel {
 
     public DownHistoryPanel(ButtonListener buttonListener) {
         historyDeleteButtonPanel = new HistoryDeleteButtonPanel(buttonListener);
-        initHistoryList();
+        initHistoryList(buttonListener);
         initScrollPane();
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
         add(historyDeleteButtonPanel, BorderLayout.SOUTH);
     }
 
-    private void initHistoryList() {
+    private void initHistoryList(ButtonListener buttonListener) {
         historyList = new ArrayList<>();
         for(int i = 0; i < 5; i++) {
             JButton button = new JButton("test" + (i + 1));
             button.setBackground(Color.WHITE);
             button.setOpaque(true);
             button.setBorderPainted(false);
+            button.addActionListener(buttonListener);
             historyList.add(button);
         }
     }

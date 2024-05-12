@@ -110,7 +110,6 @@ public class CalculationManager {
             else
                 this.secondOperator = operator;
         }
-
         this.lastInputType = LastInputType.Operator;
         this.isInput = false;
 
@@ -250,7 +249,7 @@ public class CalculationManager {
     }
 
     private String getTrimNumberString(String str) {
-        if (!isDigit(str))
+        if (!isDigit(str) || !str.contains("."))
             return str;
 
         int maxSize = 17;
@@ -274,7 +273,8 @@ public class CalculationManager {
 
     private boolean isDigit(String str) {
         for(int i = 0; i < str.length(); i++)
-            if (!Character.isDigit(str.charAt(i)))
+            if (!Character.isDigit(str.charAt(i)) && str.charAt(i) != '.' && str.charAt(i) != '-'
+                    && str.charAt(i) != '+' && str.charAt(i) != 'E')
                 return false;
         return true;
     }

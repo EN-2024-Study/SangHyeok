@@ -11,7 +11,7 @@ import java.util.Objects;
 public class CalculationManager {
 
     private enum LastInputType {
-        InitialValue, Number, Equal, Operator, Point
+        InitialValue, Number, Equal, Operator
     }
 
     private HistoryRepository historyRepository;
@@ -84,11 +84,11 @@ public class CalculationManager {
          else
             this.outputNumber += point;
 
-        this.lastInputType = LastInputType.Point;
+        this.lastInputType = LastInputType.Operator;
     }
 
     public void processOperator(String operator) {
-        if ((this.lastInputType == LastInputType.Operator || this.firstOperator.isEmpty() || this.lastInputType == LastInputType.Equal) && this.lastInputType == LastInputType.Point)   // 연산자가 연속입력일 때나 처음 연산자 입력이 들어오면 연산자만 바꾸기
+        if (this.lastInputType == LastInputType.Operator || this.firstOperator.isEmpty() || this.lastInputType == LastInputType.Equal)   // 연산자가 연속입력일 때나 처음 연산자 입력이 들어오면 연산자만 바꾸기
             this.firstOperator = operator;
         else
             this.secondOperator = operator;

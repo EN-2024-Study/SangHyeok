@@ -27,6 +27,10 @@ public class CalculationManager {
         processC();
     }
 
+    public void initLastInputType() {
+        this.lastInputType = LastInputType.InitialValue;
+    }
+
     public void processC() {
         this.outputNumber = "0";
         this.firstOperator = "";
@@ -34,8 +38,8 @@ public class CalculationManager {
         this.calculationState = " ";
         this.firstNumber = new BigDecimal("0");
         this.secondNumber = new BigDecimal("0");
-        this.lastInputType = LastInputType.InitialValue;
         this.isInput = true;
+        initLastInputType();
     }
 
     public void processCE() {
@@ -48,8 +52,10 @@ public class CalculationManager {
     }
 
     public void processInputNumber(String number) {
-        if (this.lastInputType == LastInputType.Operator || this.lastInputType == LastInputType.Equal)   // 연산자가 나온 직후 숫자가 들어왔을 때
+        if (this.lastInputType == LastInputType.Operator)   // 연산자가 나온 직후 숫자가 들어왔을 때
             this.outputNumber = "0";
+        else if (this.lastInputType == LastInputType.Equal)
+            processC();
 
         this.lastInputType = LastInputType.Number;
         this.isInput = true;
@@ -57,10 +63,13 @@ public class CalculationManager {
     }
 
     public void processDelete() {
-        if (this.lastInputType == LastInputType.Operator)  // 연산자가 나온 직후이면 return
+        if (this.lastInputType == LastInputType.InitialValue)
+            processC();
+        else if (this.lastInputType == LastInputType.Operator)  // 연산자가 나온 직후이면 return
             return;
         else if (this.lastInputType == LastInputType.Equal) {   // '='이 나온 직후이면 계산 식 초기화
             this.calculationState = " ";
+            this.firstNumber = new BigDecimal("0");
             return;
         }
 
@@ -119,9 +128,8 @@ public class CalculationManager {
             return;
         else if (this.lastInputType == LastInputType.Equal) // "number ==" 경우
             this.firstNumber = new BigDecimal(this.outputNumber);
-        else if (this.lastInputType == LastInputType.Operator) {    // 연산자 직후 "=" 경우
+        else if (this.lastInputType == LastInputType.Operator)     // 연산자 직후 "=" 경우
             this.secondNumber = new BigDecimal(this.outputNumber);
-        }
 
         this.lastInputType = LastInputType.Equal;
         this.calculationState = getTrimNumberString(this.firstNumber.toString()) + this.firstOperator + this.secondNumber + Constants.EQUAL_STRING; // "number operator number ="

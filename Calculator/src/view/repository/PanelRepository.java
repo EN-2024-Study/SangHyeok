@@ -2,12 +2,12 @@ package view.repository;
 
 import listener.ButtonListener;
 import listener.KeypadListener;
-import view.historyPanel.DownHistoryPanel;
-import view.historyPanel.RightHistoryPanel;
-import view.mainPanel.BigNumberPanel;
-import view.mainPanel.HistoryButtonPanel;
-import view.mainPanel.KeypadPanel;
-import view.mainPanel.SmallNumberPanel;
+import view.panel.historyPanel.DownHistoryPanel;
+import view.panel.historyPanel.RightHistoryPanel;
+import view.panel.mainPanel.BigNumberPanel;
+import view.panel.mainPanel.HistoryButtonPanel;
+import view.panel.mainPanel.KeypadPanel;
+import view.panel.mainPanel.SmallNumberPanel;
 
 import javax.swing.*;
 

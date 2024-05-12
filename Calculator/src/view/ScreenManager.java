@@ -4,7 +4,7 @@ import listener.repository.ListenerRepository;
 import controller.CalculationManager;
 import utility.Constants;
 import view.repository.PanelRepository;
-import view.mainPanel.*;
+import view.panel.mainPanel.*;
 
 import javax.swing.*;
 import java.awt.*;

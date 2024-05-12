@@ -95,7 +95,7 @@ public class CalculationManager {
             return;
         if (this.lastInputType == LastInputType.Operator)  // 마지막 입력이 연산자였다면 "0."으로 삽입
             this.outputNumber = "0" + point;
-         else
+        else
             this.outputNumber += point;
 
         this.lastInputType = LastInputType.Number;

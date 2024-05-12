@@ -5,13 +5,21 @@ import java.util.List;
 
 public class HistoryRepository {
 
-    List<String> historyList;
+    private List<String> historyList;
 
     public HistoryRepository() {
-        historyList = new ArrayList<>();
+        this.historyList = new ArrayList<>();
     }
 
     public void clearHistoryList() {
         this.historyList.clear();
+    }
+
+    public List<String> getHistoryList() {
+        return historyList;
+    }
+
+    public void addHistory(String history) {
+        this.historyList.add(history);
     }
 }

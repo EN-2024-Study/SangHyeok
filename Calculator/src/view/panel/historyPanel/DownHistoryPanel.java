@@ -25,7 +25,7 @@ public class DownHistoryPanel extends JPanel {
 
     private void initHistoryList(ButtonListener buttonListener) {
         historyList = new ArrayList<>();
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 20; i++) {
             JButton button = new JButton("test" + (i + 1));
             button.setBackground(Color.WHITE);
             button.setOpaque(true);

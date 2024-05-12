@@ -84,20 +84,26 @@ public class CalculationManager {
          else
             this.outputNumber += point;
 
-        this.lastInputType = LastInputType.Operator;
+        this.lastInputType = LastInputType.Number;
     }
 
     public void processOperator(String operator) {
-        if (this.lastInputType == LastInputType.Operator || this.firstOperator.isEmpty() || this.lastInputType == LastInputType.Equal)   // 연산자가 연속입력일 때나 처음 연산자 입력이 들어오면 연산자만 바꾸기
+        if (this.lastInputType == LastInputType.Operator || this.lastInputType == LastInputType.Equal)    // 연산자가 연속입력일 때나 = 다음에 연산자 입력이 들어오면 연산자만 바꾸기
             this.firstOperator = operator;
-        else
-            this.secondOperator = operator;
+        else if (this.lastInputType == LastInputType.Number || this.lastInputType == LastInputType.InitialValue) {  // 숫자 입력 후 연산자 입력일 때
+            if (this.firstOperator.isEmpty())
+                this.firstOperator = operator;
+            else
+                this.secondOperator = operator;
+        }
 
         this.lastInputType = LastInputType.Operator;
         this.isInput = false;
 
         setCalcStateByOperator();
-        this.outputNumber = this.firstNumber.toString();    // 마지막 입력이 소수점이였을 때 연산자가 들어오면 소수점 삭제
+        
+        if (outputNumber.charAt(outputNumber.length() - 1) == '.')
+            this.outputNumber = this.firstNumber.toString();    // 마지막 입력이 소수점이였을 때 연산자가 들어오면 소수점 삭제
     }
 
     public void processEqual(String operator) {

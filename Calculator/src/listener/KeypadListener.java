@@ -107,7 +107,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 this.calculationManager.processDelete();
                 break;
             case Constants.SIGN_STRING:
-
+                this.calculationManager.processSign();
                 break;
             case Constants.POINT_STRING:
                 this.calculationManager.processPoint(operator);

@@ -3,9 +3,7 @@ package controller;
 import model.HistoryRepository;
 import utility.Constants;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
+import java.math.*;
 import java.util.Objects;
 
 public class CalculationManager {
@@ -62,6 +60,11 @@ public class CalculationManager {
         addInputNumber(number);
     }
 
+    public void processSign() {
+        this.outputNumber = new BigDecimal(this.outputNumber).negate().toString();
+        this.firstNumber = new BigDecimal(this.outputNumber);
+    }
+
     public void processDelete() {
         if (this.lastInputType == LastInputType.InitialValue)
             processC();
@@ -70,6 +73,8 @@ public class CalculationManager {
         else if (this.lastInputType == LastInputType.Equal) {   // '='이 나온 직후이면 계산 식 초기화
             this.calculationState = " ";
             this.firstNumber = new BigDecimal("0");
+            this.secondNumber = new BigDecimal("0");
+            this.firstOperator = "";
             return;
         }
 

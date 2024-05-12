@@ -39,13 +39,13 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 operator = Constants.MULTIPLY_STRING;
             else {
                 processNumber(String.valueOf(e.getKeyChar() - 48));
-                this.screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
+                this.screenManager.processKeypadActionPaint(String.valueOf(e.getKeyChar() - 48));
                 return;
             }
         }
         else if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {    // 숫자 처리
             processNumber(String.valueOf(e.getKeyChar() - 48));
-            this.screenManager.processKeypadAction(String.valueOf(e.getKeyChar() - 48));
+            this.screenManager.processKeypadActionPaint(String.valueOf(e.getKeyChar() - 48));
             return;
         } else if (e.getKeyCode() == 16) {   // shift
             this.isShift = true;
@@ -72,7 +72,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
         if (isOperatorValid(operator)) {
             processKey(operator);
-            this.screenManager.processKeypadAction(operator);
+            this.screenManager.processKeypadActionPaint(operator);
         }
     }
 
@@ -84,6 +84,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
     private void processNumber(String number) {
         this.calculationManager.processInputNumber(number);
+        this.screenManager.processKeypadActionListener(true);
         this.screenManager.setBigNumber(this.calculationManager.getOutputNumber());
     }
 
@@ -115,6 +116,8 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 break;
         }
         this.screenManager.setSmallNumber(this.calculationManager.getCalculationState());
+
+        processKeypadAction(this.calculationManager.getOutputNumber());
         this.screenManager.setBigNumber(this.calculationManager.getOutputNumber());
     }
 
@@ -123,5 +126,22 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
             if (item.equals(str))
                 return true;
         return false;
+    }
+
+    private void processKeypadAction(String number) {
+        boolean isDigit = true;
+
+        for (int i = 0; i < number.length(); i++) {
+            if (!Character.isDigit(number.charAt(i))) {
+                if (number.charAt(i) != '.') {
+                    isDigit = false;
+                    this.screenManager.processKeypadActionListener(false);
+                    break;
+                }
+            }
+        }
+
+        if (isDigit)
+            this.screenManager.processKeypadActionListener(true);
     }
 }

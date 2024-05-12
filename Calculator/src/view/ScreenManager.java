@@ -2,6 +2,7 @@ package view;
 
 import listener.repository.ListenerRepository;
 import controller.CalculationManager;
+import utility.Constants;
 import view.repository.PanelRepository;
 import view.mainPanel.*;
 
@@ -80,10 +81,36 @@ public class ScreenManager {
         restartFrame();
     }
 
+    public void hideHistoryPanel() {
+        this.panelRepository.getHistoryButtonPanel().showButton();
+
+        this.frame.remove(this.panelRepository.getRightHistoryPanel());
+        this.frame.remove(this.panelRepository.getDownHistoryPanel());
+
+        this.frame.setLayout(new GridLayout(1, 1));
+        this.panelRepository.getKeypadPanel().setVisible(true);
+
+        setTopPanelBackground(Color.WHITE);
+        restartFrame();
+    }
+
     private void setTopPanelBackground(Color color) {
         this.panelRepository.getHistoryButtonPanel().setBackground(color);
         this.panelRepository.getSmallNumberPanel().setBackground(color);
         this.panelRepository.getBigNumberPanel().setBackground(color);
+    }
+
+    public void setBigNumber(String number) {
+        this.panelRepository.getBigNumberPanel().setNumber(number);
+        setBigNumberFont();
+    }
+
+    public void setSmallNumber(String state) {
+        this.panelRepository.getSmallNumberPanel().setNumber(state);
+    }
+
+    public void setBigNumberFont() {
+        this.panelRepository.getBigNumberPanel().setFont(this.frame.getWidth());
     }
 
     public void processTopPanelMouseListener(boolean isAdd) {
@@ -99,20 +126,7 @@ public class ScreenManager {
         this.panelRepository.getBigNumberPanel().removeMouseListener(this.listenerRepository.getPanelMouseListener());
     }
 
-    public void hideHistoryPanel() {
-        this.panelRepository.getHistoryButtonPanel().showButton();
-
-        this.frame.remove(this.panelRepository.getRightHistoryPanel());
-        this.frame.remove(this.panelRepository.getDownHistoryPanel());
-
-        this.frame.setLayout(new GridLayout(1, 1));
-        this.panelRepository.getKeypadPanel().setVisible(true);
-
-        setTopPanelBackground(Color.WHITE);
-        restartFrame();
-    }
-
-    public void processKeypadAction(String buttonPressed) {
+    public void processKeypadActionPaint(String buttonPressed) {
         JButton[] buttons = this.panelRepository.getKeypadPanel().getButtons();
         for (JButton button : buttons) {
             if (button.getText().equals(buttonPressed)) {
@@ -124,17 +138,18 @@ public class ScreenManager {
         }
     }
 
-    public void setBigNumber(String number) {
-        this.panelRepository.getBigNumberPanel().setNumber(number);
-        setBigNumberFont();
-    }
+    public void processKeypadActionListener(boolean isEnabled) {
+        JButton[] buttons = this.panelRepository.getKeypadPanel().getButtons();
+        String[] noActionButtons = new String[]{Constants.DIVIDE_STRING, Constants.MULTIPLY_STRING, Constants.SUBTRACT_STRING, Constants.ADD_STRING, Constants.POINT_STRING, Constants.SIGN_STRING};
 
-    public void setSmallNumber(String state) {
-        this.panelRepository.getSmallNumberPanel().setNumber(state);
-    }
-
-    public void setBigNumberFont() {
-        this.panelRepository.getBigNumberPanel().setFont(this.frame.getWidth());
+        for (JButton button : buttons) {
+            for (String noActionButton : noActionButtons) {
+                if (button.getText().equals(noActionButton)) {
+                    button.setEnabled(isEnabled);
+                    break;
+                }
+            }
+        }
     }
 
     private void restartFrame() {

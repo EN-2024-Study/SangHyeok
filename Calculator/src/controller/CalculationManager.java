@@ -101,7 +101,7 @@ public class CalculationManager {
         this.isInput = false;
 
         setCalcStateByOperator();
-        
+
         if (outputNumber.charAt(outputNumber.length() - 1) == '.')
             this.outputNumber = this.firstNumber.toString();    // 마지막 입력이 소수점이였을 때 연산자가 들어오면 소수점 삭제
     }

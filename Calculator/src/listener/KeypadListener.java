@@ -33,7 +33,6 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     @Override
     public void keyPressed(KeyEvent e) {
         String operator = "";
-
         if (e.getKeyCode() == 56) {     // 8과 곱셈 처리
             if (this.isShift)
                 operator = Constants.MULTIPLY_STRING;
@@ -53,6 +52,8 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
         }
         else if (e.getKeyCode() == 8) // delete
             operator = Constants.DELETE_STRING;
+        else if (e.getKeyCode() == 10) // enter
+            operator = Constants.EQUAL_STRING;
         else if (e.getKeyCode() == 27)  // esc
             operator = Constants.C_STRING;
         else if (e.getKeyCode() == 120) // F9

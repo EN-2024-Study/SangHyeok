@@ -36,26 +36,32 @@ public class BigNumberPanel extends SmallNumberPanel {
         if (!isDigit(str))
             return str;
 
-        String temp = str.replaceAll(",", "");
+        String num = str.replaceAll(",", "");
+        String integerPart = "";
+        String decimalPart = "";
+        boolean isPoint = false;
 
-        if (temp.contains(Constants.POINT_STRING)) {
-            String[] number = temp.split("\\.");
-            BigDecimal bigDecimal = new BigDecimal(number[0]);
-            DecimalFormat decimalFormat = new DecimalFormat("###,###");
+        for(int i = 0; i < num.length(); i++) {
+            if (num.charAt(i) == '.')
+                isPoint = true;
 
-            if (number.length == 2)
-                return decimalFormat.format(bigDecimal) + Constants.POINT_STRING + number[1];
-            return decimalFormat.format(bigDecimal) + Constants.POINT_STRING;
+            if (isPoint)
+                decimalPart += num.charAt(i);
+            else
+                integerPart += num.charAt(i);
         }
 
-        BigDecimal bigDecimal = new BigDecimal(temp);
+        BigDecimal bigDecimal = new BigDecimal(integerPart);
         DecimalFormat decimalFormat = new DecimalFormat("###,###");
+        if (isPoint)
+            return decimalFormat.format(bigDecimal) + decimalPart;
         return decimalFormat.format(bigDecimal);
     }
 
     private boolean isDigit(String str) {
         for(int i = 0; i < str.length(); i++)
-            if (!Character.isDigit(str.charAt(i)))
+            if (!Character.isDigit(str.charAt(i)) && str.charAt(i) != '.' && str.charAt(i) != '-'
+                    && str.charAt(i) != '+' && str.charAt(i) != 'E')
                 return false;
         return true;
     }

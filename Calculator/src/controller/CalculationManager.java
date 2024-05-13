@@ -207,7 +207,10 @@ public class CalculationManager {
                 return;
         }
 
-        this.outputNumber = this.firstNumber.toString();
+        if (this.firstNumber.compareTo(new BigDecimal("1E+10000")) > 0)
+            this.outputNumber = Constants.OVERFLOW;
+        else
+            this.outputNumber = this.firstNumber.toString();
     }
 
     private void processDivide() {
@@ -222,7 +225,7 @@ public class CalculationManager {
     private boolean isDivideValid() {
         this.firstNumber = this.firstNumber.stripTrailingZeros();
         this.secondNumber = this.secondNumber.stripTrailingZeros();
-        
+
         if (Objects.equals(this.secondNumber, new BigDecimal("0"))) {    // 0으로 나눴을 때
             this.calculationState = this.firstNumber.toPlainString() + this.operator;
 

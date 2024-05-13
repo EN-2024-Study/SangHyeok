@@ -141,13 +141,14 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     }
 
     private void processKeypadAction() {
-        if (this.calculationManager.getOutputNumber().equals(Constants.WRONG_DIVIDED1) ||
-        this.calculationManager.getOutputNumber().equals(Constants.WRONG_DIVIDED2)) {
-            this.screenManager.processKeypadActionListener(false);
-            this.calculationManager.initLastInputType();
+        if (!this.calculationManager.getOutputNumber().equals(Constants.WRONG_DIVIDED1) &&
+        !this.calculationManager.getOutputNumber().equals(Constants.WRONG_DIVIDED2) &&
+                !this.calculationManager.getOutputNumber().equals(Constants.OVERFLOW)) {
+            this.screenManager.processKeypadActionListener(true);
             return;
         }
 
-        this.screenManager.processKeypadActionListener(true);
+        this.screenManager.processKeypadActionListener(false);
+        this.calculationManager.initLastInputType();
     }
 }

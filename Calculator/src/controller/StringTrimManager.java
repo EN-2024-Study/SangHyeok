@@ -10,7 +10,8 @@ import java.text.DecimalFormat;
 public class StringTrimManager {
 
     public String processComma(String number) {
-        if (number.equals(Constants.WRONG_DIVIDED1) || number.equals(Constants.WRONG_DIVIDED2))
+        if (number.equals(Constants.WRONG_DIVIDED1) || number.equals(Constants.WRONG_DIVIDED2) ||
+        number.equals(Constants.OVERFLOW))
             return number;
 
         String integerPart = "";
@@ -38,15 +39,15 @@ public class StringTrimManager {
         if (number.isEmpty() || number.equals(Constants.WRONG_DIVIDED1) || number.equals(Constants.WRONG_DIVIDED2))
             return number;
 
-        String[] operators = new String[]{"\\" + Constants.ADD_STRING, Constants.SUBTRACT_STRING, "\\" + Constants.MULTIPLY_STRING, Constants.DIVIDE_STRING};
+        String[] operators = new String[]{"\\" + Constants.ADD_STRING, Constants.SUBTRACT_STRING, Constants.MULTIPLY_STRING, Constants.DIVIDE_STRING};
         for (String o : operators) {
             if (number.contains(o)) {
                 if (number.charAt(0) == o.charAt(0))
                     continue;
 
-                if (number.charAt(number.length() - 1) == o.charAt(0))   // 식의 마지막이 연산자일 경우
+                if (number.charAt(number.length() - 1) == o.charAt(0)) {  // 식의 마지막이 연산자일 경우
                     return getReplaceString(number.substring(0, number.length() - 1)) + o;
-
+                }
                 String[] strings = number.split(o);
                 String firstNumber = getReplaceString(strings[0]);
                 String secondNumber = getReplaceString(strings[1]);
@@ -60,12 +61,14 @@ public class StringTrimManager {
     private String getReplaceString(String number) {
         number = processDecimalPoint(number);
 
-        if (number.length() <= Constants.NUMBER_MAX_LENGTH ||
-                (number.contains(Constants.POINT_STRING) && number.length() <= Constants.NUMBER_MAX_LENGTH + 1))
+        if (number.length() <= Constants.NUMBER_MAX_LENGTH + 5 ||
+                (number.contains(Constants.POINT_STRING) && number.length() <= Constants.NUMBER_MAX_LENGTH + 7))
             return number;
 
+        number = number.replace(",", "");
         BigDecimal bigDecimal = new BigDecimal(number);
-        return new BigDecimal(bigDecimal.toString(), MathContext.DECIMAL64).stripTrailingZeros().toString();
+        String result =  new BigDecimal(bigDecimal.toString(), MathContext.DECIMAL64).stripTrailingZeros().toString();
+        return result.replace("E", "e");
     }
 
     private String processDecimalPoint(String number) {

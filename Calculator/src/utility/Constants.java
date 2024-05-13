@@ -23,6 +23,7 @@ public class Constants {
     public final static String BIG_NUMBER_PANEL = "BigNumberPanel";
     public final static String WRONG_DIVIDED1 = "정의되지 않은 결과입니다";
     public final static String WRONG_DIVIDED2 = "0으로 나눌 수 없습니다";
+    public final static String OVERFLOW = "오버플로";
     public final static int BIG_NUMBER_FONT_MAX_SIZE = 50;
     public final static int BIG_NUMBER_FONT_MIN_SIZE = 33;
     public final static int NUMBER_MAX_LENGTH = 16;

@@ -21,6 +21,7 @@ public class Constants {
     public final static String HISTORY_BUTTON_PANEL = "HistoryButtonPanel";
     public final static String SMALL_NUMBER_PANEL = "SmallNumberPanel";
     public final static String BIG_NUMBER_PANEL = "BigNumberPanel";
+    public final static String NUMBER_REGEX = "[+-]?\\d*(\\.\\d+)?";
     public final static int BIG_NUMBER_MAX_SIZE = 50;
     public final static int BIG_NUMBER_MIN_SIZE = 33;
 }

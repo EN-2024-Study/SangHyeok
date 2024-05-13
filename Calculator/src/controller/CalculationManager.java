@@ -249,7 +249,7 @@ public class CalculationManager {
     }
 
     private String getTrimNumberString(String str) {
-        if (!isDigit(str) || !str.contains("."))
+        if (!str.matches(Constants.NUMBER_REGEX))
             return str;
 
         int maxSize = 17;
@@ -269,13 +269,5 @@ public class CalculationManager {
             result = result.setScale(--scaleSize, RoundingMode.HALF_EVEN).stripTrailingZeros();
 
         return result.toString();
-    }
-
-    private boolean isDigit(String str) {
-        for(int i = 0; i < str.length(); i++)
-            if (!Character.isDigit(str.charAt(i)) && str.charAt(i) != '.' && str.charAt(i) != '-'
-                    && str.charAt(i) != '+' && str.charAt(i) != 'E')
-                return false;
-        return true;
     }
 }

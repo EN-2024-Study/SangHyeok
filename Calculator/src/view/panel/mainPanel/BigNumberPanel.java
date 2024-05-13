@@ -33,7 +33,7 @@ public class BigNumberPanel extends SmallNumberPanel {
     }
 
     private String processComma(String str) {
-        if (!isDigit(str))
+        if (!str.matches(Constants.NUMBER_REGEX))
             return str;
 
         String num = str.replaceAll(",", "");
@@ -56,13 +56,5 @@ public class BigNumberPanel extends SmallNumberPanel {
         if (isPoint)
             return decimalFormat.format(bigDecimal) + decimalPart;
         return decimalFormat.format(bigDecimal);
-    }
-
-    private boolean isDigit(String str) {
-        for(int i = 0; i < str.length(); i++)
-            if (!Character.isDigit(str.charAt(i)) && str.charAt(i) != '.' && str.charAt(i) != '-'
-                    && str.charAt(i) != '+' && str.charAt(i) != 'E')
-                return false;
-        return true;
     }
 }

@@ -41,16 +41,14 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 this.screenManager.processKeypadActionPaint(String.valueOf(e.getKeyChar() - 48));
                 return;
             }
-        }
-        else if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {    // 숫자 처리
+        } else if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {    // 숫자 처리
             processNumber(String.valueOf(e.getKeyChar() - 48));
             this.screenManager.processKeypadActionPaint(String.valueOf(e.getKeyChar() - 48));
             return;
         } else if (e.getKeyCode() == 16) {   // shift
             this.isShift = true;
             return;
-        }
-        else if (e.getKeyCode() == 8) // delete
+        } else if (e.getKeyCode() == 8) // delete
             operator = Constants.DELETE_STRING;
         else if (e.getKeyCode() == 10) // enter
             operator = Constants.EQUAL_STRING;
@@ -131,20 +129,12 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     }
 
     private void processKeypadAction(String number) {
-        boolean isDigit = true;
-
-        for (int i = 0; i < number.length(); i++) {
-            if (!Character.isDigit(number.charAt(i))) {
-                if (number.charAt(i) != '.' && number.charAt(i) != '-' && number.charAt(i) != '+' && number.charAt(i) != 'E') {
-                    isDigit = false;
-                    this.screenManager.processKeypadActionListener(false);
-                    this.calculationManager.initLastInputType();
-                    break;
-                }
-            }
+        if (number.matches(Constants.NUMBER_REGEX)) {
+            this.screenManager.processKeypadActionListener(false);
+            this.calculationManager.initLastInputType();
+            return;
         }
 
-        if (isDigit)
-            this.screenManager.processKeypadActionListener(true);
+        this.screenManager.processKeypadActionListener(true);
     }
 }

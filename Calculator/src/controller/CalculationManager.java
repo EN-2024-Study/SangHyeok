@@ -90,20 +90,18 @@ public class CalculationManager {
     }
 
     public void processPoint(String point) {
-        this.outputNumber = getTrimNumberString(outputNumber);
-        if (this.outputNumber.contains(Constants.POINT_STRING))   // 이미 소수점이 있다면 return
-            return;
         if (this.lastInputType == LastInputType.Operator)  // 마지막 입력이 연산자였다면 "0."으로 삽입
             this.outputNumber = "0" + point;
+        else if (this.outputNumber.contains(Constants.POINT_STRING))   // 이미 소수점이 있다면 return
+            return;
         else
             this.outputNumber += point;
-
+        
         this.lastInputType = LastInputType.Number;
     }
 
     public void processOperator(String operator) {
         this.isInput = false;
-
         if (this.lastInputType == LastInputType.Operator || this.lastInputType == LastInputType.Equal)    // 연산자가 연속입력일 때나 = 다음에 연산자 입력이 들어오면 연산자만 바꾸기
             this.operator = operator;
         else if (this.lastInputType == LastInputType.Number || this.lastInputType == LastInputType.InitialValue) {  // 숫자 입력 후 연산자 입력일 때
@@ -117,7 +115,7 @@ public class CalculationManager {
         }
 
         this.lastInputType = LastInputType.Operator;
-        this.calculationState = getTrimNumberString(this.firstNumber.toString()) + this.operator;
+        this.calculationState = getTrimNumberString(this.firstNumber.toPlainString()) + this.operator;
 
         if (outputNumber.charAt(outputNumber.length() - 1) == '.')
             this.outputNumber = this.firstNumber.toString();    // 마지막 입력이 소수점이였을 때 연산자가 들어오면 소수점 삭제
@@ -129,7 +127,7 @@ public class CalculationManager {
         if (this.operator.isEmpty()) {   // 연산자가 비어있다면 연산자에 삽입
             this.operator = operator;
             this.lastInputType = LastInputType.Operator;
-            this.calculationState = getTrimNumberString(this.firstNumber.toString()) + this.operator;
+            this.calculationState = getTrimNumberString(this.firstNumber.toPlainString()) + this.operator;
             return;
 
         } else if (this.operator.equals(Constants.EQUAL_STRING))   // "number = number =" 경우 return
@@ -140,7 +138,7 @@ public class CalculationManager {
             this.secondNumber = new BigDecimal(this.outputNumber);
 
         this.lastInputType = LastInputType.Equal;
-        this.calculationState = getTrimNumberString(this.firstNumber.toString()) + this.operator + getTrimNumberString(this.secondNumber.toString()) + Constants.EQUAL_STRING; // "number operator number ="
+        this.calculationState = getTrimNumberString(this.firstNumber.toPlainString()) + this.operator + getTrimNumberString(this.secondNumber.toPlainString()) + Constants.EQUAL_STRING; // "number operator number ="
         calculate();
     }
 
@@ -197,6 +195,7 @@ public class CalculationManager {
             this.firstNumber = new BigDecimal(this.outputNumber);
         else
             this.secondNumber = new BigDecimal(this.outputNumber);
+
     }
 
     private void calculate() {
@@ -229,7 +228,7 @@ public class CalculationManager {
 
     private boolean isDivideValid() {
         if (Objects.equals(this.secondNumber, new BigDecimal("0"))) {    // 0으로 나눴을 때
-            this.calculationState = getTrimNumberString(this.firstNumber.toString()) + this.operator;
+            this.calculationState = getTrimNumberString(this.firstNumber.toPlainString()) + this.operator;
 
             if (Objects.equals(this.firstNumber, new BigDecimal("0")))
                 this.outputNumber = "정의되지 않은 결과입니다";
@@ -263,6 +262,6 @@ public class CalculationManager {
         while (result.toString().length() > maxSize)
             result = result.setScale(--scaleSize, RoundingMode.HALF_EVEN).stripTrailingZeros();
 
-        return result.toString();
+        return result.toPlainString();
     }
 }

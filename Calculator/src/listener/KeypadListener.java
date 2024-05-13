@@ -1,6 +1,7 @@
 package listener;
 
 import controller.CalculationManager;
+import controller.StringTrimManager;
 import form.ScreenManager;
 import utility.Constants;
 
@@ -10,11 +11,13 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
     private CalculationManager calculationManager;
     private ScreenManager screenManager;
+    private StringTrimManager stringTrimManager;
     private boolean isShift;
 
     public KeypadListener(ScreenManager screenManager, CalculationManager calculationManager) {
         this.screenManager = screenManager;
         this.calculationManager = calculationManager;
+        this.stringTrimManager = new StringTrimManager();
         this.isShift = false;
     }
 
@@ -81,13 +84,6 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
             this.isShift = false;
     }
 
-    private void processNumber(String number) {
-        this.calculationManager.processInputNumber(number);
-        this.screenManager.processKeypadActionListener(true);
-        this.screenManager.setBigNumber(this.calculationManager.getOutputNumber());
-        this.screenManager.setSmallNumber(this.calculationManager.getCalculationState());
-    }
-
     private void processKey(String operator) {
         switch (operator) {
             case Constants.ADD_STRING:
@@ -115,10 +111,9 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 this.calculationManager.processEqual(operator);
                 break;
         }
-        this.screenManager.setSmallNumber(this.calculationManager.getCalculationState());
 
-        processKeypadAction(this.calculationManager.getOutputNumber());
-        this.screenManager.setBigNumber(this.calculationManager.getOutputNumber());
+        processKeypadAction();
+        processScreen();
     }
 
     private boolean isOperatorValid(String str) {
@@ -128,8 +123,21 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
         return false;
     }
 
-    private void processKeypadAction(String number) {
-        if (!isNumber(number)) {
+    private void processNumber(String number) {
+        this.calculationManager.processInputNumber(number);
+        processKeypadAction();
+        processScreen();
+    }
+
+    private void processScreen() {
+        String number = stringTrimManager.processComma(this.calculationManager.getOutputNumber());
+        String formula = stringTrimManager.processE(this.calculationManager.getCalculationState());
+        this.screenManager.setBigNumber(number);
+        this.screenManager.setSmallNumber(formula);
+    }
+
+    private void processKeypadAction() {
+        if (!isNumber(this.calculationManager.getOutputNumber())) {
             this.screenManager.processKeypadActionListener(false);
             this.calculationManager.initLastInputType();
             return;

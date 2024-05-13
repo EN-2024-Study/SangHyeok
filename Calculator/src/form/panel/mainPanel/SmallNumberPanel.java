@@ -1,7 +1,11 @@
 package form.panel.mainPanel;
 
+import utility.Constants;
+
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 public class SmallNumberPanel extends JPanel {
 
@@ -16,7 +20,7 @@ public class SmallNumberPanel extends JPanel {
         add(numberLabel);
     }
 
-    public void setNumber(String number) {
-        numberLabel.setText(number);
+    public void setNumber(String str) {
+        numberLabel.setText(str);
     }
 }

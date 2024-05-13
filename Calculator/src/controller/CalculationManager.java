@@ -90,6 +90,7 @@ public class CalculationManager {
     }
 
     public void processPoint(String point) {
+        this.outputNumber = getTrimNumberString(outputNumber);
         if (this.outputNumber.contains(Constants.POINT_STRING))   // 이미 소수점이 있다면 return
             return;
         if (this.lastInputType == LastInputType.Operator)  // 마지막 입력이 연산자였다면 "0."으로 삽입
@@ -139,7 +140,7 @@ public class CalculationManager {
             this.secondNumber = new BigDecimal(this.outputNumber);
 
         this.lastInputType = LastInputType.Equal;
-        this.calculationState = getTrimNumberString(this.firstNumber.toString()) + this.operator + this.secondNumber + Constants.EQUAL_STRING; // "number operator number ="
+        this.calculationState = getTrimNumberString(this.firstNumber.toString()) + this.operator + getTrimNumberString(this.secondNumber.toString()) + Constants.EQUAL_STRING; // "number operator number ="
         calculate();
     }
 

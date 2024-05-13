@@ -106,14 +106,15 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 break;
             case Constants.POINT_STRING:
                 this.calculationManager.processPoint(operator);
-                break;
+                processScreen(true);
+                return;
             case Constants.EQUAL_STRING:
                 this.calculationManager.processEqual(operator);
                 break;
         }
 
         processKeypadAction();
-        processScreen();
+        processScreen(false);
     }
 
     private boolean isOperatorValid(String str) {
@@ -126,31 +127,27 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     private void processNumber(String number) {
         this.calculationManager.processInputNumber(number);
         processKeypadAction();
-        processScreen();
+        processScreen(true);
     }
 
-    private void processScreen() {
-        String number = stringTrimManager.processComma(this.calculationManager.getOutputNumber());
-        String formula = stringTrimManager.processE(this.calculationManager.getCalculationState());
-        this.screenManager.setBigNumber(number);
-        this.screenManager.setSmallNumber(formula);
+    private void processScreen(boolean isInput) {
+        String bigNumber = stringTrimManager.processComma(this.calculationManager.getOutputNumber());
+        if (!isInput)
+            bigNumber = stringTrimManager.processE(bigNumber);
+        this.screenManager.setBigNumber(bigNumber);
+
+        String smallNumber = stringTrimManager.processE(this.calculationManager.getCalculationState());
+        this.screenManager.setSmallNumber(smallNumber);
     }
 
     private void processKeypadAction() {
-        if (!isNumber(this.calculationManager.getOutputNumber())) {
+        if (this.calculationManager.getOutputNumber().equals(Constants.WRONG_DIVIDED1) ||
+        this.calculationManager.getOutputNumber().equals(Constants.WRONG_DIVIDED2)) {
             this.screenManager.processKeypadActionListener(false);
             this.calculationManager.initLastInputType();
             return;
         }
 
         this.screenManager.processKeypadActionListener(true);
-    }
-
-    private boolean isNumber(String number) {
-        for(int i = 0; i < number.length(); i++)
-            if (!Character.isDigit(number.charAt(i)) && number.charAt(i) != '.' &&
-                    number.charAt(i) != '-' && number.charAt(i) != '+' && number.charAt(i) != 'E')
-                return false;
-        return true;
     }
 }

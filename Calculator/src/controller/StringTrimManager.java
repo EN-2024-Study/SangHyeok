@@ -9,12 +9,10 @@ import java.text.DecimalFormat;
 
 public class StringTrimManager {
 
-    public String processComma(String str) {
-        if (!str.matches(Constants.NUMBER_REGEX))
-            return str;
+    public String processComma(String number) {
+        if (number.equals(Constants.WRONG_DIVIDED1) || number.equals(Constants.WRONG_DIVIDED2))
+            return number;
 
-        String number = processDecimalPoint(str);
-        number = str.replaceAll(",", "");
         String integerPart = "";
         String decimalPart = "";
         boolean isPoint = false;
@@ -36,63 +34,57 @@ public class StringTrimManager {
         return decimalFormat.format(bigDecimal);
     }
 
-    public String processE(String str) {
+    public String processE(String number) {
+        if (number.isEmpty() || number.equals(Constants.WRONG_DIVIDED1) || number.equals(Constants.WRONG_DIVIDED2))
+            return number;
+
         String[] operators = new String[]{"\\" + Constants.ADD_STRING, Constants.SUBTRACT_STRING, "\\" + Constants.MULTIPLY_STRING, Constants.DIVIDE_STRING};
-        String formula = processDecimalPoint(str);
-
         for (String o : operators) {
-            if (formula.contains(o)) {
+            if (number.contains(o)) {
+                if (number.charAt(0) == o.charAt(0))
+                    continue;
 
-                if (formula.charAt(formula.length() - 1) == o.charAt(0)) {  // 식의 마지막이 연산자일 경우
-                    String number = formula.substring(0, formula.length() - 1);
-                    return getReplaceString(number) + o;
-                }
+                if (number.charAt(number.length() - 1) == o.charAt(0))   // 식의 마지막이 연산자일 경우
+                    return getReplaceString(number.substring(0, number.length() - 1)) + o;
 
-                String[] strings = formula.split(o);
+                String[] strings = number.split(o);
                 String firstNumber = getReplaceString(strings[0]);
                 String secondNumber = getReplaceString(strings[1]);
-                return firstNumber + o + secondNumber;
+                return firstNumber + o + secondNumber;  // number operator number = 일 경우
             }
         }
 
-        return getReplaceString(formula);
+        return getReplaceString(number);    // 숫자만 존재할 경우
     }
 
-    private String getReplaceString(String str) {
-        if (str.length() <= Constants.NUMBER_MAX_LENGTH ||
-                (str.contains(Constants.POINT_STRING) && str.length() <= Constants.NUMBER_MAX_LENGTH + 1))
-            return str;
+    private String getReplaceString(String number) {
+        number = processDecimalPoint(number);
 
-        BigDecimal bigDecimal = new BigDecimal(str);
-        String result = new BigDecimal(bigDecimal.toString(), MathContext.DECIMAL64).stripTrailingZeros().toString();
-        System.out.println(result);
+        if (number.length() <= Constants.NUMBER_MAX_LENGTH ||
+                (number.contains(Constants.POINT_STRING) && number.length() <= Constants.NUMBER_MAX_LENGTH + 1))
+            return number;
 
-        return result;
+        BigDecimal bigDecimal = new BigDecimal(number);
+        return new BigDecimal(bigDecimal.toString(), MathContext.DECIMAL64).stripTrailingZeros().toString();
     }
 
-    private String processDecimalPoint(String str) {
-        if (!str.matches(Constants.NUMBER_REGEX))
-            return str;
+    private String processDecimalPoint(String number) {
+        if (!number.contains(Constants.POINT_STRING))
+            return number;
 
-        if (!str.contains(Constants.POINT_STRING))
-            return str;
-
-        int maxSize = 17;
         int scaleSize = 16;
-        BigDecimal result = new BigDecimal(str).setScale(scaleSize, RoundingMode.HALF_EVEN).stripTrailingZeros();
         String integerPart = "";
 
-        for(int i = 0; i < result.toString().length(); i++) {
-            if (result.toString().charAt(i) == '.')
+        for(int i = 0; i < number.length(); i++) {
+            if (number.charAt(i) == '.')
                 break;
-            integerPart += result.toString().charAt(i);
+            integerPart += number.charAt(i);
         }
-        if (integerPart.equals("0"))    // 실수부가 0이면 소수자리 개수 하나 더 늘어남
-            maxSize = 18;
 
-        while (result.toString().length() > maxSize)
-            result = result.setScale(--scaleSize, RoundingMode.HALF_EVEN).stripTrailingZeros();
+        if (integerPart.equals("0"))
+            scaleSize = 17;
 
+        BigDecimal result = new BigDecimal(number).setScale(scaleSize, RoundingMode.HALF_EVEN).stripTrailingZeros();
         return result.toPlainString();
     }
 }

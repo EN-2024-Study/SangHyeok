@@ -220,13 +220,16 @@ public class CalculationManager {
     }
 
     private boolean isDivideValid() {
+        this.firstNumber = this.firstNumber.stripTrailingZeros();
+        this.secondNumber = this.secondNumber.stripTrailingZeros();
+        
         if (Objects.equals(this.secondNumber, new BigDecimal("0"))) {    // 0으로 나눴을 때
             this.calculationState = this.firstNumber.toPlainString() + this.operator;
 
             if (Objects.equals(this.firstNumber, new BigDecimal("0")))
-                this.outputNumber = "정의되지 않은 결과입니다";
+                this.outputNumber = Constants.WRONG_DIVIDED1;
             else
-                this.outputNumber = "0으로 나눌 수 없습니다";
+                this.outputNumber = Constants.WRONG_DIVIDED2;
             return false;
         }
         return true;

@@ -1,6 +1,6 @@
 package listener;
 
-import view.ScreenManager;
+import form.ScreenManager;
 import utility.Constants;
 
 import java.awt.event.MouseAdapter;

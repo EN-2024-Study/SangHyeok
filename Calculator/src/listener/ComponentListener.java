@@ -1,6 +1,6 @@
 package listener;
 
-import view.ScreenManager;
+import form.ScreenManager;
 
 import java.awt.event.*;
 

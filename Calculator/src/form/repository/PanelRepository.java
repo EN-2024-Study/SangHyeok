@@ -1,13 +1,13 @@
-package view.repository;
+package form.repository;
 
 import listener.ButtonListener;
 import listener.KeypadListener;
-import view.panel.historyPanel.DownHistoryPanel;
-import view.panel.historyPanel.RightHistoryPanel;
-import view.panel.mainPanel.BigNumberPanel;
-import view.panel.mainPanel.HistoryButtonPanel;
-import view.panel.mainPanel.KeypadPanel;
-import view.panel.mainPanel.SmallNumberPanel;
+import form.panel.historyPanel.DownHistoryPanel;
+import form.panel.historyPanel.RightHistoryPanel;
+import form.panel.mainPanel.BigNumberPanel;
+import form.panel.mainPanel.HistoryButtonPanel;
+import form.panel.mainPanel.KeypadPanel;
+import form.panel.mainPanel.SmallNumberPanel;
 
 import javax.swing.*;
 

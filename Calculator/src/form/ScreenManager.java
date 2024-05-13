@@ -1,10 +1,10 @@
-package view;
+package form;
 
 import listener.repository.ListenerRepository;
 import controller.CalculationManager;
 import utility.Constants;
-import view.repository.PanelRepository;
-import view.panel.mainPanel.*;
+import form.repository.PanelRepository;
+import form.panel.mainPanel.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ public class ScreenManager {
 
     private ListenerRepository listenerRepository;
     private PanelRepository panelRepository;
-    private MainFrame frame;
+    private JFrame frame;
 
     public ScreenManager() {
         CalculationManager calculationManager = new CalculationManager();

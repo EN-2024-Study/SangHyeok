@@ -14,12 +14,4 @@ public class HistoryRepository {
     public void clearHistoryList() {
         this.historyList.clear();
     }
-
-    public List<String> getHistoryList() {
-        return historyList;
-    }
-
-    public void addHistory(String history) {
-        this.historyList.add(history);
-    }
 }

@@ -1,4 +1,4 @@
-package view.panel.historyPanel;
+package form.panel.historyPanel;
 
 import listener.ButtonListener;
 import utility.Constants;

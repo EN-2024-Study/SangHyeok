@@ -1,7 +1,7 @@
 package listener;
 
 import controller.CalculationManager;
-import view.ScreenManager;
+import form.ScreenManager;
 import utility.Constants;
 
 import java.awt.event.*;
@@ -129,12 +129,20 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     }
 
     private void processKeypadAction(String number) {
-        if (number.matches(Constants.NUMBER_REGEX)) {
+        if (!isNumber(number)) {
             this.screenManager.processKeypadActionListener(false);
             this.calculationManager.initLastInputType();
             return;
         }
 
         this.screenManager.processKeypadActionListener(true);
+    }
+
+    private boolean isNumber(String number) {
+        for(int i = 0; i < number.length(); i++)
+            if (!Character.isDigit(number.charAt(i)) && number.charAt(i) != '.' &&
+                    number.charAt(i) != '-' && number.charAt(i) != '+' && number.charAt(i) != 'E')
+                return false;
+        return true;
     }
 }

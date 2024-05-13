@@ -1,4 +1,4 @@
-package view.panel.mainPanel;
+package form.panel.mainPanel;
 
 import listener.ComponentListener;
 import listener.KeypadListener;

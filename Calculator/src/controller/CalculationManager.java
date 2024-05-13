@@ -144,7 +144,7 @@ public class CalculationManager {
     }
 
     public String getOutputNumber() {
-        return outputNumber;
+        return this.outputNumber;
     }
 
     public void deleteHistory() {
@@ -207,10 +207,10 @@ public class CalculationManager {
                 return;
         }
 
-        if (this.firstNumber.compareTo(new BigDecimal("1E+10000")) > 0)
+        if (this.firstNumber.compareTo(new BigDecimal("1E+10000")) > 0 )
             this.outputNumber = Constants.OVERFLOW;
         else
-            this.outputNumber = this.firstNumber.toString();
+            this.outputNumber = this.firstNumber.toPlainString();
     }
 
     private void processDivide() {

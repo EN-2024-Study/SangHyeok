@@ -45,12 +45,12 @@ public class StringTrimManager {
                 if (number.charAt(0) == o.charAt(0))
                     continue;
 
-                if (number.charAt(number.length() - 1) == o.charAt(0)) {  // 식의 마지막이 연산자일 경우
+                if (number.charAt(number.length() - 1) == o.charAt(0))   // 식의 마지막이 연산자일 경우
                     return getReplaceString(number.substring(0, number.length() - 1)) + o;
-                }
+
                 String[] strings = number.split(o);
                 String firstNumber = getReplaceString(strings[0]);
-                String secondNumber = getReplaceString(strings[1]);
+                String secondNumber = getReplaceString(strings[1].split(Constants.EQUAL_STRING)[0]);
                 return firstNumber + o + secondNumber;  // number operator number = 일 경우
             }
         }
@@ -61,8 +61,7 @@ public class StringTrimManager {
     private String getReplaceString(String number) {
         number = processDecimalPoint(number);
 
-        if (number.length() <= Constants.NUMBER_MAX_LENGTH + 5 ||
-                (number.contains(Constants.POINT_STRING) && number.length() <= Constants.NUMBER_MAX_LENGTH + 7))
+        if (!isOverLength(number))
             return number;
 
         number = number.replace(",", "");
@@ -75,19 +74,15 @@ public class StringTrimManager {
         if (!number.contains(Constants.POINT_STRING))
             return number;
 
-        int scaleSize = 16;
-        String integerPart = "";
-
-        for(int i = 0; i < number.length(); i++) {
-            if (number.charAt(i) == '.')
-                break;
-            integerPart += number.charAt(i);
-        }
-
-        if (integerPart.equals("0"))
-            scaleSize = 17;
-
-        BigDecimal result = new BigDecimal(number).setScale(scaleSize, RoundingMode.HALF_EVEN).stripTrailingZeros();
+        BigDecimal result = new BigDecimal(number).stripTrailingZeros();
         return result.toPlainString();
+    }
+
+    private boolean isOverLength(String checkString) {
+        checkString = checkString.replace(",", "");
+        checkString = checkString.replace(".", "");
+        if (checkString.length() <= Constants.NUMBER_MAX_LENGTH)
+            return false;
+        return true;
     }
 }

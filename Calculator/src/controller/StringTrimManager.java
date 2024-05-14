@@ -4,7 +4,6 @@ import utility.Constants;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class StringTrimManager {
@@ -39,7 +38,7 @@ public class StringTrimManager {
         if (number.equals(" ") || number.equals(Constants.WRONG_DIVIDED1) || number.equals(Constants.WRONG_DIVIDED2))
             return number;
 
-        String[] operators = new String[]{"\\+", Constants.ADD_STRING, Constants.SUBTRACT_STRING, Constants.MULTIPLY_STRING, Constants.DIVIDE_STRING, Constants.EQUAL_STRING};
+        String[] operators = new String[]{Constants.ADD_STRING, Constants.SUBTRACT_STRING, Constants.MULTIPLY_STRING, Constants.DIVIDE_STRING, Constants.EQUAL_STRING};
         for (String o : operators) {
             if (number.contains(o)) {
                 if (number.charAt(0) == o.charAt(0))
@@ -47,11 +46,16 @@ public class StringTrimManager {
 
                 if (number.charAt(number.length() - 1) == o.charAt(0))   // 식의 마지막이 연산자일 경우
                     return getReplaceString(number.substring(0, number.length() - 1)) + o;
+                else if (o.equals(Constants.ADD_STRING)) {
+                    String[] str = number.split("\\+");
+                    String firstNum = getReplaceString(str[0]);
+                    String secondNum = getReplaceString(str[1].substring(0, str[1].length() - 1));
+                    return firstNum + o + secondNum + Constants.EQUAL_STRING;
+                }
 
                 String[] strings = number.split(o);
                 String firstNumber = getReplaceString(strings[0]);
-                String secondNumber = getReplaceString(strings[1].split(Constants.EQUAL_STRING)[0]);
-
+                String secondNumber = getReplaceString(strings[1].substring(0, strings[1].length() - 1));
                 return firstNumber + o + secondNumber + Constants.EQUAL_STRING;  // number operator number = 일 경우
             }
         }

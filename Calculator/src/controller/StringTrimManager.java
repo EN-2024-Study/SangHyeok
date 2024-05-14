@@ -11,14 +11,14 @@ public class StringTrimManager {
 
     public String processComma(String number) {
         if (number.equals(Constants.WRONG_DIVIDED1) || number.equals(Constants.WRONG_DIVIDED2) ||
-        number.equals(Constants.OVERFLOW))
+                number.equals(Constants.OVERFLOW))
             return number;
 
         String integerPart = "";
         String decimalPart = "";
         boolean isPoint = false;
 
-        for(int i = 0; i < number.length(); i++) {
+        for (int i = 0; i < number.length(); i++) {
             if (number.charAt(i) == '.')
                 isPoint = true;
 
@@ -36,10 +36,10 @@ public class StringTrimManager {
     }
 
     public String processE(String number) {
-        if (number.isEmpty() || number.equals(Constants.WRONG_DIVIDED1) || number.equals(Constants.WRONG_DIVIDED2))
+        if (number.equals(" ") || number.equals(Constants.WRONG_DIVIDED1) || number.equals(Constants.WRONG_DIVIDED2))
             return number;
 
-        String[] operators = new String[]{"\\" + Constants.ADD_STRING, Constants.SUBTRACT_STRING, Constants.MULTIPLY_STRING, Constants.DIVIDE_STRING, Constants.EQUAL_STRING};
+        String[] operators = new String[]{"\\+", Constants.ADD_STRING, Constants.SUBTRACT_STRING, Constants.MULTIPLY_STRING, Constants.DIVIDE_STRING, Constants.EQUAL_STRING};
         for (String o : operators) {
             if (number.contains(o)) {
                 if (number.charAt(0) == o.charAt(0))
@@ -51,7 +51,8 @@ public class StringTrimManager {
                 String[] strings = number.split(o);
                 String firstNumber = getReplaceString(strings[0]);
                 String secondNumber = getReplaceString(strings[1].split(Constants.EQUAL_STRING)[0]);
-                return firstNumber + o + secondNumber;  // number operator number = 일 경우
+
+                return firstNumber + o + secondNumber + Constants.EQUAL_STRING;  // number operator number = 일 경우
             }
         }
 
@@ -66,7 +67,7 @@ public class StringTrimManager {
 
         number = number.replace(",", "");
         BigDecimal bigDecimal = new BigDecimal(number);
-        String result =  new BigDecimal(bigDecimal.toString(), MathContext.DECIMAL64).stripTrailingZeros().toString();
+        String result = new BigDecimal(bigDecimal.toString(), MathContext.DECIMAL64).stripTrailingZeros().toString();
         return result.replace("E", "e");
     }
 

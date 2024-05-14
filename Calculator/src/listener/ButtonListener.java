@@ -31,10 +31,32 @@ public class ButtonListener implements ActionListener {
         }
 
         // HistoryPanel 의 historyButton click 일 때
-        processPreviousFormula(e.getActionCommand());
+        processPreviousState(e.getActionCommand());
     }
 
-    private void processPreviousFormula(String formula) {
+    private void processPreviousState(String str) {
+        String[] parsingStrings = str.split("<br>");
+        String calculateState = parsingStrings[0].substring(6);
+        String answer = parsingStrings[1].substring(0, parsingStrings[1].length() - 7);
 
+        String[] operators = Constants.OPERATORS;
+        String operator = "";
+        boolean isBreak = false;
+        for (int i = 0; i < calculateState.length(); i++) {
+            for (String o : operators) {
+                if (calculateState.charAt(i) == o.charAt(0)) {
+                    operator = o;
+                    isBreak = true;
+                    break;
+                }
+            }
+
+            if (isBreak)
+                break;
+        }
+
+        this.calculationManager.setPreviousCalculationState(calculateState, operator, answer);
+        this.screenManager.setBigNumber(this.calculationManager.getOutputNumber(), false);
+        this.screenManager.setSmallNumber(this.calculationManager.getCalculationState());
     }
 }

@@ -13,6 +13,7 @@ public class CalculationManager {
         InitialValue, Number, Equal, Operator
     }
 
+    private StringTrimManager stringTrimManager;
     private List<String> historyList;
     private String outputNumber;
     private String operator;
@@ -21,6 +22,7 @@ public class CalculationManager {
     private LastInputType lastInputType;
 
     public CalculationManager() {
+        this.stringTrimManager = new StringTrimManager();
         this.historyList = new ArrayList<>();
         processC();
     }
@@ -124,7 +126,7 @@ public class CalculationManager {
             this.operator = operator;
             this.lastInputType = LastInputType.Operator;
             this.calculationState = this.firstNumber.toPlainString() + this.operator;
-            this.historyList.add(this.calculationState + '\n' + this.outputNumber);
+            addHistory(this.calculationState, this.outputNumber);
             return;
 
         } else if (this.lastInputType == LastInputType.Equal) // "number ==" 경우
@@ -143,6 +145,15 @@ public class CalculationManager {
         return this.calculationState;
     }
 
+    public void setPreviousCalculationState(String calculationState, String operator, String answer) {
+        this.calculationState = calculationState;
+        this.outputNumber = answer;
+        this.operator = operator;
+
+        this.lastInputType = LastInputType.Equal;
+        this.firstNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
+    }
+
     public String getOutputNumber() {
         return this.outputNumber;
     }
@@ -153,6 +164,12 @@ public class CalculationManager {
 
     public void deleteHistory() {
         this.historyList.clear();
+    }
+
+    private void addHistory(String state, String answer) {
+        state = this.stringTrimManager.processE(state);
+        answer = this.stringTrimManager.processE(answer);
+        this.historyList.add(state + '\n' + answer);
     }
 
     private void addInputNumber(String addNumber) {
@@ -216,7 +233,7 @@ public class CalculationManager {
         else
             this.outputNumber = this.firstNumber.toPlainString();
 
-        this.historyList.add(this.calculationState + '\n' + this.outputNumber);
+        addHistory(this.calculationState, this.outputNumber);
     }
 
     private void processDivide() {

@@ -38,7 +38,7 @@ public class DownHistoryPanel extends JPanel {
         panel.setBackground(Color.WHITE);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         for(JButton button : this.historyList)
-            panel.add(button);
+            panel.add(button, 0);
 
         this.scrollPane = new JScrollPane(panel);
         this.scrollPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -56,6 +56,7 @@ public class DownHistoryPanel extends JPanel {
         button.setBackground(Color.WHITE);
         button.setOpaque(true);
         button.setBorderPainted(false);
+        button.setHorizontalAlignment(SwingConstants.RIGHT);
         button.addActionListener(buttonListener);
         this.historyList.add(button);
     }

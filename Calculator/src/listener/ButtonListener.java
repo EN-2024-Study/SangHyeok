@@ -6,6 +6,7 @@ import utility.Constants;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ButtonListener implements ActionListener {
 
@@ -25,6 +26,7 @@ public class ButtonListener implements ActionListener {
             return;
         } else if (e.getActionCommand().contains(Constants.TRASH_BUTTON)) {
             this.calculationManager.deleteHistory();
+            this.screenManager.processHistoryScreen(new ArrayList<String>());
             return;
         }
 

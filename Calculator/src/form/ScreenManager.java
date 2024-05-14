@@ -171,6 +171,7 @@ public class ScreenManager {
         this.panelRepository.getRightHistoryPanel().setHistoryList(this.listenerRepository.getButtonListener(), historyStringList);
         this.panelRepository.getRightHistoryPanel().setScrollPane();
         this.panelRepository.getRightHistoryPanel().setHistoryPanel(this.listenerRepository.getButtonListener());
+        restartFrame();
     }
 
     private void restartFrame() {

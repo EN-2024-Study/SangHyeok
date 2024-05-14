@@ -120,16 +120,14 @@ public class CalculationManager {
 
     public void processEqual(String operator) {
 
-        if (this.operator.isEmpty()) {   // 연산자가 비어있다면 연산자에 삽입
+        if (this.operator.isEmpty() || this.operator.equals(Constants.EQUAL_STRING)) {   // 연산자가 비어있거나 number = 일 때 연산자에 삽입
             this.operator = operator;
             this.lastInputType = LastInputType.Operator;
             this.calculationState = this.firstNumber.toPlainString() + this.operator;
             this.historyList.add(this.calculationState + '\n' + this.outputNumber);
             return;
 
-        } else if (this.operator.equals(Constants.EQUAL_STRING))   // "number = number =" 경우 return
-            return;
-        else if (this.lastInputType == LastInputType.Equal) // "number ==" 경우
+        } else if (this.lastInputType == LastInputType.Equal) // "number ==" 경우
             this.firstNumber = new BigDecimal(this.outputNumber);
         else if (this.lastInputType == LastInputType.Operator)     // 연산자 직후 "=" 경우
             this.secondNumber = new BigDecimal(this.outputNumber);

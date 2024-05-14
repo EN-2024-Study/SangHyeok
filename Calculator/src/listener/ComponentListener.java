@@ -14,13 +14,15 @@ public class ComponentListener extends ComponentAdapter {
 
     @Override
     public void componentResized(ComponentEvent e) {
-        screenManager.setBigNumberFont();
+        this.screenManager.setBigNumberFont();
 
         if (e.getComponent().getSize().width > 800) {
-            screenManager.showRightHistoryPanel();
+            this.screenManager.showRightHistoryPanel();
+            this.screenManager.addRightHistoryPanelWidth();
         }
         if (e.getComponent().getSize().width < 700) {
-            screenManager.hideHistoryPanel();
+            this.screenManager.hideHistoryPanel();
+            this.screenManager.removeRightHistoryPanelWidth();
         }
     }
 }

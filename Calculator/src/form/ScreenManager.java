@@ -15,6 +15,7 @@ public class ScreenManager {
     private ListenerRepository listenerRepository;
     private PanelRepository panelRepository;
     private JFrame frame;
+    private int rightHistoryPanelWidth;
 
     public ScreenManager() {
         CalculationManager calculationManager = new CalculationManager();
@@ -22,6 +23,7 @@ public class ScreenManager {
         this.listenerRepository = new ListenerRepository(this, calculationManager);
         this.panelRepository = new PanelRepository(listenerRepository.getButtonListener(), listenerRepository.getKeypadListener());
         this.frame = new MainFrame(getMainPanel(), listenerRepository.getComponentListener(), listenerRepository.getKeypadListener());
+        this.rightHistoryPanelWidth = 0;
     }
 
     private JPanel getMainPanel() {
@@ -111,7 +113,15 @@ public class ScreenManager {
     }
 
     public void setBigNumberFont() {
-        this.panelRepository.getBigNumberPanel().setFont(this.frame.getWidth());
+        this.panelRepository.getBigNumberPanel().setFont(this.frame.getWidth() - this.rightHistoryPanelWidth);
+    }
+
+    public void addRightHistoryPanelWidth() {
+        this.rightHistoryPanelWidth = this.panelRepository.getRightHistoryPanel().getWidth();
+    }
+
+    public void removeRightHistoryPanelWidth() {
+        this.rightHistoryPanelWidth = 0;
     }
 
     public void processTopPanelMouseListener(boolean isAdd) {

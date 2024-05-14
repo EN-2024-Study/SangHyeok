@@ -28,7 +28,7 @@ public class ButtonListener implements ActionListener {
             return;
         }
 
-        // HistoryPanel 에 history click
-        System.out.println("test");
+        // HistoryPanel 의 historyButton click 일 때
+
     }
 }

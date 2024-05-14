@@ -51,7 +51,7 @@ public class DownHistoryPanel extends JPanel {
     }
 
     private void initButton(ButtonListener buttonListener, String str) {
-        JButton button = new JButton(str);
+        JButton button = new JButton("<html>" + str.replaceAll("\\n", "<br>") + "</html>");
         button.setBackground(Color.WHITE);
         button.setOpaque(true);
         button.setBorderPainted(false);

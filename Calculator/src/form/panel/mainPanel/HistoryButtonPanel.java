@@ -15,7 +15,7 @@ public class HistoryButtonPanel extends JPanel {
     }
 
     private void initHistoryButton(ButtonListener buttonListener) {
-        historyButton = new JButton() {
+        this.historyButton = new JButton() {
             Image image = new ImageIcon("src/view/imageFile/HistoryLogo.png").getImage();
 
             @Override
@@ -25,15 +25,15 @@ public class HistoryButtonPanel extends JPanel {
             }
         };
 
-        historyButton.setBorderPainted(false);
-        historyButton.setFocusPainted(false);
-        historyButton.addActionListener(buttonListener);
+        this.historyButton.setBorderPainted(false);
+        this.historyButton.setFocusPainted(false);
+        this.historyButton.addActionListener(buttonListener);
     }
 
     private void initPanel() {
         setBackground(Color.WHITE);
         setLayout(new BorderLayout());
-        add(historyButton, BorderLayout.EAST);
+        add(this.historyButton, BorderLayout.EAST);
     }
 
     public void hideButton() {

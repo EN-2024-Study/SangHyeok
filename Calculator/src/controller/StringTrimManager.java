@@ -79,6 +79,7 @@ public class StringTrimManager {
         if (!number.contains(Constants.POINT_STRING))
             return number;
 
+        number = number.replace(",", "");
         BigDecimal result = new BigDecimal(number).stripTrailingZeros();
         return result.toPlainString();
     }

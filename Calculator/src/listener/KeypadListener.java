@@ -11,13 +11,11 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
     private CalculationManager calculationManager;
     private ScreenManager screenManager;
-    private StringTrimManager stringTrimManager;
     private boolean isShift;
 
     public KeypadListener(ScreenManager screenManager, CalculationManager calculationManager) {
         this.screenManager = screenManager;
         this.calculationManager = calculationManager;
-        this.stringTrimManager = new StringTrimManager();
         this.isShift = false;
     }
 
@@ -131,16 +129,11 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     }
 
     private void processScreen(boolean isInput) {
-        String bigNumber = this.stringTrimManager.processComma(this.calculationManager.getOutputNumber());
-        String smallNumber = this.stringTrimManager.processE(this.calculationManager.getCalculationState());
-
-        if (!isInput) {
-            bigNumber = this.stringTrimManager.processE(bigNumber);
+        if (!isInput)
             this.screenManager.processHistoryScreen(this.calculationManager.getHistoryList());
-        }
-        this.screenManager.setBigNumber(bigNumber);
 
-        this.screenManager.setSmallNumber(smallNumber);
+        this.screenManager.setBigNumber(this.calculationManager.getOutputNumber(), isInput);
+        this.screenManager.setSmallNumber(this.calculationManager.getCalculationState());
     }
 
     private void processKeypadAction() {

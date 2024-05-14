@@ -22,7 +22,7 @@ public class DownHistoryPanel extends JPanel {
     }
 
     public void setHistoryList(ButtonListener buttonListener, List<String> historyStringList) {
-        this.historyList = new ArrayList<JButton>();
+        this.historyList = new ArrayList<>();
 
         if (historyStringList.isEmpty()) {
             initButton(buttonListener, "아직 기록이 없음");
@@ -35,7 +35,8 @@ public class DownHistoryPanel extends JPanel {
 
     public void setScrollPane() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(this.historyList.size(), 1));
+        panel.setBackground(Color.WHITE);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         for(JButton button : this.historyList)
             panel.add(button);
 

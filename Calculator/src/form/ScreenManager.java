@@ -1,5 +1,6 @@
 package form;
 
+import controller.StringTrimManager;
 import listener.repository.ListenerRepository;
 import controller.CalculationManager;
 import utility.Constants;
@@ -15,6 +16,7 @@ public class ScreenManager {
     private ListenerRepository listenerRepository;
     private PanelRepository panelRepository;
     private JFrame frame;
+    private StringTrimManager stringTrimManager;
     private int rightHistoryPanelWidth;
 
     public ScreenManager() {
@@ -23,6 +25,7 @@ public class ScreenManager {
         this.listenerRepository = new ListenerRepository(this, calculationManager);
         this.panelRepository = new PanelRepository(listenerRepository.getButtonListener(), listenerRepository.getKeypadListener());
         this.frame = new MainFrame(getMainPanel(), listenerRepository.getComponentListener(), listenerRepository.getKeypadListener());
+        this.stringTrimManager = new StringTrimManager();
         this.rightHistoryPanelWidth = 0;
     }
 
@@ -103,13 +106,18 @@ public class ScreenManager {
         this.panelRepository.getBigNumberPanel().setBackground(color);
     }
 
-    public void setBigNumber(String number) {
-        this.panelRepository.getBigNumberPanel().setNumber(number);
+    public void setBigNumber(String number, boolean isInput) {
+        String bigNumber = this.stringTrimManager.processComma(number);
+        if (!isInput)
+            bigNumber = this.stringTrimManager.processE(bigNumber);
+
+        this.panelRepository.getBigNumberPanel().setNumber(bigNumber);
         setBigNumberFont();
     }
 
     public void setSmallNumber(String state) {
-        this.panelRepository.getSmallNumberPanel().setNumber(state);
+        String smallNumber = this.stringTrimManager.processE(state);
+        this.panelRepository.getSmallNumberPanel().setNumber(smallNumber);
     }
 
     public void setBigNumberFont() {
@@ -164,7 +172,6 @@ public class ScreenManager {
     }
 
     public void processHistoryScreen(List<String> historyStringList) {
-
         this.panelRepository.getDownHistoryPanel().setHistoryList(this.listenerRepository.getButtonListener(), historyStringList);
         this.panelRepository.getDownHistoryPanel().setScrollPane();
         this.panelRepository.getDownHistoryPanel().setHistoryPanel(this.listenerRepository.getButtonListener());

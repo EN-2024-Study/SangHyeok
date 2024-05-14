@@ -31,6 +31,10 @@ public class ButtonListener implements ActionListener {
         }
 
         // HistoryPanel 의 historyButton click 일 때
+        processPreviousFormula(e.getActionCommand());
+    }
+
+    private void processPreviousFormula(String formula) {
 
     }
 }

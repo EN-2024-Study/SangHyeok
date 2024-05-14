@@ -39,7 +39,7 @@ public class StringTrimManager {
         if (number.isEmpty() || number.equals(Constants.WRONG_DIVIDED1) || number.equals(Constants.WRONG_DIVIDED2))
             return number;
 
-        String[] operators = new String[]{"\\" + Constants.ADD_STRING, Constants.SUBTRACT_STRING, Constants.MULTIPLY_STRING, Constants.DIVIDE_STRING};
+        String[] operators = new String[]{"\\" + Constants.ADD_STRING, Constants.SUBTRACT_STRING, Constants.MULTIPLY_STRING, Constants.DIVIDE_STRING, Constants.EQUAL_STRING};
         for (String o : operators) {
             if (number.contains(o)) {
                 if (number.charAt(0) == o.charAt(0))

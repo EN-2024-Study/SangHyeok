@@ -131,7 +131,6 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     private void processScreen(boolean isInput) {
         if (!isInput)
             this.screenManager.processHistoryScreen(this.calculationManager.getHistoryList());
-
         this.screenManager.setBigNumber(this.calculationManager.getOutputNumber(), isInput);
         this.screenManager.setSmallNumber(this.calculationManager.getCalculationState());
     }

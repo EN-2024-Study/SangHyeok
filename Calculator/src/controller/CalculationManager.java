@@ -61,7 +61,9 @@ public class CalculationManager {
 
     public void processSign() {
         this.outputNumber = new BigDecimal(this.outputNumber).negate().toString();
-        this.firstNumber = new BigDecimal(this.outputNumber);
+
+        if (this.operator.equals(Constants.EQUAL_STRING) || this.lastInputType == LastInputType.Equal)
+            this.calculationState = "negate(" + this.calculationState.split(Constants.EQUAL_STRING)[0] + ")";
     }
 
     public void processDelete() {
@@ -121,7 +123,6 @@ public class CalculationManager {
     }
 
     public void processEqual(String operator) {
-
         if (this.operator.isEmpty() || this.operator.equals(Constants.EQUAL_STRING)) {   // 연산자가 비어있거나 number = 일 때 연산자에 삽입
             this.operator = operator;
             this.lastInputType = LastInputType.Operator;
@@ -209,7 +210,6 @@ public class CalculationManager {
             this.firstNumber = new BigDecimal(this.outputNumber);
         else
             this.secondNumber = new BigDecimal(this.outputNumber);
-
     }
 
     private void calculate() {
@@ -228,7 +228,7 @@ public class CalculationManager {
                 return;
         }
 
-        if (this.firstNumber.compareTo(new BigDecimal("1E+10000")) > 0 )
+        if (this.firstNumber.compareTo(new BigDecimal("1E+10000")) > 0)
             this.outputNumber = Constants.OVERFLOW;
         else
             this.outputNumber = this.firstNumber.toPlainString();

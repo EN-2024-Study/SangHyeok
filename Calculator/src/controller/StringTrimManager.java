@@ -38,6 +38,9 @@ public class StringTrimManager {
         if (number.equals(" ") || number.equals(Constants.WRONG_DIVIDED1) || number.equals(Constants.WRONG_DIVIDED2))
             return number;
 
+        if (number.contains("negate("))
+            return number;
+
         String[] operators = Constants.OPERATORS;
         for (String o : operators) {
             if (number.contains(o)) {
@@ -70,6 +73,8 @@ public class StringTrimManager {
             return number;
 
         number = number.replace(",", "");
+        number = number.replace("negate(", "");
+        number = number.replace(")", "");
         BigDecimal bigDecimal = new BigDecimal(number);
         String result = new BigDecimal(bigDecimal.toString(), MathContext.DECIMAL64).stripTrailingZeros().toString();
         return result.replace("E", "e");

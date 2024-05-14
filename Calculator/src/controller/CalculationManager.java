@@ -1,9 +1,10 @@
 package controller;
 
-import model.HistoryRepository;
 import utility.Constants;
 
 import java.math.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class CalculationManager {
@@ -12,7 +13,7 @@ public class CalculationManager {
         InitialValue, Number, Equal, Operator
     }
 
-    private HistoryRepository historyRepository;
+    private List<String> historyList;
     private String outputNumber;
     private String operator;
     private String calculationState;
@@ -20,7 +21,7 @@ public class CalculationManager {
     private LastInputType lastInputType;
 
     public CalculationManager() {
-        this.historyRepository = new HistoryRepository();
+        this.historyList = new ArrayList<>();
         processC();
     }
 
@@ -123,6 +124,7 @@ public class CalculationManager {
             this.operator = operator;
             this.lastInputType = LastInputType.Operator;
             this.calculationState = this.firstNumber.toPlainString() + this.operator;
+            this.historyList.add(this.calculationState + '\n' + this.outputNumber);
             return;
 
         } else if (this.operator.equals(Constants.EQUAL_STRING))   // "number = number =" 경우 return
@@ -147,8 +149,12 @@ public class CalculationManager {
         return this.outputNumber;
     }
 
+    public List<String> getHistoryList() {
+        return this.historyList;
+    }
+
     public void deleteHistory() {
-        this.historyRepository.clearHistoryList();
+        this.historyList.clear();
     }
 
     private void addInputNumber(String addNumber) {
@@ -211,6 +217,8 @@ public class CalculationManager {
             this.outputNumber = Constants.OVERFLOW;
         else
             this.outputNumber = this.firstNumber.toPlainString();
+
+        this.historyList.add(this.calculationState + '\n' + this.outputNumber);
     }
 
     private void processDivide() {

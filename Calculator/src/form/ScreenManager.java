@@ -5,7 +5,8 @@ import controller.CalculationManager;
 import utility.Constants;
 import form.repository.PanelRepository;
 import form.panel.mainPanel.*;
-
+import java.util.List;
+import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 
@@ -150,6 +151,16 @@ public class ScreenManager {
                 }
             }
         }
+    }
+
+    public void processHistoryScreen(List<String> historyStringList) {
+        this.panelRepository.getDownHistoryPanel().setHistoryList(this.listenerRepository.getButtonListener(), historyStringList);
+        this.panelRepository.getDownHistoryPanel().setScrollPane();
+        this.panelRepository.getDownHistoryPanel().setHistoryPanel(this.listenerRepository.getButtonListener());
+
+        this.panelRepository.getRightHistoryPanel().setHistoryList(this.listenerRepository.getButtonListener(), historyStringList);
+        this.panelRepository.getRightHistoryPanel().setScrollPane();
+        this.panelRepository.getRightHistoryPanel().setHistoryPanel(this.listenerRepository.getButtonListener());
     }
 
     private void restartFrame() {

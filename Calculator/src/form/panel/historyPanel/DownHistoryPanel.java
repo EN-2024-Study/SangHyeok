@@ -15,35 +15,50 @@ public class DownHistoryPanel extends JPanel {
     private HistoryDeleteButtonPanel historyDeleteButtonPanel;
 
     public DownHistoryPanel(ButtonListener buttonListener) {
-        historyDeleteButtonPanel = new HistoryDeleteButtonPanel(buttonListener);
-        initHistoryList(buttonListener);
-        initScrollPane();
-        setLayout(new BorderLayout());
-        add(scrollPane, BorderLayout.CENTER);
-        add(historyDeleteButtonPanel, BorderLayout.SOUTH);
+        this.historyDeleteButtonPanel = new HistoryDeleteButtonPanel(buttonListener);
+        setHistoryList(buttonListener, new ArrayList<>());
+        setScrollPane();
+        setHistoryPanel(buttonListener);
     }
 
-    private void initHistoryList(ButtonListener buttonListener) {
-        historyList = new ArrayList<>();
-        for(int i = 0; i < 20; i++) {
-            JButton button = new JButton("test" + (i + 1));
-            button.setBackground(Color.WHITE);
-            button.setOpaque(true);
-            button.setBorderPainted(false);
-            button.addActionListener(buttonListener);
-            historyList.add(button);
+    public void setHistoryList(ButtonListener buttonListener, List<String> historyStringList) {
+        this.historyList = new ArrayList<JButton>();
+
+        if (historyStringList.isEmpty()) {
+            initButton(buttonListener, "아직 기록이 없음");
+            return;
         }
+
+        for (String history : historyStringList)
+            initButton(buttonListener, history);
     }
 
-    private void initScrollPane() {
+    public void setScrollPane() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(historyList.size(), 1));
-        for(JButton button : historyList)
+        panel.setLayout(new GridLayout(this.historyList.size(), 1));
+        for(JButton button : this.historyList)
             panel.add(button);
 
-        scrollPane = new JScrollPane(panel);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        this.scrollPane = new JScrollPane(panel);
+        this.scrollPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     }
+
+    public void setHistoryPanel(ButtonListener buttonListener) {
+        removeAll();
+        setLayout(new BorderLayout());
+        add(this.scrollPane, BorderLayout.CENTER);
+        add(this.historyDeleteButtonPanel, BorderLayout.SOUTH);
+    }
+
+    private void initButton(ButtonListener buttonListener, String str) {
+        JButton button = new JButton(str);
+        button.setBackground(Color.WHITE);
+        button.setOpaque(true);
+        button.setBorderPainted(false);
+        button.addActionListener(buttonListener);
+        this.historyList.add(button);
+    }
+
 
     private class HistoryDeleteButtonPanel extends JPanel {     // 1회성 Class
 

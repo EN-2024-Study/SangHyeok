@@ -131,12 +131,15 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
     }
 
     private void processScreen(boolean isInput) {
-        String bigNumber = stringTrimManager.processComma(this.calculationManager.getOutputNumber());
-        if (!isInput)
-            bigNumber = stringTrimManager.processE(bigNumber);
+        String bigNumber = this.stringTrimManager.processComma(this.calculationManager.getOutputNumber());
+        String smallNumber = this.stringTrimManager.processE(this.calculationManager.getCalculationState());
+
+        if (!isInput) {
+            bigNumber = this.stringTrimManager.processE(bigNumber);
+            this.screenManager.processHistoryScreen(this.calculationManager.getHistoryList());
+        }
         this.screenManager.setBigNumber(bigNumber);
 
-        String smallNumber = stringTrimManager.processE(this.calculationManager.getCalculationState());
         this.screenManager.setSmallNumber(smallNumber);
     }
 

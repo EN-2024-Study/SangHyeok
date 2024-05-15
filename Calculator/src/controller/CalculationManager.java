@@ -60,7 +60,6 @@ public class CalculationManager {
     }
 
     public void processSign() {
-
         if (this.operator.equals(Constants.EQUAL_STRING) || (this.lastInputType == LastInputType.Number && this.calculationState.contains(Constants.NEGATE))) {
             if (this.calculationState.contains(Constants.NEGATE)) {
 
@@ -70,8 +69,15 @@ public class CalculationManager {
                     this.calculationState = Constants.NEGATE + this.calculationState + ")"; // 처음이 아닌 negate
             } else
                 this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // 처음 negate
-        } else if (!this.operator.isEmpty() && this.lastInputType == LastInputType.Equal) {
+
+        } else if (!this.operator.isEmpty() && this.lastInputType == LastInputType.Equal)
             this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // 처음 negate
+         else if (this.lastInputType == LastInputType.Operator) {
+            if (this.calculationState.contains(Constants.NEGATE)) {
+
+            }
+            else
+                this.calculationState += Constants.NEGATE + this.outputNumber + ")";
         }
 
         this.outputNumber = new BigDecimal(this.outputNumber).negate().toString();
@@ -81,7 +87,7 @@ public class CalculationManager {
     public void processDelete() {
         if (this.lastInputType == LastInputType.InitialValue)
             processC();
-        else if (this.lastInputType == LastInputType.Operator)  // 연산자가 나온 직후이면 return
+        else if (this.lastInputType == LastInputType.Operator || this.calculationState.contains(Constants.NEGATE))  // 연산자가 나온 직후이면 return
             return;
         else if (this.lastInputType == LastInputType.Equal) {   // '='이 나온 직후이면 계산 식 초기화
             this.calculationState = " ";

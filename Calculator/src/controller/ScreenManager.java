@@ -26,6 +26,8 @@ public class ScreenManager {
         this.frame = new MainFrame(getMainPanel(), listenerRepository.getComponentListener(), listenerRepository.getKeypadListener());
         this.stringTrimManager = new StringTrimManager();
         this.rightHistoryPanelWidth = 0;
+
+        setFrameFocus();
     }
 
     private JPanel getMainPanel() {
@@ -67,6 +69,11 @@ public class ScreenManager {
         c.weighty = 0.4;
         topPanel.add(this.panelRepository.getBigNumberPanel(), c);
         return topPanel;
+    }
+
+    public void setFrameFocus() {
+        this.frame.setFocusable(true);
+        this.frame.requestFocus();
     }
 
     public void showDownHistoryPanel() {

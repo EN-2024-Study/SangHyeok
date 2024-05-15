@@ -58,5 +58,6 @@ public class ButtonListener implements ActionListener {
         this.calculationManager.setPreviousCalculationState(calculateState, operator, answer);
         this.screenManager.setBigNumber(this.calculationManager.getOutputNumber(), false);
         this.screenManager.setSmallNumber(this.calculationManager.getCalculationState());
+        this.screenManager.setFrameFocus();
     }
 }

@@ -11,7 +11,8 @@ public class MainFrame extends JFrame {
 
     public MainFrame(JPanel panel, ComponentListener componentListener, KeypadListener keypadListener) {
         init(panel);
-        setListener(componentListener, keypadListener);
+        addKeyListener(keypadListener);
+        addComponentListener(componentListener);
     }
 
     private void init(JPanel panel) {
@@ -23,12 +24,5 @@ public class MainFrame extends JFrame {
         setMinimumSize(Constants.FRAME_MINI_SIZE);
         setSize(Constants.FRAME_MINI_SIZE);
         setVisible(true);
-    }
-
-    private void setListener(ComponentListener componentListener, KeypadListener keypadListener) {
-        addKeyListener(keypadListener);
-        addComponentListener(componentListener);
-        setFocusable(true);
-        requestFocus();
     }
 }

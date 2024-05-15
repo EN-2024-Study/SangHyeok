@@ -60,24 +60,25 @@ public class CalculationManager {
     }
 
     public void processSign() {
-        if (this.operator.equals(Constants.EQUAL_STRING) || (this.lastInputType == LastInputType.Number && this.calculationState.contains(Constants.NEGATE))) {
-            if (this.calculationState.contains(Constants.NEGATE)) {
+        // 계산이 끝나고 나서일 때, 연산자가 =만 존재할 때
+        if ((!this.operator.isEmpty() && this.lastInputType == LastInputType.Equal) ||
+                (this.operator.equals(Constants.EQUAL_STRING) && !this.calculationState.contains(Constants.NEGATE)))
+            this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // negate(number) 처리
 
-                if (this.calculationState.contains(Constants.EQUAL_STRING))
-                    this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // 처음 negate
-                else
-                    this.calculationState = Constants.NEGATE + this.calculationState + ")"; // 처음이 아닌 negate
-            } else
-                this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // 처음 negate
+        // 두번 째 숫자차례일 때
+        else if (this.lastInputType == LastInputType.Operator)
+            this.calculationState += Constants.NEGATE + this.outputNumber + ")";    // number operator negate(number) 처리
 
-        } else if (!this.operator.isEmpty() && this.lastInputType == LastInputType.Equal)
-            this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // 처음 negate
-         else if (this.lastInputType == LastInputType.Operator) {
-            if (this.calculationState.contains(Constants.NEGATE)) {
-
+        // 이미 계산 식에 negate 가 붙어있을 때
+        else if (this.lastInputType == LastInputType.Number && this.calculationState.contains(Constants.NEGATE)) {
+            // 연산자가 있냐 없냐, 만약 없다면 그냥 negate(만 붙히고, 만약 연산자가 있다면 뒤의 숫자에 negate 가 이미 붙어있는지 확인하고 붙이다
+            if (this.operator.equals(Constants.EQUAL_STRING))
+                this.calculationState = Constants.NEGATE + this.calculationState + ")";
+            else {
+                
             }
-            else
-                this.calculationState += Constants.NEGATE + this.outputNumber + ")";
+//            this.calculationState = Constants.NEGATE + this.calculationState + ")"; // negate(negate(number)) 처리
+
         }
 
         this.outputNumber = new BigDecimal(this.outputNumber).negate().toString();
@@ -126,7 +127,12 @@ public class CalculationManager {
         else if (this.lastInputType == LastInputType.Number || this.lastInputType == LastInputType.InitialValue) {  // 숫자 입력 후 연산자 입력일 때
             if (this.operator.isEmpty())
                 this.operator = operator;
-            else {
+            else if (this.operator.equals(Constants.EQUAL_STRING) && this.calculationState.contains(Constants.NEGATE)) {
+                this.calculationState += operator;
+                this.firstNumber = new BigDecimal(this.outputNumber);
+                this.lastInputType = LastInputType.Operator;
+                return;
+            } else {
                 calculate();
                 this.operator = operator;
                 this.secondNumber = new BigDecimal("0");
@@ -165,10 +171,6 @@ public class CalculationManager {
         this.lastInputType = LastInputType.Equal;
         this.calculationState = this.firstNumber.toPlainString() + this.operator + this.secondNumber.toPlainString() + Constants.EQUAL_STRING; // "number operator number ="
         calculate();
-    }
-
-    private void processNegate() {
-
     }
 
     public String getCalculationState() {

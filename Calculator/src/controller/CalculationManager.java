@@ -64,23 +64,31 @@ public class CalculationManager {
                 (this.operator.equals(Constants.EQUAL_STRING) && !this.calculationState.contains(Constants.NEGATE)))
             this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // negate(number)
 
-            // 두번 째 숫자차례일 때
+            // 두번 째 숫자 차례일 때
         else if (this.lastInputType == LastInputType.Operator)
             this.calculationState += Constants.NEGATE + this.outputNumber + ")";    // number operator negate(number)
 
-            // 이미 계산 식에 negate 가 붙어있을 때
+            // 이미 계산 식에 negate 가 존재할 때
         else if (this.lastInputType == LastInputType.Number && this.calculationState.contains(Constants.NEGATE)) {
 
-            if (this.operator.equals(Constants.EQUAL_STRING))
+            if (this.operator.equals(Constants.EQUAL_STRING)) {
+                if (this.calculationState.contains(Constants.EQUAL_STRING))
+                    this.calculationState = this.calculationState.substring(0, calculationState.length() - 1);
                 this.calculationState = Constants.NEGATE + this.calculationState + ")"; // negate(negate(number))
-            else {
+            } else {
+                boolean isPlay = false;
                 String splitString = this.operator;
                 if (this.operator.equals(Constants.ADD_STRING))
                     splitString = "\\+";
 
                 String[] tempState = this.calculationState.split(splitString);
-                if (tempState.length == 2)
+                if (tempState.length == 2) {
+                    isPlay = true;
                     this.calculationState = tempState[0] + this.operator + Constants.NEGATE + tempState[1] + ")";   // number operator negate(negate(number))
+                }
+
+                if (!isPlay)
+                    this.calculationState = Constants.NEGATE + this.calculationState + ")";
             }
         }
 
@@ -97,8 +105,7 @@ public class CalculationManager {
             this.secondNumber = new BigDecimal("0");
             this.operator = "";
             return;
-        }
-        else if (this.lastInputType == LastInputType.Operator || this.calculationState.contains(Constants.NEGATE))  // 연산자가 나온 직후이면 return
+        } else if (this.lastInputType == LastInputType.Operator || this.calculationState.contains(Constants.NEGATE))  // 연산자가 나온 직후이면 return
             return;
 
         if (outputNumber.length() == 1) {    // 숫자가 1의자리 수일 떄
@@ -158,14 +165,16 @@ public class CalculationManager {
     }
 
     public void processEqual() {
-        if (this.operator.isEmpty() || this.operator.equals(Constants.EQUAL_STRING)) {   // 연산자가 비어있거나 number = 일 때 연산자에 삽입
-            if (this.calculationState.contains(Constants.NEGATE)) {
+//        System.out.println("firstNumber: " + this.firstNumber + " secondNumber: " + this.secondNumber + " outputNumber: " + this.outputNumber);
+//        System.out.println("operator: " + this.operator + " lastInputType: " + this.lastInputType);
+//        System.out.println("===============");
 
-                if (!this.calculationState.contains(Constants.EQUAL_STRING)) {
-                    this.calculationState += Constants.EQUAL_STRING;
-                    addHistory(this.calculationState, this.outputNumber);
-                    return;
-                }
+        if (this.operator.isEmpty() || this.operator.equals(Constants.EQUAL_STRING)) {   // 연산자가 비어있거나 number = 일 때 연산자에 삽입
+
+            if (this.calculationState.contains(Constants.NEGATE) && !this.calculationState.contains(Constants.EQUAL_STRING)) {
+                this.calculationState += Constants.EQUAL_STRING;
+                addHistory(this.calculationState, this.outputNumber);
+                return;
             }
 
             this.operator = Constants.EQUAL_STRING;
@@ -181,6 +190,9 @@ public class CalculationManager {
 
         if (this.calculationState.contains(Constants.NEGATE)) {
             calculateNegate();
+            System.out.println("firstNumber: " + this.firstNumber + " secondNumber: " + this.secondNumber + " outputNumber: " + this.outputNumber);
+            System.out.println("operator: " + this.operator + " lastInputType: " + this.lastInputType);
+            System.out.println("----------------");
             return;
         } else
             this.calculationState = this.firstNumber.toPlainString() + this.operator + this.secondNumber.toPlainString() + Constants.EQUAL_STRING; // "number operator number ="

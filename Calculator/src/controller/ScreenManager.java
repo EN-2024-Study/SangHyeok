@@ -26,7 +26,6 @@ public class ScreenManager {
         this.frame = new MainFrame(getMainPanel(), listenerRepository.getComponentListener(), listenerRepository.getKeypadListener());
         this.stringTrimManager = new StringTrimManager();
         this.rightHistoryPanelWidth = 0;
-
         setFrameFocus();
     }
 

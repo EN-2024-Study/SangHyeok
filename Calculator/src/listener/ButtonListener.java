@@ -1,7 +1,7 @@
 package listener;
 
 import controller.CalculationManager;
-import form.ScreenManager;
+import controller.ScreenManager;
 import utility.Constants;
 
 import java.awt.event.ActionEvent;

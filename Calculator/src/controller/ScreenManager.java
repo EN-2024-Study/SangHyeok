@@ -1,11 +1,10 @@
-package form;
+package controller;
 
-import controller.StringTrimManager;
+import form.MainFrame;
 import listener.repository.ListenerRepository;
-import controller.CalculationManager;
 import utility.Constants;
 import form.repository.PanelRepository;
-import form.panel.mainPanel.*;
+
 import java.util.List;
 
 import javax.swing.*;

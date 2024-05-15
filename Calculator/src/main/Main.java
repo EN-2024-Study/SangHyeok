@@ -1,9 +1,6 @@
 package main;
 
-import form.ScreenManager;
-
-import java.math.BigDecimal;
-import java.math.MathContext;
+import controller.ScreenManager;
 
 public class Main {
 

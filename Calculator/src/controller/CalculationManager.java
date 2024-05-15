@@ -60,18 +60,21 @@ public class CalculationManager {
     }
 
     public void processSign() {
-        this.outputNumber = new BigDecimal(this.outputNumber).negate().toString();
 
         if (this.operator.equals(Constants.EQUAL_STRING) || (this.lastInputType == LastInputType.Number && this.calculationState.contains(Constants.NEGATE))) {
-            if (this.calculationState.contains(Constants.NEGATE))
-                this.calculationState = Constants.NEGATE + this.calculationState + ")"; // 처음이 아닌 negate
-            else
+            if (this.calculationState.contains(Constants.NEGATE)) {
+
+                if (this.calculationState.contains(Constants.EQUAL_STRING))
+                    this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // 처음 negate
+                else
+                    this.calculationState = Constants.NEGATE + this.calculationState + ")"; // 처음이 아닌 negate
+            } else
                 this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // 처음 negate
-        }
-        else if (!this.operator.isEmpty() && this.lastInputType == LastInputType.Equal) {
+        } else if (!this.operator.isEmpty() && this.lastInputType == LastInputType.Equal) {
             this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // 처음 negate
         }
 
+        this.outputNumber = new BigDecimal(this.outputNumber).negate().toString();
         this.lastInputType = LastInputType.Number;
     }
 
@@ -134,13 +137,17 @@ public class CalculationManager {
     public void processEqual() {
         if (this.operator.isEmpty() || this.operator.equals(Constants.EQUAL_STRING)) {   // 연산자가 비어있거나 number = 일 때 연산자에 삽입
             if (this.calculationState.contains(Constants.NEGATE)) {
-                this.calculationState += Constants.EQUAL_STRING;
-                return;
+
+                if (!this.calculationState.contains(Constants.EQUAL_STRING)) {
+                    this.calculationState += Constants.EQUAL_STRING;
+                    addHistory(this.calculationState, this.outputNumber);
+                    return;
+                }
             }
 
             this.operator = Constants.EQUAL_STRING;
             this.lastInputType = LastInputType.Operator;
-            this.calculationState = this.firstNumber.toPlainString() + this.operator;
+            this.calculationState = this.outputNumber + this.operator;
             addHistory(this.calculationState, this.outputNumber);
             return;
 

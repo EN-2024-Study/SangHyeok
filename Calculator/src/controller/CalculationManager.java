@@ -71,9 +71,8 @@ public class CalculationManager {
         // 이미 계산 식에 negate 가 붙어있을 때
         else if (this.lastInputType == LastInputType.Number && this.calculationState.contains(Constants.NEGATE)) {
 
-            if (this.operator.equals(Constants.EQUAL_STRING)) {
+            if (this.operator.equals(Constants.EQUAL_STRING))
                 this.calculationState = Constants.NEGATE + this.calculationState + ")"; // negate(negate(number))
-            }
             else {
                 String splitString = this.operator;
                 if (this.operator.equals(Constants.ADD_STRING))
@@ -181,8 +180,21 @@ public class CalculationManager {
         else if (this.lastInputType == LastInputType.Operator)     // 연산자 직후 "=" 경우
             this.secondNumber = new BigDecimal(this.outputNumber);
 
+        if (this.calculationState.contains(Constants.NEGATE))  {
+            calculateNegate();
+            return;
+        }
+        else
+            this.calculationState = this.firstNumber.toPlainString() + this.operator + this.secondNumber.toPlainString() + Constants.EQUAL_STRING; // "number operator number ="
+
         this.lastInputType = LastInputType.Equal;
-        this.calculationState = this.firstNumber.toPlainString() + this.operator + this.secondNumber.toPlainString() + Constants.EQUAL_STRING; // "number operator number ="
+        calculate();
+    }
+
+    private void calculateNegate() {
+        this.calculationState += Constants.EQUAL_STRING;
+        this.secondNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
+        this.lastInputType = LastInputType.Equal;
         calculate();
     }
 

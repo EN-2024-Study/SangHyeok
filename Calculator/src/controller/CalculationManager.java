@@ -42,7 +42,8 @@ public class CalculationManager {
         if (this.lastInputType == LastInputType.Equal) {
             processC();
             return;
-        }
+        } else if (this.calculationState.contains(Constants.NEGATE) && !this.calculationState.contains(Constants.EQUAL_STRING))
+            addHistory(this.calculationState, this.outputNumber);
         this.outputNumber = "0";
         this.secondNumber = new BigDecimal("0");
     }
@@ -128,16 +129,23 @@ public class CalculationManager {
         if (this.lastInputType == LastInputType.Operator || this.lastInputType == LastInputType.Equal)    // 연산자가 연속입력일 때나 = 다음에 연산자 입력이 들어오면 연산자만 바꾸기
             this.operator = operator;
         else if (this.lastInputType == LastInputType.Number || this.lastInputType == LastInputType.InitialValue) {  // 숫자 입력 후 연산자 입력일 때
+
             if (this.operator.isEmpty())
                 this.operator = operator;
             else if (this.operator.equals(Constants.EQUAL_STRING) && this.calculationState.contains(Constants.NEGATE)) {
+
                 this.calculationState += operator;
                 this.firstNumber = new BigDecimal(this.outputNumber);
                 this.operator = operator;
                 this.lastInputType = LastInputType.Operator;
                 return;
-            } else {
+
+            } else {    // = 처리 후 연산자 처리를 해야 할 때
+                System.out.println("test");
+                this.secondNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
+                this.calculationState += this.secondNumber + Constants.EQUAL_STRING;
                 calculate();
+
                 this.operator = operator;
                 this.secondNumber = new BigDecimal("0");
             }

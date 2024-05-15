@@ -164,7 +164,7 @@ public class ScreenManager {
 
     public void processKeypadActionListener(boolean isEnabled) {
         JButton[] buttons = this.panelRepository.getKeypadPanel().getButtons();
-        String[] noActionButtons = new String[]{Constants.DIVIDE_STRING, Constants.MULTIPLY_STRING, Constants.SUBTRACT_STRING, Constants.ADD_STRING, Constants.POINT_STRING, Constants.SIGN_STRING};
+        String[] noActionButtons = new String[]{Constants.EQUAL_STRING, Constants.DIVIDE_STRING, Constants.MULTIPLY_STRING, Constants.SUBTRACT_STRING, Constants.ADD_STRING, Constants.POINT_STRING, Constants.SIGN_STRING};
 
         for (JButton button : buttons) {
             for (String noActionButton : noActionButtons) {

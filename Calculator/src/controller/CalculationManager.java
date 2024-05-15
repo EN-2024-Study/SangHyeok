@@ -152,8 +152,8 @@ public class CalculationManager {
                 this.firstNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
                 this.calculationState += this.operator;
                 return;
-            } else {    // = 처리하고 연산자 처리를 해야 할 때
 
+            } else {    // = 처리하고 연산자 처리를 해야 할 때
                 this.secondNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
                 this.calculationState += this.secondNumber + Constants.EQUAL_STRING;
                 calculate();
@@ -162,6 +162,9 @@ public class CalculationManager {
                 this.secondNumber = new BigDecimal("0");
             }
         }
+
+        if (this.outputNumber.equals(Constants.WRONG_DIVIDED1) || this.outputNumber.equals(Constants.WRONG_DIVIDED2) || this.outputNumber.equals(Constants.OVERFLOW))
+            return;
 
         this.lastInputType = LastInputType.Operator;
         this.firstNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
@@ -323,7 +326,7 @@ public class CalculationManager {
                 return;
         }
 
-        if (this.firstNumber.compareTo(new BigDecimal("1E+10000")) > 0)
+        if (this.firstNumber.abs().compareTo(new BigDecimal("1E+10000")) > 0)
             this.outputNumber = Constants.OVERFLOW;
         else
             this.outputNumber = this.firstNumber.toPlainString();

@@ -64,11 +64,11 @@ public class CalculationManager {
                 (this.operator.equals(Constants.EQUAL_STRING) && !this.calculationState.contains(Constants.NEGATE)))
             this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // negate(number)
 
-        // 두번 째 숫자차례일 때
+            // 두번 째 숫자차례일 때
         else if (this.lastInputType == LastInputType.Operator)
             this.calculationState += Constants.NEGATE + this.outputNumber + ")";    // number operator negate(number)
 
-        // 이미 계산 식에 negate 가 붙어있을 때
+            // 이미 계산 식에 negate 가 붙어있을 때
         else if (this.lastInputType == LastInputType.Number && this.calculationState.contains(Constants.NEGATE)) {
 
             if (this.operator.equals(Constants.EQUAL_STRING))
@@ -91,8 +91,6 @@ public class CalculationManager {
     public void processDelete() {
         if (this.lastInputType == LastInputType.InitialValue)
             processC();
-        else if (this.lastInputType == LastInputType.Operator || this.calculationState.contains(Constants.NEGATE))  // 연산자가 나온 직후이면 return
-            return;
         else if (this.lastInputType == LastInputType.Equal) {   // '='이 나온 직후이면 계산 식 초기화
             this.calculationState = " ";
             this.firstNumber = new BigDecimal("0");
@@ -100,6 +98,8 @@ public class CalculationManager {
             this.operator = "";
             return;
         }
+        else if (this.lastInputType == LastInputType.Operator || this.calculationState.contains(Constants.NEGATE))  // 연산자가 나온 직후이면 return
+            return;
 
         if (outputNumber.length() == 1) {    // 숫자가 1의자리 수일 떄
             this.outputNumber = "0";
@@ -140,7 +140,6 @@ public class CalculationManager {
                 return;
 
             } else {    // = 처리 후 연산자 처리를 해야 할 때
-                System.out.println("test");
                 this.secondNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
                 this.calculationState += this.secondNumber + Constants.EQUAL_STRING;
                 calculate();
@@ -180,11 +179,10 @@ public class CalculationManager {
         else if (this.lastInputType == LastInputType.Operator)     // 연산자 직후 "=" 경우
             this.secondNumber = new BigDecimal(this.outputNumber);
 
-        if (this.calculationState.contains(Constants.NEGATE))  {
+        if (this.calculationState.contains(Constants.NEGATE)) {
             calculateNegate();
             return;
-        }
-        else
+        } else
             this.calculationState = this.firstNumber.toPlainString() + this.operator + this.secondNumber.toPlainString() + Constants.EQUAL_STRING; // "number operator number ="
 
         this.lastInputType = LastInputType.Equal;

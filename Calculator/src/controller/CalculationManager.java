@@ -203,7 +203,7 @@ public class CalculationManager {
 
     private void calculateNegate() {
         boolean hasOperator = false;
-        for(String o : Constants.OPERATORS) {
+        for (String o : Constants.OPERATORS) {
             if (this.calculationState.contains(o)) {
                 hasOperator = true;
                 break;
@@ -221,6 +221,9 @@ public class CalculationManager {
             this.lastInputType = LastInputType.Equal;
             return;
         }
+
+        if (this.calculationState.contains(Constants.EQUAL_STRING))
+            return;
 
         this.calculationState += Constants.EQUAL_STRING;
         this.secondNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);

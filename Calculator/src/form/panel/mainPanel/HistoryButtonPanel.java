@@ -16,7 +16,7 @@ public class HistoryButtonPanel extends JPanel {
 
     private void initHistoryButton(ButtonListener buttonListener) {
         this.historyButton = new JButton() {
-            Image image = new ImageIcon("src/view/imageFile/HistoryLogo.png").getImage();
+            final Image image = new ImageIcon("etc/HistoryLogo.png").getImage();
 
             @Override
             public void paintComponent(Graphics g) {

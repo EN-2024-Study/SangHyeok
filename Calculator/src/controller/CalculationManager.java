@@ -146,7 +146,14 @@ public class CalculationManager {
                 this.lastInputType = LastInputType.Operator;
                 return;
 
-            } else {    // = 처리 후 연산자 처리를 해야 할 때
+            } else if (this.calculationState.contains(Constants.NEGATE)) {
+                this.operator = operator;
+                this.lastInputType = LastInputType.Operator;
+                this.firstNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
+                this.calculationState += this.operator;
+                return;
+            } else {    // = 처리하고 연산자 처리를 해야 할 때
+
                 this.secondNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
                 this.calculationState += this.secondNumber + Constants.EQUAL_STRING;
                 calculate();
@@ -195,9 +202,6 @@ public class CalculationManager {
     }
 
     private void calculateNegate() {
-//        System.out.println("firstNumber: " + this.firstNumber + " secondNumber: " + this.secondNumber + " outputNumber: " + this.outputNumber);
-//        System.out.println("operator: " + this.operator + " lastInputType: " + this.lastInputType);
-//        System.out.println("----------------");
         boolean hasOperator = false;
         for(String o : Constants.OPERATORS) {
             if (this.calculationState.contains(o)) {
@@ -213,7 +217,6 @@ public class CalculationManager {
             else
                 this.outputNumber = Constants.SUBTRACT_STRING + this.firstNumber.toPlainString();
 
-//            this.secondNumber = new BigDecimal("0");
             this.calculationState += Constants.EQUAL_STRING;
             this.lastInputType = LastInputType.Equal;
             return;

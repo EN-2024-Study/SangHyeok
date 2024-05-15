@@ -107,7 +107,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 processScreen(true);
                 return;
             case Constants.EQUAL_STRING:
-                this.calculationManager.processEqual(operator);
+                this.calculationManager.processEqual();
                 break;
         }
 

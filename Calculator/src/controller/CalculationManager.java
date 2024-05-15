@@ -62,8 +62,17 @@ public class CalculationManager {
     public void processSign() {
         this.outputNumber = new BigDecimal(this.outputNumber).negate().toString();
 
-        if (this.operator.equals(Constants.EQUAL_STRING) || this.lastInputType == LastInputType.Equal)
-            this.calculationState = "negate(" + this.calculationState.split(Constants.EQUAL_STRING)[0] + ")";
+        if (this.operator.equals(Constants.EQUAL_STRING) || (this.lastInputType == LastInputType.Number && this.calculationState.contains(Constants.NEGATE))) {
+            if (this.calculationState.contains(Constants.NEGATE))
+                this.calculationState = Constants.NEGATE + this.calculationState + ")"; // 처음이 아닌 negate
+            else
+                this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // 처음 negate
+        }
+        else if (!this.operator.isEmpty() && this.lastInputType == LastInputType.Equal) {
+            this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // 처음 negate
+        }
+
+        this.lastInputType = LastInputType.Number;
     }
 
     public void processDelete() {
@@ -122,9 +131,14 @@ public class CalculationManager {
             this.outputNumber = this.firstNumber.toString();    // 마지막 입력이 소수점이였을 때 연산자가 들어오면 소수점 삭제
     }
 
-    public void processEqual(String operator) {
+    public void processEqual() {
         if (this.operator.isEmpty() || this.operator.equals(Constants.EQUAL_STRING)) {   // 연산자가 비어있거나 number = 일 때 연산자에 삽입
-            this.operator = operator;
+            if (this.calculationState.contains(Constants.NEGATE)) {
+                this.calculationState += Constants.EQUAL_STRING;
+                return;
+            }
+
+            this.operator = Constants.EQUAL_STRING;
             this.lastInputType = LastInputType.Operator;
             this.calculationState = this.firstNumber.toPlainString() + this.operator;
             addHistory(this.calculationState, this.outputNumber);
@@ -138,6 +152,10 @@ public class CalculationManager {
         this.lastInputType = LastInputType.Equal;
         this.calculationState = this.firstNumber.toPlainString() + this.operator + this.secondNumber.toPlainString() + Constants.EQUAL_STRING; // "number operator number ="
         calculate();
+    }
+
+    private void processNegate() {
+
     }
 
     public String getCalculationState() {

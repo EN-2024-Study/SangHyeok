@@ -68,13 +68,15 @@ public class StringTrimManager {
 
     private String getReplaceString(String number) {
         number = processDecimalPoint(number);
-
         if (!isOverLength(number))
             return number;
 
         number = number.replace(",", "");
-        number = number.replace("negate(", "");
-        number = number.replace(")", "");
+//        while(!number.contains(Constants.NEGATE)) {
+//            number = number.split(Constants.NEGATE)[1];
+//            number = number.replace(")", "");
+//        }
+
         BigDecimal bigDecimal = new BigDecimal(number);
         String result = new BigDecimal(bigDecimal.toString(), MathContext.DECIMAL64).stripTrailingZeros().toString();
         return result.replace("E", "e");

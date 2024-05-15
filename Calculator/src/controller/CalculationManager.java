@@ -165,10 +165,6 @@ public class CalculationManager {
     }
 
     public void processEqual() {
-//        System.out.println("firstNumber: " + this.firstNumber + " secondNumber: " + this.secondNumber + " outputNumber: " + this.outputNumber);
-//        System.out.println("operator: " + this.operator + " lastInputType: " + this.lastInputType);
-//        System.out.println("===============");
-
         if (this.operator.isEmpty() || this.operator.equals(Constants.EQUAL_STRING)) {   // 연산자가 비어있거나 number = 일 때 연산자에 삽입
 
             if (this.calculationState.contains(Constants.NEGATE) && !this.calculationState.contains(Constants.EQUAL_STRING)) {
@@ -190,9 +186,6 @@ public class CalculationManager {
 
         if (this.calculationState.contains(Constants.NEGATE)) {
             calculateNegate();
-            System.out.println("firstNumber: " + this.firstNumber + " secondNumber: " + this.secondNumber + " outputNumber: " + this.outputNumber);
-            System.out.println("operator: " + this.operator + " lastInputType: " + this.lastInputType);
-            System.out.println("----------------");
             return;
         } else
             this.calculationState = this.firstNumber.toPlainString() + this.operator + this.secondNumber.toPlainString() + Constants.EQUAL_STRING; // "number operator number ="
@@ -202,11 +195,36 @@ public class CalculationManager {
     }
 
     private void calculateNegate() {
+//        System.out.println("firstNumber: " + this.firstNumber + " secondNumber: " + this.secondNumber + " outputNumber: " + this.outputNumber);
+//        System.out.println("operator: " + this.operator + " lastInputType: " + this.lastInputType);
+//        System.out.println("----------------");
+        boolean hasOperator = false;
+        for(String o : Constants.OPERATORS) {
+            if (this.calculationState.contains(o)) {
+                hasOperator = true;
+                break;
+            }
+        }
+
+        if (!hasOperator) {
+            int count = (this.calculationState.length() - this.calculationState.replace(Constants.NEGATE, "").length()) / Constants.NEGATE.length();
+            if (count % 2 == 0)
+                this.outputNumber = this.firstNumber.toPlainString();
+            else
+                this.outputNumber = Constants.SUBTRACT_STRING + this.firstNumber.toPlainString();
+
+//            this.secondNumber = new BigDecimal("0");
+            this.calculationState += Constants.EQUAL_STRING;
+            this.lastInputType = LastInputType.Equal;
+            return;
+        }
+
         this.calculationState += Constants.EQUAL_STRING;
         this.secondNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
         this.lastInputType = LastInputType.Equal;
         calculate();
     }
+
 
     public String getCalculationState() {
         if (this.operator.isEmpty())    // 연산자가 아직 나오지 않았다면 빈 문자열 반환

@@ -3,9 +3,7 @@ package controller;
 import utility.Constants;
 
 import java.math.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class CalculationManager {
 
@@ -14,7 +12,7 @@ public class CalculationManager {
     }
 
     private StringTrimManager stringTrimManager;
-    private List<String> historyList;
+    private Deque<String> historyQueue;
     private String outputNumber;
     private String operator;
     private String calculationState;
@@ -23,7 +21,7 @@ public class CalculationManager {
 
     public CalculationManager() {
         this.stringTrimManager = new StringTrimManager();
-        this.historyList = new ArrayList<>();
+        this.historyQueue = new ArrayDeque<>();
         processC();
     }
 
@@ -63,22 +61,27 @@ public class CalculationManager {
         // 계산이 끝나고 나서일 때, 연산자가 =만 존재할 때
         if ((!this.operator.isEmpty() && this.lastInputType == LastInputType.Equal) ||
                 (this.operator.equals(Constants.EQUAL_STRING) && !this.calculationState.contains(Constants.NEGATE)))
-            this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // negate(number) 처리
+            this.calculationState = Constants.NEGATE + this.outputNumber + ")"; // negate(number)
 
         // 두번 째 숫자차례일 때
         else if (this.lastInputType == LastInputType.Operator)
-            this.calculationState += Constants.NEGATE + this.outputNumber + ")";    // number operator negate(number) 처리
+            this.calculationState += Constants.NEGATE + this.outputNumber + ")";    // number operator negate(number)
 
         // 이미 계산 식에 negate 가 붙어있을 때
         else if (this.lastInputType == LastInputType.Number && this.calculationState.contains(Constants.NEGATE)) {
-            // 연산자가 있냐 없냐, 만약 없다면 그냥 negate(만 붙히고, 만약 연산자가 있다면 뒤의 숫자에 negate 가 이미 붙어있는지 확인하고 붙이다
-            if (this.operator.equals(Constants.EQUAL_STRING))
-                this.calculationState = Constants.NEGATE + this.calculationState + ")";
-            else {
-                
-            }
-//            this.calculationState = Constants.NEGATE + this.calculationState + ")"; // negate(negate(number)) 처리
 
+            if (this.operator.equals(Constants.EQUAL_STRING)) {
+                this.calculationState = Constants.NEGATE + this.calculationState + ")"; // negate(negate(number))
+            }
+            else {
+                String splitString = this.operator;
+                if (this.operator.equals(Constants.ADD_STRING))
+                    splitString = "\\+";
+
+                String[] tempState = this.calculationState.split(splitString);
+                if (tempState.length == 2)
+                    this.calculationState = tempState[0] + this.operator + Constants.NEGATE + tempState[1] + ")";   // number operator negate(negate(number))
+            }
         }
 
         this.outputNumber = new BigDecimal(this.outputNumber).negate().toString();
@@ -130,6 +133,7 @@ public class CalculationManager {
             else if (this.operator.equals(Constants.EQUAL_STRING) && this.calculationState.contains(Constants.NEGATE)) {
                 this.calculationState += operator;
                 this.firstNumber = new BigDecimal(this.outputNumber);
+                this.operator = operator;
                 this.lastInputType = LastInputType.Operator;
                 return;
             } else {
@@ -140,6 +144,7 @@ public class CalculationManager {
         }
 
         this.lastInputType = LastInputType.Operator;
+        this.firstNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
         this.calculationState = this.firstNumber.toPlainString() + this.operator;
 
         if (outputNumber.charAt(outputNumber.length() - 1) == '.')
@@ -193,17 +198,20 @@ public class CalculationManager {
     }
 
     public List<String> getHistoryList() {
-        return this.historyList;
+        return this.historyQueue.stream().toList();
     }
 
     public void deleteHistory() {
-        this.historyList.clear();
+        this.historyQueue.clear();
     }
 
     private void addHistory(String state, String answer) {
         state = this.stringTrimManager.processE(state);
         answer = this.stringTrimManager.processE(answer);
-        this.historyList.add(state + '\n' + answer);
+        if (this.historyQueue.size() >= 20)
+            this.historyQueue.removeFirst();
+
+        this.historyQueue.addLast(state + '\n' + answer);
     }
 
     private void addInputNumber(String addNumber) {

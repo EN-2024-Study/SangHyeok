@@ -25,12 +25,12 @@ public class DownHistoryPanel extends JPanel {
         this.historyList = new ArrayList<>();
 
         if (historyStringList.isEmpty()) {
-            initButton(buttonListener, "아직 기록이 없음");
+            initButton(buttonListener, "아직 기록이 없음", false);
             return;
         }
 
         for (String history : historyStringList)
-            initButton(buttonListener, history);
+            initButton(buttonListener, history, true);
     }
 
     public void setScrollPane() {
@@ -51,12 +51,15 @@ public class DownHistoryPanel extends JPanel {
         add(this.historyDeleteButtonPanel, BorderLayout.SOUTH);
     }
 
-    private void initButton(ButtonListener buttonListener, String str) {
+    private void initButton(ButtonListener buttonListener, String str, boolean isRight) {
         JButton button = new JButton("<html>" + str.replaceAll("\\n", "<br>") + "</html>");
         button.setBackground(Color.WHITE);
         button.setOpaque(true);
         button.setBorderPainted(false);
-        button.setHorizontalAlignment(SwingConstants.RIGHT);
+        if (isRight)
+            button.setHorizontalAlignment(SwingConstants.RIGHT);
+        else
+            button.setHorizontalAlignment(SwingConstants.LEFT);
         button.addActionListener(buttonListener);
         this.historyList.add(button);
     }

@@ -219,8 +219,9 @@ public class CalculationManager {
                 return;
 
             this.secondNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
-            this.calculationState += this.secondNumber + Constants.EQUAL_STRING;
+            this.calculationState += Constants.EQUAL_STRING;
             this.lastInputType = LastInputType.Equal;
+
             calculate();
             return;
         }
@@ -234,7 +235,6 @@ public class CalculationManager {
         this.calculationState += Constants.EQUAL_STRING;
         this.lastInputType = LastInputType.Equal;
     }
-
 
     public String getCalculationState() {
         if (this.operator.isEmpty())    // 연산자가 아직 나오지 않았다면 빈 문자열 반환

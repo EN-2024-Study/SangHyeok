@@ -18,7 +18,7 @@ public class DownHistoryPanel extends JPanel {
         this.historyDeleteButtonPanel = new HistoryDeleteButtonPanel(buttonListener);
         setHistoryList(buttonListener, new ArrayList<>());
         setScrollPane();
-        setHistoryPanel(buttonListener);
+        setHistoryPanel();
     }
 
     public void setHistoryList(ButtonListener buttonListener, List<String> historyStringList) {
@@ -44,7 +44,7 @@ public class DownHistoryPanel extends JPanel {
         this.scrollPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     }
 
-    public void setHistoryPanel(ButtonListener buttonListener) {
+    public void setHistoryPanel() {
         removeAll();
         setLayout(new BorderLayout());
         add(this.scrollPane, BorderLayout.CENTER);

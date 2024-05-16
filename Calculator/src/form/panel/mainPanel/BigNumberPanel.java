@@ -12,11 +12,6 @@ public class BigNumberPanel extends SmallNumberPanel {
         super.numberLabel.setFont(new Font(Font.DIALOG, Font.BOLD, Constants.BIG_NUMBER_FONT_MAX_SIZE));
     }
 
-    @Override
-    public void setNumber(String str) {
-        super.setNumber(str);
-    }
-
     public void setFont(int frameWidthSize) {
         int fontMaxSize = Constants.BIG_NUMBER_FONT_MAX_SIZE;
         int fontMinSize = Constants.BIG_NUMBER_FONT_MIN_SIZE;

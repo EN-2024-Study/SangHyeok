@@ -1,10 +1,10 @@
 package main;
 
-import controller.ScreenManager;
+import controller.PanelManager;
 
 public class Main {
 
     public static void main(String[] args) {
-        new ScreenManager();
+        new PanelManager();
     }
 }

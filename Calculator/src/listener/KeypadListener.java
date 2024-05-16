@@ -1,7 +1,7 @@
 package listener;
 
 import controller.CalculationManager;
-import controller.ScreenManager;
+import controller.PanelManager;
 import utility.Constants;
 
 import java.awt.event.*;
@@ -9,11 +9,11 @@ import java.awt.event.*;
 public class KeypadListener extends KeyAdapter implements ActionListener {
 
     private CalculationManager calculationManager;
-    private ScreenManager screenManager;
+    private PanelManager panelManager;
     private boolean isShift;
 
-    public KeypadListener(ScreenManager screenManager, CalculationManager calculationManager) {
-        this.screenManager = screenManager;
+    public KeypadListener(PanelManager panelManager, CalculationManager calculationManager) {
+        this.panelManager = panelManager;
         this.calculationManager = calculationManager;
         this.isShift = false;
     }
@@ -38,12 +38,12 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
                 operator = Constants.MULTIPLY_STRING;
             else {
                 processNumber(String.valueOf(e.getKeyChar() - 48));
-                this.screenManager.processKeypadActionPaint(String.valueOf(e.getKeyChar() - 48));
+                this.panelManager.processKeypadActionPaint(String.valueOf(e.getKeyChar() - 48));
                 return;
             }
         } else if (48 <= e.getKeyCode() && e.getKeyCode() <= 57) {    // 숫자 처리
             processNumber(String.valueOf(e.getKeyChar() - 48));
-            this.screenManager.processKeypadActionPaint(String.valueOf(e.getKeyChar() - 48));
+            this.panelManager.processKeypadActionPaint(String.valueOf(e.getKeyChar() - 48));
             return;
         } else if (e.getKeyCode() == 16) {   // shift
             this.isShift = true;
@@ -71,7 +71,7 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
         if (isOperatorValid(operator)) {
             processKey(operator);
-            this.screenManager.processKeypadActionPaint(operator);
+            this.panelManager.processKeypadActionPaint(operator);
         }
     }
 
@@ -129,20 +129,20 @@ public class KeypadListener extends KeyAdapter implements ActionListener {
 
     private void processScreen(boolean isInput) {
         if (!isInput)
-            this.screenManager.processHistoryScreen(this.calculationManager.getHistoryList());
-        this.screenManager.setBigNumber(this.calculationManager.getOutputNumber(), isInput);
-        this.screenManager.setSmallNumber(this.calculationManager.getCalculationState());
+            this.panelManager.processHistoryScreen(this.calculationManager.getHistoryList());
+        this.panelManager.setBigNumber(this.calculationManager.getOutputNumber(), isInput);
+        this.panelManager.setSmallNumber(this.calculationManager.getCalculationState());
     }
 
     private void processKeypadAction() {
         if (!this.calculationManager.getOutputNumber().equals(Constants.WRONG_DIVIDED1) &&
         !this.calculationManager.getOutputNumber().equals(Constants.WRONG_DIVIDED2) &&
                 !this.calculationManager.getOutputNumber().equals(Constants.OVERFLOW)) {
-            this.screenManager.processKeypadActionListener(true);
+            this.panelManager.processKeypadActionListener(true);
             return;
         }
 
-        this.screenManager.processKeypadActionListener(false);
+        this.panelManager.processKeypadActionListener(false);
         this.calculationManager.initLastInputType();
     }
 }

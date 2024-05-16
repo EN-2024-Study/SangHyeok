@@ -1,7 +1,7 @@
 package listener;
 
 import controller.CalculationManager;
-import controller.ScreenManager;
+import controller.PanelManager;
 import utility.Constants;
 
 import java.awt.event.ActionEvent;
@@ -10,23 +10,23 @@ import java.util.ArrayList;
 
 public class ButtonListener implements ActionListener {
 
-    private ScreenManager screenManager;
+    private PanelManager panelManager;
     private CalculationManager calculationManager;
 
-    public ButtonListener(ScreenManager screenManager, CalculationManager calculationManager) {
-        this.screenManager = screenManager;
+    public ButtonListener(PanelManager panelManager, CalculationManager calculationManager) {
+        this.panelManager = panelManager;
         this.calculationManager = calculationManager;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().getClass().toString().contains(Constants.HISTORY_BUTTON_PANEL)) {
-            this.screenManager.showDownHistoryPanel();
-            this.screenManager.processTopPanelMouseListener(true);
+            this.panelManager.showDownHistoryPanel();
+            this.panelManager.processTopPanelMouseListener(true);
             return;
         } else if (e.getActionCommand().contains(Constants.TRASH_BUTTON)) {
             this.calculationManager.deleteHistory();
-            this.screenManager.processHistoryScreen(new ArrayList<String>());
+            this.panelManager.processHistoryScreen(new ArrayList<String>());
             return;
         }
 
@@ -56,8 +56,8 @@ public class ButtonListener implements ActionListener {
         }
 
         this.calculationManager.setPreviousCalculationState(calculateState, operator, answer);
-        this.screenManager.setBigNumber(this.calculationManager.getOutputNumber(), false);
-        this.screenManager.setSmallNumber(this.calculationManager.getCalculationState());
-        this.screenManager.setFrameFocus();
+        this.panelManager.setBigNumber(this.calculationManager.getOutputNumber(), false);
+        this.panelManager.setSmallNumber(this.calculationManager.getCalculationState());
+        this.panelManager.setFrameFocus();
     }
 }

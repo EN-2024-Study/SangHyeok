@@ -1,28 +1,28 @@
 package listener;
 
-import controller.ScreenManager;
+import controller.PanelManager;
 
 import java.awt.event.*;
 
 public class ComponentListener extends ComponentAdapter {
 
-    private ScreenManager screenManager;
+    private PanelManager panelManager;
 
-    public ComponentListener(ScreenManager screenManager) {
-        this.screenManager = screenManager;
+    public ComponentListener(PanelManager panelManager) {
+        this.panelManager = panelManager;
     }
 
     @Override
     public void componentResized(ComponentEvent e) {
-        this.screenManager.setBigNumberFont();
+        this.panelManager.setBigNumberFont();
 
         if (e.getComponent().getSize().width > 800) {
-            this.screenManager.showRightHistoryPanel();
-            this.screenManager.addRightHistoryPanelWidth();
+            this.panelManager.showRightHistoryPanel();
+            this.panelManager.addRightHistoryPanelWidth();
         }
         if (e.getComponent().getSize().width < 700) {
-            this.screenManager.hideHistoryPanel();
-            this.screenManager.removeRightHistoryPanelWidth();
+            this.panelManager.hideHistoryPanel();
+            this.panelManager.removeRightHistoryPanelWidth();
         }
     }
 }

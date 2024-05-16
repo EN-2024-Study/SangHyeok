@@ -1,7 +1,10 @@
 package controller;
 
 import form.MainFrame;
-import listener.repository.ListenerRepository;
+import listener.ButtonListener;
+import listener.ComponentListener;
+import listener.KeypadListener;
+import listener.PanelMouseListener;
 import utility.Constants;
 import form.repository.PanelRepository;
 
@@ -10,23 +13,34 @@ import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 
-public class ScreenManager {
+public class PanelManager {
 
-    private ListenerRepository listenerRepository;
     private PanelRepository panelRepository;
+    private ButtonListener buttonListener;
+    private ComponentListener componentListener;
+    private KeypadListener keypadListener;
+    private PanelMouseListener panelMouseListener;
+
     private JFrame frame;
     private StringTrimManager stringTrimManager;
     private int rightHistoryPanelWidth;
 
-    public ScreenManager() {
-        CalculationManager calculationManager = new CalculationManager();
+    public PanelManager() {
+        initListener();
 
-        this.listenerRepository = new ListenerRepository(this, calculationManager);
-        this.panelRepository = new PanelRepository(listenerRepository.getButtonListener(), listenerRepository.getKeypadListener());
-        this.frame = new MainFrame(getMainPanel(), listenerRepository.getComponentListener(), listenerRepository.getKeypadListener());
+        this.panelRepository = new PanelRepository(buttonListener, keypadListener);
+        this.frame = new MainFrame(getMainPanel(), componentListener, keypadListener);
         this.stringTrimManager = new StringTrimManager();
         this.rightHistoryPanelWidth = 0;
         setFrameFocus();
+    }
+
+    private void initListener() {
+        CalculationManager calculationManager = new CalculationManager();
+        this.buttonListener = new ButtonListener(this, calculationManager);
+        this.componentListener = new ComponentListener(this);
+        this.keypadListener = new KeypadListener(this, calculationManager);
+        this.panelMouseListener = new PanelMouseListener(this);
     }
 
     private JPanel getMainPanel() {
@@ -139,15 +153,15 @@ public class ScreenManager {
 
     public void processTopPanelMouseListener(boolean isAdd) {
         if (isAdd) {
-            this.panelRepository.getHistoryButtonPanel().addMouseListener(this.listenerRepository.getPanelMouseListener());
-            this.panelRepository.getSmallNumberPanel().addMouseListener(this.listenerRepository.getPanelMouseListener());
-            this.panelRepository.getBigNumberPanel().addMouseListener(this.listenerRepository.getPanelMouseListener());
+            this.panelRepository.getHistoryButtonPanel().addMouseListener(panelMouseListener);
+            this.panelRepository.getSmallNumberPanel().addMouseListener(panelMouseListener);
+            this.panelRepository.getBigNumberPanel().addMouseListener(panelMouseListener);
             return;
         }
 
-        this.panelRepository.getHistoryButtonPanel().removeMouseListener(this.listenerRepository.getPanelMouseListener());
-        this.panelRepository.getSmallNumberPanel().removeMouseListener(this.listenerRepository.getPanelMouseListener());
-        this.panelRepository.getBigNumberPanel().removeMouseListener(this.listenerRepository.getPanelMouseListener());
+        this.panelRepository.getHistoryButtonPanel().removeMouseListener(panelMouseListener);
+        this.panelRepository.getSmallNumberPanel().removeMouseListener(panelMouseListener);
+        this.panelRepository.getBigNumberPanel().removeMouseListener(panelMouseListener);
     }
 
     public void processKeypadActionPaint(String buttonPressed) {
@@ -177,11 +191,11 @@ public class ScreenManager {
     }
 
     public void processHistoryScreen(List<String> historyStringList) {
-        this.panelRepository.getDownHistoryPanel().setHistoryList(this.listenerRepository.getButtonListener(), historyStringList);
+        this.panelRepository.getDownHistoryPanel().setHistoryList(buttonListener, historyStringList);
         this.panelRepository.getDownHistoryPanel().setScrollPane();
         this.panelRepository.getDownHistoryPanel().setHistoryPanel();
 
-        this.panelRepository.getRightHistoryPanel().setHistoryList(this.listenerRepository.getButtonListener(), historyStringList);
+        this.panelRepository.getRightHistoryPanel().setHistoryList(buttonListener, historyStringList);
         this.panelRepository.getRightHistoryPanel().setScrollPane();
         this.panelRepository.getRightHistoryPanel().setHistoryPanel();
         restartFrame();

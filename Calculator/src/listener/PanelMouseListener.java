@@ -1,6 +1,6 @@
 package listener;
 
-import controller.ScreenManager;
+import controller.PanelManager;
 import utility.Constants;
 
 import java.awt.event.MouseAdapter;
@@ -8,10 +8,10 @@ import java.awt.event.MouseEvent;
 
 public class PanelMouseListener extends MouseAdapter {
 
-    private ScreenManager screenManager;
+    private PanelManager panelManager;
 
-    public PanelMouseListener(ScreenManager screenManager) {
-        this.screenManager = screenManager;
+    public PanelMouseListener(PanelManager panelManager) {
+        this.panelManager = panelManager;
     }
 
     @Override
@@ -19,9 +19,9 @@ public class PanelMouseListener extends MouseAdapter {
         if (e.getSource().getClass().toString().contains(Constants.HISTORY_BUTTON_PANEL) ||
                 e.getSource().getClass().toString().contains(Constants.SMALL_NUMBER_PANEL) ||
                 e.getSource().getClass().toString().contains(Constants.BIG_NUMBER_PANEL)) {
-            screenManager.hideHistoryPanel();
-            screenManager.processTopPanelMouseListener(false);
-            screenManager.processKeypadActionPaint(Constants.EQUAL_STRING);
+            panelManager.hideHistoryPanel();
+            panelManager.processTopPanelMouseListener(false);
+            panelManager.processKeypadActionPaint(Constants.EQUAL_STRING);
         }
     }
 }

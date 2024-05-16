@@ -205,33 +205,34 @@ public class CalculationManager {
     }
 
     private void calculateNegate() {
-        boolean hasOperator = false;
+        int operateCount = 0;
+        String oper = "";
         for (String o : Constants.OPERATORS) {
             if (this.calculationState.contains(o)) {
-                hasOperator = true;
-                break;
+                operateCount++;
+                oper = o;
             }
         }
 
-        if (!hasOperator) {
-            int count = (this.calculationState.length() - this.calculationState.replace(Constants.NEGATE, "").length()) / Constants.NEGATE.length();
-            if (count % 2 == 0)
-                this.outputNumber = this.firstNumber.toPlainString();
-            else
-                this.outputNumber = Constants.SUBTRACT_STRING + this.firstNumber.toPlainString();
+        if (operateCount > 0 && !oper.equals(Constants.SUBTRACT_STRING) || operateCount > 1) {
+            if (this.calculationState.contains(Constants.EQUAL_STRING))
+                return;
 
-            this.calculationState += Constants.EQUAL_STRING;
+            this.secondNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
+            this.calculationState += this.secondNumber + Constants.EQUAL_STRING;
             this.lastInputType = LastInputType.Equal;
+            calculate();
             return;
         }
 
-        if (this.calculationState.contains(Constants.EQUAL_STRING))
-            return;
+        int count = (this.calculationState.length() - this.calculationState.replace(Constants.NEGATE, "").length()) / Constants.NEGATE.length();
+        if (count % 2 == 0)
+            this.outputNumber = this.firstNumber.toPlainString();
+        else
+            this.outputNumber = Constants.SUBTRACT_STRING + this.firstNumber.toPlainString();
 
         this.calculationState += Constants.EQUAL_STRING;
-        this.secondNumber = new BigDecimal(this.outputNumber, MathContext.DECIMAL128);
         this.lastInputType = LastInputType.Equal;
-        calculate();
     }
 
 

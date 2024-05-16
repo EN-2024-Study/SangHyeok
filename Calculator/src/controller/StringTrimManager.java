@@ -26,6 +26,7 @@ public class StringTrimManager {
             else
                 integerPart += number.charAt(i);
         }
+        integerPart = integerPart.replace("--", "-");
 
         BigDecimal bigDecimal = new BigDecimal(integerPart);
         DecimalFormat decimalFormat = new DecimalFormat("###,###");

@@ -1,4 +1,4 @@
-package form.panel.historyPanel;
+package form.panel;
 
 import listener.ButtonListener;
 import utility.Constants;
@@ -8,17 +8,21 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DownHistoryPanel extends JPanel {
+public class HistoryPanel extends JPanel {
 
     private JScrollPane scrollPane;
     private List<JButton> historyList;
     private HistoryDeleteButtonPanel historyDeleteButtonPanel;
 
-    public DownHistoryPanel(ButtonListener buttonListener) {
+    public HistoryPanel(ButtonListener buttonListener, boolean isRight) {
         this.historyDeleteButtonPanel = new HistoryDeleteButtonPanel(buttonListener);
         setHistoryList(buttonListener, new ArrayList<>());
         setScrollPane();
         setHistoryPanel();
+
+        if (isRight) {
+            add(getExplainPanel(), BorderLayout.NORTH);
+        }
     }
 
     public void setHistoryList(ButtonListener buttonListener, List<String> historyStringList) {
@@ -62,6 +66,19 @@ public class DownHistoryPanel extends JPanel {
             button.setHorizontalAlignment(SwingConstants.LEFT);
         button.addActionListener(buttonListener);
         this.historyList.add(button);
+    }
+
+    private JPanel getExplainPanel() {
+        JPanel explainPanel = new JPanel();
+        explainPanel.setLayout(new GridLayout(1, 1));
+        explainPanel.setBackground(Color.WHITE);
+        explainPanel.setPreferredSize(new Dimension(getWidth(), getHeight() + 80));
+
+        JLabel label = new JLabel("기록");
+        label.setFont(new Font(Font.DIALOG, Font.PLAIN, 26));
+
+        explainPanel.add(label);
+        return explainPanel;
     }
 
 

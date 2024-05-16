@@ -1,4 +1,4 @@
-package form.panel.mainPanel;
+package form.panel;
 
 import listener.*;
 import utility.Constants;

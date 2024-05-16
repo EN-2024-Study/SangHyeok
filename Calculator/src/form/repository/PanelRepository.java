@@ -2,12 +2,10 @@ package form.repository;
 
 import listener.ButtonListener;
 import listener.KeypadListener;
-import form.panel.historyPanel.DownHistoryPanel;
-import form.panel.historyPanel.RightHistoryPanel;
-import form.panel.mainPanel.BigNumberPanel;
-import form.panel.mainPanel.HistoryButtonPanel;
-import form.panel.mainPanel.KeypadPanel;
-import form.panel.mainPanel.SmallNumberPanel;
+import form.panel.HistoryPanel;
+import form.panel.HistoryButtonPanel;
+import form.panel.KeypadPanel;
+import form.panel.NumberPanel;
 
 import javax.swing.*;
 
@@ -17,34 +15,34 @@ public class PanelRepository {
 
     public PanelRepository(ButtonListener buttonListener, KeypadListener keypadListener) {
         this.historyButtonPanel = new HistoryButtonPanel(buttonListener);
-        this.rightHistoryPanel = new RightHistoryPanel(buttonListener);
-        this.downHistoryPanel = new DownHistoryPanel(buttonListener);
+        this.rightHistoryPanel = new HistoryPanel(buttonListener, true);
+        this.downHistoryPanel = new HistoryPanel(buttonListener, false);
         this.keypadPanel = new KeypadPanel(keypadListener);
-        this.smallNumberPanel = new SmallNumberPanel();
-        this.bigNumberPanel = new BigNumberPanel();
+        this.smallNumberPanel = new NumberPanel(false);
+        this.bigNumberPanel = new NumberPanel(true);
     }
 
     public HistoryButtonPanel getHistoryButtonPanel() {
         return (HistoryButtonPanel) historyButtonPanel;
     }
 
-    public SmallNumberPanel getSmallNumberPanel() {
-        return (SmallNumberPanel) smallNumberPanel;
+    public NumberPanel getSmallNumberPanel() {
+        return (NumberPanel) smallNumberPanel;
     }
 
-    public BigNumberPanel getBigNumberPanel() {
-        return (BigNumberPanel) bigNumberPanel;
+    public NumberPanel getBigNumberPanel() {
+        return (NumberPanel) bigNumberPanel;
     }
 
     public KeypadPanel getKeypadPanel() {
         return (KeypadPanel) keypadPanel;
     }
 
-    public RightHistoryPanel getRightHistoryPanel() {
-        return (RightHistoryPanel) rightHistoryPanel;
+    public HistoryPanel getRightHistoryPanel() {
+        return (HistoryPanel) rightHistoryPanel;
     }
 
-    public DownHistoryPanel getDownHistoryPanel() {
-        return (DownHistoryPanel) downHistoryPanel;
+    public HistoryPanel getDownHistoryPanel() {
+        return (HistoryPanel) downHistoryPanel;
     }
 }

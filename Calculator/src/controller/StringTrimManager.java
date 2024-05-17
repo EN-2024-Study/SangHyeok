@@ -73,10 +73,6 @@ public class StringTrimManager {
             return number;
 
         number = number.replace(",", "");
-//        while(!number.contains(Constants.NEGATE)) {
-//            number = number.split(Constants.NEGATE)[1];
-//            number = number.replace(")", "");
-//        }
 
         BigDecimal bigDecimal = new BigDecimal(number);
         String result = new BigDecimal(bigDecimal.toString(), MathContext.DECIMAL64).stripTrailingZeros().toString();

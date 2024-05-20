@@ -22,7 +22,11 @@ public class Cd implements IObserver {
         String path = getTrimCommand(command);
 
         if (isAbsolute(path)) {  // 절대 경로일 때
-            currentDirectory = new File(path);
+            try {
+                currentDirectory = new File(path).getCanonicalFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } else {    // 상대 경로일 때
             currentDirectory = getRelativeFile(cmdManager.getCurrentPath(), path);
         }
@@ -67,20 +71,12 @@ public class Cd implements IObserver {
     private String getTrimCommand(String command) {
         String result = "";
         command = command.replace(" ", "");
-
+        command = command.replace("c:", "C:");
+        command = command.replace("/", "\\");
         for(int i = 2; i < command.length(); i++) {    // cd 명령어 제거
             result += command.charAt(i);
         }
 
-        return getTrimPath(result);
-    }
-
-    private String getTrimPath(String path) {
-        String result = path.replace("/", "\\");
-        result = result.replace("c:\\", "C:\\");
-        result = result.replace("\\users", "\\Users");
-        result = result.replace("\\desktop", "\\Desktop");
-        result = result.replace("\\en#스터디", "\\EN#스터디");
         return result;
     }
 }

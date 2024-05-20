@@ -3,3 +3,4 @@ Class Diagram 설계
 exit 명령어 처리
 help 명령어 처리
 cls 명령어 처리
+cd 기능

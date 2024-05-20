@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class CmdManager implements IObservable {
@@ -22,10 +23,10 @@ public class CmdManager implements IObservable {
         currentRoute = Constants.INITIAL_ROUTE;
         command = "";
         isRun = true;
-        printInitial();
+        printVersion();
     }
 
-    private void printInitial() {
+    private void printVersion() {
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(Constants.CMD_EXE, Constants.BUILD_EXIT, Constants.CMD_VERSION);
             Process process = processBuilder.start();
@@ -71,9 +72,11 @@ public class CmdManager implements IObservable {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
+
         while(isRun) {
             System.out.print(currentRoute);
             command = scanner.nextLine();
+            command = command.toLowerCase(Locale.ROOT);
             notifyObservers(command);
         }
     }

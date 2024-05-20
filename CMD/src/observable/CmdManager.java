@@ -8,27 +8,26 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class CmdManager implements IObservable {
 
     private List<IObserver> observers;
-    private String currentRoute;
+    private String currentPath;
     private String command;
     private boolean isRun;
 
     public CmdManager() {
-        observers = new ArrayList<IObserver>();
-        currentRoute = Constants.INITIAL_ROUTE;
-        command = "";
-        isRun = true;
+        this.observers = new ArrayList<IObserver>();
+        this.currentPath = Constants.INITIAL_ROUTE;
+        this.command = "";
+        this.isRun = true;
         printVersion();
     }
 
     private void printVersion() {
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder(Constants.CMD_EXE, Constants.BUILD_EXIT, Constants.CMD_VERSION);
+            ProcessBuilder processBuilder = new ProcessBuilder(Constants.CMD_EXE, "/c", Constants.CMD_VERSION);
             Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), Constants.ENCODING_STRING));
 
@@ -58,12 +57,12 @@ public class CmdManager implements IObservable {
         }
     }
 
-    public void setCommand(String command) {
-        this.command = command;
+    public void setCurrentPath(String path) {
+        this.currentPath = path;
     }
 
-    public void setCurrentRoute(String route) {
-        this.currentRoute = route;
+    public String getCurrentPath() {
+        return this.currentPath;
     }
 
     public void exit() {
@@ -74,9 +73,10 @@ public class CmdManager implements IObservable {
         Scanner scanner = new Scanner(System.in);
 
         while(isRun) {
-            System.out.print(currentRoute);
+            System.out.print(currentPath);
             command = scanner.nextLine();
-            command = command.toLowerCase(Locale.ROOT);
+            command = command.toLowerCase();
+
             notifyObservers(command);
         }
     }

@@ -4,8 +4,6 @@ import interfaces.IObserver;
 import observable.CmdManager;
 import utility.Constants;
 
-import java.io.IOException;
-
 public class Cls implements IObserver {
 
     @Override
@@ -14,6 +12,8 @@ public class Cls implements IObserver {
             return;
         }
 
-        
+        for(int i = 0; i < 100; i++) {
+            System.out.println("\b");
+        }
     }
 }

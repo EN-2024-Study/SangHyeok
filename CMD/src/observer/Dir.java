@@ -30,17 +30,7 @@ public class Dir implements IObserver {
     }
 
     private boolean isCommandValid(String command) {
-        if (command.length() < 3 || !Constants.COMMANDS[3].equals(command.charAt(0) + "" + command.charAt(1) + command.charAt(2)))
-            return false;
-
-        if (command.length() > 3) {
-            for(Character c : Constants.VALID_ADDITION_COMMANDS) {
-                if (c == command.charAt(3))
-                    return true;
-            }
-            return false;
-        }
-        return true;
+        return command.length() >= 3 && Constants.COMMANDS[3].equals(command.charAt(0) + "" + command.charAt(1) + command.charAt(2));
     }
 
     private void printVolume(String path) {

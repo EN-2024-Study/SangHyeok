@@ -87,6 +87,7 @@ public class CmdManager implements IObservable {
     private String getTrimCommand(String command) {
         String result = command.toLowerCase();
         result = result.trim();
+        result = result.replace(",", "");
         return result.replace("\"", "");
     }
 }

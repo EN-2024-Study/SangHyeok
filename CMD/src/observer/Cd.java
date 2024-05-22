@@ -23,10 +23,8 @@ public class Cd implements IObserver {
         }
 
         String path = getTrimCommand(command);
-        if (path.isEmpty()) {   // 명령어에서 cd 제거 후 아무것도 존재하지 않을 때
-            System.out.println(cmdManager.getCurrentPath());
+        if (isProcessException(cmdManager.getCurrentPath(), path))
             return;
-        }
 
         File currentDirectory = getFile(cmdManager.getCurrentPath(), path);
         if (!pathManager.isPathValid(currentDirectory)) {  // 유효한 경로가 아닐 때
@@ -38,18 +36,7 @@ public class Cd implements IObserver {
     }
 
     private boolean isCommandValid(String command) {
-        if (command.length() < 2 || !Constants.COMMANDS[0].equals(command.charAt(0) + "" + command.charAt(1)))
-            return false;
-
-        if (command.length() > 2) {
-            for(Character c : Constants.VALID_ADDITION_COMMANDS) {
-                if (c == command.charAt(2))
-                    return true;
-            }
-
-            return command.charAt(2) == '/';
-        }
-        return true;
+        return command.length() >= 2 && Constants.COMMANDS[0].equals(command.charAt(0) + "" + command.charAt(1));
     }
 
     private String getTrimCommand(String command) {
@@ -62,6 +49,29 @@ public class Cd implements IObserver {
         }
 
         return result.toString();
+    }
+
+    private boolean isProcessException(String currentPath, String path) {
+        if (path.isEmpty()) {
+            System.out.println(currentPath);
+            return true;
+        }
+
+        if (path.length() == 1) {
+            switch(path.charAt(0)) {
+                case ' ':
+                case '=':
+                case '&':
+                    System.out.println(currentPath);
+                    return true;
+                case '.':
+                    System.out.println();
+                    return true;
+                case '\\':
+                    return false;
+            }
+        }
+        return false;
     }
 
     private File getFile(String currentPath, String path) {

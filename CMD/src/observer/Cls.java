@@ -2,8 +2,7 @@ package observer;
 
 import controller.ExceptionManager;
 import interfaces.IObserver;
-import observable.CmdManager;
-import utility.Constants;
+import observable.Cmd;
 
 public class Cls implements IObserver {
 
@@ -14,7 +13,7 @@ public class Cls implements IObserver {
     }
 
     @Override
-    public void update(CmdManager cmdManager, String command) {
+    public void update(Cmd cmd, String command) {
         if (!exceptionManager.isClsValid(command)) {
             return;
         }

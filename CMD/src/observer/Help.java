@@ -2,7 +2,7 @@ package observer;
 
 import controller.ExceptionManager;
 import interfaces.IObserver;
-import observable.CmdManager;
+import observable.Cmd;
 import utility.Constants;
 
 import java.io.*;
@@ -18,7 +18,7 @@ public class Help implements IObserver {
     }
 
     @Override
-    public void update(CmdManager cmdManager, String command) {
+    public void update(Cmd cmd, String command) {
         if (!exceptionManager.isHelpValid(command)) {
             return;
         }

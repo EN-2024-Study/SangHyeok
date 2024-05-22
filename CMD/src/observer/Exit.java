@@ -2,7 +2,7 @@ package observer;
 
 import controller.ExceptionManager;
 import interfaces.IObserver;
-import observable.CmdManager;
+import observable.Cmd;
 import utility.Constants;
 
 public class Exit implements IObserver {
@@ -14,13 +14,13 @@ public class Exit implements IObserver {
     }
 
     @Override
-    public void update(CmdManager cmdManager, String command) {
+    public void update(Cmd cmd, String command) {
         if (!exceptionManager.isExitValid(command)) {
             return;
         }
 
         if (command.equals(Constants.COMMANDS[6])) {
-            cmdManager.exit();
+            cmd.exit();
         }
     }
 }

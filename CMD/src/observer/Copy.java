@@ -2,21 +2,21 @@ package observer;
 
 import controller.ExceptionManager;
 import interfaces.IObserver;
-import observable.CmdManager;
-import controller.PathManager;
+import observable.Cmd;
+import controller.FileManager;
 
 public class Copy implements IObserver {
 
-    protected PathManager pathManager;
+    protected FileManager fileManager;
     protected ExceptionManager exceptionManager;
 
-    public Copy(ExceptionManager exceptionManager, PathManager pathManager) {
+    public Copy(ExceptionManager exceptionManager, FileManager fileManager) {
         this.exceptionManager = exceptionManager;
-        this.pathManager = pathManager;
+        this.fileManager = fileManager;
     }
 
     @Override
-    public void update(CmdManager cmdManager, String command) {
+    public void update(Cmd cmd, String command) {
         if (!exceptionManager.isCopyValid(command)) {
             return;
         }

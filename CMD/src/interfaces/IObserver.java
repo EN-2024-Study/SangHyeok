@@ -1,7 +1,7 @@
 package interfaces;
 
-import observable.CmdManager;
+import observable.Cmd;
 
 public interface IObserver {
-    void update(CmdManager o, String arg);
+    void update(Cmd o, String arg);
 }

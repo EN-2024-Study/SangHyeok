@@ -1,32 +1,32 @@
 package client;
 
 import controller.ExceptionManager;
-import observable.CmdManager;
+import observable.Cmd;
 import observer.*;
 import observer.Exit;
-import controller.PathManager;
+import controller.FileManager;
 
 public class Client {
 
-    private CmdManager cmdManager;
+    private Cmd cmd;
 
     public Client() {
         ExceptionManager exceptionManager = new ExceptionManager();
-        this.cmdManager = new CmdManager(exceptionManager);
+        this.cmd = new Cmd(exceptionManager);
 
         initCmdManager(exceptionManager);
-        this.cmdManager.run();
+        this.cmd.run();
     }
 
     private void initCmdManager(ExceptionManager exceptionManager) {
-        PathManager pathManager = new PathManager();
+        FileManager fileManager = new FileManager();
 
-        cmdManager.addObserver(new Cd(exceptionManager, pathManager));
-        cmdManager.addObserver(new Copy(exceptionManager, pathManager));
-        cmdManager.addObserver(new Dir(exceptionManager, pathManager));
-        cmdManager.addObserver(new Move(exceptionManager, pathManager));
-        cmdManager.addObserver(new Cls(exceptionManager));
-        cmdManager.addObserver(new Help(exceptionManager));
-        cmdManager.addObserver(new Exit(exceptionManager));
+        cmd.addObserver(new Cd(exceptionManager, fileManager));
+        cmd.addObserver(new Copy(exceptionManager, fileManager));
+        cmd.addObserver(new Dir(exceptionManager, fileManager));
+        cmd.addObserver(new Move(exceptionManager, fileManager));
+        cmd.addObserver(new Cls(exceptionManager));
+        cmd.addObserver(new Help(exceptionManager));
+        cmd.addObserver(new Exit(exceptionManager));
     }
 }

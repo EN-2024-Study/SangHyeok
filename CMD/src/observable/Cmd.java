@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CmdManager implements IObservable {
+public class Cmd implements IObservable {
 
     private List<IObserver> observers;
     private ExceptionManager exceptionManager;
@@ -19,7 +19,7 @@ public class CmdManager implements IObservable {
     private String command;
     private boolean isRun;
 
-    public CmdManager(ExceptionManager exceptionManager) {
+    public Cmd(ExceptionManager exceptionManager) {
         this.observers = new ArrayList<IObserver>();
         this.exceptionManager = exceptionManager;
         this.currentPath = Constants.INITIAL_ROUTE;
@@ -113,5 +113,6 @@ public class CmdManager implements IObservable {
         command = command.replace("/", "\\");
         command = command.replace(",", "");
         command = command.replace("\"", "");
+        command = command.replace("c:", "C:");
     }
 }

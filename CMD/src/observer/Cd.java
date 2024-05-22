@@ -11,9 +11,6 @@ public class Cd implements IObserver {
 
     @Override
     public void update(CmdManager cmdManager, String command) {
-        if (!command.contains(Constants.COMMANDS[0]))
-            return;
-
         if (!isCommandValid(command)) {
             return;     // 기능 구현 후 예외처리 하기
         }
@@ -40,6 +37,9 @@ public class Cd implements IObserver {
     }
 
     private boolean isCommandValid(String command) {
+        if (!Constants.COMMANDS[0].equals(String.valueOf(command.charAt(0) + command.charAt(1))))
+            return false;
+
         if (command.length() < 4 || command.charAt(2) != ' ') {
             return false;
         }

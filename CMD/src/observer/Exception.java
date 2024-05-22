@@ -21,8 +21,9 @@ public class Exception implements IObserver {
     }
 
     private boolean isCommandValid(String command) {
+        String result = String.valueOf((command.charAt(0) + command.charAt(1)));
         for(String s : Constants.COMMANDS) {
-            if (s.contains(command)) {
+            if (s.equals(result)) {
                 return true;
             }
         }

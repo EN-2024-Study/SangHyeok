@@ -3,7 +3,7 @@ package observer;
 import interfaces.IObserver;
 import observable.CmdManager;
 import utility.Constants;
-import utility.PathManager;
+import controller.PathManager;
 
 import java.io.BufferedReader;
 import java.io.File;

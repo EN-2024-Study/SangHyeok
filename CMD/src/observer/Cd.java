@@ -3,7 +3,7 @@ package observer;
 import interfaces.IObserver;
 import observable.CmdManager;
 import utility.Constants;
-import utility.PathManager;
+import controller.PathManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,22 +19,16 @@ public class Cd implements IObserver {
     @Override
     public void update(CmdManager cmdManager, String command) {
         if (!isCommandValid(command)) {
-            return;     // 기능 구현 후 예외처리 하기
+            return;
         }
 
-        File currentDirectory;
         String path = getTrimCommand(command);
-
-        if (pathManager.isAbsolute(path)) {  // 절대 경로일 때
-            try {
-                currentDirectory = new File(path).getCanonicalFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } else {    // 상대 경로일 때
-            currentDirectory = pathManager.getRelativeFile(cmdManager.getCurrentPath(), path);
+        if (path.isEmpty()) {   // 명령어에서 cd 제거 후 아무것도 존재하지 않을 때
+            System.out.println(cmdManager.getCurrentPath());
+            return;
         }
 
+        File currentDirectory = getFile(cmdManager.getCurrentPath(), path);
         if (!pathManager.isPathValid(currentDirectory)) {  // 유효한 경로가 아닐 때
             System.out.println(Constants.WRONG_PATH);
             return;
@@ -68,5 +62,21 @@ public class Cd implements IObserver {
         }
 
         return result.toString();
+    }
+
+    private File getFile(String currentPath, String path) {
+        if (path.equals("\\")) {
+            return new File(Constants.ABSOLUTE_FRONT_STRING);
+        }
+
+        if (pathManager.isAbsolute(path)) {  // 절대 경로일 때
+            try {
+                return new File(path).getCanonicalFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {    // 상대 경로일 때
+            return pathManager.getRelativeFile(currentPath, path);
+        }
     }
 }

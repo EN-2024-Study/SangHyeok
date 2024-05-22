@@ -1,7 +1,7 @@
 package observer;
 
 import observable.CmdManager;
-import utility.PathManager;
+import controller.PathManager;
 
 public class Move extends Copy {
 

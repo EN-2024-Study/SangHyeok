@@ -3,7 +3,7 @@ package client;
 import observable.CmdManager;
 import observer.*;
 import observer.Exception;
-import utility.PathManager;
+import controller.PathManager;
 
 public class Client {
 

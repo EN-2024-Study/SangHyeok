@@ -2,7 +2,7 @@ package observer;
 
 import interfaces.IObserver;
 import observable.CmdManager;
-import utility.PathManager;
+import controller.PathManager;
 
 public class Copy implements IObserver {
 

@@ -18,7 +18,7 @@ public class Cls implements IObserver {
     }
 
     private boolean isCommandValid(String command) {
-        if (!Constants.COMMANDS[1].equals(command.charAt(0) + "" + command.charAt(1) + command.charAt(2)))
+        if (command.length() < 3 || !Constants.COMMANDS[1].equals(command.charAt(0) + "" + command.charAt(1) + command.charAt(2)))
             return false;
 
         if (command.length() > 3) {

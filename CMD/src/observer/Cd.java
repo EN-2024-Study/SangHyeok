@@ -3,11 +3,18 @@ package observer;
 import interfaces.IObserver;
 import observable.CmdManager;
 import utility.Constants;
+import utility.PathManager;
 
 import java.io.File;
 import java.io.IOException;
 
 public class Cd implements IObserver {
+
+    private PathManager pathManager;
+
+    public Cd(PathManager pathManager) {
+        this.pathManager = pathManager;
+    }
 
     @Override
     public void update(CmdManager cmdManager, String command) {
@@ -18,17 +25,17 @@ public class Cd implements IObserver {
         File currentDirectory;
         String path = getTrimCommand(command);
 
-        if (isAbsolute(path)) {  // 절대 경로일 때
+        if (pathManager.isAbsolute(path)) {  // 절대 경로일 때
             try {
                 currentDirectory = new File(path).getCanonicalFile();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         } else {    // 상대 경로일 때
-            currentDirectory = getRelativeFile(cmdManager.getCurrentPath(), path);
+            currentDirectory = pathManager.getRelativeFile(cmdManager.getCurrentPath(), path);
         }
 
-        if (!cmdManager.isPathValid(currentDirectory)) {  // 유효한 경로가 아닐 때
+        if (!pathManager.isPathValid(currentDirectory)) {  // 유효한 경로가 아닐 때
             System.out.println(Constants.WRONG_PATH);
             return;
         }
@@ -37,7 +44,7 @@ public class Cd implements IObserver {
     }
 
     private boolean isCommandValid(String command) {
-        if (!Constants.COMMANDS[0].equals(command.charAt(0) + "" + command.charAt(1)))
+        if (command.length() < 2 || !Constants.COMMANDS[0].equals(command.charAt(0) + "" + command.charAt(1)))
             return false;
 
         if (command.length() > 2) {
@@ -51,32 +58,15 @@ public class Cd implements IObserver {
         return true;
     }
 
-    private boolean isAbsolute(String command) {
-        return command.contains(Constants.ABSOLUTE_FRONT_STRING);
-    }
-
-    // 상대경로
-    private File getRelativeFile(String pastPath, String path) {
-        String currentPath = pastPath.replace(">", "\\");
-        currentPath += path;
-        currentPath = currentPath.replace("\\", "/");
-
-        try {
-            return new File(currentPath).getCanonicalFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private String getTrimCommand(String command) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         command = command.replace(" ", "");
         command = command.replace("c:", "C:");
         command = command.replace("/", "\\");
         for(int i = 2; i < command.length(); i++) {    // cd 명령어 제거
-            result += command.charAt(i);
+            result.append(command.charAt(i));
         }
 
-        return result;
+        return result.toString();
     }
 }

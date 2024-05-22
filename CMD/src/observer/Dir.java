@@ -3,6 +3,7 @@ package observer;
 import interfaces.IObserver;
 import observable.CmdManager;
 import utility.Constants;
+import utility.PathManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +13,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Dir implements IObserver {
+
+    private PathManager pathManager;
+
+    public Dir(PathManager pathManager) {
+        this.pathManager = pathManager;
+    }
+
     @Override
     public void update(CmdManager cmdManager, String command) {
         if (!isCommandValid(command))
@@ -22,7 +30,7 @@ public class Dir implements IObserver {
     }
 
     private boolean isCommandValid(String command) {
-        if (!Constants.COMMANDS[3].equals(command.charAt(0) + "" + command.charAt(1) + command.charAt(2)))
+        if (command.length() < 3 || !Constants.COMMANDS[3].equals(command.charAt(0) + "" + command.charAt(1) + command.charAt(2)))
             return false;
 
         if (command.length() > 3) {

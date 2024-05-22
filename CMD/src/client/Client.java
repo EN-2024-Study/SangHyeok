@@ -3,24 +3,25 @@ package client;
 import observable.CmdManager;
 import observer.*;
 import observer.Exception;
+import utility.PathManager;
 
 public class Client {
 
-    private CmdManager cmdManager;
-
     public Client() {
-        this.cmdManager = new CmdManager();
-        initCmdManager();
-        this.cmdManager.run();
+        CmdManager cmdManager = new CmdManager();
+        initCmdManager(cmdManager);
+        cmdManager.run();
     }
 
-    private void initCmdManager() {
-        cmdManager.addObserver(new Cd());
+    private void initCmdManager(CmdManager cmdManager) {
+        PathManager pathManager = new PathManager();
+
+        cmdManager.addObserver(new Cd(pathManager));
+        cmdManager.addObserver(new Copy(pathManager));
+        cmdManager.addObserver(new Dir(pathManager));
+        cmdManager.addObserver(new Move(pathManager));
         cmdManager.addObserver(new Cls());
-        cmdManager.addObserver(new Copy());
-        cmdManager.addObserver(new Dir());
         cmdManager.addObserver(new Help());
-        cmdManager.addObserver(new Move());
         cmdManager.addObserver(new Exception());
     }
 }

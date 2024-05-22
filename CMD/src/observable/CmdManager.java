@@ -60,10 +60,6 @@ public class CmdManager implements IObservable {
         }
     }
 
-    public boolean isPathValid(File path) {
-        return path.exists() && path.isDirectory();
-    }
-
     public void setCurrentPath(String path) {
         this.currentPath = path;
     }
@@ -82,9 +78,15 @@ public class CmdManager implements IObservable {
         while(isRun) {
             System.out.print(currentPath);
             command = scanner.nextLine();
-            command = command.toLowerCase();
+            command = getTrimCommand(command);
 
             notifyObservers(command);
         }
+    }
+
+    private String getTrimCommand(String command) {
+        String result = command.toLowerCase();
+        result = result.trim();
+        return result.replace("\"", "");
     }
 }

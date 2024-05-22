@@ -1,11 +1,11 @@
 package observable;
 
+import controller.ExceptionManager;
 import interfaces.IObservable;
 import interfaces.IObserver;
 import utility.Constants;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,16 +14,62 @@ import java.util.Scanner;
 public class CmdManager implements IObservable {
 
     private List<IObserver> observers;
+    private ExceptionManager exceptionManager;
     private String currentPath;
     private String command;
     private boolean isRun;
 
-    public CmdManager() {
+    public CmdManager(ExceptionManager exceptionManager) {
         this.observers = new ArrayList<IObserver>();
+        this.exceptionManager = exceptionManager;
         this.currentPath = Constants.INITIAL_ROUTE;
         this.command = "";
         this.isRun = true;
         printVersion();
+    }
+
+    @Override
+    public void addObserver(IObserver o) {
+        if (o == null || observers.contains(o)) {
+            return;
+        }
+        observers.add(o);
+    }
+
+    @Override
+    public void notifyObservers(String arg) {
+        for (IObserver o : observers) {
+            o.update(this, arg);
+        }
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
+
+        while(isRun) {
+            System.out.print(currentPath);
+            command = scanner.nextLine();
+
+            trimCommand();
+            if (!isCommandValid()) {
+                System.out.println("'" + command + "'" + Constants.WRONG_COMMAND);
+                continue;
+            }
+
+            notifyObservers(command);
+        }
+    }
+
+    public void setCurrentPath(String path) {
+        this.currentPath = path;
+    }
+
+    public void exit() {
+        this.isRun = false;
+    }
+
+    public String getCurrentPath() {
+        return this.currentPath;
     }
 
     private void printVersion() {
@@ -44,50 +90,28 @@ public class CmdManager implements IObservable {
         System.out.println(Constants.BUILD_STRING);
     }
 
-    @Override
-    public void addObserver(IObserver o) {
-        if (o == null || observers.contains(o)) {
-            System.out.println("객체가 null 이거나 이미 생성됨.");
-            return;
-        }
-        observers.add(o);
+    private boolean isCommandValid() {
+        if (exceptionManager.isCdValid(command))
+            return true;
+        if (exceptionManager.isClsValid(command))
+            return true;
+        if (exceptionManager.isCopyValid(command))
+            return true;
+        if (exceptionManager.isDirValid(command))
+            return true;
+        if (exceptionManager.isExitValid(command))
+            return true;
+        if (exceptionManager.isHelpValid(command))
+            return true;
+
+        return exceptionManager.isMoveValid(command);
     }
 
-    @Override
-    public void notifyObservers(String arg) {
-        for (IObserver o : observers) {
-            o.update(this, arg);
-        }
-    }
-
-    public void setCurrentPath(String path) {
-        this.currentPath = path;
-    }
-
-    public String getCurrentPath() {
-        return this.currentPath;
-    }
-
-    public void exit() {
-        this.isRun = false;
-    }
-
-    public void run() {
-        Scanner scanner = new Scanner(System.in);
-
-        while(isRun) {
-            System.out.print(currentPath);
-            command = scanner.nextLine();
-            command = getTrimCommand(command);
-
-            notifyObservers(command);
-        }
-    }
-
-    private String getTrimCommand(String command) {
-        String result = command.toLowerCase();
-        result = result.trim();
-        result = result.replace(",", "");
-        return result.replace("\"", "");
+    private void trimCommand() {
+        command = command.trim();
+        command = command.toLowerCase();
+        command = command.replace("/", "\\");
+        command = command.replace(",", "");
+        command = command.replace("\"", "");
     }
 }

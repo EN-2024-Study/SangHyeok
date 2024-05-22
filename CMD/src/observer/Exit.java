@@ -5,23 +5,22 @@ import interfaces.IObserver;
 import observable.CmdManager;
 import utility.Constants;
 
-public class Cls implements IObserver {
+public class Exit implements IObserver {
 
     private ExceptionManager exceptionManager;
 
-    public Cls(ExceptionManager exceptionManager) {
+    public Exit(ExceptionManager exceptionManager) {
         this.exceptionManager = exceptionManager;
     }
 
     @Override
     public void update(CmdManager cmdManager, String command) {
-        if (!exceptionManager.isClsValid(command)) {
+        if (!exceptionManager.isExitValid(command)) {
             return;
         }
 
-        for (int i = 0; i < 100; i++) {
-            System.out.println("\b");
+        if (command.equals(Constants.COMMANDS[6])) {
+            cmdManager.exit();
         }
     }
 }
-

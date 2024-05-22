@@ -1,5 +1,6 @@
 package observer;
 
+import controller.ExceptionManager;
 import interfaces.IObserver;
 import observable.CmdManager;
 import utility.Constants;
@@ -15,22 +16,21 @@ import java.util.Date;
 public class Dir implements IObserver {
 
     private PathManager pathManager;
+    private ExceptionManager exceptionManager;
 
-    public Dir(PathManager pathManager) {
+    public Dir(ExceptionManager exceptionManager, PathManager pathManager) {
+        this.exceptionManager = exceptionManager;
         this.pathManager = pathManager;
     }
 
     @Override
     public void update(CmdManager cmdManager, String command) {
-        if (!isCommandValid(command))
+        if (!exceptionManager.isDirValid(command)) {
             return;
+        }
 
         printVolume(cmdManager.getCurrentPath());
 
-    }
-
-    private boolean isCommandValid(String command) {
-        return command.length() >= 3 && Constants.COMMANDS[3].equals(command.charAt(0) + "" + command.charAt(1) + command.charAt(2));
     }
 
     private void printVolume(String path) {

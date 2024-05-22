@@ -1,17 +1,20 @@
 package observer;
 
+import controller.ExceptionManager;
 import observable.CmdManager;
 import controller.PathManager;
 
 public class Move extends Copy {
 
-    public Move(PathManager pathManager) {
-        super(pathManager);
+    public Move(ExceptionManager exceptionManager, PathManager pathManager) {
+        super(exceptionManager, pathManager);
     }
 
     @Override
-    public void update(CmdManager o, String arg) {
-        super.update(o, arg);
+    public void update(CmdManager cmdManager, String command) {
+        if (!super.exceptionManager.isMoveValid(command)) {
+            return;
+        }
 
     }
 }

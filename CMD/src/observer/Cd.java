@@ -1,5 +1,6 @@
 package observer;
 
+import controller.ExceptionManager;
 import interfaces.IObserver;
 import observable.CmdManager;
 import utility.Constants;
@@ -11,14 +12,16 @@ import java.io.IOException;
 public class Cd implements IObserver {
 
     private PathManager pathManager;
+    private ExceptionManager exceptionManager;
 
-    public Cd(PathManager pathManager) {
+    public Cd(ExceptionManager exceptionManager, PathManager pathManager) {
+        this.exceptionManager = exceptionManager;
         this.pathManager = pathManager;
     }
 
     @Override
     public void update(CmdManager cmdManager, String command) {
-        if (!isCommandValid(command)) {
+        if (!exceptionManager.isCdValid(command)) {
             return;
         }
 
@@ -33,10 +36,6 @@ public class Cd implements IObserver {
         }
 
         cmdManager.setCurrentPath(currentDirectory + ">");
-    }
-
-    private boolean isCommandValid(String command) {
-        return command.length() >= 2 && Constants.COMMANDS[0].equals(command.charAt(0) + "" + command.charAt(1));
     }
 
     private String getTrimCommand(String command) {

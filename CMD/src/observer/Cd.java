@@ -28,7 +28,7 @@ public class Cd implements IObserver {
             currentDirectory = getRelativeFile(cmdManager.getCurrentPath(), path);
         }
 
-        if (!isPathValid(currentDirectory)) {  // 유효한 경로가 아닐 때
+        if (!cmdManager.isPathValid(currentDirectory)) {  // 유효한 경로가 아닐 때
             System.out.println(Constants.WRONG_PATH);
             return;
         }
@@ -37,22 +37,22 @@ public class Cd implements IObserver {
     }
 
     private boolean isCommandValid(String command) {
-        if (!Constants.COMMANDS[0].equals(String.valueOf(command.charAt(0) + command.charAt(1))))
+        if (!Constants.COMMANDS[0].equals(command.charAt(0) + "" + command.charAt(1)))
             return false;
 
-        if (command.length() < 4 || command.charAt(2) != ' ') {
-            return false;
+        if (command.length() > 2) {
+            for(Character c : Constants.VALID_ADDITION_COMMANDS) {
+                if (c == command.charAt(2))
+                    return true;
+            }
+
+            return command.charAt(2) == '/';
         }
-
-        return command.charAt(0) == 'c' && command.charAt(1) == 'd';
+        return true;
     }
 
     private boolean isAbsolute(String command) {
         return command.contains(Constants.ABSOLUTE_FRONT_STRING);
-    }
-
-    private boolean isPathValid(File path) {
-        return path.exists() && path.isDirectory();
     }
 
     // 상대경로

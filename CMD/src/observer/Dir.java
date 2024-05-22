@@ -2,18 +2,59 @@ package observer;
 
 import interfaces.IObserver;
 import observable.CmdManager;
+import utility.Constants;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Dir implements IObserver {
     @Override
-    public void update(CmdManager o, String arg) {
+    public void update(CmdManager cmdManager, String command) {
+        if (!isCommandValid(command))
+            return;
+
+        printVolume(cmdManager.getCurrentPath());
 
     }
 
-    private void test() {
+    private boolean isCommandValid(String command) {
+        if (!Constants.COMMANDS[3].equals(command.charAt(0) + "" + command.charAt(1) + command.charAt(2)))
+            return false;
+
+        if (command.length() > 3) {
+            for(Character c : Constants.VALID_ADDITION_COMMANDS) {
+                if (c == command.charAt(3))
+                    return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private void printVolume(String path) {
+        ProcessBuilder processBuilder = new ProcessBuilder(Constants.CMD_EXE, Constants.CMD_EXE_EXIT, Constants.CMD_VOLUME);
+
+        try {
+            Process process = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), Constants.ENCODING_STRING));
+            System.out.println(reader.readLine());
+            System.out.println(reader.readLine());
+
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println();
+        System.out.println(path.replace(">", "") + " " + Constants.DIRECTORY);
+        System.out.println();
+    }
+
+    private void test1() {
         File rootDirectory = new File("C:\\");
 
         // 루트 디렉토리가 존재하고 디렉토리인지 확인

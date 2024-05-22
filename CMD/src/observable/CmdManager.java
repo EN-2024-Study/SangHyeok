@@ -5,6 +5,7 @@ import interfaces.IObserver;
 import utility.Constants;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,9 @@ public class CmdManager implements IObservable {
     }
 
     private void printVersion() {
+        ProcessBuilder processBuilder = new ProcessBuilder(Constants.CMD_EXE, Constants.CMD_EXE_EXIT, Constants.CMD_VERSION);
+
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder(Constants.CMD_EXE, "/c", Constants.CMD_VERSION);
             Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), Constants.ENCODING_STRING));
 
@@ -38,6 +40,7 @@ public class CmdManager implements IObservable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         System.out.println(Constants.BUILD_STRING);
     }
 
@@ -55,6 +58,10 @@ public class CmdManager implements IObservable {
         for (IObserver o : observers) {
             o.update(this, arg);
         }
+    }
+
+    public boolean isPathValid(File path) {
+        return path.exists() && path.isDirectory();
     }
 
     public void setCurrentPath(String path) {

@@ -30,4 +30,15 @@ public class FileManager {
 
         return getAbsoluteFile(currentPath);
     }
+
+    public String getPath(String command, int startIndex) {
+        StringBuilder result = new StringBuilder();
+        command = command.replace(" ", "");
+
+        for (int i = startIndex; i < command.length(); i++) {    // 명령어 제거
+            result.append(command.charAt(i));
+        }
+
+        return result.toString();
+    }
 }

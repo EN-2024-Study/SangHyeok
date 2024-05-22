@@ -34,6 +34,30 @@ public class Dir implements IObserver {
         processCommand(cmd, command);
     }
 
+    private void processCommand(Cmd cmd, String command) {
+        File currentFile = new File(cmd.getCurrentPath().replace(">", ""));
+        String path = fileManager.getPath(command, 3);
+
+        if (command.length() < 4 || path.isEmpty()) {
+            printDir(currentFile);
+            return;
+        }
+
+        if (fileManager.isAbsolute(path)) {
+            currentFile = fileManager.getAbsoluteFile(path);
+        } else {
+            String pastFile = currentFile + ">";
+            currentFile = fileManager.getRelativeFile(pastFile, path);
+        }
+
+        if (!fileManager.isFileValid(currentFile)) {
+            System.out.println(Constants.NO_SEARCH_FILE);
+            return;
+        }
+
+        printDir(currentFile);
+    }
+
     private void printVolume(String path) {
         ProcessBuilder processBuilder = new ProcessBuilder(Constants.CMD_EXE, Constants.CMD_EXE_EXIT, Constants.CMD_VOLUME);
 
@@ -51,16 +75,6 @@ public class Dir implements IObserver {
         System.out.println();
         System.out.println(path.replace(">", "") + " " + Constants.DIRECTORY);
         System.out.println();
-    }
-
-    private void processCommand(Cmd cmd, String command) {
-        File currentPath = new File(cmd.getCurrentPath().replace(">", ""));
-
-        if (command.length() < 4 || command.charAt(3) == ' ') {
-            printDir(currentPath);
-            return;
-        }
-
     }
 
     private void printDir(File file) {
@@ -109,7 +123,7 @@ public class Dir implements IObserver {
 
         result.append(getDirectoryInfo(lastModified, "."));
 
-        if (fileManager.isFileValid(file.getParentFile())) {
+        if (!file.getParentFile().toString().equals(Constants.ABSOLUTE_FRONT_STRING)) {
             lastModified = getTimeInfo(file.getParentFile().lastModified());
             result.append("\n" + getDirectoryInfo(lastModified, ".."));
         }

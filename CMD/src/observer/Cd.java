@@ -24,48 +24,15 @@ public class Cd implements IObserver {
             return;
         }
 
-        String path = getRemovedCommand(command);
+        processCommand(cmd, command);
+    }
+
+    private void processCommand(Cmd cmd, String command) {
+        String path = fileManager.getPath(command, 2);
+
         if (isProcessException(cmd.getCurrentPath(), path))
             return;
 
-        processCommand(cmd, path);
-    }
-
-    private String getRemovedCommand(String command) {
-        StringBuilder result = new StringBuilder();
-        command = command.replace(" ", "");
-
-        for (int i = 2; i < command.length(); i++) {    // cd 명령어 제거
-            result.append(command.charAt(i));
-        }
-
-        return result.toString();
-    }
-
-    private boolean isProcessException(String currentPath, String path) {
-        if (path.isEmpty()) {
-            System.out.println(currentPath);
-            return true;
-        }
-
-        if (path.length() == 1) {
-            switch (path.charAt(0)) {
-                case ' ':
-                case '=':
-                case '&':
-                    System.out.println(currentPath);
-                    return true;
-                case '.':
-                    System.out.println();
-                    return true;
-                case '\\':
-                    return false;
-            }
-        }
-        return false;
-    }
-
-    private void processCommand(Cmd cmd, String path) {
         File currentDirectory = getFile(cmd.getCurrentPath(), path);
 
         if (!fileManager.isFileValid(currentDirectory)) {  // 유효한 경로가 아닐 때
@@ -76,9 +43,33 @@ public class Cd implements IObserver {
         cmd.setCurrentPath(currentDirectory + ">");
     }
 
+    private boolean isProcessException(String currentPath, String path) {
+        if (path.isEmpty()) {
+            System.out.println(currentPath);
+            return true;
+        }
+
+        if (path.length() == 1) {
+            switch (path.charAt(0)) {
+                case ' ', '=', '&' -> {
+                    System.out.println(currentPath);
+                    return true;
+                }
+                case '.' -> {
+                    System.out.println();
+                    return true;
+                }
+                case '\\' -> {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
     private File getFile(String currentPath, String path) {
         if (path.equals("\\")) {
-            return new File(Constants.ABSOLUTE_FRONT_STRING);
+            return fileManager.getAbsoluteFile(Constants.ABSOLUTE_FRONT_STRING);
         }
 
         if (fileManager.isAbsolute(path)) {  // 절대 경로일 때

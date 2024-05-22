@@ -68,7 +68,7 @@ public class Cd implements IObserver {
     private void processCommand(Cmd cmd, String path) {
         File currentDirectory = getFile(cmd.getCurrentPath(), path);
 
-        if (!fileManager.isPathValid(currentDirectory)) {  // 유효한 경로가 아닐 때
+        if (!fileManager.isFileValid(currentDirectory)) {  // 유효한 경로가 아닐 때
             System.out.println(Constants.WRONG_PATH);
             return;
         }

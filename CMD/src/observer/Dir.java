@@ -63,8 +63,8 @@ public class Dir implements IObserver {
 
     }
 
-    private void printDir(File path) {
-        File[] fileList = path.listFiles();
+    private void printDir(File file) {
+        File[] fileList = file.listFiles();
         long totalByte = 0;
         int fileCount = 0;
         int directoryCount = 0;
@@ -74,22 +74,26 @@ public class Dir implements IObserver {
             return;
         }
 
-        for (File file : fileList) {
-            if (file.isHidden())
+        if (!file.getName().isEmpty()) {    // 최상위 path 가 아닐 때
+            printCurrentDir(file);
+        }
+
+        for (File f : fileList) {
+            if (f.isHidden())
                 continue;
 
             String result;
-            String lastModified = getTimeInfo(file.lastModified());
+            String lastModified = getTimeInfo(f.lastModified());
 
-            if (file.isDirectory()) {
+            if (f.isDirectory()) {
                 directoryCount++;
 
-                result = lastModified + "    " + "<DIR>" + "          " + file.getName();
+                result = getDirectoryInfo(lastModified, f.getName());
             } else {
-                totalByte += file.length();
+                totalByte += f.length();
                 fileCount++;
 
-                result = getFileInfo(lastModified, file.length(), file.getName());
+                result = getFileInfo(lastModified, f.length(), f.getName());
             }
 
             System.out.println(result);
@@ -99,12 +103,30 @@ public class Dir implements IObserver {
         System.out.println(getTotalDirectoryInfo(directoryCount));
     }
 
+    private void printCurrentDir(File file) {
+        StringBuilder result = new StringBuilder();
+        String lastModified = getTimeInfo(file.lastModified());
+
+        result.append(getDirectoryInfo(lastModified, "."));
+
+        if (fileManager.isFileValid(file.getParentFile())) {
+            lastModified = getTimeInfo(file.getParentFile().lastModified());
+            result.append("\n" + getDirectoryInfo(lastModified, ".."));
+        }
+
+        System.out.println(result);
+    }
+
     private String getFileInfo(String lastModified, long fileByte, String name) {
         StringBuilder result = new StringBuilder(lastModified + "                  ");
         String byteString = getCommaByte(fileByte);
 
         result.append(getBackspace(byteString));
         return result + byteString + " " + name;
+    }
+
+    private String getDirectoryInfo(String lastModified, String name) {
+        return lastModified + "    " + "<DIR>" + "          " + name;
     }
 
     private String getTotalFileInfo(int fileCount, long totalByte) {
@@ -145,7 +167,7 @@ public class Dir implements IObserver {
 
     private String getBackspace(String str) {
         StringBuilder result = new StringBuilder();
-        for(int i = 0; i < str.length(); i++) {
+        for (int i = 0; i < str.length(); i++) {
             result.append("\b");
         }
         return result.toString();

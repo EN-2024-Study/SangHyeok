@@ -7,8 +7,8 @@ import java.io.IOException;
 
 public class FileManager {
 
-    public boolean isPathValid(File path) {
-        return path.exists() && path.isDirectory();
+    public boolean isFileValid(File file) {
+        return file.exists() && file.isDirectory();
     }
 
     public boolean isAbsolute(String command) {

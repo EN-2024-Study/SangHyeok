@@ -1,6 +1,7 @@
 기초 기능 설계
 Class Diagram 설계
-exit 명령어 처리
-help 명령어 처리
-cls 명령어 처리
+exit 기능
+help 기능
+cls 기능
 cd 기능
+dir 기능

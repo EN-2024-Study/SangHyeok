@@ -35,6 +35,7 @@ public class Dir implements IObserver {
     }
 
     private void processCommand(Cmd cmd, String command) {
+        command = command.replace(" ", "");
         File currentFile = new File(cmd.getCurrentPath().replace(">", ""));
         String path = fileManager.getPath(command, 3);
 
@@ -80,8 +81,7 @@ public class Dir implements IObserver {
     private void printDir(File file) {
         File[] fileList = file.listFiles();
         long totalByte = 0;
-        int fileCount = 0;
-        int directoryCount = 0;
+        int fileCount = 0, directoryCount = 0;
 
         if (fileList == null) {
             System.out.println(Constants.NO_SEARCH_FILE);
@@ -99,11 +99,11 @@ public class Dir implements IObserver {
             String result;
             String lastModified = getTimeInfo(f.lastModified());
 
-            if (f.isDirectory()) {
+            if (f.isDirectory()) {  // DIC 일 때
                 directoryCount++;
 
                 result = getDirectoryInfo(lastModified, f.getName());
-            } else {
+            } else {    // FILE 일 때
                 totalByte += f.length();
                 fileCount++;
 
@@ -113,8 +113,8 @@ public class Dir implements IObserver {
             System.out.println(result);
         }
 
-        System.out.println(getTotalFileInfo(fileCount, totalByte));
-        System.out.println(getTotalDirectoryInfo(directoryCount));
+        System.out.println(getTotalFileInfo(fileCount, totalByte)); // FILE 출력
+        System.out.println(getTotalDirectoryInfo(directoryCount));  // DIC 와 C 드라이브 남은 용량 출력
     }
 
     private void printCurrentDir(File file) {

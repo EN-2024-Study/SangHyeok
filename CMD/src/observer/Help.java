@@ -23,12 +23,16 @@ public class Help implements IObserver {
             return;
         }
 
+        processCommand();
+    }
+
+    private void processCommand() {
         try {
             FileReader fileReader = new FileReader(file);
             int cur = 0;
 
-            while((cur = fileReader.read()) != -1){
-                System.out.print((char)cur);
+            while ((cur = fileReader.read()) != -1) {
+                System.out.print((char) cur);
             }
 
             fileReader.close();

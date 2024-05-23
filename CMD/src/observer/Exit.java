@@ -19,8 +19,6 @@ public class Exit implements IObserver {
             return;
         }
 
-        if (command.equals(Constants.COMMANDS[6])) {
-            cmd.exit();
-        }
+        cmd.exit();
     }
 }

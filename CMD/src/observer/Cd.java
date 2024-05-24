@@ -34,7 +34,10 @@ public class Cd implements IObserver {
         if (isProcessException(cmd.getCurrentPath(), inputPath))
             return;
 
-        File currentFile = getFile(cmd.getCurrentPath(), inputPath);
+        File currentFile = fileManager.getFile(cmd.getCurrentPath(), inputPath);
+        if (inputPath.equals("\\")) {    // 최상위 경로일 때
+            currentFile = fileManager.getAbsoluteFile(Constants.ABSOLUTE_FRONT_STRING);
+        }
 
         if (!currentFile.isDirectory()) {  // 유효한 경로가 아닐 때
             System.out.println(Constants.WRONG_PATH);
@@ -66,18 +69,5 @@ public class Cd implements IObserver {
             }
         }
         return false;
-    }
-
-    private File getFile(String currentPath, String path) {
-        if (path.equals("\\")) {    // 최상위 경로일 때
-            return fileManager.getAbsoluteFile(Constants.ABSOLUTE_FRONT_STRING);
-        }
-
-        if (fileManager.isAbsolute(path)) {  // 절대 경로일 때
-            return fileManager.getAbsoluteFile(path);
-        }
-
-        // 상대 경로일 때
-        return fileManager.getRelativeFile(currentPath, path);
     }
 }

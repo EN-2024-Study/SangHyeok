@@ -29,6 +29,8 @@ public class Copy implements IObserver {
 
     private void processCommand(Cmd cmd, String command) {
         File currentFile = new File(cmd.getCurrentPath().replace(">", ""));
+        File targetFile = null;
+        File replaceFile = null;
         String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[2].length());
 
         // 명령어만 존재할 때
@@ -40,28 +42,18 @@ public class Copy implements IObserver {
         // 두개의 경로가 존재할 때
         if (fileManager.isTwoPaths(inputPath)) {
             File[] files = fileManager.getTwoFiles(inputPath);
-            return;
+            targetFile = fileManager.getFile(currentFile.toString(), files[0].toString());
+            replaceFile = fileManager.getFile(currentFile.toString(), files[1].toString());
+
+        } else {    // 하나의 경로만 존재할 때
+            targetFile = fileManager.getFile(currentFile.toString(), inputPath);
         }
 
-        // 하나의 경로만 존재할 때
-        currentFile = getFile(currentFile, inputPath);
-
-        if (!currentFile.exists()) {
+        if (!targetFile.exists()) {
             System.out.println(Constants.WRONG_DIRECTOR);
             return;
         }
 
 
     }
-
-    private File getFile(File currentFile, String path) {
-        if (fileManager.isAbsolute(path)) {
-            currentFile = fileManager.getAbsoluteFile(path);
-        } else {
-            currentFile = fileManager.getRelativeFile(currentFile.toString(), path);
-        }
-        return currentFile;
-    }
-
-
 }

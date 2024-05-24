@@ -8,60 +8,60 @@ public class CommandExceptionManager {
         if (command.length() < 2) {
             return false;
         }
-        return isCommandValid(2, command, Constants.COMMANDS[0]);
+        return isCommandValid(command.replace("/", "\\"), Constants.COMMANDS[0]);
     }
 
     public boolean isClsValid(String command) {
         if (command.length() < 3) {
             return false;
         }
-        return isCommandValid(3, command, Constants.COMMANDS[1]);
+        return isCommandValid(command, Constants.COMMANDS[1]);
     }
 
     public boolean isCopyValid(String command) {
         if (command.length() < 4) {
             return false;
         }
-        return isCommandValid(4, command, Constants.COMMANDS[2]);
+        return isCommandValid(command, Constants.COMMANDS[2]);
     }
 
     public boolean isDirValid(String command) {
         if (command.length() < 3) {
             return false;
         }
-        return isCommandValid(3, command, Constants.COMMANDS[3]);
+        return isCommandValid(command, Constants.COMMANDS[3]);
     }
 
     public boolean isExitValid(String command) {
         if (command.length() < 4) {
             return false;
         }
-        return isCommandValid(4, command, Constants.COMMANDS[4]);
+        return isCommandValid(command, Constants.COMMANDS[4]);
     }
 
     public boolean isHelpValid(String command) {
         if (command.length() < 4) {
             return false;
         }
-        return isCommandValid(4, command, Constants.COMMANDS[5]);
+        return isCommandValid(command, Constants.COMMANDS[5]);
     }
 
     public boolean isMoveValid(String command) {
         if (command.length() < 4) {
             return false;
         }
-        return isCommandValid(4, command, Constants.COMMANDS[6]);
+        return isCommandValid(command, Constants.COMMANDS[6]);
     }
 
-    private boolean isCommandValid(int length, String command, String constant) {
+    private boolean isCommandValid(String command, String constant) {
         StringBuilder front = new StringBuilder();
 
-        for(int i = 0; i < length; i++) {
+        for(int i = 0; i < constant.length(); i++) {
             front.append(command.charAt(i));
         }
 
-        if (front.toString().equals(constant)) {
-            if (constant.length() < command.length()) {
+        if (front.toString().equals(constant)) {    // 올바른 명령어이면
+            if (constant.length() < command.length()) { // 입력받은 값이 명령어 길이보다 길다면
                 return isBackCommandValid(command.charAt(constant.length()));
             }
             return true;

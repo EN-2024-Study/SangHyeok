@@ -16,14 +16,12 @@ public class Cmd implements IObservable {
     private List<IObserver> observers;
     private ExceptionManager exceptionManager;
     private String currentPath;
-    private String command;
     private boolean isRun;
 
     public Cmd(ExceptionManager exceptionManager) {
         this.observers = new ArrayList<IObserver>();
         this.exceptionManager = exceptionManager;
         this.currentPath = Constants.INITIAL_ROUTE;
-        this.command = "";
         this.isRun = true;
         printVersion();
     }
@@ -48,10 +46,10 @@ public class Cmd implements IObservable {
 
         while(isRun) {
             System.out.print(currentPath);
-            command = scanner.nextLine();
+            String command = scanner.nextLine();
+            command = trimCommand(command);
 
-            trimCommand();
-            if (!isCommandValid()) {
+            if (!isCommandValid(command)) {
                 System.out.println("'" + command + "'" + Constants.WRONG_COMMAND);
                 continue;
             }
@@ -90,7 +88,7 @@ public class Cmd implements IObservable {
         System.out.println(Constants.BUILD_STRING);
     }
 
-    private boolean isCommandValid() {
+    private boolean isCommandValid(String command) {
         if (exceptionManager.isCdValid(command))
             return true;
         if (exceptionManager.isClsValid(command))
@@ -107,12 +105,10 @@ public class Cmd implements IObservable {
         return exceptionManager.isMoveValid(command);
     }
 
-    private void trimCommand() {
+    private String trimCommand(String command) {
         command = command.trim();
         command = command.toLowerCase();
-        command = command.replace("/", "\\");
         command = command.replace(",", "");
-        command = command.replace("\"", "");
-        command = command.replace("c:", "C:");
+        return command.replace("c:", "C:");
     }
 }

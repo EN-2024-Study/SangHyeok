@@ -35,9 +35,8 @@ public class Dir implements IObserver {
     }
 
     private void processCommand(Cmd cmd, String command) {
-        command = command.replace(" ", "");
         File currentFile = new File(cmd.getCurrentPath().replace(">", ""));
-        String path = fileManager.getPath(command, 3);
+        String path = fileManager.getOnePath(command, 3);
 
         if (command.length() < 4 || path.isEmpty()) {
             printDir(currentFile);

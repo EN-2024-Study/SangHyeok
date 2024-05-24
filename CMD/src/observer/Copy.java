@@ -27,13 +27,17 @@ public class Copy implements IObserver {
     }
 
     private void processCommand(Cmd cmd, String command) {
-        command = command.replace(" ", "");
         File currentFile = new File(cmd.getCurrentPath().replace(">", ""));
-        String path = fileManager.getPath(command, 5);
+        String[] paths = fileManager.getTwoPath(command);
 
-        if (command.length() < 5 || path.isEmpty()) {
+        if (command.length() < 5 || paths == null) {
 
-            return;
+        }
+
+        if (paths.length == 1) {
+
+        } else if (paths.length == 2) {
+
         }
 
 

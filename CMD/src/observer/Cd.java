@@ -28,8 +28,7 @@ public class Cd implements IObserver {
     }
 
     private void processCommand(Cmd cmd, String command) {
-        command = command.replace(" ", "");
-        String path = fileManager.getPath(command, 2);
+        String path = fileManager.getOnePath(command.replace("/", "\\"), 2);
 
         if (isProcessException(cmd.getCurrentPath(), path))
             return;

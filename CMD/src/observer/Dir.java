@@ -5,6 +5,7 @@ import interfaces.IObserver;
 import observable.Cmd;
 import utility.Constants;
 import controller.FileManager;
+import utility.StringManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -91,7 +92,7 @@ public class Dir implements IObserver {
                 continue;
 
             String result;
-            String lastModified = getTimeInfo(f.lastModified());
+            String lastModified = StringManager.getTimeInfo(f.lastModified());
 
             if (f.isDirectory()) {  // DIC 일 때
                 directoryCount++;
@@ -113,12 +114,12 @@ public class Dir implements IObserver {
 
     private void printCurrentDir(File file) {
         StringBuilder result = new StringBuilder();
-        String lastModified = getTimeInfo(file.lastModified());
+        String lastModified = StringManager.getTimeInfo(file.lastModified());
 
         result.append(getDirectoryInfo(lastModified, "."));
 
         if (!file.getParentFile().toString().equals(Constants.ABSOLUTE_FRONT_STRING)) {
-            lastModified = getTimeInfo(file.getParentFile().lastModified());
+            lastModified = StringManager.getTimeInfo(file.getParentFile().lastModified());
             result.append("\n" + getDirectoryInfo(lastModified, ".."));
         }
 
@@ -127,9 +128,9 @@ public class Dir implements IObserver {
 
     private String getFileInfo(String lastModified, long fileByte, String name) {
         StringBuilder result = new StringBuilder(lastModified + "                  ");
-        String byteString = getCommaByte(fileByte);
+        String byteString = StringManager.getCommaNumber(fileByte);
 
-        result.append(getBackspace(byteString));
+        result.append(StringManager.getBackspace(byteString));
         return result + byteString + " " + name;
     }
 
@@ -139,12 +140,12 @@ public class Dir implements IObserver {
 
     private String getTotalFileInfo(int fileCount, long totalByte) {
         StringBuilder result = new StringBuilder("                ");
-        String byteString = getCommaByte(totalByte);
+        String byteString = StringManager.getCommaNumber(totalByte);
 
-        result.append(getBackspace(String.valueOf(fileCount)));
+        result.append(StringManager.getBackspace(String.valueOf(fileCount)));
         result.append(fileCount + "개 " + Constants.FILE + "                    ");
 
-        result.append(getBackspace(byteString));
+        result.append(StringManager.getBackspace(byteString));
         result.append(byteString + " " + Constants.BYTE);
         return result.toString();
     }
@@ -152,32 +153,14 @@ public class Dir implements IObserver {
     private String getTotalDirectoryInfo(int directoryCount) {
         StringBuilder result = new StringBuilder("                ");
         long totalByte = new File(Constants.ABSOLUTE_FRONT_STRING).getFreeSpace();
-        String totalString = getCommaByte(totalByte);
+        String totalString = StringManager.getCommaNumber(totalByte);
 
-        result.append(getBackspace(String.valueOf(directoryCount)));
+        result.append(StringManager.getBackspace(String.valueOf(directoryCount)));
         result.append(directoryCount);
         result.append("개 " + Constants.DIRECTORY + "                 ");
 
-        result.append(getBackspace(totalString));
+        result.append(StringManager.getBackspace(totalString));
         result.append(totalString + " " + Constants.BYTE + " 남음");
-        return result.toString();
-    }
-
-    private String getTimeInfo(long time) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd a hh:mm");
-        return dateFormat.format(new Date(time));
-    }
-
-    private String getCommaByte(long number) {
-        DecimalFormat decimalFormat = new DecimalFormat("###,###");
-        return decimalFormat.format(number);
-    }
-
-    private String getBackspace(String str) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < str.length(); i++) {
-            result.append("\b");
-        }
         return result.toString();
     }
 }

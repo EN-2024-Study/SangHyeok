@@ -7,6 +7,9 @@ import controller.FileManager;
 import utility.Constants;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class Copy implements IObserver {
 
@@ -28,9 +31,7 @@ public class Copy implements IObserver {
     }
 
     private void processCommand(Cmd cmd, String command) {
-        File currentFile = new File(cmd.getCurrentPath().replace(">", ""));
-        File targetFile = null;
-        File replaceFile = null;
+        File currentFile = new File(cmd.getCurrentPath());
         String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[2].length());
 
         // 명령어만 존재할 때
@@ -39,21 +40,36 @@ public class Copy implements IObserver {
             return;
         }
 
+        File targetFile = fileManager.getFile(currentFile.toString(), inputPath);
+
         // 두개의 경로가 존재할 때
         if (fileManager.isTwoPaths(inputPath)) {
-            File[] files = fileManager.getTwoFiles(inputPath);
-            targetFile = fileManager.getFile(currentFile.toString(), files[0].toString());
-            replaceFile = fileManager.getFile(currentFile.toString(), files[1].toString());
+            String[] paths = fileManager.getTwoPaths(inputPath);
+            targetFile = fileManager.getFile(currentFile.toString(), paths[0]);
+            File replaceFile = fileManager.getFile(currentFile.toString(), paths[1]);
 
-        } else {    // 하나의 경로만 존재할 때
-            targetFile = fileManager.getFile(currentFile.toString(), inputPath);
+            processCopy(targetFile, replaceFile);
+            return;
         }
 
+        processCopy(targetFile, currentFile);
+    }
+
+    private void processCopy(File targetFile, File replaceFile) {
         if (!targetFile.exists()) {
             System.out.println(Constants.WRONG_DIRECTOR);
             return;
         }
 
+        if (replaceFile.exists()) {
 
+            return;
+        }
+
+        try {
+            Files.copy(targetFile.toPath(), replaceFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

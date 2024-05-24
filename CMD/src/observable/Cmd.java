@@ -67,7 +67,7 @@ public class Cmd implements IObservable {
     }
 
     public String getCurrentPath() {
-        return this.currentPath;
+        return this.currentPath.replace(">", "");
     }
 
     private void printVersion() {

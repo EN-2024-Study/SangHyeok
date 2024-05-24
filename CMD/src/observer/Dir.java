@@ -36,14 +36,14 @@ public class Dir implements IObserver {
 
     private void processCommand(Cmd cmd, String command) {
         String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[3].length());
-        File pastFile = new File(cmd.getCurrentPath().replace(">", ""));
+        File pastFile = new File(cmd.getCurrentPath());
 
         if (command.length() < 4 || inputPath.isEmpty()) {
             printDir(pastFile);
             return;
         }
 
-        File currentFile = fileManager.getFile(pastFile + ">", inputPath);
+        File currentFile = fileManager.getFile(pastFile.toString(), inputPath);
 
         if (!currentFile.isDirectory()) {
             System.out.println(Constants.NO_SEARCH_FILE);

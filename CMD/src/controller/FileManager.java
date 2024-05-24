@@ -37,7 +37,7 @@ public class FileManager {
         if (isAbsolute(path)) {
             return getAbsoluteFile(path);
         } else {
-            return getRelativeFile(pastPath + ">", path);
+            return getRelativeFile(pastPath, path);
         }
     }
 
@@ -50,14 +50,13 @@ public class FileManager {
     }
 
     private File getRelativeFile(String pastPath, String path) {
-        String currentPath = pastPath.replace(">", "\\");
+        String currentPath = pastPath + "\\";
         currentPath += path;
-        currentPath = currentPath.replace("\\", "/");
 
         return getAbsoluteFile(currentPath);
     }
 
-    public File[] getTwoFiles(String path) {
+    public String[] getTwoPaths(String path) {
         int count = getQuotesCount(path);
 
         if (count == 2) {   // 쌍 따움표가 한 경로에만 존재할 때
@@ -65,21 +64,20 @@ public class FileManager {
 
             if (index == 0) {   // 쌍 따움표가 앞 경로에 존재할 때
                 String[] paths = path.split("\" ");
-                return new File[]{new File(paths[0].replace("\"", "")), new File(paths[1])};
+                return new String[]{paths[0].replace("\"", ""), paths[1]};
             }
 
             // 쌍 따움표가 뒷 경로에 존재할 때
             String[] paths = path.split(" \"");
-            return new File[]{new File(paths[0]), new File(paths[1].replace("\"", ""))};
+            return new String[]{paths[0], paths[1].replace("\"", "")};
         }
 
         if (count == 4) {   // 쌍 따움표가 두 경로 모두 존재할 때
             String[] paths = path.split("\" ");
-            return new File[]{new File(paths[0].replace("\"", "")), new File(paths[1].replace("\"", ""))};
+            return new String[]{paths[0].replace("\"", ""), paths[1].replace("\"", "")};
         }
 
-        String[] paths = path.split(" ");
-        return new File[]{new File(paths[0]), new File(paths[1])};
+        return path.split(" ");
     }
 
     private int getQuotesCount(String str) {

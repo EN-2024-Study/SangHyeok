@@ -58,7 +58,7 @@ public class Copy implements IObserver {
     }
 
     private void processCopy(File sourceFile, File targetFile) {
-        if (!isFileValid(sourceFile)) {
+        if (!fileManager.isFileValid(sourceFile)) {
             return;
         }
 
@@ -106,11 +106,9 @@ public class Copy implements IObserver {
         }
 
         // 기존 파일에 덮어씌울 때
-        overWrite(sourceFile, targetFile);
-    }
-
-    private void overWrite(File sourceFile, File targetFile) {
-
+        if (fileManager.whetherOverWrite(sourceFile)) {
+            copy(sourceFile, targetFile);
+        }
     }
 
     private void copy(File source, File target) {
@@ -126,13 +124,5 @@ public class Copy implements IObserver {
             System.out.println(file.getParentFile().getName() + "\\" + file.getName());
         }
         System.out.println("         " + files.size() + Constants.VALID_COPY);
-    }
-
-    private boolean isFileValid(File file) {
-        if (!file.exists()) {
-            System.out.println(Constants.WRONG_DIRECTOR);
-            return false;
-        }
-        return true;
     }
 }

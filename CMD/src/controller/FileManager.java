@@ -5,12 +5,9 @@ import utility.StringManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class FileManager {
-
-    public boolean isAbsolute(String command) {
-        return command.contains(Constants.ABSOLUTE_FRONT_STRING);
-    }
 
     public boolean isTwoPaths(String path) {
         if (!path.contains(" ")) {
@@ -23,6 +20,51 @@ public class FileManager {
         }
 
         return true;    // 쌍 따움표가 없고 공백 하나만 존재할 때
+    }
+
+    public boolean isFileValid(File file) {
+        if (!file.exists()) {
+            System.out.println(Constants.WRONG_FILE);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean whetherOverWrite(File file) {
+        Scanner scanner = new Scanner(System.in);
+        boolean whetherAnswer = false;
+
+        while(!whetherAnswer) {
+            System.out.print(file.getName() + Constants.WHETHER_OVER_WRITE);
+            String answer = scanner.nextLine();
+            answer = answer.toLowerCase();
+
+            if (answer.isEmpty()) {
+                continue;
+            }
+
+            switch(answer.charAt(0)) {
+                case 'y' -> {
+                    return true;
+                }
+                case 'n' -> {
+                    return false;
+                }
+                case 'a' -> {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isAbsolute(String command) {
+        if (command.length() < 3) {
+            return false;
+        }
+
+        String result = command.substring(0, 3);
+        return result.equals(Constants.ABSOLUTE_FRONT_STRING);
     }
 
     public String removeCommand(String command, int startIndex) {

@@ -130,7 +130,7 @@ public class Dir implements IObserver {
         StringBuilder result = new StringBuilder(lastModified + "                  ");
         String byteString = StringManager.getCommaNumber(fileByte);
 
-        result.append(StringManager.getBackspace(byteString));
+        result.append(StringManager.getBackspace(byteString.length()));
         return result + byteString + " " + name;
     }
 
@@ -142,10 +142,10 @@ public class Dir implements IObserver {
         StringBuilder result = new StringBuilder("                ");
         String byteString = StringManager.getCommaNumber(totalByte);
 
-        result.append(StringManager.getBackspace(String.valueOf(fileCount)));
+        result.append(StringManager.getBackspace(String.valueOf(fileCount).length()));
         result.append(fileCount + "개 " + Constants.FILE + "                    ");
 
-        result.append(StringManager.getBackspace(byteString));
+        result.append(StringManager.getBackspace(byteString.length()));
         result.append(byteString + " " + Constants.BYTE);
         return result.toString();
     }
@@ -155,11 +155,11 @@ public class Dir implements IObserver {
         long totalByte = new File(Constants.ABSOLUTE_FRONT_STRING).getFreeSpace();
         String totalString = StringManager.getCommaNumber(totalByte);
 
-        result.append(StringManager.getBackspace(String.valueOf(directoryCount)));
+        result.append(StringManager.getBackspace(String.valueOf(directoryCount).length()));
         result.append(directoryCount);
         result.append("개 " + Constants.DIRECTORY + "                 ");
 
-        result.append(StringManager.getBackspace(totalString));
+        result.append(StringManager.getBackspace(totalString.length()));
         result.append(totalString + " " + Constants.BYTE + " 남음");
         return result.toString();
     }

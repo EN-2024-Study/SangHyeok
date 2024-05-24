@@ -1,6 +1,7 @@
 package controller;
 
 import utility.Constants;
+import utility.StringManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class FileManager {
             return false;
         }
 
-        int count = getQuotesCount(path);
+        int count = StringManager.getQuotesCount(path);
         if (count >= 2) {   // 쌍 따움표가 존재할 때
             return path.contains("\" ") || path.contains(" \"");
         }
@@ -57,7 +58,7 @@ public class FileManager {
     }
 
     public String[] getTwoPaths(String path) {
-        int count = getQuotesCount(path);
+        int count = StringManager.getQuotesCount(path);
 
         if (count == 2) {   // 쌍 따움표가 한 경로에만 존재할 때
             int index = path.indexOf("\"");
@@ -78,15 +79,5 @@ public class FileManager {
         }
 
         return path.split(" ");
-    }
-
-    private int getQuotesCount(String str) {
-        int count = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == '\"') {
-                count++;
-            }
-        }
-        return count;
     }
 }

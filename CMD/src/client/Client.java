@@ -1,6 +1,6 @@
 package client;
 
-import controller.ExceptionManager;
+import controller.CommandExceptionManager;
 import observable.Cmd;
 import observer.*;
 import observer.Exit;
@@ -11,22 +11,22 @@ public class Client {
     private Cmd cmd;
 
     public Client() {
-        ExceptionManager exceptionManager = new ExceptionManager();
-        this.cmd = new Cmd(exceptionManager);
+        CommandExceptionManager commandExceptionManager = new CommandExceptionManager();
+        this.cmd = new Cmd(commandExceptionManager);
 
-        initCmdManager(exceptionManager);
+        initCmdManager(commandExceptionManager);
         this.cmd.run();
     }
 
-    private void initCmdManager(ExceptionManager exceptionManager) {
+    private void initCmdManager(CommandExceptionManager commandExceptionManager) {
         FileManager fileManager = new FileManager();
 
-        cmd.addObserver(new Cd(exceptionManager, fileManager));
-        cmd.addObserver(new Copy(exceptionManager, fileManager));
-        cmd.addObserver(new Dir(exceptionManager, fileManager));
-        cmd.addObserver(new Move(exceptionManager, fileManager));
-        cmd.addObserver(new Cls(exceptionManager));
-        cmd.addObserver(new Help(exceptionManager));
-        cmd.addObserver(new Exit(exceptionManager));
+        cmd.addObserver(new Cd(commandExceptionManager, fileManager));
+        cmd.addObserver(new Copy(commandExceptionManager, fileManager));
+        cmd.addObserver(new Dir(commandExceptionManager, fileManager));
+        cmd.addObserver(new Move(commandExceptionManager, fileManager));
+        cmd.addObserver(new Cls(commandExceptionManager));
+        cmd.addObserver(new Help(commandExceptionManager));
+        cmd.addObserver(new Exit(commandExceptionManager));
     }
 }

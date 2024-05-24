@@ -2,7 +2,7 @@ package controller;
 
 import utility.Constants;
 
-public class ExceptionManager {
+public class CommandExceptionManager {
 
     public boolean isCdValid(String command) {
         if (command.length() < 2) {

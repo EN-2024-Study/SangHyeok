@@ -1,6 +1,6 @@
 package observer;
 
-import controller.ExceptionManager;
+import controller.CommandExceptionManager;
 import interfaces.IObserver;
 import observable.Cmd;
 import utility.Constants;
@@ -10,16 +10,16 @@ import java.io.*;
 public class Help implements IObserver {
 
     private File file;
-    private ExceptionManager exceptionManager;
+    private CommandExceptionManager commandExceptionManager;
 
-    public Help(ExceptionManager exceptionManager) {
-        this.exceptionManager = exceptionManager;
+    public Help(CommandExceptionManager commandExceptionManager) {
+        this.commandExceptionManager = commandExceptionManager;
         this.file = new File(Constants.HELP_PATH);
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!exceptionManager.isHelpValid(command)) {
+        if (!commandExceptionManager.isHelpValid(command)) {
             return;
         }
 

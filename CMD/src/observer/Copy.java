@@ -1,25 +1,26 @@
 package observer;
 
-import controller.ExceptionManager;
+import controller.CommandExceptionManager;
 import interfaces.IObserver;
 import observable.Cmd;
 import controller.FileManager;
+import utility.Constants;
 
 import java.io.File;
 
 public class Copy implements IObserver {
 
     protected FileManager fileManager;
-    protected ExceptionManager exceptionManager;
+    protected CommandExceptionManager commandExceptionManager;
 
-    public Copy(ExceptionManager exceptionManager, FileManager fileManager) {
-        this.exceptionManager = exceptionManager;
+    public Copy(CommandExceptionManager commandExceptionManager, FileManager fileManager) {
+        this.commandExceptionManager = commandExceptionManager;
         this.fileManager = fileManager;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!exceptionManager.isCopyValid(command)) {
+        if (!commandExceptionManager.isCopyValid(command)) {
             return;
         }
 
@@ -28,18 +29,39 @@ public class Copy implements IObserver {
 
     private void processCommand(Cmd cmd, String command) {
         File currentFile = new File(cmd.getCurrentPath().replace(">", ""));
-        String[] paths = fileManager.getTwoPath(command);
+        String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[2].length());
 
-        if (command.length() < 5 || paths == null) {
-
+        // 명령어만 존재할 때
+        if (command.length() < 5 || inputPath.isEmpty()) {
+            System.out.println(Constants.WRONG_COMMAND2);
+            return;
         }
 
-        if (paths.length == 1) {
+        // 두개의 경로가 존재할 때
+        if (fileManager.isTwoPaths(inputPath)) {
+            File[] files = fileManager.getTwoFiles(inputPath);
+            return;
+        }
 
-        } else if (paths.length == 2) {
+        // 하나의 경로만 존재할 때
+        currentFile = getFile(currentFile, inputPath);
 
+        if (!currentFile.exists()) {
+            System.out.println(Constants.WRONG_DIRECTOR);
+            return;
         }
 
 
     }
+
+    private File getFile(File currentFile, String path) {
+        if (fileManager.isAbsolute(path)) {
+            currentFile = fileManager.getAbsoluteFile(path);
+        } else {
+            currentFile = fileManager.getRelativeFile(currentFile.toString(), path);
+        }
+        return currentFile;
+    }
+
+
 }

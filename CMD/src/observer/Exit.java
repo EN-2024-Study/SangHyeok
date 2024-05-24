@@ -1,21 +1,20 @@
 package observer;
 
-import controller.ExceptionManager;
+import controller.CommandExceptionManager;
 import interfaces.IObserver;
 import observable.Cmd;
-import utility.Constants;
 
 public class Exit implements IObserver {
 
-    private ExceptionManager exceptionManager;
+    private CommandExceptionManager commandExceptionManager;
 
-    public Exit(ExceptionManager exceptionManager) {
-        this.exceptionManager = exceptionManager;
+    public Exit(CommandExceptionManager commandExceptionManager) {
+        this.commandExceptionManager = commandExceptionManager;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!exceptionManager.isExitValid(command)) {
+        if (!commandExceptionManager.isExitValid(command)) {
             return;
         }
 

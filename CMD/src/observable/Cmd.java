@@ -1,6 +1,6 @@
 package observable;
 
-import controller.ExceptionManager;
+import controller.CommandExceptionManager;
 import interfaces.IObservable;
 import interfaces.IObserver;
 import utility.Constants;
@@ -14,13 +14,13 @@ import java.util.Scanner;
 public class Cmd implements IObservable {
 
     private List<IObserver> observers;
-    private ExceptionManager exceptionManager;
+    private CommandExceptionManager commandExceptionManager;
     private String currentPath;
     private boolean isRun;
 
-    public Cmd(ExceptionManager exceptionManager) {
+    public Cmd(CommandExceptionManager commandExceptionManager) {
         this.observers = new ArrayList<IObserver>();
-        this.exceptionManager = exceptionManager;
+        this.commandExceptionManager = commandExceptionManager;
         this.currentPath = Constants.INITIAL_ROUTE;
         this.isRun = true;
         printVersion();
@@ -89,20 +89,20 @@ public class Cmd implements IObservable {
     }
 
     private boolean isCommandValid(String command) {
-        if (exceptionManager.isCdValid(command))
+        if (commandExceptionManager.isCdValid(command))
             return true;
-        if (exceptionManager.isClsValid(command))
+        if (commandExceptionManager.isClsValid(command))
             return true;
-        if (exceptionManager.isCopyValid(command))
+        if (commandExceptionManager.isCopyValid(command))
             return true;
-        if (exceptionManager.isDirValid(command))
+        if (commandExceptionManager.isDirValid(command))
             return true;
-        if (exceptionManager.isExitValid(command))
+        if (commandExceptionManager.isExitValid(command))
             return true;
-        if (exceptionManager.isHelpValid(command))
+        if (commandExceptionManager.isHelpValid(command))
             return true;
 
-        return exceptionManager.isMoveValid(command);
+        return commandExceptionManager.isMoveValid(command);
     }
 
     private String trimCommand(String command) {

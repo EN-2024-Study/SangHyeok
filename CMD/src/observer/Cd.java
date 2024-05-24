@@ -1,6 +1,6 @@
 package observer;
 
-import controller.ExceptionManager;
+import controller.CommandExceptionManager;
 import interfaces.IObserver;
 import observable.Cmd;
 import utility.Constants;
@@ -11,16 +11,16 @@ import java.io.File;
 public class Cd implements IObserver {
 
     private FileManager fileManager;
-    private ExceptionManager exceptionManager;
+    private CommandExceptionManager commandExceptionManager;
 
-    public Cd(ExceptionManager exceptionManager, FileManager fileManager) {
-        this.exceptionManager = exceptionManager;
+    public Cd(CommandExceptionManager commandExceptionManager, FileManager fileManager) {
+        this.commandExceptionManager = commandExceptionManager;
         this.fileManager = fileManager;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!exceptionManager.isCdValid(command)) {
+        if (!commandExceptionManager.isCdValid(command)) {
             return;
         }
 
@@ -28,19 +28,20 @@ public class Cd implements IObserver {
     }
 
     private void processCommand(Cmd cmd, String command) {
-        String path = fileManager.getOnePath(command.replace("/", "\\"), 2);
+        String inputPath = fileManager.removeCommand(command.replace("/", "\\"), Constants.COMMANDS[0].length());
+        inputPath = inputPath.replace("\"", "");
 
-        if (isProcessException(cmd.getCurrentPath(), path))
+        if (isProcessException(cmd.getCurrentPath(), inputPath))
             return;
 
-        File currentDirectory = getFile(cmd.getCurrentPath(), path);
+        File currentFile = getFile(cmd.getCurrentPath(), inputPath);
 
-        if (!fileManager.isFileValid(currentDirectory)) {  // 유효한 경로가 아닐 때
+        if (!currentFile.isDirectory()) {  // 유효한 경로가 아닐 때
             System.out.println(Constants.WRONG_PATH);
             return;
         }
 
-        cmd.setCurrentPath(currentDirectory + ">");
+        cmd.setCurrentPath(currentFile + ">");
     }
 
     private boolean isProcessException(String currentPath, String path) {
@@ -68,7 +69,7 @@ public class Cd implements IObserver {
     }
 
     private File getFile(String currentPath, String path) {
-        if (path.equals("\\")) {
+        if (path.equals("\\")) {    // 최상위 경로일 때
             return fileManager.getAbsoluteFile(Constants.ABSOLUTE_FRONT_STRING);
         }
 

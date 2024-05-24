@@ -7,12 +7,30 @@ import java.io.IOException;
 
 public class FileManager {
 
-    public boolean isFileValid(File file) {
-        return file.exists() && file.isDirectory();
-    }
-
     public boolean isAbsolute(String command) {
         return command.contains(Constants.ABSOLUTE_FRONT_STRING);
+    }
+
+    public boolean isTwoPaths(String path) {
+        if (!path.contains(" ")) {
+            return false;
+        }
+
+        int count = getQuotes(path);
+        if (count >= 2) {   // 쌍 따움표가 존재할 때
+            return path.contains("\" ") || path.contains(" \"");
+        }
+
+        return true;    // 쌍 따움표가 없고 공백 하나만 존재할 때
+    }
+
+    public String removeCommand(String command, int startIndex) {
+        StringBuilder result = new StringBuilder();
+
+        for (int i = startIndex; i < command.length(); i++) {    // 명령어 제거
+            result.append(command.charAt(i));
+        }
+        return result.toString().trim();
     }
 
     public File getAbsoluteFile(String path) {
@@ -31,42 +49,38 @@ public class FileManager {
         return getAbsoluteFile(currentPath);
     }
 
-    public String getOnePath(String command, int startIndex) {
-        StringBuilder result = new StringBuilder();
+    public File[] getTwoFiles(String path) {
+        int count = getQuotes(path);
 
-        for (int i = startIndex; i < command.length(); i++) {    // 명령어 제거
-            result.append(command.charAt(i));
-        }
+        if (count == 2) {   // 쌍 따움표가 한 경로에만 존재할 때
+            int index = path.indexOf("\"");
 
-        return result.toString().trim().replace("\"", "");
-    }
-
-    public String[] getTwoPath(String command) {
-        StringBuilder path1 = new StringBuilder();
-        StringBuilder path2 = new StringBuilder();
-        int endIndex = 0;
-
-        while(isFileValid(new File(path1.toString()))) {
-
-            for(int i = 5; i < command.length() - endIndex; i++) {
-                path1.append(command.charAt(i));
+            if (index == 0) {   // 쌍 따움표가 앞 경로에 존재할 때
+                String[] paths = path.split("\" ");
+                return new File[] {new File(paths[0].replace("\"", "")), new File(paths[1])};
             }
 
-            path1 = new StringBuilder(path1.toString().replace(" ", ""));
-            endIndex++;
+            // 쌍 따움표가 뒷 경로에 존재할 때
+            String[] paths = path.split(" \"");
+            return new File[] {new File(paths[0]), new File(paths[1].replace("\"", ""))};
         }
 
-        for(int i = endIndex - 1; i < command.length(); i++) {
-            path2.append(command.charAt(i));
+        if (count == 4) {   // 쌍 따움표가 두 경로 모두 존재할 때
+            String[] paths = path.split("\" ");
+            return new File[] {new File(paths[0].replace("\"", "")), new File(paths[1].replace("\"", ""))};
         }
 
-        if (isFileValid(new File(path2.toString()))) {  // 경로가 2개 존재한다면
-            return new String[] {path1.toString(), path2.toString()};
-        }
+        String[] paths = path.split(" ");
+        return new File[] {new File(paths[0]), new File(paths[1])};
+    }
 
-        if (isFileValid(new File(path1.toString()))) {  // 경로가 1개 존재한다면
-            return new String[] {path1.toString()};
+    private int getQuotes(String str) {
+        int count = 0;
+        for(int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '\"') {
+                count++;
+            }
         }
-        return null;    // 경로가 존재하지 않으면
+        return count;
     }
 }

@@ -1,6 +1,6 @@
 package observer;
 
-import controller.ExceptionManager;
+import controller.CommandExceptionManager;
 import interfaces.IObserver;
 import observable.Cmd;
 import utility.Constants;
@@ -17,16 +17,16 @@ import java.util.Date;
 public class Dir implements IObserver {
 
     private FileManager fileManager;
-    private ExceptionManager exceptionManager;
+    private CommandExceptionManager commandExceptionManager;
 
-    public Dir(ExceptionManager exceptionManager, FileManager fileManager) {
-        this.exceptionManager = exceptionManager;
+    public Dir(CommandExceptionManager commandExceptionManager, FileManager fileManager) {
+        this.commandExceptionManager = commandExceptionManager;
         this.fileManager = fileManager;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!exceptionManager.isDirValid(command)) {
+        if (!commandExceptionManager.isDirValid(command)) {
             return;
         }
 
@@ -35,22 +35,21 @@ public class Dir implements IObserver {
     }
 
     private void processCommand(Cmd cmd, String command) {
+        String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[3].length());
         File currentFile = new File(cmd.getCurrentPath().replace(">", ""));
-        String path = fileManager.getOnePath(command, 3);
 
-        if (command.length() < 4 || path.isEmpty()) {
+        if (command.length() < 4 || inputPath.isEmpty()) {
             printDir(currentFile);
             return;
         }
 
-        if (fileManager.isAbsolute(path)) {
-            currentFile = fileManager.getAbsoluteFile(path);
+        if (fileManager.isAbsolute(inputPath)) {
+            currentFile = fileManager.getAbsoluteFile(inputPath);
         } else {
-            String pastFile = currentFile + ">";
-            currentFile = fileManager.getRelativeFile(pastFile, path);
+            currentFile = fileManager.getRelativeFile(currentFile + ">", inputPath);
         }
 
-        if (!fileManager.isFileValid(currentFile)) {
+        if (!currentFile.isDirectory()) {
             System.out.println(Constants.NO_SEARCH_FILE);
             return;
         }

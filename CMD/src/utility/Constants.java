@@ -26,7 +26,7 @@ public class Constants {
     public final static String NO_SEARCH_FILE = "파일을 찾을 수 없습니다.";
     public final static String WHETHER_OVER_WRITE = "을(를) 덮어쓰시겠습니까? (Yes/No/All):";
     public final static String[] COMMANDS = new String[] {"cd", "cls", "copy", "dir", "exit", "help", "move"};
-    public final static Character[] INVALID_ADDITION_COMMANDS = new Character[] {'|', '&', '*', ':', '?', '<', '>'};
+    public final static Character[] INVALID_ADDITION_COMMANDS = new Character[] {'|', '&', '*', '?', '<', '>'};
     public enum ValidType {
         Valid, WrongCommand, WrongCommandSyntax, WrongSwitch
     }

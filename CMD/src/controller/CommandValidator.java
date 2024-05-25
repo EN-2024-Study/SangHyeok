@@ -4,6 +4,16 @@ import utility.Constants;
 
 public class CommandValidator {
 
+    public Constants.ValidType[] hasAllCommandValue(String command) {
+        Constants.ValidType[] valueTypes = new Constants.ValidType[7];
+        int index = 0;
+        for(String c : Constants.COMMANDS) {
+            valueTypes[index++] = hasCommandValue(command, c);
+        }
+
+        return valueTypes;
+    }
+
     public Constants.ValidType hasCdValue(String command) {
         return hasCommandValue(command.replace("/", "\\"), Constants.COMMANDS[0]);
     }

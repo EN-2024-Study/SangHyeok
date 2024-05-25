@@ -42,6 +42,7 @@ public class Cmd implements IObservable {
         }
     }
 
+    @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
 
@@ -70,88 +71,6 @@ public class Cmd implements IObservable {
         return this.currentPath.replace(">", "");
     }
 
-    private boolean isCommandValid(String command) {
-        Constants.ValidType valueType = commandValidator.hasCdValue(command);
-        switch(valueType) {
-            case Valid -> {
-                return true;
-            }
-            case WrongCommandSyntax -> {
-                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
-                return false;
-            }
-        }
-
-        valueType = commandValidator.hasClsValue(command);
-        switch(valueType) {
-            case Valid -> {
-                return true;
-            }
-            case WrongCommandSyntax -> {
-                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
-                return false;
-            }
-        }
-
-        valueType = commandValidator.hasCopyValue(command);
-        switch(valueType) {
-            case Valid -> {
-                return true;
-            }
-            case WrongCommandSyntax -> {
-                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
-                return false;
-            }
-        }
-
-        valueType = commandValidator.hasDirValue(command);
-        switch(valueType) {
-            case Valid -> {
-                return true;
-            }
-            case WrongCommandSyntax -> {
-                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
-                return false;
-            }
-        }
-
-        valueType = commandValidator.hasExitValue(command);
-        switch(valueType) {
-            case Valid -> {
-                return true;
-            }
-            case WrongCommandSyntax -> {
-                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
-                return false;
-            }
-        }
-
-        valueType = commandValidator.hasHelpValue(command);
-        switch(valueType) {
-            case Valid -> {
-                return true;
-            }
-            case WrongCommandSyntax -> {
-                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
-                return false;
-            }
-        }
-
-        valueType = commandValidator.hasMoveValue(command);
-        switch(valueType) {
-            case Valid -> {
-                return true;
-            }
-            case WrongCommandSyntax -> {
-                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
-                return false;
-            }
-        }
-
-        System.out.println("'" + command + "'" + Constants.WRONG_COMMAND);
-        return false;
-    }
-
     private void printVersion() {
         ProcessBuilder processBuilder = new ProcessBuilder(Constants.CMD_EXE, Constants.CMD_EXE_EXIT, Constants.CMD_VERSION);
 
@@ -168,5 +87,29 @@ public class Cmd implements IObservable {
         }
 
         System.out.println(Constants.BUILD_STRING);
+    }
+
+    /*
+    observer pattern 은 CMD project 에 매우 비효율 적인 패턴 인 것 같습니다.
+    run()에서 올바른 명령어인지 확인 후 각 명령어 Class 에 넘겨주면
+    또 각각의 명령어 Class 에서 자기 것의 명령어인지 한번 더 확인하는 과정이 있어서 비효율 적이라고 생각합니다.
+     */
+    private boolean isCommandValid(String command) {
+        Constants.ValidType[] valueTypes = commandValidator.hasAllCommandValue(command);
+
+        for(Constants.ValidType value : valueTypes) {
+            switch(value) {
+                case Valid -> {
+                    return true;
+                }
+                case WrongCommandSyntax -> {
+                    System.out.println(Constants.WRONG_COMMAND_SYNTAX);
+                    return false;
+                }
+            }
+        }
+
+        System.out.println("'" + command + "'" + Constants.WRONG_COMMAND);
+        return false;
     }
 }

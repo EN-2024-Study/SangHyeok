@@ -14,17 +14,17 @@ import java.util.List;
 public class Copy extends OverWriteManager implements IObserver {
 
     private FileManager fileManager;
-    private CommandExceptionManager commandExceptionManager;
+    private CommandValidCheck commandValidCheck;
 
-    public Copy(CommandExceptionManager commandExceptionManager, FileManager fileManager) {
-        super(fileManager);
-        this.commandExceptionManager = commandExceptionManager;
+    public Copy(CommandValidCheck commandValidCheck, FileManager fileManager) {
+        super();
+        this.commandValidCheck = commandValidCheck;
         this.fileManager = fileManager;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandExceptionManager.isCopyValid(command)) {
+        if (!commandValidCheck.isCopyValid(command)) {
             return;
         }
 
@@ -89,7 +89,6 @@ public class Copy extends OverWriteManager implements IObserver {
         }
 
         for (File file : files) {
-
             if (file.isDirectory()) {
                 continue;
             }

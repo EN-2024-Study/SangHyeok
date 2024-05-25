@@ -1,6 +1,6 @@
 package observer;
 
-import controller.CommandExceptionManager;
+import controller.CommandValidCheck;
 import interfaces.IObserver;
 import observable.Cmd;
 import utility.Constants;
@@ -11,16 +11,16 @@ import java.io.File;
 public class Cd implements IObserver {
 
     private FileManager fileManager;
-    private CommandExceptionManager commandExceptionManager;
+    private CommandValidCheck commandValidCheck;
 
-    public Cd(CommandExceptionManager commandExceptionManager, FileManager fileManager) {
-        this.commandExceptionManager = commandExceptionManager;
+    public Cd(CommandValidCheck commandValidCheck, FileManager fileManager) {
+        this.commandValidCheck = commandValidCheck;
         this.fileManager = fileManager;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandExceptionManager.isCdValid(command)) {
+        if (!commandValidCheck.isCdValid(command)) {
             return;
         }
 

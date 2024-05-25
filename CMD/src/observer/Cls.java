@@ -1,20 +1,20 @@
 package observer;
 
-import controller.CommandExceptionManager;
+import controller.CommandValidCheck;
 import interfaces.IObserver;
 import observable.Cmd;
 
 public class Cls implements IObserver {
 
-    private CommandExceptionManager commandExceptionManager;
+    private CommandValidCheck commandValidCheck;
 
-    public Cls(CommandExceptionManager commandExceptionManager) {
-        this.commandExceptionManager = commandExceptionManager;
+    public Cls(CommandValidCheck commandValidCheck) {
+        this.commandValidCheck = commandValidCheck;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandExceptionManager.isClsValid(command)) {
+        if (!commandValidCheck.isClsValid(command)) {
             return;
         }
 

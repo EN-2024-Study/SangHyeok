@@ -85,32 +85,4 @@ public class FileManager {
 
         return path.split(" ");
     }
-
-    public Character whetherOverWrite(String targetPath) {
-        Scanner scanner = new Scanner(System.in);
-        boolean whetherAnswer = false;
-
-        while(!whetherAnswer) {
-            System.out.print(targetPath + Constants.WHETHER_OVER_WRITE);
-            String answer = scanner.nextLine();
-            answer = answer.toLowerCase();
-
-            if (answer.isEmpty()) {
-                continue;
-            }
-
-            switch(answer.charAt(0)) {
-                case 'y' -> {
-                    return 'y';
-                }
-                case 'n' -> {
-                    return 'n';
-                }
-                case 'a' -> {
-                    return 'a';
-                }
-            }
-        }
-        return 'n';
-    }
 }

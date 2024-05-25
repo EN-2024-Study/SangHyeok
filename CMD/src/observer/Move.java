@@ -12,18 +12,18 @@ import java.nio.file.StandardCopyOption;
 
 public class Move extends OverWriteManager implements IObserver {
 
-    private CommandExceptionManager commandExceptionManager;
+    private CommandValidCheck commandValidCheck;
     private FileManager fileManager;
 
-    public Move(CommandExceptionManager commandExceptionManager, FileManager fileManager) {
-        super(fileManager);
-        this.commandExceptionManager = commandExceptionManager;
+    public Move(CommandValidCheck commandValidCheck, FileManager fileManager) {
+        super();
+        this.commandValidCheck = commandValidCheck;
         this.fileManager = fileManager;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandExceptionManager.isMoveValid(command)) {
+        if (!commandValidCheck.isMoveValid(command)) {
             return;
         }
 

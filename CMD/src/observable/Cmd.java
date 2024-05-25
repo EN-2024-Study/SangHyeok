@@ -1,6 +1,6 @@
 package observable;
 
-import controller.CommandExceptionManager;
+import controller.CommandValidCheck;
 import interfaces.IObservable;
 import interfaces.IObserver;
 import utility.Constants;
@@ -14,13 +14,13 @@ import java.util.Scanner;
 public class Cmd implements IObservable {
 
     private List<IObserver> observers;
-    private CommandExceptionManager commandExceptionManager;
+    private CommandValidCheck commandValidCheck;
     private String currentPath;
     private boolean isRun;
 
-    public Cmd(CommandExceptionManager commandExceptionManager) {
+    public Cmd(CommandValidCheck commandValidCheck) {
         this.observers = new ArrayList<>();
-        this.commandExceptionManager = commandExceptionManager;
+        this.commandValidCheck = commandValidCheck;
         this.currentPath = System.getProperty(Constants.INITIAL_PATH) + ">";
         this.isRun = true;
         printVersion();
@@ -89,20 +89,20 @@ public class Cmd implements IObservable {
     }
 
     private boolean isCommandValid(String command) {
-        if (commandExceptionManager.isCdValid(command))
+        if (commandValidCheck.isCdValid(command))
             return true;
-        if (commandExceptionManager.isClsValid(command))
+        if (commandValidCheck.isClsValid(command))
             return true;
-        if (commandExceptionManager.isCopyValid(command))
+        if (commandValidCheck.isCopyValid(command))
             return true;
-        if (commandExceptionManager.isDirValid(command))
+        if (commandValidCheck.isDirValid(command))
             return true;
-        if (commandExceptionManager.isExitValid(command))
+        if (commandValidCheck.isExitValid(command))
             return true;
-        if (commandExceptionManager.isHelpValid(command))
+        if (commandValidCheck.isHelpValid(command))
             return true;
 
-        return commandExceptionManager.isMoveValid(command);
+        return commandValidCheck.isMoveValid(command);
     }
 
     private String trimCommand(String command) {

@@ -32,6 +32,7 @@ public class Copy extends OverWriteManager implements IObserver {
         processCommand(cmd.getCurrentPath(), command);
     }
 
+    // 경로를 알아낸 후 processCopy 수행
     private void processCommand(String currentPath, String command) {
         File currentFile = new File(currentPath);
         String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[2].length());
@@ -68,7 +69,9 @@ public class Copy extends OverWriteManager implements IObserver {
             return;
         }
 
-        if (isProcessFileCopy(sourceFile, targetFile))
+        //============= sourceFile.exists() && sourceFile.isFile() =============//
+
+        if (isFileCopyExecuted(sourceFile, targetFile))
             System.out.println("         " + 1 + Constants.VALID_COPY);
         else
             System.out.println("         " + 0 + Constants.VALID_COPY);
@@ -78,13 +81,21 @@ public class Copy extends OverWriteManager implements IObserver {
         File[] files = sourceDirectory.listFiles();
         List<File> sourceFileList = new ArrayList<>();
 
+        if (files.length == 0) {
+            System.out.println(sourceDirectory.getName() + "\\*");
+            System.out.println(Constants.WRONG_FILE);
+            System.out.println("         " + 0 + Constants.VALID_COPY);
+            return;
+        }
+
         for (File file : files) {
+
             if (file.isDirectory()) {
                 continue;
             }
 
             System.out.println(file.getParentFile().getName() + "\\" + file.getName());
-            if (isProcessFileCopy(file, targetFile)) {
+            if (isFileCopyExecuted(file, targetFile)) {
                 sourceFileList.add(file);
             }
         }
@@ -92,7 +103,7 @@ public class Copy extends OverWriteManager implements IObserver {
         System.out.println("         " + sourceFileList.size() + Constants.VALID_COPY);
     }
 
-    private boolean isProcessFileCopy(File sourceFile, File targetFile) {
+    private boolean isFileCopyExecuted(File sourceFile, File targetFile) {
         if (!targetFile.exists()) {
             copy(sourceFile, targetFile);
             return true;
@@ -130,8 +141,28 @@ public class Copy extends OverWriteManager implements IObserver {
     }
 
     private void copy(File source, File target) {
+        if (target.isDirectory()) {
+            try {
+                Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
+
+        //===== target.isFile() =====//
+
         try {
-            Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            InputStream inputStream = new FileInputStream(source);
+            OutputStream outputStream = new FileOutputStream(target, true);
+
+            int data;
+            while((data = inputStream.read()) != -1) {
+                outputStream.write((char)data);
+            }
+
+            inputStream.close();
+            outputStream.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

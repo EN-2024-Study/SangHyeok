@@ -31,6 +31,7 @@ public class Move extends OverWriteManager implements IObserver {
         processCommand(cmd.getCurrentPath(), command);
     }
 
+    // 경로를 알아낸 후 processMove 수행
     private void processCommand(String currentPath, String command) {
         File currentFile = new File(currentPath);
         String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[6].length());
@@ -74,22 +75,23 @@ public class Move extends OverWriteManager implements IObserver {
             return;
         }
 
-        //================= sourceFile.exists() && targetFile.exists() =================//
+        //============= sourceFile.exists() && targetFile.exists() =============//
 
-        if (super.isProcessOverWrite(targetFile.toString())) {      // 복사 하려는 폴더에 이미 존재 할 때
-            if (targetFile.isFile()) {
-                move(sourceFile, targetFile);
-                printSuccess(sourceFile.isFile(), 1);
-                return;
-            }
-
-            // targetFile.isFile() == false
-            System.out.println(Constants.WRONG_ACCESS);
+        if (!super.isProcessOverWrite(targetFile.toString())) { // 대답이 no 일 때
+            printSuccess(sourceFile.isFile(), 0);
             return;
         }
 
-        // 대답이 no 일 때
-        printSuccess(sourceFile.isFile(), 0);
+        ///================= OverWrite =================//
+
+        if (targetFile.isFile()) {
+            printSuccess(sourceFile.isFile(), 1);
+            move(sourceFile, targetFile);
+            return;
+        }
+
+        // targetFile.isFile() == false
+        System.out.println(Constants.WRONG_ACCESS);
     }
 
     private void move(File source, File target) {

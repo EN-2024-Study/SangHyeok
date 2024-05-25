@@ -21,7 +21,7 @@ public class Cmd implements IObservable {
     public Cmd(CommandExceptionManager commandExceptionManager) {
         this.observers = new ArrayList<>();
         this.commandExceptionManager = commandExceptionManager;
-        this.currentPath = System.getProperty(Constants.INITIAL_PATH);
+        this.currentPath = System.getProperty(Constants.INITIAL_PATH) + ">";
         this.isRun = true;
         printVersion();
     }

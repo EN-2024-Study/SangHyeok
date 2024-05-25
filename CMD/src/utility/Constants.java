@@ -17,7 +17,7 @@ public class Constants {
     public final static String WRONG_PATH = "지정된 경로를 찾을 수 없습니다.";
     public final static String WRONG_FILE = "지정된 파일를 찾을 수 없습니다.";
     public final static String WRONG_COMMAND = "은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는\n" + "배치 파일이 아닙니다.";
-    public final static String WRONG_COMMAND2 = "명령 구문이 올바르지 않습니다.";
+    public final static String WRONG_COMMAND_SYNTAX = "명령 구문이 올바르지 않습니다.";
     public final static String WRONG_COPY = "같은 파일로 복사할 수 없습니다.";
     public final static String WRONG_ACCESS = "액세스가 거부되었습니다.";
     public final static String VALID_COPY = "개 파일이 복사되었습니다.";
@@ -26,5 +26,8 @@ public class Constants {
     public final static String NO_SEARCH_FILE = "파일을 찾을 수 없습니다.";
     public final static String WHETHER_OVER_WRITE = "을(를) 덮어쓰시겠습니까? (Yes/No/All):";
     public final static String[] COMMANDS = new String[] {"cd", "cls", "copy", "dir", "exit", "help", "move"};
-    public final static Character[] VALID_ADDITION_COMMANDS = new Character[] {' ', '.', '&', '=', '\\'};
+    public final static Character[] INVALID_ADDITION_COMMANDS = new Character[] {'|', '&', '*', ':', '?', '<', '>'};
+    public enum ValidType {
+        Valid, WrongCommand, WrongCommandSyntax, WrongSwitch
+    }
 }

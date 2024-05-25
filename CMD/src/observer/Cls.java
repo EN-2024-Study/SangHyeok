@@ -3,6 +3,7 @@ package observer;
 import controller.CommandValidator;
 import interfaces.IObserver;
 import observable.Cmd;
+import utility.Constants;
 
 public class Cls implements IObserver {
 
@@ -14,7 +15,7 @@ public class Cls implements IObserver {
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandValidator.isClsValid(command)) {
+        if (commandValidator.hasClsValid(command) != Constants.ValidType.Valid) {
             return;
         }
 

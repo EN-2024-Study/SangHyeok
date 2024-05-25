@@ -4,76 +4,58 @@ import utility.Constants;
 
 public class CommandValidator {
 
-    public boolean isCdValid(String command) {
-        if (command.length() < 2) {
-            return false;
-        }
-        return isCommandValid(command.replace("/", "\\"), Constants.COMMANDS[0]);
+    public Constants.ValidType hasCdValid(String command) {
+        return hasCommandValid(command.replace("/", "\\"), Constants.COMMANDS[0]);
     }
 
-    public boolean isClsValid(String command) {
-        if (command.length() < 3) {
-            return false;
-        }
-        return isCommandValid(command, Constants.COMMANDS[1]);
+    public Constants.ValidType hasClsValid(String command) {
+        return hasCommandValid(command, Constants.COMMANDS[1]);
     }
 
-    public boolean isCopyValid(String command) {
-        if (command.length() < 4) {
-            return false;
-        }
-        return isCommandValid(command, Constants.COMMANDS[2]);
+    public Constants.ValidType hasCopyValid(String command) {
+        return hasCommandValid(command, Constants.COMMANDS[2]);
     }
 
-    public boolean isDirValid(String command) {
-        if (command.length() < 3) {
-            return false;
-        }
-        return isCommandValid(command, Constants.COMMANDS[3]);
+    public Constants.ValidType hasDirValid(String command) {
+        return hasCommandValid(command, Constants.COMMANDS[3]);
     }
 
-    public boolean isExitValid(String command) {
-        if (command.length() < 4) {
-            return false;
-        }
-        return isCommandValid(command, Constants.COMMANDS[4]);
+    public Constants.ValidType hasExitValid(String command) {
+        return hasCommandValid(command, Constants.COMMANDS[4]);
     }
 
-    public boolean isHelpValid(String command) {
-        if (command.length() < 4) {
-            return false;
-        }
-        return isCommandValid(command, Constants.COMMANDS[5]);
+    public Constants.ValidType hasHelpValid(String command) {
+        return hasCommandValid(command, Constants.COMMANDS[5]);
     }
 
-    public boolean isMoveValid(String command) {
-        if (command.length() < 4) {
-            return false;
-        }
-        return isCommandValid(command, Constants.COMMANDS[6]);
+    public Constants.ValidType hasMoveValid(String command) {
+        return hasCommandValid(command, Constants.COMMANDS[6]);
     }
 
-    private boolean isCommandValid(String command, String constant) {
+    private Constants.ValidType hasCommandValid(String command, String constant) {
         StringBuilder front = new StringBuilder();
 
-        for(int i = 0; i < constant.length(); i++) {
+        if (command.length() < constant.length()) {
+            return Constants.ValidType.WrongCommand;
+        }
+
+        for (int i = 0; i < constant.length(); i++) {
             front.append(command.charAt(i));
         }
 
-        if (front.toString().equals(constant)) {    // 올바른 명령어이면
-            if (constant.length() < command.length()) { // 입력받은 값이 명령어 길이보다 길다면
-                return isBackCommandValid(command.charAt(constant.length()));
-            }
-            return true;
+        if (front.toString().equals(constant)) {    // 올바른 명령이면
+            return hasPathValid(command.substring(front.length() + 1));
         }
-        return false;
+
+        return Constants.ValidType.WrongCommand;
     }
 
-    private boolean isBackCommandValid(Character back) {
-        for (Character c : Constants.VALID_ADDITION_COMMANDS) {
-            if (back == c)
-                return true;
+    private Constants.ValidType hasPathValid(String path) {
+        for (Character c : Constants.INVALID_ADDITION_COMMANDS) {
+            if (path.contains(c + "")) {
+                return Constants.ValidType.WrongCommandSyntax;
+            }
         }
-        return false;
+        return Constants.ValidType.Valid;
     }
 }

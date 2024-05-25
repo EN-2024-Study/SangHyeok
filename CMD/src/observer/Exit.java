@@ -3,6 +3,7 @@ package observer;
 import controller.CommandValidator;
 import interfaces.IObserver;
 import observable.Cmd;
+import utility.Constants;
 
 public class Exit implements IObserver {
 
@@ -14,7 +15,7 @@ public class Exit implements IObserver {
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandValidator.isExitValid(command)) {
+        if (commandValidator.hasExitValid(command) != Constants.ValidType.Valid) {
             return;
         }
 

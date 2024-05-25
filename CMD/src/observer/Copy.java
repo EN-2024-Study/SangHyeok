@@ -22,7 +22,7 @@ public class Copy extends OverWriteHandler implements IObserver {
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandValidator.isCopyValid(command)) {
+        if (commandValidator.hasCopyValid(command) != Constants.ValidType.Valid) {
             return;
         }
 
@@ -37,7 +37,7 @@ public class Copy extends OverWriteHandler implements IObserver {
 
         // 명령어만 존재할 때
         if (command.length() < 5 || inputPath.isEmpty()) {
-            System.out.println(Constants.WRONG_COMMAND2);
+            System.out.println(Constants.WRONG_COMMAND_SYNTAX);
             return;
         }
 

@@ -24,6 +24,19 @@ public class StringFormatter {
         return decimalFormat.format(number);
     }
 
+    public static String trimCommand(String command) {
+        command = command.trim();
+        command = command.toLowerCase();
+        command = command.replace(",", "");
+        command = command.replace("c:", "C:");
+
+        command = removeDuplication(command, "/");
+        command = removeDuplication(command, "\\");
+        command = removeDuplication(command, "\"");
+        command = removeDuplication(command, " ");
+        return command;
+    }
+
     public static String removeCommand(String command, int startIndex) {
         StringBuilder result = new StringBuilder();
 
@@ -33,10 +46,10 @@ public class StringFormatter {
         return result.toString().trim();
     }
 
-    public static String trimCommand(String command) {
-        command = command.trim();
-        command = command.toLowerCase();
-        command = command.replace(",", "");
-        return command.replace("c:", "C:");
+    private static String removeDuplication(String target, String duplication) {
+        while(target.contains(duplication + duplication)) {
+            target = target.replace(duplication + duplication, duplication);
+        }
+        return target;
     }
 }

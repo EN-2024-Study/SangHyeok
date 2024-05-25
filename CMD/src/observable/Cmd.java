@@ -51,7 +51,6 @@ public class Cmd implements IObservable {
             command = StringFormatter.trimCommand(command);
 
             if (!isCommandValid(command)) {
-                System.out.println("'" + command + "'" + Constants.WRONG_COMMAND);
                 continue;
             }
 
@@ -71,6 +70,30 @@ public class Cmd implements IObservable {
         return this.currentPath.replace(">", "");
     }
 
+    private boolean isCommandValid(String command) {
+        if (commandValidator.hasCdValid(command) == Constants.ValidType.Valid)
+            return true;
+        if (commandValidator.hasClsValid(command) == Constants.ValidType.Valid)
+            return true;
+        if (commandValidator.hasCopyValid(command) == Constants.ValidType.Valid)
+            return true;
+        if (commandValidator.hasDirValid(command) == Constants.ValidType.Valid)
+            return true;
+        if (commandValidator.hasExitValid(command) == Constants.ValidType.Valid)
+            return true;
+        if (commandValidator.hasHelpValid(command) == Constants.ValidType.Valid)
+            return true;
+        if (commandValidator.hasMoveValid(command) == Constants.ValidType.Valid)
+            return true;
+
+        switch(commandValidator.hasMoveValid(command)) {
+            case WrongCommand -> System.out.println("'" + command + "'" + Constants.WRONG_COMMAND);
+            case WrongCommandSyntax -> System.out.println(Constants.WRONG_COMMAND_SYNTAX);
+        }
+
+        return false;
+    }
+
     private void printVersion() {
         ProcessBuilder processBuilder = new ProcessBuilder(Constants.CMD_EXE, Constants.CMD_EXE_EXIT, Constants.CMD_VERSION);
 
@@ -87,21 +110,5 @@ public class Cmd implements IObservable {
         }
 
         System.out.println(Constants.BUILD_STRING);
-    }
-
-    private boolean isCommandValid(String command) {
-        if (commandValidator.isCdValid(command))
-            return true;
-        if (commandValidator.isClsValid(command))
-            return true;
-        if (commandValidator.isCopyValid(command))
-            return true;
-        if (commandValidator.isDirValid(command))
-            return true;
-        if (commandValidator.isExitValid(command))
-            return true;
-        if (commandValidator.isHelpValid(command))
-            return true;
-        return commandValidator.isMoveValid(command);
     }
 }

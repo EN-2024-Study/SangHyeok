@@ -19,7 +19,7 @@ public class Dir implements IObserver {
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandValidator.isDirValid(command)) {
+        if (commandValidator.hasDirValid(command) != Constants.ValidType.Valid) {
             return;
         }
 

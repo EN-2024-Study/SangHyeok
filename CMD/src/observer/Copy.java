@@ -72,6 +72,8 @@ public class Copy implements IObserver {
 
         if (isProcessFileCopy(sourceFile, targetFile))
             System.out.println("         " + 1 + Constants.VALID_COPY);
+        else
+            System.out.println("         " + 0 + Constants.VALID_COPY);
     }
 
     private void processDirectoryCopy(File sourceDirectory, File targetFile) {
@@ -83,42 +85,55 @@ public class Copy implements IObserver {
                 continue;
             }
 
+            System.out.println(file.getParentFile().getName() + "\\" + file.getName());
             if (isProcessFileCopy(file, targetFile)) {
                 sourceFileList.add(file);
             }
         }
 
-        for(File file : sourceFileList) {
-            System.out.println(file.getParentFile().getName() + "\\" + file.getName());
-        }
         System.out.println("         " + sourceFileList.size() + Constants.VALID_COPY);
     }
 
     private boolean isProcessFileCopy(File sourceFile, File targetFile) {
-        // 새로운 파일로 복사를 할 때
         if (!targetFile.exists()) {
             copy(sourceFile, targetFile);
             return false;
         }
 
-        // 기존의 폴더안에 복사를 할 때
-        if ((targetFile.exists() && targetFile.isDirectory())) {
-            copy(sourceFile, new File(targetFile + "\\" + sourceFile.getName()));
-            return true;
+        // 파일이 존재하면서 폴더가 아닌 파일일 때
+        if (!targetFile.isDirectory()) {
+            return isProcessOverWrite(sourceFile, new File(targetFile + "\\" + sourceFile.getName()));
         }
 
+        // 같은 경로에 복사를 할 때
+        if (targetFile.getName().equals(sourceFile.getParentFile().getName())) {
+            System.out.println(Constants.WRONG_COPY);
+            return false;
+        }
+
+        targetFile = new File(targetFile + "\\" + sourceFile.getName());
+
+        // 복사 하려는 폴더에 이미 존재 할 때
+        if (targetFile.exists()) {
+            return isProcessOverWrite(sourceFile, targetFile);
+        }
+
+        copy(sourceFile, targetFile);
+        return true;
+    }
+
+    private boolean isProcessOverWrite(File source, File target) {
         // 기존 파일에 덮어씌울 때
         if (answer != 'a') {
-            answer = fileManager.whetherOverWrite(sourceFile);
+            answer = fileManager.whetherOverWrite(target);
         }
 
         switch(answer) {
             case 'y', 'a' -> {
-                copy(sourceFile, targetFile);
+                copy(source, target);
                 return true;
             }
         }
-
         return false;
     }
 

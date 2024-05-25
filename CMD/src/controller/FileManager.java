@@ -92,7 +92,7 @@ public class FileManager {
         boolean whetherAnswer = false;
 
         while(!whetherAnswer) {
-            System.out.print(file.getName() + Constants.WHETHER_OVER_WRITE);
+            System.out.print(file + Constants.WHETHER_OVER_WRITE);
             String answer = scanner.nextLine();
             answer = answer.toLowerCase();
 

@@ -15,8 +15,9 @@ import java.util.List;
 
 public class Copy implements IObserver {
 
-    protected FileManager fileManager;
-    protected CommandExceptionManager commandExceptionManager;
+    private FileManager fileManager;
+    private CommandExceptionManager commandExceptionManager;
+    private Character answer;
 
     public Copy(CommandExceptionManager commandExceptionManager, FileManager fileManager) {
         this.commandExceptionManager = commandExceptionManager;
@@ -29,6 +30,7 @@ public class Copy implements IObserver {
             return;
         }
 
+        this.answer = 'n';
         processCommand(cmd, command);
     }
 
@@ -58,7 +60,8 @@ public class Copy implements IObserver {
     }
 
     private void processCopy(File sourceFile, File targetFile) {
-        if (!fileManager.isFileValid(sourceFile)) {
+        if (!sourceFile.exists()) {
+            System.out.println(Constants.WRONG_FILE);
             return;
         }
 
@@ -67,11 +70,8 @@ public class Copy implements IObserver {
             return;
         }
 
-        processFileCopy(sourceFile, targetFile);
-
-        ArrayList<File> fileList = new ArrayList<>();
-        fileList.add(sourceFile);
-        printSuccess(fileList);
+        if (isProcessFileCopy(sourceFile, targetFile))
+            System.out.println("         " + 1 + Constants.VALID_COPY);
     }
 
     private void processDirectoryCopy(File sourceDirectory, File targetFile) {
@@ -82,33 +82,44 @@ public class Copy implements IObserver {
             if (file.isDirectory()) {
                 continue;
             }
-            sourceFileList.add(file);
+
+            if (isProcessFileCopy(file, targetFile)) {
+                sourceFileList.add(file);
+            }
         }
 
-        for(File sourceFile : sourceFileList) {
-            processFileCopy(sourceFile, targetFile);
+        for(File file : sourceFileList) {
+            System.out.println(file.getParentFile().getName() + "\\" + file.getName());
         }
-
-        printSuccess(sourceFileList);
+        System.out.println("         " + sourceFileList.size() + Constants.VALID_COPY);
     }
 
-    private void processFileCopy(File sourceFile, File targetFile) {
+    private boolean isProcessFileCopy(File sourceFile, File targetFile) {
         // 새로운 파일로 복사를 할 때
         if (!targetFile.exists()) {
             copy(sourceFile, targetFile);
-            return;
+            return false;
         }
 
         // 기존의 폴더안에 복사를 할 때
         if ((targetFile.exists() && targetFile.isDirectory())) {
             copy(sourceFile, new File(targetFile + "\\" + sourceFile.getName()));
-            return;
+            return true;
         }
 
         // 기존 파일에 덮어씌울 때
-        if (fileManager.whetherOverWrite(sourceFile)) {
-            copy(sourceFile, targetFile);
+        if (answer != 'a') {
+            answer = fileManager.whetherOverWrite(sourceFile);
         }
+
+        switch(answer) {
+            case 'y', 'a' -> {
+                copy(sourceFile, targetFile);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void copy(File source, File target) {
@@ -117,12 +128,5 @@ public class Copy implements IObserver {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void printSuccess(List<File> files) {
-        for(File file : files) {
-            System.out.println(file.getParentFile().getName() + "\\" + file.getName());
-        }
-        System.out.println("         " + files.size() + Constants.VALID_COPY);
     }
 }

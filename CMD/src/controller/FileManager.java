@@ -22,42 +22,6 @@ public class FileManager {
         return true;    // 쌍 따움표가 없고 공백 하나만 존재할 때
     }
 
-    public boolean isFileValid(File file) {
-        if (!file.exists()) {
-            System.out.println(Constants.WRONG_FILE);
-            return false;
-        }
-        return true;
-    }
-
-    public boolean whetherOverWrite(File file) {
-        Scanner scanner = new Scanner(System.in);
-        boolean whetherAnswer = false;
-
-        while(!whetherAnswer) {
-            System.out.print(file.getName() + Constants.WHETHER_OVER_WRITE);
-            String answer = scanner.nextLine();
-            answer = answer.toLowerCase();
-
-            if (answer.isEmpty()) {
-                continue;
-            }
-
-            switch(answer.charAt(0)) {
-                case 'y' -> {
-                    return true;
-                }
-                case 'n' -> {
-                    return false;
-                }
-                case 'a' -> {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     private boolean isAbsolute(String command) {
         if (command.length() < 3) {
             return false;
@@ -121,5 +85,33 @@ public class FileManager {
         }
 
         return path.split(" ");
+    }
+
+    public Character whetherOverWrite(File file) {
+        Scanner scanner = new Scanner(System.in);
+        boolean whetherAnswer = false;
+
+        while(!whetherAnswer) {
+            System.out.print(file.getName() + Constants.WHETHER_OVER_WRITE);
+            String answer = scanner.nextLine();
+            answer = answer.toLowerCase();
+
+            if (answer.isEmpty()) {
+                continue;
+            }
+
+            switch(answer.charAt(0)) {
+                case 'y' -> {
+                    return 'y';
+                }
+                case 'n' -> {
+                    return 'n';
+                }
+                case 'a' -> {
+                    return 'a';
+                }
+            }
+        }
+        return 'n';
     }
 }

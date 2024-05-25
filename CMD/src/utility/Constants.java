@@ -19,6 +19,7 @@ public class Constants {
     public final static String WRONG_COMMAND = "은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는\n" + "배치 파일이 아닙니다.";
     public final static String WRONG_COMMAND2 = "명령 구문이 올바르지 않습니다.";
     public final static String WRONG_COPY = "같은 파일로 복사할 수 없습니다.";
+    public final static String WRONG_ACCESS = "액세스가 거부되었습니다.";
     public final static String VALID_COPY = "개 파일이 복사되었습니다.";
     public final static String VALID_FILE_MOVE = "개 파일을 이동했습니다.";
     public final static String VALID_DIRECTORY_MOVE = "개 디렉터리를 이동했습니다.";

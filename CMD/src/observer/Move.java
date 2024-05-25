@@ -62,31 +62,29 @@ public class Move extends OverWriteManager implements IObserver {
             return;
         }
 
+        if (targetFile.isDirectory()) {
+            targetFile = new File(targetFile + "\\" + sourceFile.getName());
+        }
+
         //================= sourceFile.exists() =================//
 
         if (!targetFile.exists()) {
+            printSuccess(sourceFile.isFile(), 1);
             move(sourceFile, targetFile);
-            printSuccess(sourceFile.toString().contains("."), 1);
             return;
         }
 
         //================= sourceFile.exists() && targetFile.exists() =================//
 
-        if (targetFile.isDirectory()) {
-            targetFile = new File(targetFile + "\\" + sourceFile.getName());
-        }
+        if (super.isProcessOverWrite(targetFile.toString())) {      // 복사 하려는 폴더에 이미 존재 할 때
+            if (targetFile.isFile()) {
 
-        if (targetFile.exists()) {  // 복사 하려는 폴더에 이미 존재 할 때
-            if (super.isProcessOverWrite(targetFile.toString())) {
-                move(sourceFile, targetFile);
-                printSuccess(sourceFile.toString().contains("."), 1);
+                return;
             }
-            printSuccess(sourceFile.toString().contains("."), 0);
-            return;
+            System.out.println(Constants.WRONG_ACCESS);
         }
-
-        move(sourceFile, targetFile);
-        printSuccess(sourceFile.toString().contains("."), 1);
+        else
+            printSuccess(sourceFile.isFile(), 0);
     }
 
     private void move(File source, File target) {

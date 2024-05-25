@@ -1,11 +1,11 @@
 package observer;
 
-import controller.CommandValidCheck;
+import controller.CommandValidator;
 import interfaces.IObserver;
 import observable.Cmd;
 import utility.Constants;
-import controller.FileManager;
-import controller.StringManager;
+import controller.FileProvider;
+import controller.StringFormatter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,41 +14,22 @@ import java.io.InputStreamReader;
 
 public class Dir implements IObserver {
 
-    private FileManager fileManager;
-    private CommandValidCheck commandValidCheck;
+    private FileProvider fileProvider;
+    private CommandValidator commandValidator;
 
-    public Dir(CommandValidCheck commandValidCheck, FileManager fileManager) {
-        this.commandValidCheck = commandValidCheck;
-        this.fileManager = fileManager;
+    public Dir(CommandValidator commandValidator, FileProvider fileProvider) {
+        this.commandValidator = commandValidator;
+        this.fileProvider = fileProvider;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandValidCheck.isDirValid(command)) {
+        if (!commandValidator.isDirValid(command)) {
             return;
         }
 
         printVolume(cmd.getCurrentPath());
         processCommand(cmd, command);
-    }
-
-    private void processCommand(Cmd cmd, String command) {
-        String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[3].length());
-        File pastFile = new File(cmd.getCurrentPath());
-
-        if (command.length() < 4 || inputPath.isEmpty()) {
-            printDir(pastFile);
-            return;
-        }
-
-        File currentFile = fileManager.getFile(pastFile.toString(), inputPath);
-
-        if (!currentFile.isDirectory()) {
-            System.out.println(Constants.NO_SEARCH_FILE);
-            return;
-        }
-
-        printDir(currentFile);
     }
 
     private void printVolume(String path) {
@@ -70,6 +51,25 @@ public class Dir implements IObserver {
         System.out.println();
     }
 
+    private void processCommand(Cmd cmd, String command) {
+        String inputPath = StringFormatter.removeCommand(command, Constants.COMMANDS[3].length());
+        File pastFile = new File(cmd.getCurrentPath());
+
+        if (command.length() < 4 || inputPath.isEmpty()) {
+            printDir(pastFile);
+            return;
+        }
+
+        File currentFile = fileProvider.getFile(pastFile.toString(), inputPath);
+
+        if (!currentFile.isDirectory()) {
+            System.out.println(Constants.NO_SEARCH_FILE);
+            return;
+        }
+
+        printDir(currentFile);
+    }
+
     private void printDir(File file) {
         File[] fileList = file.listFiles();
         long totalByte = 0;
@@ -89,7 +89,7 @@ public class Dir implements IObserver {
                 continue;
 
             String result;
-            String lastModified = StringManager.getTimeInfo(f.lastModified());
+            String lastModified = StringFormatter.getTimeInfo(f.lastModified());
 
             if (f.isDirectory()) {  // DIC 일 때
                 directoryCount++;
@@ -111,12 +111,12 @@ public class Dir implements IObserver {
 
     private void printCurrentDir(File file) {
         StringBuilder result = new StringBuilder();
-        String lastModified = StringManager.getTimeInfo(file.lastModified());
+        String lastModified = StringFormatter.getTimeInfo(file.lastModified());
 
         result.append(getDirectoryInfo(lastModified, "."));
 
         if (!file.getParentFile().toString().equals(Constants.ABSOLUTE_FRONT_STRING)) {
-            lastModified = StringManager.getTimeInfo(file.getParentFile().lastModified());
+            lastModified = StringFormatter.getTimeInfo(file.getParentFile().lastModified());
             result.append("\n" + getDirectoryInfo(lastModified, ".."));
         }
 
@@ -125,9 +125,9 @@ public class Dir implements IObserver {
 
     private String getFileInfo(String lastModified, long fileByte, String name) {
         StringBuilder result = new StringBuilder(lastModified + "                  ");
-        String byteString = StringManager.getCommaNumber(fileByte);
+        String byteString = StringFormatter.getCommaNumber(fileByte);
 
-        result.append(StringManager.getBackspace(byteString.length()));
+        result.append(StringFormatter.getBackspace(byteString.length()));
         return result + byteString + " " + name;
     }
 
@@ -137,12 +137,12 @@ public class Dir implements IObserver {
 
     private String getTotalFileInfo(int fileCount, long totalByte) {
         StringBuilder result = new StringBuilder("                ");
-        String byteString = StringManager.getCommaNumber(totalByte);
+        String byteString = StringFormatter.getCommaNumber(totalByte);
 
-        result.append(StringManager.getBackspace(String.valueOf(fileCount).length()));
+        result.append(StringFormatter.getBackspace(String.valueOf(fileCount).length()));
         result.append(fileCount + "개 " + Constants.FILE + "                    ");
 
-        result.append(StringManager.getBackspace(byteString.length()));
+        result.append(StringFormatter.getBackspace(byteString.length()));
         result.append(byteString + " " + Constants.BYTE);
         return result.toString();
     }
@@ -150,13 +150,13 @@ public class Dir implements IObserver {
     private String getTotalDirectoryInfo(int directoryCount) {
         StringBuilder result = new StringBuilder("                ");
         long totalByte = new File(Constants.ABSOLUTE_FRONT_STRING).getFreeSpace();
-        String totalString = StringManager.getCommaNumber(totalByte);
+        String totalString = StringFormatter.getCommaNumber(totalByte);
 
-        result.append(StringManager.getBackspace(String.valueOf(directoryCount).length()));
+        result.append(StringFormatter.getBackspace(String.valueOf(directoryCount).length()));
         result.append(directoryCount);
         result.append("개 " + Constants.DIRECTORY + "                 ");
 
-        result.append(StringManager.getBackspace(totalString.length()));
+        result.append(StringFormatter.getBackspace(totalString.length()));
         result.append(totalString + " " + Constants.BYTE + " 남음");
         return result.toString();
     }

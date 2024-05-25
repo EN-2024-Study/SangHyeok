@@ -10,20 +10,20 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-public class Move extends OverWriteManager implements IObserver {
+public class Move extends OverWriteHandler implements IObserver {
 
-    private CommandValidCheck commandValidCheck;
-    private FileManager fileManager;
+    private CommandValidator commandValidator;
+    private FileProvider fileProvider;
 
-    public Move(CommandValidCheck commandValidCheck, FileManager fileManager) {
+    public Move(CommandValidator commandValidator, FileProvider fileProvider) {
         super();
-        this.commandValidCheck = commandValidCheck;
-        this.fileManager = fileManager;
+        this.commandValidator = commandValidator;
+        this.fileProvider = fileProvider;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandValidCheck.isMoveValid(command)) {
+        if (!commandValidator.isMoveValid(command)) {
             return;
         }
 
@@ -31,10 +31,10 @@ public class Move extends OverWriteManager implements IObserver {
         processCommand(cmd.getCurrentPath(), command);
     }
 
-    // 경로를 알아낸 후 processMove 수행
+    // 경로를 알아낸 후 processMove 호출하는 method
     private void processCommand(String currentPath, String command) {
         File currentFile = new File(currentPath);
-        String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[6].length());
+        String inputPath = StringFormatter.removeCommand(command, Constants.COMMANDS[6].length());
 
         // 명령어만 존재할 때
         if (command.length() < 5 || inputPath.isEmpty()) {
@@ -42,19 +42,13 @@ public class Move extends OverWriteManager implements IObserver {
             return;
         }
 
-        // 두개의 경로가 존재할 때
-        if (fileManager.isTwoPaths(inputPath)) {
-            String[] paths = fileManager.getTwoPaths(inputPath);
-            File sourceFile = fileManager.getFile(currentFile.toString(), paths[0]);
-            File targetFile = fileManager.getFile(currentFile.toString(), paths[1]);
-
-            processMove(sourceFile, targetFile);
+        File[] files = fileProvider.getTwoPaths(currentPath, inputPath);
+        if (files.length == 1) {
+            processMove(files[0], currentFile);
             return;
         }
 
-        // 한개의 경로만 존재할 때
-        File sourceFile = fileManager.getFile(currentFile.toString(), inputPath);
-        processMove(sourceFile, currentFile);
+        processMove(files[0], files[1]);
     }
 
     private void processMove(File sourceFile, File targetFile) {
@@ -77,7 +71,7 @@ public class Move extends OverWriteManager implements IObserver {
 
         //============= sourceFile.exists() && targetFile.exists() =============//
 
-        if (!super.isProcessOverWrite(targetFile.toString())) { // 대답이 no 일 때
+        if (!super.isOverwriteConfirmed(targetFile.toString(), false)) { // 대답이 no 일 때
             printSuccess(sourceFile.isFile(), 0);
             return;
         }

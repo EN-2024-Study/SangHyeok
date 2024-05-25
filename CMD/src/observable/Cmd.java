@@ -1,6 +1,6 @@
 package observable;
 
-import controller.CommandValidCheck;
+import controller.CommandValidator;
 import interfaces.IObservable;
 import interfaces.IObserver;
 import utility.Constants;
@@ -14,13 +14,13 @@ import java.util.Scanner;
 public class Cmd implements IObservable {
 
     private List<IObserver> observers;
-    private CommandValidCheck commandValidCheck;
+    private CommandValidator commandValidator;
     private String currentPath;
     private boolean isRun;
 
-    public Cmd(CommandValidCheck commandValidCheck) {
+    public Cmd(CommandValidator commandValidator) {
         this.observers = new ArrayList<>();
-        this.commandValidCheck = commandValidCheck;
+        this.commandValidator = commandValidator;
         this.currentPath = System.getProperty(Constants.INITIAL_PATH) + ">";
         this.isRun = true;
         printVersion();
@@ -89,20 +89,20 @@ public class Cmd implements IObservable {
     }
 
     private boolean isCommandValid(String command) {
-        if (commandValidCheck.isCdValid(command))
+        if (commandValidator.isCdValid(command))
             return true;
-        if (commandValidCheck.isClsValid(command))
+        if (commandValidator.isClsValid(command))
             return true;
-        if (commandValidCheck.isCopyValid(command))
+        if (commandValidator.isCopyValid(command))
             return true;
-        if (commandValidCheck.isDirValid(command))
+        if (commandValidator.isDirValid(command))
             return true;
-        if (commandValidCheck.isExitValid(command))
+        if (commandValidator.isExitValid(command))
             return true;
-        if (commandValidCheck.isHelpValid(command))
+        if (commandValidator.isHelpValid(command))
             return true;
 
-        return commandValidCheck.isMoveValid(command);
+        return commandValidator.isMoveValid(command);
     }
 
     private String trimCommand(String command) {

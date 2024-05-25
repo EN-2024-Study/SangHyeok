@@ -1,6 +1,6 @@
 package observer;
 
-import controller.CommandValidCheck;
+import controller.CommandValidator;
 import interfaces.IObserver;
 import observable.Cmd;
 import utility.Constants;
@@ -10,16 +10,16 @@ import java.io.*;
 public class Help implements IObserver {
 
     private File file;
-    private CommandValidCheck commandValidCheck;
+    private CommandValidator commandValidator;
 
-    public Help(CommandValidCheck commandValidCheck) {
-        this.commandValidCheck = commandValidCheck;
+    public Help(CommandValidator commandValidator) {
+        this.commandValidator = commandValidator;
         this.file = new File(Constants.HELP_PATH);
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandValidCheck.isHelpValid(command)) {
+        if (!commandValidator.isHelpValid(command)) {
             return;
         }
 

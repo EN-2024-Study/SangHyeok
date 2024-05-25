@@ -4,11 +4,11 @@ import utility.Constants;
 
 import java.util.Scanner;
 
-public class OverWriteManager {
+public class OverWriteHandler {
 
     private Character answer;
 
-    public OverWriteManager() {
+    public OverWriteHandler() {
         initAnswer();
     }
 
@@ -16,9 +16,12 @@ public class OverWriteManager {
         this.answer = 'n';
     }
 
-    protected boolean isProcessOverWrite(String targetPath) {
-        // 기존 파일에 덮어씌울 때
-        if (answer != 'a') {
+    protected boolean isOverwriteConfirmed(String targetPath, boolean isSourceDirectory) {
+        if (isSourceDirectory) {
+            if (answer == 'n') {
+                answer = whetherOverWrite(targetPath);
+            }
+        } else if (answer != 'a') {
             answer = whetherOverWrite(targetPath);
         }
 
@@ -32,16 +35,16 @@ public class OverWriteManager {
         Scanner scanner = new Scanner(System.in);
         boolean whetherAnswer = false;
 
-        while(!whetherAnswer) {
+        while (!whetherAnswer) {
             System.out.print(targetPath + Constants.WHETHER_OVER_WRITE);
-            String answer = scanner.nextLine();
-            answer = answer.toLowerCase();
+            String inputString = scanner.nextLine();
+            answer = inputString.trim().toLowerCase().charAt(0);
 
-            if (answer.isEmpty()) {
+            if (inputString.isEmpty()) {
                 continue;
             }
 
-            switch(answer.charAt(0)) {
+            switch (answer) {
                 case 'y' -> {
                     return 'y';
                 }

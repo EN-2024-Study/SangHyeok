@@ -1,26 +1,27 @@
 package observer;
 
-import controller.CommandValidCheck;
+import controller.CommandValidator;
+import controller.StringFormatter;
 import interfaces.IObserver;
 import observable.Cmd;
 import utility.Constants;
-import controller.FileManager;
+import controller.FileProvider;
 
 import java.io.File;
 
 public class Cd implements IObserver {
 
-    private FileManager fileManager;
-    private CommandValidCheck commandValidCheck;
+    private FileProvider fileProvider;
+    private CommandValidator commandValidator;
 
-    public Cd(CommandValidCheck commandValidCheck, FileManager fileManager) {
-        this.commandValidCheck = commandValidCheck;
-        this.fileManager = fileManager;
+    public Cd(CommandValidator commandValidator, FileProvider fileProvider) {
+        this.commandValidator = commandValidator;
+        this.fileProvider = fileProvider;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandValidCheck.isCdValid(command)) {
+        if (!commandValidator.isCdValid(command)) {
             return;
         }
 
@@ -28,15 +29,15 @@ public class Cd implements IObserver {
     }
 
     private void processCommand(Cmd cmd, String command) {
-        String inputPath = fileManager.removeCommand(command.replace("/", "\\"), Constants.COMMANDS[0].length());
+        String inputPath = StringFormatter.removeCommand(command.replace("/", "\\"), Constants.COMMANDS[0].length());
         inputPath = inputPath.replace("\"", "");
 
         if (isProcessException(cmd.getCurrentPath(), inputPath))
             return;
 
-        File currentFile = fileManager.getFile(cmd.getCurrentPath(), inputPath);
+        File currentFile = fileProvider.getFile(cmd.getCurrentPath(), inputPath);
         if (inputPath.equals("\\")) {    // 최상위 경로일 때
-            currentFile = fileManager.getAbsoluteFile(Constants.ABSOLUTE_FRONT_STRING);
+            currentFile = fileProvider.getAbsoluteFile(Constants.ABSOLUTE_FRONT_STRING);
         }
 
         if (!currentFile.isDirectory()) {  // 유효한 경로가 아닐 때

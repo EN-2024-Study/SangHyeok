@@ -1,32 +1,32 @@
 package client;
 
-import controller.CommandValidCheck;
+import controller.CommandValidator;
 import observable.Cmd;
 import observer.*;
 import observer.Exit;
-import controller.FileManager;
+import controller.FileProvider;
 
 public class Client {
 
     private Cmd cmd;
 
     public Client() {
-        CommandValidCheck commandValidCheck = new CommandValidCheck();
-        this.cmd = new Cmd(commandValidCheck);
+        CommandValidator commandValidator = new CommandValidator();
+        this.cmd = new Cmd(commandValidator);
 
-        initCmdManager(commandValidCheck);
+        initCmdManager(commandValidator);
         this.cmd.run();
     }
 
-    private void initCmdManager(CommandValidCheck commandValidCheck) {
-        FileManager fileManager = new FileManager();
+    private void initCmdManager(CommandValidator commandValidator) {
+        FileProvider fileProvider = new FileProvider();
 
-        cmd.addObserver(new Cd(commandValidCheck, fileManager));
-        cmd.addObserver(new Copy(commandValidCheck, fileManager));
-        cmd.addObserver(new Dir(commandValidCheck, fileManager));
-        cmd.addObserver(new Move(commandValidCheck, fileManager));
-        cmd.addObserver(new Cls(commandValidCheck));
-        cmd.addObserver(new Help(commandValidCheck));
-        cmd.addObserver(new Exit(commandValidCheck));
+        cmd.addObserver(new Cd(commandValidator, fileProvider));
+        cmd.addObserver(new Copy(commandValidator, fileProvider));
+        cmd.addObserver(new Dir(commandValidator, fileProvider));
+        cmd.addObserver(new Move(commandValidator, fileProvider));
+        cmd.addObserver(new Cls(commandValidator));
+        cmd.addObserver(new Help(commandValidator));
+        cmd.addObserver(new Exit(commandValidator));
     }
 }

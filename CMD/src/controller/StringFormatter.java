@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class StringManager {
+public class StringFormatter {
 
     public static String getBackspace(int length) {
         StringBuilder result = new StringBuilder();
@@ -32,5 +32,14 @@ public class StringManager {
             }
         }
         return count;
+    }
+
+    public static String removeCommand(String command, int startIndex) {
+        StringBuilder result = new StringBuilder();
+
+        for (int i = startIndex; i < command.length(); i++) {    // 명령어 제거
+            result.append(command.charAt(i));
+        }
+        return result.toString().trim();
     }
 }

@@ -2,7 +2,7 @@ package controller;
 
 import utility.Constants;
 
-public class CommandValidCheck {
+public class CommandValidator {
 
     public boolean isCdValid(String command) {
         if (command.length() < 2) {

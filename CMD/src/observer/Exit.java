@@ -1,20 +1,20 @@
 package observer;
 
-import controller.CommandValidCheck;
+import controller.CommandValidator;
 import interfaces.IObserver;
 import observable.Cmd;
 
 public class Exit implements IObserver {
 
-    private CommandValidCheck commandValidCheck;
+    private CommandValidator commandValidator;
 
-    public Exit(CommandValidCheck commandValidCheck) {
-        this.commandValidCheck = commandValidCheck;
+    public Exit(CommandValidator commandValidator) {
+        this.commandValidator = commandValidator;
     }
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (!commandValidCheck.isExitValid(command)) {
+        if (!commandValidator.isExitValid(command)) {
             return;
         }
 

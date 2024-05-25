@@ -15,7 +15,7 @@ public class Cls implements IObserver {
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (commandValidator.hasClsValid(command) != Constants.ValidType.Valid) {
+        if (commandValidator.hasClsValue(command) != Constants.ValidType.Valid) {
             return;
         }
 

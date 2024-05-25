@@ -23,7 +23,7 @@ public class Move extends OverWriteHandler implements IObserver {
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (commandValidator.hasMoveValid(command) != Constants.ValidType.Valid) {
+        if (commandValidator.hasMoveValue(command) != Constants.ValidType.Valid) {
             return;
         }
 

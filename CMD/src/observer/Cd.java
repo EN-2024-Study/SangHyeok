@@ -21,7 +21,7 @@ public class Cd implements IObserver {
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (commandValidator.hasCdValid(command) != Constants.ValidType.Valid) {
+        if (commandValidator.hasCdValue(command) != Constants.ValidType.Valid) {
             return;
         }
 

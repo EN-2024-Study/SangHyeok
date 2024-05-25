@@ -71,26 +71,84 @@ public class Cmd implements IObservable {
     }
 
     private boolean isCommandValid(String command) {
-        if (commandValidator.hasCdValid(command) == Constants.ValidType.Valid)
-            return true;
-        if (commandValidator.hasClsValid(command) == Constants.ValidType.Valid)
-            return true;
-        if (commandValidator.hasCopyValid(command) == Constants.ValidType.Valid)
-            return true;
-        if (commandValidator.hasDirValid(command) == Constants.ValidType.Valid)
-            return true;
-        if (commandValidator.hasExitValid(command) == Constants.ValidType.Valid)
-            return true;
-        if (commandValidator.hasHelpValid(command) == Constants.ValidType.Valid)
-            return true;
-        if (commandValidator.hasMoveValid(command) == Constants.ValidType.Valid)
-            return true;
-
-        switch(commandValidator.hasMoveValid(command)) {
-            case WrongCommand -> System.out.println("'" + command + "'" + Constants.WRONG_COMMAND);
-            case WrongCommandSyntax -> System.out.println(Constants.WRONG_COMMAND_SYNTAX);
+        Constants.ValidType valueType = commandValidator.hasCdValue(command);
+        switch(valueType) {
+            case Valid -> {
+                return true;
+            }
+            case WrongCommandSyntax -> {
+                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
+                return false;
+            }
         }
 
+        valueType = commandValidator.hasClsValue(command);
+        switch(valueType) {
+            case Valid -> {
+                return true;
+            }
+            case WrongCommandSyntax -> {
+                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
+                return false;
+            }
+        }
+
+        valueType = commandValidator.hasCopyValue(command);
+        switch(valueType) {
+            case Valid -> {
+                return true;
+            }
+            case WrongCommandSyntax -> {
+                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
+                return false;
+            }
+        }
+
+        valueType = commandValidator.hasDirValue(command);
+        switch(valueType) {
+            case Valid -> {
+                return true;
+            }
+            case WrongCommandSyntax -> {
+                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
+                return false;
+            }
+        }
+
+        valueType = commandValidator.hasExitValue(command);
+        switch(valueType) {
+            case Valid -> {
+                return true;
+            }
+            case WrongCommandSyntax -> {
+                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
+                return false;
+            }
+        }
+
+        valueType = commandValidator.hasHelpValue(command);
+        switch(valueType) {
+            case Valid -> {
+                return true;
+            }
+            case WrongCommandSyntax -> {
+                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
+                return false;
+            }
+        }
+
+        valueType = commandValidator.hasMoveValue(command);
+        switch(valueType) {
+            case Valid -> {
+                return true;
+            }
+            case WrongCommandSyntax -> {
+                System.out.println(Constants.WRONG_COMMAND_SYNTAX);
+                return false;
+            }
+        }
+
+        System.out.println("'" + command + "'" + Constants.WRONG_COMMAND);
         return false;
     }
 

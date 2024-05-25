@@ -22,7 +22,7 @@ public class Copy extends OverWriteHandler implements IObserver {
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (commandValidator.hasCopyValid(command) != Constants.ValidType.Valid) {
+        if (commandValidator.hasCopyValue(command) != Constants.ValidType.Valid) {
             return;
         }
 

@@ -19,7 +19,7 @@ public class Help implements IObserver {
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (commandValidator.hasHelpValid(command) != Constants.ValidType.Valid) {
+        if (commandValidator.hasHelpValue(command) != Constants.ValidType.Valid) {
             return;
         }
 

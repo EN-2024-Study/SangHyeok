@@ -15,7 +15,7 @@ public class Exit implements IObserver {
 
     @Override
     public void update(Cmd cmd, String command) {
-        if (commandValidator.hasExitValid(command) != Constants.ValidType.Valid) {
+        if (commandValidator.hasExitValue(command) != Constants.ValidType.Valid) {
             return;
         }
 

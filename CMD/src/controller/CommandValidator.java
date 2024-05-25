@@ -4,35 +4,35 @@ import utility.Constants;
 
 public class CommandValidator {
 
-    public Constants.ValidType hasCdValid(String command) {
-        return hasCommandValid(command.replace("/", "\\"), Constants.COMMANDS[0]);
+    public Constants.ValidType hasCdValue(String command) {
+        return hasCommandValue(command.replace("/", "\\"), Constants.COMMANDS[0]);
     }
 
-    public Constants.ValidType hasClsValid(String command) {
-        return hasCommandValid(command, Constants.COMMANDS[1]);
+    public Constants.ValidType hasClsValue(String command) {
+        return hasCommandValue(command, Constants.COMMANDS[1]);
     }
 
-    public Constants.ValidType hasCopyValid(String command) {
-        return hasCommandValid(command, Constants.COMMANDS[2]);
+    public Constants.ValidType hasCopyValue(String command) {
+        return hasCommandValue(command, Constants.COMMANDS[2]);
     }
 
-    public Constants.ValidType hasDirValid(String command) {
-        return hasCommandValid(command, Constants.COMMANDS[3]);
+    public Constants.ValidType hasDirValue(String command) {
+        return hasCommandValue(command, Constants.COMMANDS[3]);
     }
 
-    public Constants.ValidType hasExitValid(String command) {
-        return hasCommandValid(command, Constants.COMMANDS[4]);
+    public Constants.ValidType hasExitValue(String command) {
+        return hasCommandValue(command, Constants.COMMANDS[4]);
     }
 
-    public Constants.ValidType hasHelpValid(String command) {
-        return hasCommandValid(command, Constants.COMMANDS[5]);
+    public Constants.ValidType hasHelpValue(String command) {
+        return hasCommandValue(command, Constants.COMMANDS[5]);
     }
 
-    public Constants.ValidType hasMoveValid(String command) {
-        return hasCommandValid(command, Constants.COMMANDS[6]);
+    public Constants.ValidType hasMoveValue(String command) {
+        return hasCommandValue(command, Constants.COMMANDS[6]);
     }
 
-    private Constants.ValidType hasCommandValid(String command, String constant) {
+    private Constants.ValidType hasCommandValue(String command, String constant) {
         StringBuilder front = new StringBuilder();
 
         if (command.length() < constant.length()) {
@@ -44,15 +44,15 @@ public class CommandValidator {
         }
 
         if (front.toString().equals(constant)) {    // 올바른 명령이면
-            return hasPathValid(command.substring(front.length() + 1));
+            return hasPathValue(command);
         }
 
         return Constants.ValidType.WrongCommand;
     }
 
-    private Constants.ValidType hasPathValid(String path) {
+    private Constants.ValidType hasPathValue(String command) {
         for (Character c : Constants.INVALID_ADDITION_COMMANDS) {
-            if (path.contains(c + "")) {
+            if (command.contains(c + "")) {
                 return Constants.ValidType.WrongCommandSyntax;
             }
         }

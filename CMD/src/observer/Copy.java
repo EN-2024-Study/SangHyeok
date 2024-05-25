@@ -135,6 +135,8 @@ public class Copy extends OverWriteHandler implements IObserver {
             return;
         }
 
+        //======== isSourceDirectory ========//
+
         try {
             InputStream inputStream = new FileInputStream(source);
             OutputStream outputStream = new FileOutputStream(target, true);

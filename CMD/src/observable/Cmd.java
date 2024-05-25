@@ -51,7 +51,7 @@ public class Cmd implements IObservable {
             String command = scanner.nextLine();
             command = StringFormatter.trimCommand(command);
 
-            if (!isCommandValid(command)) {
+            if (!processCommandIfValid(command)) {
                 continue;
             }
 
@@ -94,8 +94,11 @@ public class Cmd implements IObservable {
     run()에서 올바른 명령어인지 확인 후 각 명령어 Class 에 넘겨주면
     또 각각의 명령어 Class 에서 자기 것의 명령어인지 한번 더 확인하는 과정이 있어서 비효율 적이라고 생각합니다.
      */
-    private boolean isCommandValid(String command) {
+    private boolean processCommandIfValid(String command) {
         Constants.ValidType[] valueTypes = commandValidator.hasAllCommandValue(command);
+
+        if (command.isEmpty())
+            return false;
 
         for(Constants.ValidType value : valueTypes) {
             switch(value) {
@@ -109,6 +112,7 @@ public class Cmd implements IObservable {
             }
         }
 
+        //======== valueType == Wrong_Command =======//
         System.out.println("'" + command + "'" + Constants.WRONG_COMMAND);
         return false;
     }

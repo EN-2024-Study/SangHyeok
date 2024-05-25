@@ -6,16 +6,22 @@ public class CommandValidator {
 
     public Constants.ValidType[] hasAllCommandValue(String command) {
         Constants.ValidType[] valueTypes = new Constants.ValidType[7];
-        int index = 0;
-        for(String c : Constants.COMMANDS) {
-            valueTypes[index++] = hasCommandValue(command, c);
-        }
-
+        valueTypes[0] = hasCdValue(command);
+        valueTypes[1] = hasClsValue(command);
+        valueTypes[2] = hasCopyValue(command);
+        valueTypes[3] = hasDirValue(command);
+        valueTypes[4] = hasExitValue(command);
+        valueTypes[5] = hasHelpValue(command);
+        valueTypes[6] = hasMoveValue(command);
         return valueTypes;
     }
 
     public Constants.ValidType hasCdValue(String command) {
-        return hasCommandValue(command.replace("/", "\\"), Constants.COMMANDS[0]);
+        String result = command.replace("/", "\\");
+        if (result.length() > 2 && (result.charAt(2) == '.' || result.charAt(2) == '\\')) {
+            result = result.substring(0, 2) + " " + result.substring(2);
+        }
+        return hasCommandValue(result, Constants.COMMANDS[0]);
     }
 
     public Constants.ValidType hasClsValue(String command) {
@@ -46,18 +52,33 @@ public class CommandValidator {
         StringBuilder front = new StringBuilder();
 
         if (command.length() < constant.length()) {
+
+            for(Character c : Constants.INVALID_ADDITION_COMMANDS) {
+                if (command.contains(c + "")) {
+                    return Constants.ValidType.WrongCommandSyntax;
+                }
+            }
+
             return Constants.ValidType.WrongCommand;
         }
+
+        //===== 명령어 길이 만족 후 =====//
 
         for (int i = 0; i < constant.length(); i++) {
             front.append(command.charAt(i));
         }
 
-        if (front.toString().equals(constant)) {    // 올바른 명령이면
-            return hasPathValue(command);
+        if (!front.toString().equals(constant)) {
+            return Constants.ValidType.WrongCommand;
         }
 
-        return Constants.ValidType.WrongCommand;
+        if (command.length() > front.length()) {    // 경로가 존재한다면
+            if (command.charAt(constant.length()) == ' ')
+                return hasPathValue(command);
+            return Constants.ValidType.WrongCommand;
+        }
+
+        return hasPathValue(command);
     }
 
     private Constants.ValidType hasPathValue(String command) {
@@ -66,6 +87,11 @@ public class CommandValidator {
                 return Constants.ValidType.WrongCommandSyntax;
             }
         }
+
+        if (!command.contains(Constants.ABSOLUTE_FRONT_STRING) && command.contains(":")) {
+            return Constants.ValidType.WrongCommand;
+        }
+
         return Constants.ValidType.Valid;
     }
 }

@@ -6,6 +6,7 @@ import observable.Cmd;
 import utility.Constants;
 
 import java.io.*;
+import java.nio.file.Files;
 
 public class Dir implements IObserver {
 
@@ -83,6 +84,10 @@ public class Dir implements IObserver {
             if (f.isHidden())
                 continue;
 
+            if (!Files.isReadable(f.toPath())) {
+                continue;
+            }
+
             String result;
             String lastModified = StringFormatter.getTimeInfo(f.lastModified());
 
@@ -100,7 +105,7 @@ public class Dir implements IObserver {
             System.out.println(result);
         }
 
-        System.out.println(getTotalFileInfo(fileCount, totalByte)); // FILE 출력
+        System.out.println(getTotalFileInfo(fileCount + 2, totalByte)); // FILE 출력
         System.out.println(getTotalDirectoryInfo(directoryCount));  // DIC 와 C 드라이브 남은 용량 출력
     }
 

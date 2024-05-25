@@ -24,16 +24,6 @@ public class StringFormatter {
         return decimalFormat.format(number);
     }
 
-    public static int getQuotesCount(String str) {
-        int count = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == '\"') {
-                count++;
-            }
-        }
-        return count;
-    }
-
     public static String removeCommand(String command, int startIndex) {
         StringBuilder result = new StringBuilder();
 
@@ -41,5 +31,12 @@ public class StringFormatter {
             result.append(command.charAt(i));
         }
         return result.toString().trim();
+    }
+
+    public static String trimCommand(String command) {
+        command = command.trim();
+        command = command.toLowerCase();
+        command = command.replace(",", "");
+        return command.replace("c:", "C:");
     }
 }

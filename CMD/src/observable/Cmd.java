@@ -1,6 +1,7 @@
 package observable;
 
 import controller.CommandValidator;
+import controller.StringFormatter;
 import interfaces.IObservable;
 import interfaces.IObserver;
 import utility.Constants;
@@ -47,7 +48,7 @@ public class Cmd implements IObservable {
         while(isRun) {
             System.out.print(currentPath);
             String command = scanner.nextLine();
-            command = trimCommand(command);
+            command = StringFormatter.trimCommand(command);
 
             if (!isCommandValid(command)) {
                 System.out.println("'" + command + "'" + Constants.WRONG_COMMAND);
@@ -101,14 +102,6 @@ public class Cmd implements IObservable {
             return true;
         if (commandValidator.isHelpValid(command))
             return true;
-
         return commandValidator.isMoveValid(command);
-    }
-
-    private String trimCommand(String command) {
-        command = command.trim();
-        command = command.toLowerCase();
-        command = command.replace(",", "");
-        return command.replace("c:", "C:");
     }
 }

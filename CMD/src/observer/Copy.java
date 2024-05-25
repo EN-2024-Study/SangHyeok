@@ -42,6 +42,7 @@ public class Copy extends OverWriteHandler implements IObserver {
         }
 
         File[] files = fileProvider.getTwoPaths(currentPath, inputPath);
+
         if (files.length == 1) {
             processCopy(files[0], currentFile);
             return;
@@ -73,13 +74,7 @@ public class Copy extends OverWriteHandler implements IObserver {
     private void processDirectoryCopy(File sourceDirectory, File targetFile) {
         File[] files = sourceDirectory.listFiles();
         int copyCount = 0;
-
-        if (files.length == 0) {    // sourceDirectory 안에 파일이 없을 때
-            System.out.println(sourceDirectory.getName() + "\\*");
-            System.out.println(Constants.WRONG_FILE);
-            System.out.println("         " + 0 + Constants.VALID_COPY);
-            return;
-        }
+        boolean existFile = false;
 
         for (File file : files) {
             if (file.isDirectory()) {
@@ -87,10 +82,18 @@ public class Copy extends OverWriteHandler implements IObserver {
             }
 
             // copy 수행
+            existFile = true;
             System.out.println(file.getParentFile().getName() + "\\" + file.getName());
             if (isFileCopyExecuted(file, targetFile, true)) {
                 copyCount++;
             }
+        }
+
+        if (!existFile) {   // sourceDirectory 안에 파일이 없을 때
+            System.out.println(sourceDirectory.getName() + "\\*");
+            System.out.println(Constants.WRONG_FILE);
+            System.out.println("         " + 0 + Constants.VALID_COPY);
+            return;
         }
 
         System.out.println("         " + copyCount + Constants.VALID_COPY);

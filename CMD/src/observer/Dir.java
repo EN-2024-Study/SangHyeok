@@ -1,16 +1,11 @@
 package observer;
 
-import controller.CommandValidator;
+import controller.*;
 import interfaces.IObserver;
 import observable.Cmd;
 import utility.Constants;
-import controller.FileProvider;
-import controller.StringFormatter;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class Dir implements IObserver {
 

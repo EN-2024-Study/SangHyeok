@@ -5,15 +5,12 @@ import interfaces.IObserver;
 import observable.Cmd;
 import utility.Constants;
 import controller.FileManager;
-import utility.StringManager;
+import controller.StringManager;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Dir implements IObserver {
 

@@ -20,6 +20,8 @@ public class Constants {
     public final static String WRONG_COMMAND2 = "명령 구문이 올바르지 않습니다.";
     public final static String WRONG_COPY = "같은 파일로 복사할 수 없습니다.";
     public final static String VALID_COPY = "개 파일이 복사되었습니다.";
+    public final static String VALID_FILE_MOVE = "개 파일을 이동했습니다.";
+    public final static String VALID_DIRECTORY_MOVE = "개 디렉터리를 이동했습니다.";
     public final static String NO_SEARCH_FILE = "파일을 찾을 수 없습니다.";
     public final static String WHETHER_OVER_WRITE = "을(를) 덮어쓰시겠습니까? (Yes/No/All):";
     public final static String[] COMMANDS = new String[] {"cd", "cls", "copy", "dir", "exit", "help", "move"};

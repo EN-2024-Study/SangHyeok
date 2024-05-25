@@ -1,25 +1,23 @@
 package observer;
 
-import controller.CommandExceptionManager;
+import controller.*;
 import interfaces.IObserver;
 import observable.Cmd;
-import controller.FileManager;
 import utility.Constants;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Copy implements IObserver {
+public class Copy extends OverWriteManager implements IObserver {
 
     private FileManager fileManager;
     private CommandExceptionManager commandExceptionManager;
-    private Character answer;
 
     public Copy(CommandExceptionManager commandExceptionManager, FileManager fileManager) {
+        super(fileManager);
         this.commandExceptionManager = commandExceptionManager;
         this.fileManager = fileManager;
     }
@@ -30,7 +28,7 @@ public class Copy implements IObserver {
             return;
         }
 
-        this.answer = 'n';
+        initAnswer();
         processCommand(cmd, command);
     }
 
@@ -80,7 +78,7 @@ public class Copy implements IObserver {
         File[] files = sourceDirectory.listFiles();
         List<File> sourceFileList = new ArrayList<>();
 
-        for(File file : files) {
+        for (File file : files) {
             if (file.isDirectory()) {
                 continue;
             }
@@ -97,44 +95,38 @@ public class Copy implements IObserver {
     private boolean isProcessFileCopy(File sourceFile, File targetFile) {
         if (!targetFile.exists()) {
             copy(sourceFile, targetFile);
+            return true;
+        }
+
+        //================= targetFile.exists() =================//
+
+        if (!targetFile.isDirectory()) {
+            if (super.isProcessOverWrite(targetFile.toString())) {
+                copy(sourceFile, targetFile);
+                return true;
+            }
             return false;
         }
 
-        // 파일이 존재하면서 폴더가 아닌 파일일 때
-        if (!targetFile.isDirectory()) {
-            return isProcessOverWrite(sourceFile, new File(targetFile + "\\" + sourceFile.getName()));
-        }
+        //================= targetFile.exists() && targetFile.isDirectory() =================//
 
-        // 같은 경로에 복사를 할 때
-        if (targetFile.getName().equals(sourceFile.getParentFile().getName())) {
+        if (targetFile.getName().equals(sourceFile.getParentFile().getName())) {    // 같은 경로에 복사를 할 때
             System.out.println(Constants.WRONG_COPY);
             return false;
         }
 
         targetFile = new File(targetFile + "\\" + sourceFile.getName());
 
-        // 복사 하려는 폴더에 이미 존재 할 때
-        if (targetFile.exists()) {
-            return isProcessOverWrite(sourceFile, targetFile);
+        if (targetFile.exists()) {  // 복사 하려는 폴더에 이미 존재 할 때
+            if (super.isProcessOverWrite(targetFile.toString())) {
+                copy(sourceFile, targetFile);
+                return true;
+            }
+            return false;
         }
 
         copy(sourceFile, targetFile);
         return true;
-    }
-
-    private boolean isProcessOverWrite(File source, File target) {
-        // 기존 파일에 덮어씌울 때
-        if (answer != 'a') {
-            answer = fileManager.whetherOverWrite(target);
-        }
-
-        switch(answer) {
-            case 'y', 'a' -> {
-                copy(source, target);
-                return true;
-            }
-        }
-        return false;
     }
 
     private void copy(File source, File target) {

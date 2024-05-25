@@ -1,7 +1,6 @@
 package controller;
 
 import utility.Constants;
-import utility.StringManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -87,12 +86,12 @@ public class FileManager {
         return path.split(" ");
     }
 
-    public Character whetherOverWrite(File file) {
+    public Character whetherOverWrite(String targetPath) {
         Scanner scanner = new Scanner(System.in);
         boolean whetherAnswer = false;
 
         while(!whetherAnswer) {
-            System.out.print(file + Constants.WHETHER_OVER_WRITE);
+            System.out.print(targetPath + Constants.WHETHER_OVER_WRITE);
             String answer = scanner.nextLine();
             answer = answer.toLowerCase();
 

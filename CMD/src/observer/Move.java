@@ -26,14 +26,14 @@ public class Move extends OverWriteManager implements IObserver {
         if (!commandExceptionManager.isMoveValid(command)) {
             return;
         }
-        
+
         super.initAnswer();
-        processCommand(cmd, command);
+        processCommand(cmd.getCurrentPath(), command);
     }
 
-    private void processCommand(Cmd cmd, String command) {
-        File currentFile = new File(cmd.getCurrentPath());
-        String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[2].length());
+    private void processCommand(String currentPath, String command) {
+        File currentFile = new File(currentPath);
+        String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[6].length());
 
         // 명령어만 존재할 때
         if (command.length() < 5 || inputPath.isEmpty()) {
@@ -66,7 +66,7 @@ public class Move extends OverWriteManager implements IObserver {
 
         if (!targetFile.exists()) {
             move(sourceFile, targetFile);
-            printSuccess(sourceFile.isDirectory(), 1);
+            printSuccess(sourceFile.toString().contains("."), 1);
             return;
         }
 
@@ -79,14 +79,14 @@ public class Move extends OverWriteManager implements IObserver {
         if (targetFile.exists()) {  // 복사 하려는 폴더에 이미 존재 할 때
             if (super.isProcessOverWrite(targetFile.toString())) {
                 move(sourceFile, targetFile);
-                printSuccess(sourceFile.isDirectory(), 1);
+                printSuccess(sourceFile.toString().contains("."), 1);
             }
-            printSuccess(sourceFile.isDirectory(), 0);
+            printSuccess(sourceFile.toString().contains("."), 0);
             return;
         }
 
         move(sourceFile, targetFile);
-        printSuccess(sourceFile.isDirectory(), 1);
+        printSuccess(sourceFile.toString().contains("."), 1);
     }
 
     private void move(File source, File target) {
@@ -97,11 +97,11 @@ public class Move extends OverWriteManager implements IObserver {
         }
     }
 
-    private void printSuccess(boolean isDirectory, int count) {
-        if (isDirectory) {
-            System.out.println("         " + count + Constants.VALID_DIRECTORY_MOVE);
+    private void printSuccess(boolean isFile, int count) {
+        if (isFile) {
+            System.out.println("         " + count + Constants.VALID_FILE_MOVE);
             return;
         }
-        System.out.println("         " + count + Constants.VALID_FILE_MOVE);
+        System.out.println("         " + count + Constants.VALID_DIRECTORY_MOVE);
     }
 }

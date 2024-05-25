@@ -29,11 +29,11 @@ public class Copy extends OverWriteManager implements IObserver {
         }
 
         initAnswer();
-        processCommand(cmd, command);
+        processCommand(cmd.getCurrentPath(), command);
     }
 
-    private void processCommand(Cmd cmd, String command) {
-        File currentFile = new File(cmd.getCurrentPath());
+    private void processCommand(String currentPath, String command) {
+        File currentFile = new File(currentPath);
         String inputPath = fileManager.removeCommand(command, Constants.COMMANDS[2].length());
 
         // 명령어만 존재할 때

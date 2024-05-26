@@ -25,7 +25,16 @@ public class CommandValidator {
     }
 
     public Constants.ValidType hasClsValue(String command) {
-        return hasCommandValue(command, Constants.COMMANDS[1]);
+        Constants.ValidType validType = hasCommandValue(command, Constants.COMMANDS[1]);
+        if (validType == Constants.ValidType.Valid) {
+
+            if (command.trim().equals(Constants.COMMANDS[1])) {
+                return Constants.ValidType.Valid;
+            }
+
+            return Constants.ValidType.WrongCommand;
+        }
+        return validType;
     }
 
     public Constants.ValidType hasCopyValue(String command) {
@@ -41,7 +50,16 @@ public class CommandValidator {
     }
 
     public Constants.ValidType hasHelpValue(String command) {
-        return hasCommandValue(command, Constants.COMMANDS[5]);
+        Constants.ValidType validType = hasCommandValue(command, Constants.COMMANDS[5]);
+        if (validType == Constants.ValidType.Valid) {
+
+            if (command.trim().equals(Constants.COMMANDS[5])) {
+                return Constants.ValidType.Valid;
+            }
+
+            return Constants.ValidType.WrongCommand;
+        }
+        return validType;
     }
 
     public Constants.ValidType hasMoveValue(String command) {

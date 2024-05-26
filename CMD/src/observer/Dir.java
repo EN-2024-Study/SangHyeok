@@ -56,7 +56,7 @@ public class Dir implements IObserver {
             return;
         }
 
-        File currentFile = fileProvider.getFile(pastFile.toString(), inputPath);
+        File currentFile = fileProvider.getFile(pastFile.toString(), inputPath.replace("\"", ""));
 
         if (!currentFile.isDirectory()) {
             System.out.println(Constants.NO_SEARCH_FILE);

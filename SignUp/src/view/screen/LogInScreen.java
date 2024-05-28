@@ -2,7 +2,7 @@ package view.screen;
 
 import constant.Enums;
 import constant.Texts;
-import listener.Controller;
+import controller.Listener;
 import view.screen.panel.ButtonPanel;
 import view.screen.panel.TextFieldPanel;
 
@@ -14,10 +14,10 @@ public class LogInScreen extends JPanel implements IScreen {
 
     private TextFieldPanel[] textFieldPanel;
 
-    public LogInScreen(Controller controller) {
+    public LogInScreen(Listener listener) {
         setLayout(new GridLayout(2, 1));
         initTextPanel();
-        initButtonPanel(controller);
+        initButtonPanel(listener);
     }
 
     @Override
@@ -43,12 +43,12 @@ public class LogInScreen extends JPanel implements IScreen {
         add(mainPanel);
     }
 
-    private void initButtonPanel(Controller controller) {
+    private void initButtonPanel(Listener listener) {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(2, 2));
 
-        JPanel[] buttonPanels = new JPanel[]{new ButtonPanel(Texts.LOGIN, controller), new ButtonPanel(Texts.SIGNUP, controller),
-                new ButtonPanel(Texts.FIND_ID, controller), new ButtonPanel(Texts.FIND_PASSWORD, controller)};
+        JPanel[] buttonPanels = new JPanel[]{new ButtonPanel(Texts.LOGIN, listener), new ButtonPanel(Texts.SIGNUP, listener),
+                new ButtonPanel(Texts.FIND_ID, listener), new ButtonPanel(Texts.FIND_PASSWORD, listener)};
 
         for (JPanel panel : buttonPanels) {
             mainPanel.add(panel);

@@ -1,20 +1,20 @@
 package view.screen.panel;
 
-import listener.Controller;
+import controller.Listener;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ButtonPanel extends JPanel {
 
-    public ButtonPanel(String labelText, Controller controller) {
+    public ButtonPanel(String labelText, Listener listener) {
         setLayout(new GridLayout(1, 1));
-        initButton(labelText, controller);
+        initButton(labelText, listener);
     }
 
-    private void initButton(String labelText, Controller controller) {
+    private void initButton(String labelText, Listener listener) {
         JButton button = new JButton(labelText);
-        button.addActionListener(controller);
+        button.addActionListener(listener);
         add(button);
     }
 }

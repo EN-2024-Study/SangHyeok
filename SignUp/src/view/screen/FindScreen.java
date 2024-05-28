@@ -1,14 +1,14 @@
 package view.screen;
 
 import constant.Enums;
-import listener.Controller;
+import controller.Listener;
 
 import javax.swing.*;
 import java.util.HashMap;
 
 public class FindScreen extends JPanel implements IScreen {
 
-    public FindScreen(Controller controller) {
+    public FindScreen(Listener listener) {
 
     }
 

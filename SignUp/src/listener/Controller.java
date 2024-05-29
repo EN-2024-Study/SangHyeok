@@ -14,19 +14,27 @@ public class Controller implements ActionListener {
 
     private IView iView;
     private AccountDao accountDao;
+    private boolean isFindId;
 
     public Controller() {
         this.iView = new FrameClient(this);
         this.accountDao = new AccountDao();
+        this.isFindId = false;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case Texts.LOGIN -> processLogIn();
-            case Texts.SIGNUP -> processSignUp();
-            case Texts.FIND_ID -> processFindId();
-            case Texts.FIND_PASSWORD -> processFindPassword();
+            case Texts.SIGNUP -> iView.showScreen(Enums.ScreenType.SignUp);
+            case Texts.FIND_ID -> {
+                isFindId = true;
+                iView.showScreen(Enums.ScreenType.Find);
+            }
+            case Texts.FIND_PASSWORD -> {
+                isFindId = false;
+                iView.showScreen(Enums.ScreenType.Find);
+            }
         }
     }
 
@@ -37,23 +45,11 @@ public class Controller implements ActionListener {
         HashMap<Enums.TextType, String> userMap = accountDao.findUser(inputId);
 
         if (userMap.isEmpty() || !password.equals(userMap.get(Enums.TextType.Password))) {
-            System.out.println("Test");
+            iView.showDialog(false, Texts.LOGIN_COMPLETE);
             return;
         }
 
+        iView.showDialog(true, Texts.LOGIN_COMPLETE);
         iView.showScreen(Enums.ScreenType.Home);
     }
-
-    private void processSignUp() {
-
-    }
-
-    private void processFindId() {
-
-    }
-
-    private void processFindPassword() {
-
-    }
-
 }

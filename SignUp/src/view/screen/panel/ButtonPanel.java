@@ -1,7 +1,5 @@
 package view.screen.panel;
 
-import listener.Controller;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;

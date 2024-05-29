@@ -22,6 +22,7 @@ public class Texts {
     public static final String ACCOUNT_DELETE = "ACCOUNT DELETE";
     public static final String GET_CODE = "GET CODE";
     public static final String OK = "OK";
-    public static final String COMPLETE = "COMPLETE!";
-    public static final String ERROR = "ERROR!";
+    public static final String LOGIN_COMPLETE = "LOG IN COMPLETE!";
+    public static final String ERROR = "ERROR";
+    public static final String COMPLETE = "COMPLETE";
 }

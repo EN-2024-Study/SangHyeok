@@ -2,7 +2,6 @@ package view;
 
 import constant.Enums;
 import constant.Texts;
-import listener.Controller;
 import view.screen.*;
 
 import javax.swing.*;
@@ -64,13 +63,36 @@ public class FrameClient extends JFrame implements IView {
             case SignUp -> add(panelList[3], BorderLayout.CENTER);
         }
 
-        revalidate();
-        repaint();
+        restartFrame();
+    }
+
+    @Override
+    public void showDialog(boolean isComplete, String text) {
+        JDialog dialog = new JDialog(this, true);
+        JLabel label = new JLabel(text);
+
+        label.setHorizontalAlignment(JLabel.CENTER);
+        if (isComplete) {
+            dialog.setTitle(Texts.COMPLETE);
+        } else {
+            dialog.setTitle(Texts.ERROR);
+        }
+        dialog.setSize(300, 100);
+        dialog.add(label);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+
+        restartFrame();
     }
 
     private JPanel getBlankPanel() {
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(100, 100));
         return panel;
+    }
+
+    private void restartFrame() {
+        revalidate();
+        repaint();
     }
 }

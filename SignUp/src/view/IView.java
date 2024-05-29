@@ -6,6 +6,6 @@ import javax.swing.*;
 import java.util.HashMap;
 
 public interface IView {
-    void showScreen(JPanel panel);
+    void showScreen(Enums.ScreenType screenType);
     HashMap<Enums.TextType, String> getText(Enums.ScreenType screenType);
 }

@@ -1,9 +1,9 @@
 package main;
 
-import controller.Listener;
+import listener.Controller;
 
 public class Main {
     public static void main(String[] args) {
-        new Listener();
+        new Controller();
     }
 }

@@ -1,14 +1,15 @@
 package view.screen;
 
 import constant.Enums;
-import controller.Listener;
+import listener.Controller;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class SignUpScreen extends JPanel implements IScreen {
 
-    public SignUpScreen(Listener listener) {
+    public SignUpScreen(ActionListener controller) {
 
     }
 

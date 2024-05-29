@@ -1,47 +1,63 @@
 package model;
 
+import constant.Enums;
 import constant.Queries;
 
 import java.io.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.lang.System.getenv;
 
 public class AccountDao {
 
     private Statement statement;
 
-    public AccountDao() throws SQLException, IOException {
-        this.statement = getConnection().createStatement();
-    }
-
-    private Connection getConnection() throws SQLException, IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(Queries.DB_PATH));
-        String url = bufferedReader.readLine();
-        String username = bufferedReader.readLine();
-        String password = bufferedReader.readLine();
-        return DriverManager.getConnection(url, username, password);
-    }
-
-    private void setQuery(String query) throws SQLException {
-        statement.executeUpdate(query);
-    }
-
-    private String selectQuery(String key) throws SQLException {
-        ResultSet resultSet = statement.executeQuery(Queries.SELECT_QUERY);
-        String resultString = "";
-        while (resultSet.next()) {
-            resultString = resultSet.getString(key);
+    public AccountDao() {
+        try {
+            this.statement = getConnection().createStatement();
+        } catch (SQLException | IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        return resultString;
     }
 
-    private List<String> selectAllQuery() throws SQLException {
-        ResultSet resultSet = statement.executeQuery(Queries.SELECT_QUERY);
-        List<String> resultStrings = new ArrayList<>();
-        while (resultSet.next()) {
-            resultStrings.add(resultSet.getString(Queries.FIELD_ID));
+    private Connection getConnection() throws SQLException, IOException, ClassNotFoundException {
+        Map<String, String> environment = getenv();
+        String url = environment.get("DB_URL");
+        String userName = environment.get("DB_ID");
+        String password = environment.get("DB_PASSWORD");
+        return DriverManager.getConnection(url, userName, password);
+    }
+
+    public HashMap<Enums.TextType, String> findUser(String id) {
+        HashMap<Enums.TextType, String> resultMap = new HashMap<>();
+
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format(Queries.SELECT_WHERE_QUERY, id));
+            if (resultSet.next()) {
+                resultMap.put(Enums.TextType.Name, resultSet.getString("name"));
+                resultMap.put(Enums.TextType.Id, resultSet.getString("id"));
+                resultMap.put(Enums.TextType.Password, resultSet.getString("password"));
+                resultMap.put(Enums.TextType.BirthDay, resultSet.getString("birthday"));
+                resultMap.put(Enums.TextType.Email, resultSet.getString("email"));
+                resultMap.put(Enums.TextType.PhoneNumber, resultSet.getString("phone_number"));
+                resultMap.put(Enums.TextType.Address, resultSet.getString("address"));
+                resultMap.put(Enums.TextType.DetailedAddress, resultSet.getString("detailed_Address"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return resultStrings;
+        return resultMap;
+    }
+
+    private void insertQuery(String[] valueList) {
+        String query = String.format(Queries.INSERT_QUERY, valueList[0], valueList[1],
+                valueList[2], valueList[3], valueList[4], valueList[5], valueList[6], valueList[7], valueList[8]);
+        try {
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

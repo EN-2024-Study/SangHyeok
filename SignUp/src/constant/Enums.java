@@ -5,7 +5,7 @@ public class Enums {
         LogIn, Find, SignUp, Home
     }
     public enum TextType {
-        Name, Id, Password, PasswordCheck, Birth,
+        Name, Id, Password, PasswordCheck, BirthDay,
         Email, VerificationCode, PhoneNumber, Address, DetailedAddress
     }
 }

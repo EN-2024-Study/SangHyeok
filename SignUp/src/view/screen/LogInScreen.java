@@ -2,22 +2,22 @@ package view.screen;
 
 import constant.Enums;
 import constant.Texts;
-import controller.Listener;
 import view.screen.panel.ButtonPanel;
 import view.screen.panel.TextFieldPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class LogInScreen extends JPanel implements IScreen {
 
     private TextFieldPanel[] textFieldPanel;
 
-    public LogInScreen(Listener listener) {
+    public LogInScreen(ActionListener actionListener) {
         setLayout(new GridLayout(2, 1));
         initTextPanel();
-        initButtonPanel(listener);
+        initButtonPanel(actionListener);
     }
 
     @Override
@@ -43,12 +43,12 @@ public class LogInScreen extends JPanel implements IScreen {
         add(mainPanel);
     }
 
-    private void initButtonPanel(Listener listener) {
+    private void initButtonPanel(ActionListener actionListener) {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(2, 2));
 
-        JPanel[] buttonPanels = new JPanel[]{new ButtonPanel(Texts.LOGIN, listener), new ButtonPanel(Texts.SIGNUP, listener),
-                new ButtonPanel(Texts.FIND_ID, listener), new ButtonPanel(Texts.FIND_PASSWORD, listener)};
+        JPanel[] buttonPanels = new JPanel[]{new ButtonPanel(Texts.LOGIN, actionListener), new ButtonPanel(Texts.SIGNUP, actionListener),
+                new ButtonPanel(Texts.FIND_ID, actionListener), new ButtonPanel(Texts.FIND_PASSWORD, actionListener)};
 
         for (JPanel panel : buttonPanels) {
             mainPanel.add(panel);

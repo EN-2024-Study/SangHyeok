@@ -16,7 +16,7 @@ public class FindScreen extends JPanel implements IScreen {
     private TextFieldPanel[] textFieldPanel;
 
     public FindScreen(ActionListener actionListener) {
-        setLayout(new GridLayout(2, 2));
+        setLayout(new GridLayout(2, 1));
         initTextPanel();
         initButtonPanel(actionListener);
     }
@@ -39,9 +39,9 @@ public class FindScreen extends JPanel implements IScreen {
         mainPanel.setLayout(new GridLayout(3, 1));
 
         textFieldPanel = new TextFieldPanel[3];
-        textFieldPanel[0] = new TextFieldPanel(Texts.NAME);
-        textFieldPanel[1] = new TextFieldPanel(Texts.EMAIL);
-        textFieldPanel[2] = new TextFieldPanel(Texts.VERIFICATION_CODE);
+        textFieldPanel[0] = new TextFieldPanel(10, Texts.NAME);
+        textFieldPanel[1] = new TextFieldPanel(20, Texts.EMAIL);
+        textFieldPanel[2] = new TextFieldPanel(4, Texts.VERIFICATION_CODE);
         mainPanel.add(textFieldPanel[0]);
         mainPanel.add(textFieldPanel[1]);
         mainPanel.add(textFieldPanel[2]);
@@ -52,7 +52,7 @@ public class FindScreen extends JPanel implements IScreen {
         JPanel mainPanel = new JPanel();
         JPanel blankPanel = new JPanel();
         JPanel[] buttonPanels = new JPanel[]{new ButtonPanel(Texts.GET_CODE, actionListener),
-                new ButtonPanel(Texts.OK, actionListener)};
+                new ButtonPanel(Texts.OK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
 
         blankPanel.add(new JLabel(" "));
         mainPanel.setLayout(new GridLayout(3, 1));

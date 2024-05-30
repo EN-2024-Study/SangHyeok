@@ -34,7 +34,7 @@ public class AccountDao {
         HashMap<Enums.TextType, String> resultMap = new HashMap<>();
 
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(Queries.SELECT_WHERE_QUERY, id));
+            ResultSet resultSet = statement.executeQuery(String.format(Queries.SELECT_QUERY, id));
             if (resultSet.next()) {
                 resultMap.put(Enums.TextType.Name, resultSet.getString("name"));
                 resultMap.put(Enums.TextType.Id, resultSet.getString("id"));
@@ -54,6 +54,15 @@ public class AccountDao {
     private void insertQuery(String[] valueList) {
         String query = String.format(Queries.INSERT_QUERY, valueList[0], valueList[1],
                 valueList[2], valueList[3], valueList[4], valueList[5], valueList[6], valueList[7], valueList[8]);
+        processQuery(query);
+    }
+
+    private void deleteQuery(String id) {
+        String query = String.format(Queries.DELETE_QUERY, id);
+        processQuery(query);
+    }
+
+    private void processQuery(String query) {
         try {
             statement.executeUpdate(query);
         } catch (SQLException e) {

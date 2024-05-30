@@ -36,8 +36,8 @@ public class LogInScreen extends JPanel implements IScreen {
         mainPanel.setLayout(new GridLayout(2, 1));
 
         textFieldPanel = new TextFieldPanel[2];
-        textFieldPanel[0] = new TextFieldPanel(Texts.ID);
-        textFieldPanel[1] = new TextFieldPanel(Texts.PASSWORD);
+        textFieldPanel[0] = new TextFieldPanel(14, Texts.ID);
+        textFieldPanel[1] = new TextFieldPanel(14, Texts.PASSWORD);
         mainPanel.add(textFieldPanel[0]);
         mainPanel.add(textFieldPanel[1]);
         add(mainPanel);

@@ -45,7 +45,7 @@ public class Controller implements ActionListener {
         HashMap<Enums.TextType, String> userMap = accountDao.findUser(inputId);
 
         if (userMap.isEmpty() || !password.equals(userMap.get(Enums.TextType.Password))) {
-            iView.showDialog(false, Texts.LOGIN_COMPLETE);
+            iView.showDialog(false, Texts.LOGIN_FAIL);
             return;
         }
 

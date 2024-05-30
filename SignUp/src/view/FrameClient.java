@@ -75,7 +75,7 @@ public class FrameClient extends JFrame implements IView {
         if (isComplete) {
             dialog.setTitle(Texts.COMPLETE);
         } else {
-            dialog.setTitle(Texts.ERROR);
+            dialog.setTitle(Texts.FAIL);
         }
         dialog.setSize(300, 100);
         dialog.add(label);

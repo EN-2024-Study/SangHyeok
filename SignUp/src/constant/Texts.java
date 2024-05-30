@@ -8,6 +8,7 @@ public class Texts {
     public static final String PASSWORD_CHECK = "PASSWORD_CHECK";
     public static final String BIRTHDAY = "BIRTHDAY";
     public static final String EMAIL = "EMAIL";
+    public static final String AT = "@";
     public static final String VERIFICATION_CODE = "VERIFICATION CODE";
     public static final String PHONE_NUMBER = "PHONE NUMBER";
     public static final String ADDRESS = "ADDRESS";
@@ -22,7 +23,12 @@ public class Texts {
     public static final String ACCOUNT_DELETE = "ACCOUNT DELETE";
     public static final String GET_CODE = "GET CODE";
     public static final String OK = "OK";
-    public static final String LOGIN_COMPLETE = "LOG IN COMPLETE!";
-    public static final String ERROR = "ERROR";
+    public static final String GO_BACK = "GO BACK";
+    public static final String DUPLICATION_CHECK = "Duplication Check";
+    public static final String LOGIN_COMPLETE = "Log in COMPLETE!";
+    public static final String LOGIN_FAIL = "Log in Fail!";
+    public static final String FAIL = "FAIL";
     public static final String COMPLETE = "COMPLETE";
+    public static final String FRONT_PHONE_NUMBER = "010";
+    public static final String[] EMAIL_COMBOBOX = new String[] {"gmail.com", "naver.com", "outlook.com", "icloud.com"};
 }

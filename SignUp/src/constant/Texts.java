@@ -14,6 +14,7 @@ public class Texts {
     public static final String ADDRESS = "ADDRESS";
     public static final String DETAILED_ADDRESS = "detailed ADDRESS";
     public static final String SIGNUP = "SIGN UP";
+    public static final String SIGNUP_CHECK = "SIGN UP CHECK";
     public static final String LOGIN = "LOG IN";
     public static final String LOGOUT = "LOG OUT";
     public static final String FIND_ID = "FIND ID";

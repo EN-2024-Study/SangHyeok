@@ -24,7 +24,9 @@ public class Controller implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println(e.getActionCommand());
         switch (e.getActionCommand()) {
+            case Texts.GO_BACK -> iView.showScreen(Enums.ScreenType.LogIn);
             case Texts.LOGIN -> processLogIn();
             case Texts.SIGNUP -> iView.showScreen(Enums.ScreenType.SignUp);
             case Texts.FIND_ID -> {

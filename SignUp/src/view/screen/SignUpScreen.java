@@ -18,9 +18,7 @@ public class SignUpScreen extends JPanel implements IScreen {
 
     public SignUpScreen(ActionListener actionListener) {
         textFieldPanel = new TextFieldPanel[9];
-
-        setLayout(new GridLayout(1, 3));
-        initTextPanel(actionListener);
+        initScreen(actionListener);
     }
 
     @Override
@@ -39,12 +37,17 @@ public class SignUpScreen extends JPanel implements IScreen {
         return map;
     }
 
-    private void initTextPanel(ActionListener actionListener) {
+    private void initScreen(ActionListener actionListener) {
+        setLayout(new BorderLayout());
+        initTextPanel();
+        initButtonPanel(actionListener);
+    }
+
+    private void initTextPanel() {
         JPanel mainPanel = new JPanel();
-        JPanel idPanel = getIdFieldPanel(actionListener);
-        JPanel emailPanel = getEmailFieldPanel();
 
         textFieldPanel[0] = new TextFieldPanel(10, Texts.NAME);
+        textFieldPanel[1] = new TextFieldPanel(14, Texts.ID);
         textFieldPanel[2] = new TextFieldPanel(14, Texts.PASSWORD);
         textFieldPanel[3] = new TextFieldPanel(14, Texts.PASSWORD_CHECK);
         textFieldPanel[4] = new TextFieldPanel(8, Texts.BIRTHDAY);
@@ -54,28 +57,30 @@ public class SignUpScreen extends JPanel implements IScreen {
 
         mainPanel.setLayout(new GridLayout(9, 1));
         mainPanel.add(textFieldPanel[0]);
-        mainPanel.add(idPanel);
+        mainPanel.add(textFieldPanel[1]);
         mainPanel.add(textFieldPanel[2]);
         mainPanel.add(textFieldPanel[3]);
         mainPanel.add(textFieldPanel[4]);
-        mainPanel.add(emailPanel);
+        mainPanel.add(getEmailFieldPanel());
         mainPanel.add(textFieldPanel[6]);
         mainPanel.add(textFieldPanel[7]);
         mainPanel.add(textFieldPanel[8]);
 
-        add(mainPanel);
+        add(mainPanel, BorderLayout.CENTER);
     }
 
-    private JPanel getIdFieldPanel(ActionListener actionListener) {
+    private void initButtonPanel(ActionListener actionListener) {
         JPanel mainPanel = new JPanel();
-        JPanel buttonPanel = new ButtonPanel(Texts.DUPLICATION_CHECK, actionListener);
-        textFieldPanel[1] = new TextFieldPanel(14, Texts.ID);
+        mainPanel.setLayout(new GridLayout(2, 2));
 
-        mainPanel.setLayout(new GridLayout(1, 2));
-        mainPanel.add(textFieldPanel[1]);
-        mainPanel.add(buttonPanel);
+        JPanel[] buttonPanels = new JPanel[]{new ButtonPanel(Texts.DUPLICATION_CHECK, actionListener), new ButtonPanel(Texts.FIND_ADDRESS, actionListener),
+                new ButtonPanel(Texts.SIGNUP_CHECK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
 
-        return mainPanel;
+        for (JPanel panel : buttonPanels) {
+            mainPanel.add(panel);
+        }
+
+        add(mainPanel, BorderLayout.SOUTH);
     }
 
     private JPanel getEmailFieldPanel() {

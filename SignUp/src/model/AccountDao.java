@@ -30,7 +30,7 @@ public class AccountDao {
         return DriverManager.getConnection(url, userName, password);
     }
 
-    public HashMap<Enums.TextType, String> findUser(String id) {
+    public HashMap<Enums.TextType, String> findAccount(String id) {
         HashMap<Enums.TextType, String> resultMap = new HashMap<>();
 
         try {
@@ -51,13 +51,13 @@ public class AccountDao {
         return resultMap;
     }
 
-    private void insertQuery(String[] valueList) {
+    public void insertAccount(String[] valueList) {
         String query = String.format(Queries.INSERT_QUERY, valueList[0], valueList[1],
                 valueList[2], valueList[3], valueList[4], valueList[5], valueList[6], valueList[7], valueList[8]);
         processQuery(query);
     }
 
-    private void deleteQuery(String id) {
+    public void deleteAccount(String id) {
         String query = String.format(Queries.DELETE_QUERY, id);
         processQuery(query);
     }

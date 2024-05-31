@@ -26,10 +26,10 @@ public class Texts {
     public static final String OK = "OK";
     public static final String GO_BACK = "GO BACK";
     public static final String DUPLICATION_CHECK = "Duplication Check";
-    public static final String LOGIN_COMPLETE = "Log in COMPLETE!";
-    public static final String LOGIN_FAIL = "Log in Fail!";
+    public static final String LOGIN_COMPLETE = "LOG IN COMPLETE!";
+    public static final String LOGIN_FAIL = "LOG IN Fail!";
+    public static final String DELETE_COMPLETE = "DELETE COMPLETE!";
     public static final String FAIL = "FAIL";
     public static final String COMPLETE = "COMPLETE";
-    public static final String FRONT_PHONE_NUMBER = "010";
     public static final String[] EMAIL_COMBOBOX = new String[] {"gmail.com", "naver.com", "outlook.com", "icloud.com"};
 }

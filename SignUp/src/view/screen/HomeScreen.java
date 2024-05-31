@@ -19,8 +19,8 @@ public class HomeScreen extends JPanel{
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(3, 1));
 
-        JPanel[] buttonPanels = new JPanel[]{new ButtonPanel(Texts.ACCOUNT_MODIFY, actionListener), new ButtonPanel(Texts.ACCOUNT_DELETE, actionListener),
-                new ButtonPanel(Texts.LOGOUT, actionListener)};
+        JPanel[] buttonPanels = new JPanel[]{new ButtonPanel(Texts.ACCOUNT_MODIFY, actionListener),
+                new ButtonPanel(Texts.ACCOUNT_DELETE, actionListener), new ButtonPanel(Texts.LOGOUT, actionListener)};
 
         for (JPanel panel : buttonPanels) {
             mainPanel.add(panel);

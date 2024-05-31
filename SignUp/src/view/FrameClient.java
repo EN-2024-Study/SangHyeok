@@ -15,7 +15,8 @@ public class FrameClient extends JFrame implements IView {
 
     public FrameClient(ActionListener actionListener) {
         this.panelList = new JPanel[] {new FindScreen(actionListener),
-                new HomeScreen(actionListener), new LogInScreen(actionListener), new SignUpScreen(actionListener)};
+                new HomeScreen(actionListener), new LogInScreen(actionListener),
+                new SignUpScreen(actionListener, true), new SignUpScreen(actionListener, false)};
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle(Texts.TITLE);
@@ -41,6 +42,10 @@ public class FrameClient extends JFrame implements IView {
                 IScreen screen = (IScreen) panelList[3];
                 return screen.getText();
             }
+            case Modified -> {
+                IScreen screen = (IScreen) panelList[4];
+                return screen.getText();
+            }
         }
         return null;
     }
@@ -61,6 +66,7 @@ public class FrameClient extends JFrame implements IView {
             case Home -> add(panelList[1], BorderLayout.CENTER);
             case LogIn -> add(panelList[2], BorderLayout.CENTER);
             case SignUp -> add(panelList[3], BorderLayout.CENTER);
+            case Modified -> add(panelList[4], BorderLayout.CENTER);
         }
 
         restartFrame();

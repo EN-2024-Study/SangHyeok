@@ -15,10 +15,14 @@ public class SignUpScreen extends JPanel implements IScreen {
 
     private TextFieldPanel[] textFieldPanel;
     private JComboBox<String> emailAddress;
+    private boolean isSignUp;
 
-    public SignUpScreen(ActionListener actionListener) {
-        textFieldPanel = new TextFieldPanel[9];
-        initScreen(actionListener);
+    public SignUpScreen(ActionListener actionListener, boolean isSignUp) {
+        this.textFieldPanel = new TextFieldPanel[9];
+        this.isSignUp = isSignUp;
+        setLayout(new BorderLayout());
+        initTextPanel();
+        initButtonPanel(actionListener);
     }
 
     @Override
@@ -37,27 +41,24 @@ public class SignUpScreen extends JPanel implements IScreen {
         return map;
     }
 
-    private void initScreen(ActionListener actionListener) {
-        setLayout(new BorderLayout());
-        initTextPanel();
-        initButtonPanel(actionListener);
-    }
-
     private void initTextPanel() {
         JPanel mainPanel = new JPanel();
 
-        textFieldPanel[0] = new TextFieldPanel(10, Texts.NAME);
-        textFieldPanel[1] = new TextFieldPanel(14, Texts.ID);
-        textFieldPanel[2] = new TextFieldPanel(14, Texts.PASSWORD);
-        textFieldPanel[3] = new TextFieldPanel(14, Texts.PASSWORD_CHECK);
-        textFieldPanel[4] = new TextFieldPanel(8, Texts.BIRTHDAY);
-        textFieldPanel[6] = new TextFieldPanel(11, Texts.PHONE_NUMBER);
-        textFieldPanel[7] = new TextFieldPanel(100, Texts.ADDRESS);
-        textFieldPanel[8] = new TextFieldPanel(100, Texts.DETAILED_ADDRESS);
+        textFieldPanel[0] = new TextFieldPanel(10, Texts.NAME, false);
+        textFieldPanel[1] = new TextFieldPanel(14, Texts.ID, false);
+        textFieldPanel[2] = new TextFieldPanel(14, Texts.PASSWORD, true);
+        textFieldPanel[3] = new TextFieldPanel(14, Texts.PASSWORD_CHECK, true);
+        textFieldPanel[4] = new TextFieldPanel(8, Texts.BIRTHDAY, false);
+        textFieldPanel[5] = new TextFieldPanel(20, Texts.EMAIL, false);
+        textFieldPanel[6] = new TextFieldPanel(11, Texts.PHONE_NUMBER, false);
+        textFieldPanel[7] = new TextFieldPanel(100, Texts.ADDRESS, false);
+        textFieldPanel[8] = new TextFieldPanel(100, Texts.DETAILED_ADDRESS, false);
 
         mainPanel.setLayout(new GridLayout(9, 1));
         mainPanel.add(textFieldPanel[0]);
-        mainPanel.add(textFieldPanel[1]);
+        if (isSignUp) {
+            mainPanel.add(textFieldPanel[1]);
+        }
         mainPanel.add(textFieldPanel[2]);
         mainPanel.add(textFieldPanel[3]);
         mainPanel.add(textFieldPanel[4]);
@@ -87,7 +88,6 @@ public class SignUpScreen extends JPanel implements IScreen {
         JPanel mainPanel = new JPanel();
         JLabel at = new JLabel(Texts.AT);
         emailAddress = new JComboBox<>(Texts.EMAIL_COMBOBOX);
-        textFieldPanel[5] = new TextFieldPanel(20, Texts.EMAIL);
 
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();

@@ -39,9 +39,9 @@ public class FindScreen extends JPanel implements IScreen {
         mainPanel.setLayout(new GridLayout(3, 1));
 
         textFieldPanel = new TextFieldPanel[3];
-        textFieldPanel[0] = new TextFieldPanel(10, Texts.NAME);
-        textFieldPanel[1] = new TextFieldPanel(20, Texts.EMAIL);
-        textFieldPanel[2] = new TextFieldPanel(4, Texts.VERIFICATION_CODE);
+        textFieldPanel[0] = new TextFieldPanel(10, Texts.NAME, false);
+        textFieldPanel[1] = new TextFieldPanel(20, Texts.EMAIL, false);
+        textFieldPanel[2] = new TextFieldPanel(4, Texts.VERIFICATION_CODE, false);
         mainPanel.add(textFieldPanel[0]);
         mainPanel.add(textFieldPanel[1]);
         mainPanel.add(textFieldPanel[2]);

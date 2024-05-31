@@ -15,6 +15,7 @@ public class Texts {
     public static final String DETAILED_ADDRESS = "detailed ADDRESS";
     public static final String SIGNUP = "SIGN UP";
     public static final String SIGNUP_CHECK = "SIGN UP CHECK";
+    public static final String MODIFIED_CHECK = "MODIFIED CHECK";
     public static final String LOGIN = "LOG IN";
     public static final String LOGOUT = "LOG OUT";
     public static final String FIND_ID = "FIND ID";
@@ -26,10 +27,13 @@ public class Texts {
     public static final String OK = "OK";
     public static final String GO_BACK = "GO BACK";
     public static final String DUPLICATION_CHECK = "Duplication Check";
+    public static final String DUPLICATION = "Duplication!";
     public static final String LOGIN_COMPLETE = "LOG IN COMPLETE!";
     public static final String LOGIN_FAIL = "LOG IN Fail!";
     public static final String DELETE_COMPLETE = "DELETE COMPLETE!";
     public static final String FAIL = "FAIL";
     public static final String COMPLETE = "COMPLETE";
+    public static final String REQUEST_INPUT = "Please input your ID";
+    public static final String AVAILABLE_ID = "Available ID";
     public static final String[] EMAIL_COMBOBOX = new String[] {"gmail.com", "naver.com", "outlook.com", "icloud.com"};
 }

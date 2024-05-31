@@ -5,6 +5,5 @@ import constant.Enums;
 import java.util.HashMap;
 
 public interface IScreen {
-    HashMap<Enums.TextType, String > getText();
-
+    HashMap<Enums.TextType, String> getText();
 }

@@ -31,6 +31,7 @@ public class Texts {
     public static final String LOGIN_COMPLETE = "LOG IN COMPLETE!";
     public static final String DELETE_COMPLETE = "DELETE COMPLETE!";
     public static final String SIGNUP_COMPLETE = "SIGNUP COMPLETE";
+    public static final String MODIFY_COMPLETE = "MODIFY COMPLETE!";
     public static final String LOGIN_FAIL = "LOG IN Fail!";
     public static final String FAIL = "FAIL";
     public static final String COMPLETE = "COMPLETE";

@@ -3,6 +3,7 @@ package listener;
 import constant.Enums;
 import constant.Texts;
 import model.AccountDao;
+import model.IAccount;
 import view.FrameClient;
 import view.IView;
 
@@ -13,15 +14,15 @@ import java.util.List;
 
 public class Controller implements ActionListener {
 
-    private IView iView;
-    private AccountDao accountDao;
+    private final IView iView;
+    private final IAccount iAccount;
     private boolean isFindId;
     private boolean isCheckedDuplication;
     private String logInId;
 
     public Controller() {
         this.iView = new FrameClient(this);
-        this.accountDao = new AccountDao();
+        this.iAccount = new AccountDao();
         this.isFindId = false;
         this.isCheckedDuplication = false;
         this.logInId = "";
@@ -30,7 +31,10 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case Texts.GO_BACK, Texts.LOGOUT -> iView.showScreen(Enums.ScreenType.LogIn);
+            case Texts.GO_BACK, Texts.LOGOUT -> {
+                logInId = "";
+                iView.showScreen(Enums.ScreenType.LogIn);
+            }
 
             //===== LogIn Screen 버튼들 =====//
             case Texts.LOGIN -> processLogIn();
@@ -54,9 +58,7 @@ public class Controller implements ActionListener {
 
             }
             case Texts.SIGNUP_CHECK -> processSignUp();
-            case Texts.MODIFIED_CHECK -> {
-
-            }
+            case Texts.MODIFIED_CHECK -> processModified();
 
             //===== Find Screen 버튼들 =====//
             case Texts.GET_CODE -> {
@@ -72,7 +74,7 @@ public class Controller implements ActionListener {
         HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.LogIn);
         String inputId = inputTextMap.get(Enums.TextType.Id);
         String inputPassword = inputTextMap.get(Enums.TextType.Password);
-        HashMap<Enums.TextType, String> userMap = accountDao.findAccount(inputId);
+        HashMap<Enums.TextType, String> userMap = iAccount.findAccount(inputId);
 
         if (userMap.isEmpty() || !inputPassword.equals(userMap.get(Enums.TextType.Password))) {
             iView.showDialog(false, Texts.LOGIN_FAIL);
@@ -106,20 +108,20 @@ public class Controller implements ActionListener {
         }
 
         //===== SignUp complete =====//
-        accountDao.insertAccount(inputTextMap);
+        iAccount.insertAccount(inputTextMap);
+        isCheckedDuplication = false;
         iView.showDialog(true, Texts.SIGNUP_COMPLETE);
         iView.showScreen(Enums.ScreenType.LogIn);
-        isCheckedDuplication = false;
     }
 
     private void processDelete() {
-        accountDao.deleteAccount(logInId);
+        iAccount.deleteAccount(logInId);
         iView.showDialog(true, Texts.DELETE_COMPLETE);
         iView.showScreen(Enums.ScreenType.LogIn);
     }
 
     private void checkIdDuplication() {
-        List<String> idList = accountDao.getIdList();
+        List<String> idList = iAccount.getIdList();
         HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.SignUp);
 
         if (!inputTextMap.containsKey(Enums.TextType.Id)) { // id 입력을 했는지
@@ -136,5 +138,41 @@ public class Controller implements ActionListener {
 
         isCheckedDuplication = true;
         iView.showDialog(true, Texts.AVAILABLE_ID);
+    }
+
+    private void processModified() {
+        HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.Modified);
+        String name = inputTextMap.get(Enums.TextType.Name);
+        String password = inputTextMap.get(Enums.TextType.Password);
+        String birthday = inputTextMap.get(Enums.TextType.BirthDay);
+        String email = inputTextMap.get(Enums.TextType.Email);
+        String phoneNumber = inputTextMap.get(Enums.TextType.PhoneNumber);
+        String address = inputTextMap.get(Enums.TextType.Address);
+        String detailedAddress = inputTextMap.get(Enums.TextType.DetailedAddress);
+
+        if (!name.isEmpty()) {
+            iAccount.modifyAccount(logInId, Texts.NAME, inputTextMap.get(Enums.TextType.Name));
+        }
+        if (!password.isEmpty()) {
+            iAccount.modifyAccount(logInId, Texts.PASSWORD, inputTextMap.get(Enums.TextType.Password));
+        }
+        if (!birthday.isEmpty()) {
+            iAccount.modifyAccount(logInId, Texts.BIRTHDAY, inputTextMap.get(Enums.TextType.BirthDay));
+        }
+        if (!email.isEmpty()) {
+            iAccount.modifyAccount(logInId, Texts.EMAIL, inputTextMap.get(Enums.TextType.Email));
+        }
+        if (!phoneNumber.isEmpty()) {
+            iAccount.modifyAccount(logInId, Texts.PHONE_NUMBER, inputTextMap.get(Enums.TextType.PhoneNumber));
+        }
+        if (!address.isEmpty()) {
+            iAccount.modifyAccount(logInId, Texts.ADDRESS, inputTextMap.get(Enums.TextType.Address));
+        }
+        if (!detailedAddress.isEmpty()) {
+            iAccount.modifyAccount(logInId, Texts.DETAILED_ADDRESS, inputTextMap.get(Enums.TextType.DetailedAddress));
+        }
+
+        iView.showDialog(true, Texts.MODIFY_COMPLETE);
+        iView.showScreen(Enums.ScreenType.Home);
     }
 }

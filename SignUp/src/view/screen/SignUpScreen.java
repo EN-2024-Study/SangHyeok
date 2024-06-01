@@ -2,7 +2,6 @@ package view.screen;
 
 import constant.Enums;
 import constant.Texts;
-import listener.Controller;
 import view.screen.panel.ButtonPanel;
 import view.screen.panel.TextFieldPanel;
 
@@ -79,7 +78,7 @@ public class SignUpScreen extends JPanel implements IScreen {
             buttonPanels = new JPanel[]{new ButtonPanel(Texts.DUPLICATION_CHECK, actionListener), new ButtonPanel(Texts.FIND_ADDRESS, actionListener),
                     new ButtonPanel(Texts.SIGNUP_CHECK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
         } else {
-            buttonPanels = new JPanel[]{new ButtonPanel(Texts.DUPLICATION_CHECK, actionListener), new ButtonPanel(Texts.FIND_ADDRESS, actionListener),
+            buttonPanels = new JPanel[]{new ButtonPanel(Texts.FIND_ADDRESS, actionListener),
                     new ButtonPanel(Texts.MODIFIED_CHECK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
         }
 

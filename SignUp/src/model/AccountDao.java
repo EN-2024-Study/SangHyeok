@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static java.lang.System.getenv;
 
-public class AccountDao {
+public class AccountDao implements IAccount {
 
     private Statement statement;
 
@@ -32,6 +32,7 @@ public class AccountDao {
         return DriverManager.getConnection(url, userName, password);
     }
 
+    @Override
     public List<String> getIdList() {
         List<String> resultList = new ArrayList<>();
         ResultSet resultSet = getResultSet(Queries.SELECT_ID_QUERY);
@@ -47,6 +48,7 @@ public class AccountDao {
         return resultList;
     }
 
+    @Override
     public HashMap<Enums.TextType, String> findAccount(String id) {
         HashMap<Enums.TextType, String> resultMap = new HashMap<>();
         ResultSet resultSet = getResultSet(String.format(Queries.SELECT_WHERE_QUERY, id));
@@ -69,6 +71,7 @@ public class AccountDao {
         return resultMap;
     }
 
+    @Override
     public void insertAccount(HashMap<Enums.TextType, String> account) {
         String name = account.get(Enums.TextType.Name);
         String id = account.get(Enums.TextType.Id);
@@ -84,6 +87,14 @@ public class AccountDao {
         processUpdateQuery(query);
     }
 
+    @Override
+    public void modifyAccount(String id, String column, String value) {
+        String query = String.format(Queries.UPDATE_QUERY, column, value, id);
+        System.out.println(query);
+        processUpdateQuery(query);
+    }
+
+    @Override
     public void deleteAccount(String id) {
         String query = String.format(Queries.DELETE_QUERY, id);
         processUpdateQuery(query);

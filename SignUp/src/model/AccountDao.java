@@ -34,9 +34,9 @@ public class AccountDao {
 
     public List<String> getIdList() {
         List<String> resultList = new ArrayList<>();
+        ResultSet resultSet = getResultSet(Queries.SELECT_ID_QUERY);
 
         try {
-            ResultSet resultSet = statement.executeQuery(Queries.SELECT_ID_QUERY);
             while(resultSet.next()) {
                 resultList.add(resultSet.getString(1));
             }
@@ -49,9 +49,9 @@ public class AccountDao {
 
     public HashMap<Enums.TextType, String> findAccount(String id) {
         HashMap<Enums.TextType, String> resultMap = new HashMap<>();
+        ResultSet resultSet = getResultSet(String.format(Queries.SELECT_WHERE_QUERY, id));
 
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(Queries.SELECT_WHERE_QUERY, id));
             if (resultSet.next()) {
                 resultMap.put(Enums.TextType.Name, resultSet.getString("name"));
                 resultMap.put(Enums.TextType.Id, resultSet.getString("id"));
@@ -65,18 +65,37 @@ public class AccountDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return resultMap;
     }
 
-    public void insertAccount(String[] valueList) {
-        String query = String.format(Queries.INSERT_QUERY, valueList[0], valueList[1],
-                valueList[2], valueList[3], valueList[4], valueList[5], valueList[6], valueList[7], valueList[8]);
+    public void insertAccount(HashMap<Enums.TextType, String> account) {
+        String name = account.get(Enums.TextType.Name);
+        String id = account.get(Enums.TextType.Id);
+        String password = account.get(Enums.TextType.Password);
+        String birthday = account.get(Enums.TextType.BirthDay);
+        String email = account.get(Enums.TextType.Email);
+        String phoneNumber = account.get(Enums.TextType.PhoneNumber);
+        String address = account.get(Enums.TextType.Address);
+        String detailedAddress = account.get(Enums.TextType.DetailedAddress);
+        String query = String.format(Queries.INSERT_QUERY, name, id,
+                password, birthday, email, phoneNumber, address, detailedAddress);
+
         processUpdateQuery(query);
     }
 
     public void deleteAccount(String id) {
         String query = String.format(Queries.DELETE_QUERY, id);
         processUpdateQuery(query);
+    }
+
+    private ResultSet getResultSet(String query) {
+        try {
+            return statement.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void processUpdateQuery(String query) {

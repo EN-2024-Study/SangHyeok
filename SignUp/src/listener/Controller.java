@@ -87,6 +87,29 @@ public class Controller implements ActionListener {
     private void processSignUp() {
         HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.SignUp);
 
+        if (!isCheckedDuplication) { // 중복 확인 버튼을 누르지 않았을 때
+            iView.showDialog(false, Texts.REQUEST_DUPLICATION);
+            return;
+        }
+
+        for (String inputText : inputTextMap.values()) {
+            if (inputText.isEmpty()) {  // 입력하지 않은 TextField 존재할 때
+                iView.showDialog(false, Texts.REQUEST_INPUT);
+                return;
+            }
+        }
+
+        if (!inputTextMap.get(Enums.TextType.Password).equals   // 비밀번호와 비밀번호 확인이 다를 때
+                (inputTextMap.get(Enums.TextType.PasswordCheck))) {
+            iView.showDialog(false, Texts.WRONG_PASSWORD);
+            return;
+        }
+
+        //===== SignUp complete =====//
+        accountDao.insertAccount(inputTextMap);
+        iView.showDialog(true, Texts.SIGNUP_COMPLETE);
+        iView.showScreen(Enums.ScreenType.LogIn);
+        isCheckedDuplication = false;
     }
 
     private void processDelete() {
@@ -100,11 +123,11 @@ public class Controller implements ActionListener {
         HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.SignUp);
 
         if (!inputTextMap.containsKey(Enums.TextType.Id)) { // id 입력을 했는지
-            iView.showDialog(false, Texts.REQUEST_INPUT);
+            iView.showDialog(false, Texts.REQUEST_INPUT_ID);
             return;
         }
 
-        for(String id : idList) {   // 중복 체크
+        for (String id : idList) {   // 중복 체크
             if (inputTextMap.get(Enums.TextType.Id).equals(id)) {
                 iView.showDialog(false, Texts.DUPLICATION);
                 return;

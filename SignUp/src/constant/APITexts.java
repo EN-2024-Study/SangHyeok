@@ -2,7 +2,8 @@ package constant;
 
 public class APITexts {
     public static final String API_KEY = "API_KEY";
-    public static final String URL = "https://dapi.kakao.com/v2/local/search/address.json";
+    public static final String ADDRESS_URL = "https://www.juso.go.kr/openIndexPage.do";
+    public static final String KAKAO_URL = "https://dapi.kakao.com/v2/local/search/address.json";
     public static final String encoding = "UTF-8";
     public static final String QUERY = "?query=";
     public static final String GET = "GET";

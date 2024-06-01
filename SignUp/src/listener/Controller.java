@@ -1,5 +1,6 @@
 package listener;
 
+import constant.APITexts;
 import constant.DialogTexts;
 import constant.Enums;
 import constant.Texts;
@@ -10,8 +11,12 @@ import model.IAddress;
 import view.FrameClient;
 import view.IView;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,9 +63,10 @@ public class Controller implements ActionListener {
 
             //===== SignUp Screen 버튼들 =====//
             case Texts.DUPLICATION_CHECK -> checkIdDuplication();
-            case Texts.ADDRESS_CHECK -> processFindAddress();
+            case Texts.ADDRESS_CHECK -> checkAddress();
             case Texts.SIGNUP_CHECK -> processSignUp();
             case Texts.MODIFIED_CHECK -> processModified();
+            case Texts.FIND_ADDRESS -> processFindAddress();
 
             //===== AccountFinder Screen 버튼들 =====//
             case Texts.GET_CODE -> {
@@ -95,7 +101,7 @@ public class Controller implements ActionListener {
         iView.showScreen(Enums.ScreenType.Home);
     }
 
-    private void processFindAddress() {
+    private void checkAddress() {
         HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.Modify);
 
         if (loggedInAccount.isEmpty()) { // signup screen 일 때
@@ -200,6 +206,15 @@ public class Controller implements ActionListener {
 
         iView.showDialog(true, DialogTexts.MODIFY_COMPLETE);
         iView.showScreen(Enums.ScreenType.Home);
+    }
+
+    private void processFindAddress() {
+        String urlLink = APITexts.ADDRESS_URL;
+        try {
+            Desktop.getDesktop().browse(new URL(urlLink).toURI());
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean isValidSignUp(HashMap<Enums.TextType, String> inputTextMap) {

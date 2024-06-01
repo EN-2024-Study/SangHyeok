@@ -51,7 +51,7 @@ public class AddressDao implements IAddress {
 
     private int getResponseCode(String query) throws IOException {
         String encodedQuery = URLEncoder.encode(query, APITexts.encoding);
-        URL url = new URL(APITexts.URL + APITexts.QUERY + encodedQuery);
+        URL url = new URL(APITexts.KAKAO_URL + APITexts.QUERY + encodedQuery);
 
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod(APITexts.GET);

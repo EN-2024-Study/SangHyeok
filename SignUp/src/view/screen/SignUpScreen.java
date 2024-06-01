@@ -117,9 +117,9 @@ public class SignUpScreen extends JPanel implements IScreen, ITextFieldSetter {
 
         if (isSignUp) {
             buttonPanels = new JPanel[]{new ButtonPanel(Texts.DUPLICATION_CHECK, actionListener), new ButtonPanel(Texts.ADDRESS_CHECK, actionListener),
-                    new ButtonPanel(Texts.SIGNUP_CHECK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
+                   new ButtonPanel(Texts.FIND_ADDRESS, actionListener),  new ButtonPanel(Texts.SIGNUP_CHECK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
         } else {
-            buttonPanels = new JPanel[]{new ButtonPanel(Texts.ADDRESS_CHECK, actionListener),
+            buttonPanels = new JPanel[]{new ButtonPanel(Texts.ADDRESS_CHECK, actionListener), new ButtonPanel(Texts.FIND_ADDRESS, actionListener),
                     new ButtonPanel(Texts.MODIFIED_CHECK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
         }
 

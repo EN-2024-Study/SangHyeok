@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class SignUpScreen extends JPanel implements IScreen, ITextSetter {
+public class SignUpScreen extends JPanel implements IScreen, ITextFieldSetter {
 
     private TextFieldPanel[] textFieldPanel;
     private JComboBox<String> emailAddress;
@@ -41,8 +41,36 @@ public class SignUpScreen extends JPanel implements IScreen, ITextSetter {
     }
 
     @Override
-    public void setText(HashMap<Enums.TextType, String> valueMap) {
+    public void setTextField(HashMap<Enums.TextType, String> valueMap) {
+        boolean isFindAddress = true;
 
+        if (valueMap.containsKey(Enums.TextType.Name)) {
+            isFindAddress = false;
+            textFieldPanel[0].setText(valueMap.get(Enums.TextType.Name));
+        }
+        if (valueMap.containsKey(Enums.TextType.Id))  {
+            textFieldPanel[1].setText(valueMap.get(Enums.TextType.Id));
+        }
+        if (valueMap.containsKey(Enums.TextType.BirthDay))  {
+            textFieldPanel[4].setText(valueMap.get(Enums.TextType.BirthDay));
+        }
+        if (valueMap.containsKey(Enums.TextType.Email))  {
+            String email = valueMap.get(Enums.TextType.Email).split(Texts.AT)[0];
+            textFieldPanel[5].setText(email);
+        }
+        if (valueMap.containsKey(Enums.TextType.PhoneNumber))  {
+            textFieldPanel[6].setText(valueMap.get(Enums.TextType.PhoneNumber));
+        }
+        if (valueMap.containsKey(Enums.TextType.Address))  {
+            textFieldPanel[7].setText(valueMap.get(Enums.TextType.Address));
+        }
+        if (valueMap.containsKey(Enums.TextType.DetailedAddress))  {
+            textFieldPanel[8].setText(valueMap.get(Enums.TextType.DetailedAddress));
+        }
+
+        if (isFindAddress) {
+            textFieldPanel[7].setNoEditable();
+        }
     }
 
     private void initTextPanel() {

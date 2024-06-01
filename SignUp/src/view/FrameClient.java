@@ -23,7 +23,6 @@ public class FrameClient extends JFrame implements IView {
         setTitle(Texts.TITLE);
         setLayout(new BorderLayout());
 
-        showScreen(Enums.ScreenType.LogIn);
         setSize(600, 600);
         setVisible(true);
     }
@@ -93,15 +92,14 @@ public class FrameClient extends JFrame implements IView {
     }
 
     @Override
-    public void setText(Enums.ScreenType screenType, HashMap<Enums.TextType, String> valueMap) {
+    public void setTextField(Enums.ScreenType screenType, HashMap<Enums.TextType, String> valueMap) {
+        ITextFieldSetter textFieldSetter = null;
         switch(screenType) {
-            case SignUp -> {
-
-            }
-            case Modify -> {
-
-            }
+            case SignUp -> textFieldSetter = (ITextFieldSetter) panelList[3];
+            case Modify -> textFieldSetter = (ITextFieldSetter) panelList[4];
         }
+
+        textFieldSetter.setTextField(valueMap);
     }
 
     private JPanel getBlankPanel() {

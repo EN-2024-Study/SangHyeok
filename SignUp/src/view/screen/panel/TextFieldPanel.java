@@ -15,6 +15,14 @@ public class TextFieldPanel extends JPanel {
         return textField.getText();
     }
 
+    public void setText(String text) {
+        textField.setText(text);
+    }
+
+    public void setNoEditable() {
+        textField.setEnabled(false);
+    }
+
     private void init(int maxLength, String labelText, boolean isPassword) {
         setLayout(new GridLayout(1, 3));
 

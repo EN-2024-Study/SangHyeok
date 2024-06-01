@@ -10,4 +10,7 @@ public class APITexts {
     public static final String KAKAOAK = "KakaoAK ";
     public static final String DOCUMENT = "documents";
     public static final String ADDRESS_NAME = "address_name";
+    public static final String ADDRESS__TYPE = "address_type";
+    public static final String REGION_ADDR = "REGION_ADDR";
+    public static final String ROAD_ADDR = "ROAD_ADDR";
 }

@@ -21,8 +21,8 @@ public class TextFieldPanel extends JPanel {
         textField.setText(text);
     }
 
-    public void setNoEditable() {
-        textField.setEnabled(false);
+    public void setNoEditable(boolean isNoEditable) {
+        textField.setEnabled(isNoEditable);
     }
 
     private void init(int maxLength, String labelText, boolean isPassword) {

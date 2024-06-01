@@ -17,6 +17,7 @@ public class Texts {
     public static final String SIGNUP_CHECK = "SIGN UP CHECK";
     public static final String MODIFIED_CHECK = "MODIFIED CHECK";
     public static final String DUPLICATION_CHECK = "Duplication Check";
+    public static final String ADDRESS_CHECK = "Address Check";
     public static final String LOGIN = "LOG IN";
     public static final String LOGOUT = "LOG OUT";
     public static final String FIND_ID = "FIND ID";

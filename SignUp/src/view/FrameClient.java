@@ -15,7 +15,7 @@ public class FrameClient extends JFrame implements IView {
     private JPanel[] panelList;
 
     public FrameClient(ActionListener actionListener) {
-        this.panelList = new JPanel[]{new FindScreen(actionListener),
+        this.panelList = new JPanel[]{new AccountFinderScreen(actionListener),
                 new HomeScreen(actionListener), new LogInScreen(actionListener),
                 new SignUpScreen(actionListener, true), new SignUpScreen(actionListener, false)};
 

@@ -44,6 +44,7 @@ public class SignUpScreen extends JPanel implements IScreen, ITextFieldSetter {
         for(TextFieldPanel text : textFieldPanel) {
             text.setText("");
         }
+        textFieldPanel[7].setNoEditable(true);
     }
 
     @Override
@@ -75,7 +76,7 @@ public class SignUpScreen extends JPanel implements IScreen, ITextFieldSetter {
         }
 
         if (isFindAddress) {
-            textFieldPanel[7].setNoEditable();
+            textFieldPanel[7].setNoEditable(false);
         }
     }
 
@@ -115,10 +116,10 @@ public class SignUpScreen extends JPanel implements IScreen, ITextFieldSetter {
         JPanel[] buttonPanels = null;
 
         if (isSignUp) {
-            buttonPanels = new JPanel[]{new ButtonPanel(Texts.DUPLICATION_CHECK, actionListener), new ButtonPanel(Texts.FIND_ADDRESS, actionListener),
+            buttonPanels = new JPanel[]{new ButtonPanel(Texts.DUPLICATION_CHECK, actionListener), new ButtonPanel(Texts.ADDRESS_CHECK, actionListener),
                     new ButtonPanel(Texts.SIGNUP_CHECK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
         } else {
-            buttonPanels = new JPanel[]{new ButtonPanel(Texts.FIND_ADDRESS, actionListener),
+            buttonPanels = new JPanel[]{new ButtonPanel(Texts.ADDRESS_CHECK, actionListener),
                     new ButtonPanel(Texts.MODIFIED_CHECK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
         }
 

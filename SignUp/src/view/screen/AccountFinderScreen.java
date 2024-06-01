@@ -2,7 +2,6 @@ package view.screen;
 
 import constant.Enums;
 import constant.Texts;
-import listener.Controller;
 import view.screen.panel.ButtonPanel;
 import view.screen.panel.TextFieldPanel;
 
@@ -11,11 +10,11 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class FindScreen extends JPanel implements IScreen {
+public class AccountFinderScreen extends JPanel implements IScreen {
 
     private TextFieldPanel[] textFieldPanel;
 
-    public FindScreen(ActionListener actionListener) {
+    public AccountFinderScreen(ActionListener actionListener) {
         setLayout(new GridLayout(2, 1));
         initTextPanel();
         initButtonPanel(actionListener);

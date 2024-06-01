@@ -20,9 +20,9 @@ public class Controller implements ActionListener {
     private final IView iView;
     private final IAccount iAccount;
     private final IAddress iAddress;
-    private boolean isFindId;
+    private boolean isFoundId;
+    private boolean isCheckedAddress;
     private boolean isCheckedDuplication;
-    private String address;
     private HashMap<Enums.TextType, String> loggedInAccount;
 
     public Controller() {
@@ -41,11 +41,11 @@ public class Controller implements ActionListener {
             case Texts.LOGIN -> processLogIn();
             case Texts.SIGNUP -> iView.showScreen(Enums.ScreenType.SignUp);
             case Texts.FIND_ID -> {
-                isFindId = true;
+                isFoundId = true;
                 iView.showScreen(Enums.ScreenType.Find);
             }
             case Texts.FIND_PASSWORD -> {
-                isFindId = false;
+                isFoundId = false;
                 iView.showScreen(Enums.ScreenType.Find);
             }
 
@@ -58,11 +58,11 @@ public class Controller implements ActionListener {
 
             //===== SignUp Screen 버튼들 =====//
             case Texts.DUPLICATION_CHECK -> checkIdDuplication();
-            case Texts.FIND_ADDRESS -> processFindAddress();
+            case Texts.ADDRESS_CHECK -> processFindAddress();
             case Texts.SIGNUP_CHECK -> processSignUp();
             case Texts.MODIFIED_CHECK -> processModified();
 
-            //===== Find Screen 버튼들 =====//
+            //===== AccountFinder Screen 버튼들 =====//
             case Texts.GET_CODE -> {
 
             }
@@ -73,9 +73,9 @@ public class Controller implements ActionListener {
     }
 
     private void processLogOut() {
-        this.isFindId = false;
+        this.isFoundId = false;
         this.isCheckedDuplication = false;
-        this.address = "";
+        this.isCheckedAddress = false;
         this.loggedInAccount = new HashMap<>();
         iView.showScreen(Enums.ScreenType.LogIn);
     }
@@ -102,25 +102,21 @@ public class Controller implements ActionListener {
             inputTextMap = iView.getText(Enums.ScreenType.SignUp);
         }
 
-        if (inputTextMap.get(Enums.TextType.Address).isEmpty()) {
+        String foundAddress = iAddress.searchAddress(inputTextMap.get(Enums.TextType.Address));
+        if (foundAddress == null || foundAddress.isEmpty()) {
             iView.showDialog(false, String.format(DialogTexts.REQUEST_INPUT, Texts.ADDRESS));
             return;
         }
 
-        address = iAddress.searchAddress(inputTextMap.get(Enums.TextType.Address));
-
-        if (address == null || address.isEmpty()) {
-            iView.showDialog(false, DialogTexts.WRONG_ADDRESS);
-            return;
-        }
-
         HashMap<Enums.TextType, String> map = new HashMap<>();
-        map.put(Enums.TextType.Address, address);
+        map.put(Enums.TextType.Address, foundAddress);
+        isCheckedAddress = true;
 
         if (loggedInAccount.isEmpty()) { // signup screen 일 때
             iView.setTextField(Enums.ScreenType.SignUp, map);
         }
         iView.setTextField(Enums.ScreenType.Modify, map);
+        iView.showDialog(true, DialogTexts.ADDRESS_COMPLETE);
     }
 
     private void processSignUp() {
@@ -231,7 +227,7 @@ public class Controller implements ActionListener {
             return false;
         }
 
-        if (address.isEmpty()) {    // 주소가 올바르지 않을 때
+        if (!isCheckedAddress) {    // 주소가 올바르지 않을 때
             iView.showDialog(false, String.format(DialogTexts.REQUEST_INPUT, Texts.ADDRESS));
             return false;
         }

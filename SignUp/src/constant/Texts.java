@@ -28,5 +28,12 @@ public class Texts {
     public static final String GET_CODE = "GET CODE";
     public static final String OK = "OK";
     public static final String GO_BACK = "GO BACK";
-    public static final String[] EMAIL_COMBOBOX = new String[] {"gmail.com", "naver.com", "outlook.com", "icloud.com"};
+    public static final String[] EMAIL_COMBOBOX = new String[] {"@gmail.com", "@naver.com", "@outlook.com", "@icloud.com"};
+    public static final String MAIN_IMAGE = "src/images/main_image.jpg";
+    public static final String HOME_IMAGE = "src/images/home_image.jpg";
+    public static final String NAME_PLACEHOLDER = "2~4글자의 한영";
+    public static final String ID_PLACEHOLDER = "학번 8자리";
+    public static final String PASSWORD_PLACEHOLDER = "4자리 숫자";
+    public static final String BIRTHDAY_PLACEHOLDER = "8자리 숫자";
+    public static final String PHONE_PLACEHOLDER = "11자리 숫자";
 }

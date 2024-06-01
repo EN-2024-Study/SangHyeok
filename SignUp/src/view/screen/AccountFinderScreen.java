@@ -15,7 +15,7 @@ public class AccountFinderScreen extends JPanel implements ITextField {
     private TextFieldPanel[] textFieldPanel;
 
     public AccountFinderScreen(ActionListener actionListener) {
-        setLayout(new GridLayout(2, 1));
+        setLayout(null);
         initTextPanel();
         initButtonPanel(actionListener);
     }
@@ -43,7 +43,7 @@ public class AccountFinderScreen extends JPanel implements ITextField {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ImageIcon imageIcon = new ImageIcon("src/images/find_image.jpg");
+        ImageIcon imageIcon = new ImageIcon(Texts.MAIN_IMAGE);
         g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), null);
     }
 
@@ -53,16 +53,14 @@ public class AccountFinderScreen extends JPanel implements ITextField {
         mainPanel.setOpaque(false);
 
         textFieldPanel = new TextFieldPanel[3];
-        textFieldPanel[0] = new TextFieldPanel(10, Texts.NAME, false);
-        textFieldPanel[1] = new TextFieldPanel(20, Texts.EMAIL, false);
-        textFieldPanel[2] = new TextFieldPanel(4, Texts.VERIFICATION_CODE, false);
-        textFieldPanel[0].setOpaque(false);
-        textFieldPanel[1].setOpaque(false);
-        textFieldPanel[2].setOpaque(false);
+        textFieldPanel[0] = new TextFieldPanel(10, Texts.NAME, Texts.NAME_PLACEHOLDER, false);
+        textFieldPanel[1] = new TextFieldPanel(20, Texts.EMAIL, "",false);
+        textFieldPanel[2] = new TextFieldPanel(4, Texts.VERIFICATION_CODE, "", false);
 
         mainPanel.add(textFieldPanel[0]);
         mainPanel.add(textFieldPanel[1]);
         mainPanel.add(textFieldPanel[2]);
+        mainPanel.setBounds(0, 0, 350, 150);
         add(mainPanel);
     }
 
@@ -75,14 +73,18 @@ public class AccountFinderScreen extends JPanel implements ITextField {
         blankPanel.add(new JLabel(" "));
         blankPanel.setOpaque(false);
 
-        mainPanel.setLayout(new GridLayout(3, 1));
+        mainPanel.setLayout(null);
         mainPanel.setOpaque(false);
+
+        buttonPanels[0].setBounds(0, 50, 100, 50);
+        buttonPanels[1].setBounds(0, 0, 100, 50);
+        buttonPanels[2].setBounds(0, 100, 100, 50);
 
         mainPanel.add(blankPanel);
         for (JPanel panel : buttonPanels) {
-            panel.setOpaque(false);
             mainPanel.add(panel);
         }
+        mainPanel.setBounds(350, 0, 300, 150);
 
         add(mainPanel);
     }

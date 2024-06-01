@@ -15,7 +15,7 @@ public class LogInScreen extends JPanel implements ITextField {
     private TextFieldPanel[] textFieldPanel;
 
     public LogInScreen(ActionListener actionListener) {
-//        setLayout(new GridLayout(2, 1));
+        setLayout(null);
         initTextPanel();
         initButtonPanel(actionListener);
     }
@@ -41,7 +41,7 @@ public class LogInScreen extends JPanel implements ITextField {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ImageIcon imageIcon = new ImageIcon("src/images/login_image.jpg");
+        ImageIcon imageIcon = new ImageIcon(Texts.MAIN_IMAGE);
         g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), null);
     }
 
@@ -50,14 +50,13 @@ public class LogInScreen extends JPanel implements ITextField {
         mainPanel.setLayout(new GridLayout(2, 1));
 
         textFieldPanel = new TextFieldPanel[2];
-        textFieldPanel[0] = new TextFieldPanel(14, Texts.ID, false);
-        textFieldPanel[1] = new TextFieldPanel(14, Texts.PASSWORD, true);
-        textFieldPanel[0].setOpaque(false);
-        textFieldPanel[1].setOpaque(false);
+        textFieldPanel[0] = new TextFieldPanel(8, Texts.ID, Texts.ID_PLACEHOLDER,false);
+        textFieldPanel[1] = new TextFieldPanel(4, Texts.PASSWORD, Texts.PASSWORD_PLACEHOLDER,true);
 
         mainPanel.add(textFieldPanel[0]);
         mainPanel.add(textFieldPanel[1]);
         mainPanel.setOpaque(false);
+        mainPanel.setBounds(0, 50, 250, 100);
 
         add(mainPanel);
     }
@@ -71,9 +70,10 @@ public class LogInScreen extends JPanel implements ITextField {
                 new ButtonPanel(Texts.FIND_ID, actionListener), new ButtonPanel(Texts.FIND_PASSWORD, actionListener)};
 
         for (JPanel panel : buttonPanels) {
-            panel.setOpaque(false);
             mainPanel.add(panel);
         }
+        mainPanel.setBounds(250, 50, 250, 100);
+
         add(mainPanel);
     }
 }

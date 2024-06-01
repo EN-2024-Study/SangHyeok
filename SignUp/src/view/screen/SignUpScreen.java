@@ -18,9 +18,10 @@ public class SignUpScreen extends JPanel implements ITextField, IEditor {
 
     public SignUpScreen(ActionListener actionListener, boolean isSignUp) {
         this.isSignUp = isSignUp;
-        setLayout(new BorderLayout());
+        setLayout(null);
         initTextPanel();
         initButtonPanel(actionListener);
+        initEmailComboBox();
     }
 
     @Override
@@ -44,7 +45,7 @@ public class SignUpScreen extends JPanel implements ITextField, IEditor {
         for(TextFieldPanel text : textFieldPanel) {
             text.setText("");
         }
-        textFieldPanel[7].setNoEditable(true);
+        textFieldPanel[7].setEditable(true);
     }
 
     @Override
@@ -76,98 +77,77 @@ public class SignUpScreen extends JPanel implements ITextField, IEditor {
         }
 
         if (isFindAddress) {
-            textFieldPanel[7].setNoEditable(false);
+            textFieldPanel[7].setEditable(false);
         }
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ImageIcon imageIcon = new ImageIcon("src/images/signup_image.jpg");
+        ImageIcon imageIcon = new ImageIcon(Texts.MAIN_IMAGE);
         g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), null);
     }
 
     private void initTextPanel() {
         JPanel mainPanel = new JPanel();
-
         textFieldPanel = new TextFieldPanel[9];
-        textFieldPanel[0] = new TextFieldPanel(4, Texts.NAME, false);
-        textFieldPanel[1] = new TextFieldPanel(8, Texts.ID, false);
-        textFieldPanel[2] = new TextFieldPanel(4, Texts.PASSWORD, true);
-        textFieldPanel[3] = new TextFieldPanel(4, Texts.PASSWORD_CHECK, true);
-        textFieldPanel[4] = new TextFieldPanel(8, Texts.BIRTHDAY, false);
-        textFieldPanel[5] = new TextFieldPanel(20, Texts.EMAIL, false);
-        textFieldPanel[6] = new TextFieldPanel(11, Texts.PHONE_NUMBER, false);
-        textFieldPanel[7] = new TextFieldPanel(100, Texts.ADDRESS, false);
-        textFieldPanel[8] = new TextFieldPanel(100, Texts.DETAILED_ADDRESS, false);
+        textFieldPanel[0] = new TextFieldPanel(4, Texts.NAME, Texts.NAME_PLACEHOLDER,false);
+        textFieldPanel[1] = new TextFieldPanel(8, Texts.ID, Texts.ID_PLACEHOLDER,false);
+        textFieldPanel[2] = new TextFieldPanel(4, Texts.PASSWORD, Texts.PASSWORD_PLACEHOLDER,true);
+        textFieldPanel[3] = new TextFieldPanel(4, Texts.PASSWORD_CHECK, "", true);
+        textFieldPanel[4] = new TextFieldPanel(8, Texts.BIRTHDAY, Texts.BIRTHDAY_PLACEHOLDER,false);
+        textFieldPanel[5] = new TextFieldPanel(20, Texts.EMAIL, "", false);
+        textFieldPanel[6] = new TextFieldPanel(11, Texts.PHONE_NUMBER, Texts.PHONE_PLACEHOLDER,false);
+        textFieldPanel[7] = new TextFieldPanel(100, Texts.ADDRESS, "", false);
+        textFieldPanel[8] = new TextFieldPanel(100, Texts.DETAILED_ADDRESS, "", false);
 
-        for(TextFieldPanel panel : textFieldPanel) {
-            panel.setOpaque(false);
+        for(int i = 0, y = 0; i < 9; i++, y += 50) {
+            textFieldPanel[i].setBounds(0, y, 300, 50);
         }
 
-        mainPanel.setLayout(new GridLayout(9, 1));
+        mainPanel.setLayout(null);
         mainPanel.setOpaque(false);
+        mainPanel.setBounds(0, 0, 350, 600);
 
         mainPanel.add(textFieldPanel[0]);
         if (isSignUp) {
             mainPanel.add(textFieldPanel[1]);
         }
-        mainPanel.add(textFieldPanel[2]);
-        mainPanel.add(textFieldPanel[3]);
-        mainPanel.add(textFieldPanel[4]);
-        mainPanel.add(getEmailFieldPanel());
-        mainPanel.add(textFieldPanel[6]);
-        mainPanel.add(textFieldPanel[7]);
-        mainPanel.add(textFieldPanel[8]);
+        for(int i = 2; i < 9; i++) {
+            mainPanel.add(textFieldPanel[i]);
+        }
 
-        add(mainPanel, BorderLayout.CENTER);
+        add(mainPanel);
     }
 
     private void initButtonPanel(ActionListener actionListener) {
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(2, 2));
-        mainPanel.setOpaque(false);
         JPanel[] buttonPanels = null;
 
         if (isSignUp) {
             buttonPanels = new JPanel[]{new ButtonPanel(Texts.DUPLICATION_CHECK, actionListener), new ButtonPanel(Texts.ADDRESS_CHECK, actionListener),
                    new ButtonPanel(Texts.FIND_ADDRESS, actionListener),  new ButtonPanel(Texts.SIGNUP_CHECK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
+            buttonPanels[0].setBounds(300, 50, 150, 50);
+            buttonPanels[1].setBounds(300, 400, 150, 50);
+            buttonPanels[2].setBounds(300, 350, 150, 50);
+            buttonPanels[3].setBounds(150, 450, 150, 50);
+            buttonPanels[4].setBounds(300, 450, 150, 50);
         } else {
             buttonPanels = new JPanel[]{new ButtonPanel(Texts.ADDRESS_CHECK, actionListener), new ButtonPanel(Texts.FIND_ADDRESS, actionListener),
                     new ButtonPanel(Texts.MODIFIED_CHECK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
+            buttonPanels[0].setBounds(300, 400, 150, 50);
+            buttonPanels[1].setBounds(300, 350, 150, 50);
+            buttonPanels[2].setBounds(150, 450, 150, 50);
+            buttonPanels[3].setBounds(300, 450, 150, 50);
         }
 
         for (JPanel panel : buttonPanels) {
-            panel.setOpaque(false);
-            mainPanel.add(panel);
+            add(panel);
         }
-
-        add(mainPanel, BorderLayout.SOUTH);
     }
 
-    private JPanel getEmailFieldPanel() {
-        JPanel mainPanel = new JPanel();
-        JLabel at = new JLabel(Texts.AT);
+    private void initEmailComboBox() {
         emailAddress = new JComboBox<>(Texts.EMAIL_COMBOBOX);
-
-        mainPanel.setLayout(new GridBagLayout());
-        mainPanel.setOpaque(false);
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.weightx = 1;
-        constraints.weighty = 1;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        mainPanel.add(textFieldPanel[5], constraints);
-
-        constraints.gridx = 1;
-        constraints.weightx = 0.1;
-        mainPanel.add(at);
-
-        constraints.gridx = 2;
-        constraints.weightx = 0.7;
-        mainPanel.add(emailAddress, constraints);
-
-        return mainPanel;
+        emailAddress.setBounds(300, 130, 200, 300);
+        add(emailAddress);
     }
 }

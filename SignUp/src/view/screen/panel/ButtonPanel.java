@@ -8,6 +8,7 @@ public class ButtonPanel extends JPanel {
 
     public ButtonPanel(String labelText, ActionListener actionListener) {
         setLayout(new GridLayout(1, 1));
+        setOpaque(false);
         initButton(labelText, actionListener);
     }
 

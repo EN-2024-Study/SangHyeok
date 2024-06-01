@@ -19,12 +19,7 @@ public class FrameClient extends JFrame implements IView {
                 new HomeScreen(actionListener), new LogInScreen(actionListener),
                 new SignUpScreen(actionListener, true), new SignUpScreen(actionListener, false)};
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle(Texts.TITLE);
-        setLayout(new GridLayout(1, 1));
-
-        setSize(600, 600);
-        setVisible(true);
+        initFrame();
     }
 
     @Override
@@ -101,8 +96,17 @@ public class FrameClient extends JFrame implements IView {
         if (panel instanceof ITextField) {
             ((ITextField) panel).resetTextField();
         }
-
         add(panel);
+    }
+
+    private void initFrame() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle(Texts.TITLE);
+        setLayout(new GridLayout(1, 1));
+
+        setResizable(false);
+        setSize(600, 600);
+        setVisible(true);
     }
 
     private void restartFrame() {

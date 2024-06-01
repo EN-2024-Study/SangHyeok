@@ -40,14 +40,25 @@ public class AccountFinderScreen extends JPanel implements ITextField {
         }
     }
 
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        ImageIcon imageIcon = new ImageIcon("src/images/find_image.jpg");
+        g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), null);
+    }
+
     private void initTextPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(3, 1));
+        mainPanel.setOpaque(false);
 
         textFieldPanel = new TextFieldPanel[3];
         textFieldPanel[0] = new TextFieldPanel(10, Texts.NAME, false);
         textFieldPanel[1] = new TextFieldPanel(20, Texts.EMAIL, false);
         textFieldPanel[2] = new TextFieldPanel(4, Texts.VERIFICATION_CODE, false);
+        textFieldPanel[0].setOpaque(false);
+        textFieldPanel[1].setOpaque(false);
+        textFieldPanel[2].setOpaque(false);
 
         mainPanel.add(textFieldPanel[0]);
         mainPanel.add(textFieldPanel[1]);
@@ -62,11 +73,17 @@ public class AccountFinderScreen extends JPanel implements ITextField {
                 new ButtonPanel(Texts.OK, actionListener), new ButtonPanel(Texts.GO_BACK, actionListener)};
 
         blankPanel.add(new JLabel(" "));
+        blankPanel.setOpaque(false);
+
         mainPanel.setLayout(new GridLayout(3, 1));
+        mainPanel.setOpaque(false);
+
         mainPanel.add(blankPanel);
         for (JPanel panel : buttonPanels) {
+            panel.setOpaque(false);
             mainPanel.add(panel);
         }
+
         add(mainPanel);
     }
 }

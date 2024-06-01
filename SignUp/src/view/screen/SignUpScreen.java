@@ -80,6 +80,13 @@ public class SignUpScreen extends JPanel implements ITextField, IEditor {
         }
     }
 
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        ImageIcon imageIcon = new ImageIcon("src/images/signup_image.jpg");
+        g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), null);
+    }
+
     private void initTextPanel() {
         JPanel mainPanel = new JPanel();
 
@@ -94,7 +101,13 @@ public class SignUpScreen extends JPanel implements ITextField, IEditor {
         textFieldPanel[7] = new TextFieldPanel(100, Texts.ADDRESS, false);
         textFieldPanel[8] = new TextFieldPanel(100, Texts.DETAILED_ADDRESS, false);
 
+        for(TextFieldPanel panel : textFieldPanel) {
+            panel.setOpaque(false);
+        }
+
         mainPanel.setLayout(new GridLayout(9, 1));
+        mainPanel.setOpaque(false);
+
         mainPanel.add(textFieldPanel[0]);
         if (isSignUp) {
             mainPanel.add(textFieldPanel[1]);
@@ -113,6 +126,7 @@ public class SignUpScreen extends JPanel implements ITextField, IEditor {
     private void initButtonPanel(ActionListener actionListener) {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(2, 2));
+        mainPanel.setOpaque(false);
         JPanel[] buttonPanels = null;
 
         if (isSignUp) {
@@ -124,6 +138,7 @@ public class SignUpScreen extends JPanel implements ITextField, IEditor {
         }
 
         for (JPanel panel : buttonPanels) {
+            panel.setOpaque(false);
             mainPanel.add(panel);
         }
 
@@ -136,6 +151,7 @@ public class SignUpScreen extends JPanel implements ITextField, IEditor {
         emailAddress = new JComboBox<>(Texts.EMAIL_COMBOBOX);
 
         mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setOpaque(false);
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 0;

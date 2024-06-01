@@ -15,6 +15,13 @@ public class HomeScreen extends JPanel{
         initButtonPanel(actionListener);
     }
 
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        ImageIcon imageIcon = new ImageIcon("src/images/home_image.jpg");
+        g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), null);
+    }
+
     private void initButtonPanel(ActionListener actionListener) {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(3, 1));

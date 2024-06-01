@@ -15,7 +15,7 @@ public class LogInScreen extends JPanel implements ITextField {
     private TextFieldPanel[] textFieldPanel;
 
     public LogInScreen(ActionListener actionListener) {
-        setLayout(new GridLayout(2, 1));
+//        setLayout(new GridLayout(2, 1));
         initTextPanel();
         initButtonPanel(actionListener);
     }
@@ -38,6 +38,13 @@ public class LogInScreen extends JPanel implements ITextField {
         }
     }
 
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        ImageIcon imageIcon = new ImageIcon("src/images/login_image.jpg");
+        g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), null);
+    }
+
     private void initTextPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(2, 1));
@@ -45,20 +52,26 @@ public class LogInScreen extends JPanel implements ITextField {
         textFieldPanel = new TextFieldPanel[2];
         textFieldPanel[0] = new TextFieldPanel(14, Texts.ID, false);
         textFieldPanel[1] = new TextFieldPanel(14, Texts.PASSWORD, true);
+        textFieldPanel[0].setOpaque(false);
+        textFieldPanel[1].setOpaque(false);
 
         mainPanel.add(textFieldPanel[0]);
         mainPanel.add(textFieldPanel[1]);
+        mainPanel.setOpaque(false);
+
         add(mainPanel);
     }
 
     private void initButtonPanel(ActionListener actionListener) {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(2, 2));
+        mainPanel.setOpaque(false);
 
         JPanel[] buttonPanels = new JPanel[]{new ButtonPanel(Texts.LOGIN, actionListener), new ButtonPanel(Texts.SIGNUP, actionListener),
                 new ButtonPanel(Texts.FIND_ID, actionListener), new ButtonPanel(Texts.FIND_PASSWORD, actionListener)};
 
         for (JPanel panel : buttonPanels) {
+            panel.setOpaque(false);
             mainPanel.add(panel);
         }
         add(mainPanel);

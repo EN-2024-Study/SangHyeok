@@ -21,7 +21,7 @@ public class FrameClient extends JFrame implements IView {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle(Texts.TITLE);
-        setLayout(new BorderLayout());
+        setLayout(new GridLayout(1, 1));
 
         setSize(600, 600);
         setVisible(true);
@@ -102,17 +102,7 @@ public class FrameClient extends JFrame implements IView {
             ((ITextField) panel).resetTextField();
         }
 
-        add(getBlankPanel(), BorderLayout.SOUTH);
-        add(getBlankPanel(), BorderLayout.NORTH);
-        add(getBlankPanel(), BorderLayout.EAST);
-        add(getBlankPanel(), BorderLayout.WEST);
-        add(panel, BorderLayout.CENTER);
-    }
-
-    private JPanel getBlankPanel() {
-        JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(100, 100));
-        return panel;
+        add(panel);
     }
 
     private void restartFrame() {

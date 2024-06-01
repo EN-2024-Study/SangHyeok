@@ -51,8 +51,8 @@ public class Controller implements ActionListener {
 
             //===== Home Screen 버튼들 =====//
             case Texts.ACCOUNT_MODIFY -> {
-                iView.setTextField(Enums.ScreenType.Modify, loggedInAccount);
                 iView.showScreen(Enums.ScreenType.Modify);
+                iView.setTextField(Enums.ScreenType.Modify, loggedInAccount);
             }
             case Texts.ACCOUNT_DELETE -> processDelete();
 
@@ -103,7 +103,7 @@ public class Controller implements ActionListener {
         }
 
         if (inputTextMap.get(Enums.TextType.Address).isEmpty()) {
-            iView.showDialog(false, DialogTexts.REQUEST_INPUT_ADDRESS);
+            iView.showDialog(false, String.format(DialogTexts.REQUEST_INPUT, Texts.ADDRESS));
             return;
         }
 
@@ -114,7 +114,7 @@ public class Controller implements ActionListener {
             return;
         }
 
-        HashMap <Enums.TextType, String> map = new HashMap<>();
+        HashMap<Enums.TextType, String> map = new HashMap<>();
         map.put(Enums.TextType.Address, address);
 
         if (loggedInAccount.isEmpty()) { // signup screen 일 때
@@ -126,30 +126,9 @@ public class Controller implements ActionListener {
     private void processSignUp() {
         HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.SignUp);
 
-        if (!isCheckedDuplication) { // 중복 확인 버튼을 누르지 않았을 때
-            iView.showDialog(false, DialogTexts.REQUEST_DUPLICATION);
+        if (!isValidSignUp(inputTextMap)) {
             return;
         }
-
-        for (String inputText : inputTextMap.values()) {
-            if (inputText.isEmpty()) {  // 입력하지 않은 TextField 존재할 때
-                iView.showDialog(false, DialogTexts.REQUEST_INPUT);
-                return;
-            }
-        }
-
-        if (!inputTextMap.get(Enums.TextType.Password).equals   // 비밀번호와 비밀번호 확인이 다를 때
-                (inputTextMap.get(Enums.TextType.PasswordCheck))) {
-            iView.showDialog(false, DialogTexts.WRONG_PASSWORD);
-            return;
-        }
-
-        if (address.isEmpty()) {    // 주소가 올바르지 않을 때
-            iView.showDialog(false, DialogTexts.REQUEST_INPUT_ADDRESS);
-            return;
-        }
-
-
 
         //===== SignUp complete =====//
         iAccount.insertAccount(inputTextMap);
@@ -169,17 +148,14 @@ public class Controller implements ActionListener {
         HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.SignUp);
 
         if (!inputTextMap.containsKey(Enums.TextType.Id) || inputTextMap.get(Enums.TextType.Id).length() != 8) { // 올바른 id 입력을 했는지
-            iView.showDialog(false, DialogTexts.REQUEST_INPUT_ID);
+            iView.showDialog(false, String.format(DialogTexts.REQUEST_INPUT, Texts.ID));
             return;
         }
 
         String inputId = inputTextMap.get(Enums.TextType.Id);
 
-        for(char c : inputId.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                iView.showDialog(false, DialogTexts.REQUEST_INPUT_ID);
-                return;
-            }
+        if (!isValidDigit(false, inputId.toCharArray())) {  // 올바른 입력이 아니라면
+            iView.showDialog(false, String.format(DialogTexts.REQUEST_INPUT, Texts.ID));
         }
 
         for (String id : idList) {   // 중복 체크
@@ -228,5 +204,59 @@ public class Controller implements ActionListener {
 
         iView.showDialog(true, DialogTexts.MODIFY_COMPLETE);
         iView.showScreen(Enums.ScreenType.Home);
+    }
+
+    private boolean isValidSignUp(HashMap<Enums.TextType, String> inputTextMap) {
+        if (!isCheckedDuplication) { // 중복 확인 버튼을 누르지 않았을 때
+            iView.showDialog(false, DialogTexts.REQUEST_DUPLICATION_BUTTON);
+            return false;
+        }
+
+        for (String inputText : inputTextMap.values()) {
+            if (inputText.isEmpty()) {  // 입력하지 않은 TextField 존재할 때
+                iView.showDialog(false, DialogTexts.REQUEST_INPUT_ALL);
+                return false;
+            }
+        }
+
+        if (isValidDigit(false, inputTextMap.get(Enums.TextType.Name).toCharArray()) ||
+                inputTextMap.get(Enums.TextType.Name).length() < 2) { // 올바른 이름 입력이 아닐 때
+            iView.showDialog(false, String.format(DialogTexts.REQUEST_INPUT, Texts.NAME));
+            return false;
+        }
+
+        if (!inputTextMap.get(Enums.TextType.Password).equals   // 비밀번호와 비밀번호 확인이 다를 때
+                (inputTextMap.get(Enums.TextType.PasswordCheck))) {
+            iView.showDialog(false, DialogTexts.WRONG_PASSWORD);
+            return false;
+        }
+
+        if (address.isEmpty()) {    // 주소가 올바르지 않을 때
+            iView.showDialog(false, String.format(DialogTexts.REQUEST_INPUT, Texts.ADDRESS));
+            return false;
+        }
+
+        if (isValidDigit(true, inputTextMap.get(Enums.TextType.Password).toCharArray()) ||
+                inputTextMap.get(Enums.TextType.PasswordCheck).length() != 4) { // 올바른 비밀번호 입력이 아닐 때
+            iView.showDialog(false, String.format(DialogTexts.REQUEST_INPUT, Texts.PASSWORD));
+            return false;
+        }
+
+        if (isValidDigit(true, inputTextMap.get(Enums.TextType.BirthDay).toCharArray()) ||
+                inputTextMap.get(Enums.TextType.BirthDay).length() != 8) { // 올바른 생일 입력이 아닐 때
+            iView.showDialog(false, String.format(DialogTexts.REQUEST_INPUT, Texts.BIRTHDAY));
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isValidDigit(boolean isDigit, char[] inputList) {
+        for (char c : inputList) {
+            if (Character.isDigit(c) == isDigit) {
+                return false;
+            }
+        }
+        return true;
     }
 }

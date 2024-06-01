@@ -31,6 +31,13 @@ public class LogInScreen extends JPanel implements IScreen {
         return map;
     }
 
+    @Override
+    public void resetTextField() {
+        for(TextFieldPanel text : textFieldPanel) {
+            text.setText("");
+        }
+    }
+
     private void initTextPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(2, 1));
@@ -38,6 +45,7 @@ public class LogInScreen extends JPanel implements IScreen {
         textFieldPanel = new TextFieldPanel[2];
         textFieldPanel[0] = new TextFieldPanel(14, Texts.ID, false);
         textFieldPanel[1] = new TextFieldPanel(14, Texts.PASSWORD, true);
+
         mainPanel.add(textFieldPanel[0]);
         mainPanel.add(textFieldPanel[1]);
         add(mainPanel);

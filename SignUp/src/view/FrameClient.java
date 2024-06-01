@@ -15,7 +15,7 @@ public class FrameClient extends JFrame implements IView {
     private JPanel[] panelList;
 
     public FrameClient(ActionListener actionListener) {
-        this.panelList = new JPanel[] {new FindScreen(actionListener),
+        this.panelList = new JPanel[]{new FindScreen(actionListener),
                 new HomeScreen(actionListener), new LogInScreen(actionListener),
                 new SignUpScreen(actionListener, true), new SignUpScreen(actionListener, false)};
 
@@ -29,7 +29,7 @@ public class FrameClient extends JFrame implements IView {
 
     @Override
     public HashMap<Enums.TextType, String> getText(Enums.ScreenType screenType) {
-        switch(screenType) {
+        switch (screenType) {
             case Find -> {
                 IScreen screen = (IScreen) panelList[0];
                 return screen.getText();
@@ -52,21 +52,12 @@ public class FrameClient extends JFrame implements IView {
 
     @Override
     public void showScreen(Enums.ScreenType screenType) {
-        for(JPanel p : panelList) {
-            remove(p);
-        }
-
-        add(getBlankPanel(), BorderLayout.SOUTH);
-        add(getBlankPanel(), BorderLayout.NORTH);
-        add(getBlankPanel(), BorderLayout.EAST);
-        add(getBlankPanel(), BorderLayout.WEST);
-
-        switch(screenType) {
-            case Find -> add(panelList[0], BorderLayout.CENTER);
-            case Home -> add(panelList[1], BorderLayout.CENTER);
-            case LogIn -> add(panelList[2], BorderLayout.CENTER);
-            case SignUp -> add(panelList[3], BorderLayout.CENTER);
-            case Modify -> add(panelList[4], BorderLayout.CENTER);
+        switch (screenType) {
+            case Find -> show(panelList[0]);
+            case Home -> show(panelList[1]);
+            case LogIn -> show(panelList[2]);
+            case SignUp -> show(panelList[3]);
+            case Modify -> show(panelList[4]);
         }
 
         restartFrame();
@@ -94,12 +85,28 @@ public class FrameClient extends JFrame implements IView {
     @Override
     public void setTextField(Enums.ScreenType screenType, HashMap<Enums.TextType, String> valueMap) {
         ITextFieldSetter textFieldSetter = null;
-        switch(screenType) {
+        switch (screenType) {
             case SignUp -> textFieldSetter = (ITextFieldSetter) panelList[3];
             case Modify -> textFieldSetter = (ITextFieldSetter) panelList[4];
         }
 
         textFieldSetter.setTextField(valueMap);
+    }
+
+    private void show(JPanel panel) {
+        for (JPanel p : panelList) {
+            remove(p);
+        }
+
+        if (panel instanceof IScreen) {
+            ((IScreen) panel).resetTextField();
+        }
+
+        add(getBlankPanel(), BorderLayout.SOUTH);
+        add(getBlankPanel(), BorderLayout.NORTH);
+        add(getBlankPanel(), BorderLayout.EAST);
+        add(getBlankPanel(), BorderLayout.WEST);
+        add(panel, BorderLayout.CENTER);
     }
 
     private JPanel getBlankPanel() {

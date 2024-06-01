@@ -17,7 +17,6 @@ public class SignUpScreen extends JPanel implements IScreen, ITextFieldSetter {
     private boolean isSignUp;
 
     public SignUpScreen(ActionListener actionListener, boolean isSignUp) {
-        this.textFieldPanel = new TextFieldPanel[9];
         this.isSignUp = isSignUp;
         setLayout(new BorderLayout());
         initTextPanel();
@@ -41,6 +40,13 @@ public class SignUpScreen extends JPanel implements IScreen, ITextFieldSetter {
     }
 
     @Override
+    public void resetTextField() {
+        for(TextFieldPanel text : textFieldPanel) {
+            text.setText("");
+        }
+    }
+
+    @Override
     public void setTextField(HashMap<Enums.TextType, String> valueMap) {
         boolean isFindAddress = true;
 
@@ -48,23 +54,23 @@ public class SignUpScreen extends JPanel implements IScreen, ITextFieldSetter {
             isFindAddress = false;
             textFieldPanel[0].setText(valueMap.get(Enums.TextType.Name));
         }
-        if (valueMap.containsKey(Enums.TextType.Id))  {
+        if (valueMap.containsKey(Enums.TextType.Id)) {
             textFieldPanel[1].setText(valueMap.get(Enums.TextType.Id));
         }
-        if (valueMap.containsKey(Enums.TextType.BirthDay))  {
+        if (valueMap.containsKey(Enums.TextType.BirthDay)) {
             textFieldPanel[4].setText(valueMap.get(Enums.TextType.BirthDay));
         }
-        if (valueMap.containsKey(Enums.TextType.Email))  {
+        if (valueMap.containsKey(Enums.TextType.Email)) {
             String email = valueMap.get(Enums.TextType.Email).split(Texts.AT)[0];
             textFieldPanel[5].setText(email);
         }
-        if (valueMap.containsKey(Enums.TextType.PhoneNumber))  {
+        if (valueMap.containsKey(Enums.TextType.PhoneNumber)) {
             textFieldPanel[6].setText(valueMap.get(Enums.TextType.PhoneNumber));
         }
-        if (valueMap.containsKey(Enums.TextType.Address))  {
+        if (valueMap.containsKey(Enums.TextType.Address)) {
             textFieldPanel[7].setText(valueMap.get(Enums.TextType.Address));
         }
-        if (valueMap.containsKey(Enums.TextType.DetailedAddress))  {
+        if (valueMap.containsKey(Enums.TextType.DetailedAddress)) {
             textFieldPanel[8].setText(valueMap.get(Enums.TextType.DetailedAddress));
         }
 
@@ -76,6 +82,7 @@ public class SignUpScreen extends JPanel implements IScreen, ITextFieldSetter {
     private void initTextPanel() {
         JPanel mainPanel = new JPanel();
 
+        textFieldPanel = new TextFieldPanel[9];
         textFieldPanel[0] = new TextFieldPanel(4, Texts.NAME, false);
         textFieldPanel[1] = new TextFieldPanel(8, Texts.ID, false);
         textFieldPanel[2] = new TextFieldPanel(4, Texts.PASSWORD, true);

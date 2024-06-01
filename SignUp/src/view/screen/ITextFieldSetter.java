@@ -6,4 +6,5 @@ import java.util.HashMap;
 
 public interface ITextFieldSetter {
     void setTextField(HashMap<Enums.TextType, String> valueMap);
+    
 }

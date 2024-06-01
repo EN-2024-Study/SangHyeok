@@ -34,6 +34,13 @@ public class FindScreen extends JPanel implements IScreen {
         return map;
     }
 
+    @Override
+    public void resetTextField() {
+        for(TextFieldPanel text : textFieldPanel) {
+            text.setText("");
+        }
+    }
+
     private void initTextPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(3, 1));
@@ -42,6 +49,7 @@ public class FindScreen extends JPanel implements IScreen {
         textFieldPanel[0] = new TextFieldPanel(10, Texts.NAME, false);
         textFieldPanel[1] = new TextFieldPanel(20, Texts.EMAIL, false);
         textFieldPanel[2] = new TextFieldPanel(4, Texts.VERIFICATION_CODE, false);
+
         mainPanel.add(textFieldPanel[0]);
         mainPanel.add(textFieldPanel[1]);
         mainPanel.add(textFieldPanel[2]);

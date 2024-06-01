@@ -76,10 +76,10 @@ public class SignUpScreen extends JPanel implements IScreen, ITextFieldSetter {
     private void initTextPanel() {
         JPanel mainPanel = new JPanel();
 
-        textFieldPanel[0] = new TextFieldPanel(10, Texts.NAME, false);
-        textFieldPanel[1] = new TextFieldPanel(14, Texts.ID, false);
-        textFieldPanel[2] = new TextFieldPanel(14, Texts.PASSWORD, true);
-        textFieldPanel[3] = new TextFieldPanel(14, Texts.PASSWORD_CHECK, true);
+        textFieldPanel[0] = new TextFieldPanel(4, Texts.NAME, false);
+        textFieldPanel[1] = new TextFieldPanel(8, Texts.ID, false);
+        textFieldPanel[2] = new TextFieldPanel(4, Texts.PASSWORD, true);
+        textFieldPanel[3] = new TextFieldPanel(4, Texts.PASSWORD_CHECK, true);
         textFieldPanel[4] = new TextFieldPanel(8, Texts.BIRTHDAY, false);
         textFieldPanel[5] = new TextFieldPanel(20, Texts.EMAIL, false);
         textFieldPanel[6] = new TextFieldPanel(11, Texts.PHONE_NUMBER, false);

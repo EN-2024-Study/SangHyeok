@@ -1,6 +1,6 @@
 package constant;
 
-public class APIConstants {
+public class APITexts {
     public static final String API_KEY = "API_KEY";
     public static final String URL = "https://dapi.kakao.com/v2/local/search/address.json";
     public static final String encoding = "UTF-8";

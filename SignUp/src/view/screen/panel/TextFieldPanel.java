@@ -2,6 +2,8 @@ package view.screen.panel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TextFieldPanel extends JPanel {
 
@@ -27,14 +29,29 @@ public class TextFieldPanel extends JPanel {
         setLayout(new GridLayout(1, 3));
 
         JLabel label = new JLabel(labelText);
-        if (isPassword) {
-            textField = new JPasswordField(maxLength);
-        } else {
-            textField = new JTextField(maxLength);
-        }
-
         label.setHorizontalAlignment(JLabel.RIGHT);
+
+        initTextField(maxLength, isPassword);
         add(label);
         add(textField);
+    }
+
+    private void initTextField(int maxLength, boolean isPassword) {
+        if (isPassword) {
+            textField = new JPasswordField();
+        } else {
+            textField = new JTextField();
+        }
+
+        //===== 입력 길이 제한 =====//
+        textField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                JTextField textField = (JTextField) e.getSource();
+                if (textField.getText().length() >= maxLength) {
+                    e.consume();
+                }
+            }
+        });
     }
 }

@@ -22,6 +22,7 @@ public class Controller implements ActionListener {
     private final IAddress iAddress;
     private boolean isFindId;
     private boolean isCheckedDuplication;
+    private String address;
     private HashMap<Enums.TextType, String> loggedInAccount;
 
     public Controller() {
@@ -74,6 +75,7 @@ public class Controller implements ActionListener {
     private void processLogOut() {
         this.isFindId = false;
         this.isCheckedDuplication = false;
+        this.address = "";
         this.loggedInAccount = new HashMap<>();
         iView.showScreen(Enums.ScreenType.LogIn);
     }
@@ -105,7 +107,7 @@ public class Controller implements ActionListener {
             return;
         }
 
-        String address = iAddress.searchAddress(inputTextMap.get(Enums.TextType.Address));
+        address = iAddress.searchAddress(inputTextMap.get(Enums.TextType.Address));
 
         if (address == null || address.isEmpty()) {
             iView.showDialog(false, DialogTexts.WRONG_ADDRESS);
@@ -142,6 +144,13 @@ public class Controller implements ActionListener {
             return;
         }
 
+        if (address.isEmpty()) {    // 주소가 올바르지 않을 때
+            iView.showDialog(false, DialogTexts.REQUEST_INPUT_ADDRESS);
+            return;
+        }
+
+
+
         //===== SignUp complete =====//
         iAccount.insertAccount(inputTextMap);
         isCheckedDuplication = false;
@@ -159,13 +168,22 @@ public class Controller implements ActionListener {
         List<String> idList = iAccount.getIdList();
         HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.SignUp);
 
-        if (!inputTextMap.containsKey(Enums.TextType.Id)) { // id 입력을 했는지
+        if (!inputTextMap.containsKey(Enums.TextType.Id) || inputTextMap.get(Enums.TextType.Id).length() != 8) { // 올바른 id 입력을 했는지
             iView.showDialog(false, DialogTexts.REQUEST_INPUT_ID);
             return;
         }
 
+        String inputId = inputTextMap.get(Enums.TextType.Id);
+
+        for(char c : inputId.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                iView.showDialog(false, DialogTexts.REQUEST_INPUT_ID);
+                return;
+            }
+        }
+
         for (String id : idList) {   // 중복 체크
-            if (inputTextMap.get(Enums.TextType.Id).equals(id)) {
+            if (inputId.equals(id)) {
                 iView.showDialog(false, DialogTexts.DUPLICATION);
                 return;
             }

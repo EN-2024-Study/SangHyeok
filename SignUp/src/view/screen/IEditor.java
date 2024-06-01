@@ -4,7 +4,6 @@ import constant.Enums;
 
 import java.util.HashMap;
 
-public interface ITextFieldSetter {
+public interface IEditor {
     void setTextField(HashMap<Enums.TextType, String> valueMap);
-    
 }

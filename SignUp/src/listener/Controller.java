@@ -42,7 +42,7 @@ public class Controller implements ActionListener {
         switch (e.getActionCommand()) {
             case Texts.GO_BACK, Texts.LOGOUT -> processLogOut();
 
-            //===== LogIn Screen 버튼들 =====//
+            //===== LogIn Screen Buttons =====//
             case Texts.LOGIN -> processLogIn();
             case Texts.SIGNUP -> iView.showScreen(Enums.ScreenType.SignUp);
             case Texts.FIND_ID -> {
@@ -54,21 +54,21 @@ public class Controller implements ActionListener {
                 iView.showScreen(Enums.ScreenType.Find);
             }
 
-            //===== Home Screen 버튼들 =====//
+            //===== Home Screen Buttons =====//
             case Texts.ACCOUNT_MODIFY -> {
                 iView.showScreen(Enums.ScreenType.Modify);
                 iView.setTextField(Enums.ScreenType.Modify, loggedInAccount);
             }
             case Texts.ACCOUNT_DELETE -> processDelete();
 
-            //===== SignUp Screen 버튼들 =====//
+            //===== SignUp Screen Buttons =====//
             case Texts.DUPLICATION_CHECK -> checkIdDuplication();
             case Texts.ADDRESS_CHECK -> checkAddress();
             case Texts.SIGNUP_CHECK -> processSignUp();
             case Texts.MODIFIED_CHECK -> processModified();
             case Texts.FIND_ADDRESS -> processFindAddress();
 
-            //===== AccountFinder Screen 버튼들 =====//
+            //===== AccountFinder Screen Buttons =====//
             case Texts.GET_CODE -> {
 
             }

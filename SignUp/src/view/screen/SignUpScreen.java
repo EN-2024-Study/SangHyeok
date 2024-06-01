@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class SignUpScreen extends JPanel implements IScreen, ITextFieldSetter {
+public class SignUpScreen extends JPanel implements ITextField, IEditor {
 
     private TextFieldPanel[] textFieldPanel;
     private JComboBox<String> emailAddress;

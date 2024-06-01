@@ -31,19 +31,19 @@ public class FrameClient extends JFrame implements IView {
     public HashMap<Enums.TextType, String> getText(Enums.ScreenType screenType) {
         switch (screenType) {
             case Find -> {
-                IScreen screen = (IScreen) panelList[0];
+                ITextField screen = (ITextField) panelList[0];
                 return screen.getText();
             }
             case LogIn -> {
-                IScreen screen = (IScreen) panelList[2];
+                ITextField screen = (ITextField) panelList[2];
                 return screen.getText();
             }
             case SignUp -> {
-                IScreen screen = (IScreen) panelList[3];
+                ITextField screen = (ITextField) panelList[3];
                 return screen.getText();
             }
             case Modify -> {
-                IScreen screen = (IScreen) panelList[4];
+                ITextField screen = (ITextField) panelList[4];
                 return screen.getText();
             }
         }
@@ -84,13 +84,13 @@ public class FrameClient extends JFrame implements IView {
 
     @Override
     public void setTextField(Enums.ScreenType screenType, HashMap<Enums.TextType, String> valueMap) {
-        ITextFieldSetter textFieldSetter = null;
+        IEditor iEditor = null;
         switch (screenType) {
-            case SignUp -> textFieldSetter = (ITextFieldSetter) panelList[3];
-            case Modify -> textFieldSetter = (ITextFieldSetter) panelList[4];
+            case SignUp -> iEditor = (IEditor) panelList[3];
+            case Modify -> iEditor = (IEditor) panelList[4];
         }
 
-        textFieldSetter.setTextField(valueMap);
+        iEditor.setTextField(valueMap);
     }
 
     private void show(JPanel panel) {
@@ -98,8 +98,8 @@ public class FrameClient extends JFrame implements IView {
             remove(p);
         }
 
-        if (panel instanceof IScreen) {
-            ((IScreen) panel).resetTextField();
+        if (panel instanceof ITextField) {
+            ((ITextField) panel).resetTextField();
         }
 
         add(getBlankPanel(), BorderLayout.SOUTH);

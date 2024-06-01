@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class LogInScreen extends JPanel implements IScreen {
+public class LogInScreen extends JPanel implements ITextField {
 
     private TextFieldPanel[] textFieldPanel;
 

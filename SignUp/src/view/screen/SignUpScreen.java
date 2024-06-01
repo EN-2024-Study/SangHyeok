@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class SignUpScreen extends JPanel implements IScreen {
+public class SignUpScreen extends JPanel implements IScreen, ITextSetter {
 
     private TextFieldPanel[] textFieldPanel;
     private JComboBox<String> emailAddress;
@@ -38,6 +38,11 @@ public class SignUpScreen extends JPanel implements IScreen {
         map.put(Enums.TextType.Address, textFieldPanel[7].getText());
         map.put(Enums.TextType.DetailedAddress, textFieldPanel[8].getText());
         return map;
+    }
+
+    @Override
+    public void setText(HashMap<Enums.TextType, String> valueMap) {
+
     }
 
     private void initTextPanel() {

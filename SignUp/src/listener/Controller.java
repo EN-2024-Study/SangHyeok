@@ -1,9 +1,12 @@
 package listener;
 
+import constant.DialogTexts;
 import constant.Enums;
 import constant.Texts;
 import model.AccountDao;
+import model.AddressDao;
 import model.IAccount;
+import model.IAddress;
 import view.FrameClient;
 import view.IView;
 
@@ -16,6 +19,7 @@ public class Controller implements ActionListener {
 
     private final IView iView;
     private final IAccount iAccount;
+    private final IAddress iAddress;
     private boolean isFindId;
     private boolean isCheckedDuplication;
     private String logInId;
@@ -23,6 +27,7 @@ public class Controller implements ActionListener {
     public Controller() {
         this.iView = new FrameClient(this);
         this.iAccount = new AccountDao();
+        this.iAddress = new AddressDao();
         this.isFindId = false;
         this.isCheckedDuplication = false;
         this.logInId = "";
@@ -49,14 +54,12 @@ public class Controller implements ActionListener {
             }
 
             //===== Home Screen 버튼들 =====//
-            case Texts.ACCOUNT_MODIFY -> iView.showScreen(Enums.ScreenType.Modified);
+            case Texts.ACCOUNT_MODIFY -> iView.showScreen(Enums.ScreenType.Modify);
             case Texts.ACCOUNT_DELETE -> processDelete();
 
             //===== SignUp Screen 버튼들 =====//
             case Texts.DUPLICATION_CHECK -> checkIdDuplication();
-            case Texts.FIND_ADDRESS -> {
-
-            }
+            case Texts.FIND_ADDRESS -> processFindAddress();
             case Texts.SIGNUP_CHECK -> processSignUp();
             case Texts.MODIFIED_CHECK -> processModified();
 
@@ -77,46 +80,61 @@ public class Controller implements ActionListener {
         HashMap<Enums.TextType, String> userMap = iAccount.findAccount(inputId);
 
         if (userMap.isEmpty() || !inputPassword.equals(userMap.get(Enums.TextType.Password))) {
-            iView.showDialog(false, Texts.LOGIN_FAIL);
+            iView.showDialog(false, DialogTexts.LOGIN_FAIL);
             return;
         }
 
         logInId = inputId;
-        iView.showDialog(true, Texts.LOGIN_COMPLETE);
+        iView.showDialog(true, DialogTexts.LOGIN_COMPLETE);
         iView.showScreen(Enums.ScreenType.Home);
+    }
+
+    private void processFindAddress() {
+        HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.Modify);
+        if (logInId.isEmpty()) {
+            inputTextMap = iView.getText(Enums.ScreenType.SignUp);
+        }
+
+        if (inputTextMap.get(Enums.TextType.Address).isEmpty()) {
+            iView.showDialog(false, DialogTexts.REQUEST_INPUT_ADDRESS);
+            return;
+        }
+
+        String test = iAddress.searchAddress(inputTextMap.get(Enums.TextType.Address));
+        System.out.println(test);
     }
 
     private void processSignUp() {
         HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.SignUp);
 
         if (!isCheckedDuplication) { // 중복 확인 버튼을 누르지 않았을 때
-            iView.showDialog(false, Texts.REQUEST_DUPLICATION);
+            iView.showDialog(false, DialogTexts.REQUEST_DUPLICATION);
             return;
         }
 
         for (String inputText : inputTextMap.values()) {
             if (inputText.isEmpty()) {  // 입력하지 않은 TextField 존재할 때
-                iView.showDialog(false, Texts.REQUEST_INPUT);
+                iView.showDialog(false, DialogTexts.REQUEST_INPUT);
                 return;
             }
         }
 
         if (!inputTextMap.get(Enums.TextType.Password).equals   // 비밀번호와 비밀번호 확인이 다를 때
                 (inputTextMap.get(Enums.TextType.PasswordCheck))) {
-            iView.showDialog(false, Texts.WRONG_PASSWORD);
+            iView.showDialog(false, DialogTexts.WRONG_PASSWORD);
             return;
         }
 
         //===== SignUp complete =====//
         iAccount.insertAccount(inputTextMap);
         isCheckedDuplication = false;
-        iView.showDialog(true, Texts.SIGNUP_COMPLETE);
+        iView.showDialog(true, DialogTexts.SIGNUP_COMPLETE);
         iView.showScreen(Enums.ScreenType.LogIn);
     }
 
     private void processDelete() {
         iAccount.deleteAccount(logInId);
-        iView.showDialog(true, Texts.DELETE_COMPLETE);
+        iView.showDialog(true, DialogTexts.DELETE_COMPLETE);
         iView.showScreen(Enums.ScreenType.LogIn);
     }
 
@@ -125,23 +143,23 @@ public class Controller implements ActionListener {
         HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.SignUp);
 
         if (!inputTextMap.containsKey(Enums.TextType.Id)) { // id 입력을 했는지
-            iView.showDialog(false, Texts.REQUEST_INPUT_ID);
+            iView.showDialog(false, DialogTexts.REQUEST_INPUT_ID);
             return;
         }
 
         for (String id : idList) {   // 중복 체크
             if (inputTextMap.get(Enums.TextType.Id).equals(id)) {
-                iView.showDialog(false, Texts.DUPLICATION);
+                iView.showDialog(false, DialogTexts.DUPLICATION);
                 return;
             }
         }
 
         isCheckedDuplication = true;
-        iView.showDialog(true, Texts.AVAILABLE_ID);
+        iView.showDialog(true, DialogTexts.AVAILABLE_ID);
     }
 
     private void processModified() {
-        HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.Modified);
+        HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.Modify);
         String name = inputTextMap.get(Enums.TextType.Name);
         String password = inputTextMap.get(Enums.TextType.Password);
         String birthday = inputTextMap.get(Enums.TextType.BirthDay);
@@ -172,7 +190,7 @@ public class Controller implements ActionListener {
             iAccount.modifyAccount(logInId, Texts.DETAILED_ADDRESS, inputTextMap.get(Enums.TextType.DetailedAddress));
         }
 
-        iView.showDialog(true, Texts.MODIFY_COMPLETE);
+        iView.showDialog(true, DialogTexts.MODIFY_COMPLETE);
         iView.showScreen(Enums.ScreenType.Home);
     }
 }

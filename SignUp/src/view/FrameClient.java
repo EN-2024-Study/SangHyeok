@@ -1,5 +1,6 @@
 package view;
 
+import constant.DialogTexts;
 import constant.Enums;
 import constant.Texts;
 import view.screen.*;
@@ -42,7 +43,7 @@ public class FrameClient extends JFrame implements IView {
                 IScreen screen = (IScreen) panelList[3];
                 return screen.getText();
             }
-            case Modified -> {
+            case Modify -> {
                 IScreen screen = (IScreen) panelList[4];
                 return screen.getText();
             }
@@ -66,7 +67,7 @@ public class FrameClient extends JFrame implements IView {
             case Home -> add(panelList[1], BorderLayout.CENTER);
             case LogIn -> add(panelList[2], BorderLayout.CENTER);
             case SignUp -> add(panelList[3], BorderLayout.CENTER);
-            case Modified -> add(panelList[4], BorderLayout.CENTER);
+            case Modify -> add(panelList[4], BorderLayout.CENTER);
         }
 
         restartFrame();
@@ -79,9 +80,9 @@ public class FrameClient extends JFrame implements IView {
 
         label.setHorizontalAlignment(JLabel.CENTER);
         if (isComplete) {
-            dialog.setTitle(Texts.COMPLETE);
+            dialog.setTitle(DialogTexts.COMPLETE);
         } else {
-            dialog.setTitle(Texts.FAIL);
+            dialog.setTitle(DialogTexts.FAIL);
         }
         dialog.setSize(300, 100);
         dialog.add(label);
@@ -89,6 +90,18 @@ public class FrameClient extends JFrame implements IView {
         dialog.setVisible(true);
 
         restartFrame();
+    }
+
+    @Override
+    public void setText(Enums.ScreenType screenType, HashMap<Enums.TextType, String> valueMap) {
+        switch(screenType) {
+            case SignUp -> {
+
+            }
+            case Modify -> {
+
+            }
+        }
     }
 
     private JPanel getBlankPanel() {

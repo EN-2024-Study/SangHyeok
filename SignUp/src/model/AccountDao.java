@@ -25,10 +25,9 @@ public class AccountDao implements IAccount {
     }
 
     private Connection getConnection() throws SQLException, IOException, ClassNotFoundException {
-        Map<String, String> environment = getenv();
-        String url = environment.get("DB_URL");
-        String userName = environment.get("DB_ID");
-        String password = environment.get("DB_PASSWORD");
+        String url = getenv().get("DB_URL");
+        String userName = getenv().get("DB_ID");
+        String password = getenv().get("DB_PASSWORD");
         return DriverManager.getConnection(url, userName, password);
     }
 

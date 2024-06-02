@@ -4,10 +4,7 @@ import constant.APITexts;
 import constant.DialogTexts;
 import constant.Enums;
 import constant.Texts;
-import model.AccountDao;
-import model.AddressDao;
-import model.IAccount;
-import model.IAddress;
+import model.*;
 import view.FrameClient;
 import view.IView;
 
@@ -25,6 +22,7 @@ public class Controller implements ActionListener {
     private final IView iView;
     private final IAccount iAccount;
     private final IAddress iAddress;
+    private final MailDao mailDao;
     private boolean isFoundId;
     private boolean isCheckedAddress;
     private boolean isCheckedDuplication;
@@ -34,6 +32,7 @@ public class Controller implements ActionListener {
         this.iView = new FrameClient(this);
         this.iAccount = new AccountDao();
         this.iAddress = new AddressDao();
+        this.mailDao = new MailDao();
         processLogOut();
     }
 
@@ -69,9 +68,7 @@ public class Controller implements ActionListener {
             case Texts.FIND_ADDRESS -> processFindAddress();
 
             //===== AccountFinder Screen Buttons =====//
-            case Texts.GET_CODE -> {
-
-            }
+            case Texts.GET_CODE -> processGetCode();
             case Texts.OK -> {
 
             }
@@ -215,6 +212,20 @@ public class Controller implements ActionListener {
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
+    }
+
+    private void processGetCode() {
+        HashMap<Enums.TextType, String> inputTextMap = iView.getText(Enums.ScreenType.Find);
+        if (!inputTextMap.containsKey(Enums.TextType.Email)) {
+            iView.showDialog(false, String.format(DialogTexts.REQUEST_INPUT, Texts.EMAIL));
+        }
+
+        String email = inputTextMap.get(Enums.TextType.Email);
+        if (email == null || email.isEmpty()) {
+            iView.showDialog(false, String.format(DialogTexts.REQUEST_INPUT, Texts.EMAIL));
+        }
+
+        mailDao.sendMail(email);
     }
 
     private boolean isValidSignUp(HashMap<Enums.TextType, String> inputTextMap) {
